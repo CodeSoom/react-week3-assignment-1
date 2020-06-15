@@ -12,6 +12,9 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
     context: 'readonly',
+    Feature: 'readonly',
+    Scenario: 'readonly',
+    actor: 'readonly',
   },
   parserOptions: {
     ecmaFeatures: {
