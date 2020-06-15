@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { render, fireEvent } from '@testing-library/react';
 import Item from './Item';
 
@@ -7,52 +8,46 @@ describe('<Item />', () => {
     const { task, onClickDelete } = props;
     const utils = render(<Item task={task} onClickDelete={onClickDelete} />);
     const { getByText } = utils;
-    const button = getByText('완료');
+    const completeButton = getByText('완료');
     return {
       ...utils,
-      button,
+      completeButton,
     };
   };
 
-  it('완료 텍스트가 있다.', () => {
-    const task = {
-      id: 1,
-      title: 'first title',
-    };
-    const { button } = dom({ task });
-    expect(button).toBeTruthy();
+  context('로딩 되면, ', () => {
+    it('완료 텍스트가 있다.', () => {
+      const task = {
+        id: 1,
+        title: 'first title',
+      };
+      const { completeButton } = dom({ task });
+      expect(completeButton).toBeTruthy();
+    });
+
+    it('테스크의 타이틀이 보인다.', () => {
+      const task = {
+        id: 1,
+        title: 'first title',
+      };
+      const { getByText } = dom({ task });
+      getByText(task.title);
+    });
   });
 
-  it('완료 버튼을 클릭 할 수 있다.', () => {
-    const task = {
-      id: 1,
-      title: 'first title',
-    };
-    const onClickDelete = jest.fn();
-    const { button } = dom({ task, onClickDelete });
+  context('완료 버튼을 클릭하면, ', () => {
+    it('task id를 파라미터로 갖는 onClickDelete 함수가 호출된다.', () => {
+      const task = {
+        id: 1,
+        title: 'first title',
+      };
+      const onClickDelete = jest.fn();
+      const { completeButton } = dom({ task, onClickDelete });
 
-    expect(onClickDelete).not.toBeCalled();
-    fireEvent.click(button);
-    expect(onClickDelete).toBeCalledTimes(1);
-  });
-
-  it('테스크의 타이틀이 보인다.', () => {
-    const task = {
-      id: 1,
-      title: 'first title',
-    };
-    const { getByText } = dom({ task });
-    getByText(task.title);
-  });
-
-  it('완료를 클릭하면 task.id를 파라미터로 갖는다.', () => {
-    const task = {
-      id: 1,
-      title: 'first title',
-    };
-    const onClickDelete = jest.fn();
-    const { button } = dom({ task, onClickDelete });
-    fireEvent.click(button);
-    expect(onClickDelete).toBeCalledWith(task.id);
+      expect(onClickDelete).not.toBeCalled();
+      fireEvent.click(completeButton);
+      expect(onClickDelete).toBeCalledTimes(1);
+      expect(onClickDelete).toBeCalledWith(1);
+    });
   });
 });
