@@ -1,8 +1,5 @@
 module.exports = {
-  setupFilesAfterEnv: [
-    'jest-plugin-context/setup',
-    './jest.setup',
-  ],
+  setupFilesAfterEnv: ['jest-plugin-context/setup', './jest.setup'],
   coverageThreshold: {
     global: {
       branches: 80,
@@ -10,7 +7,6 @@ module.exports = {
       lines: 80,
       statements: 80,
     },
-    "./src/App.jsx": {
-    },
+    './src/App.jsx': {},
   },
 };
