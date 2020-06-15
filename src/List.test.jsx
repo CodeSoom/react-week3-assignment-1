@@ -30,8 +30,8 @@ describe('<List />', () => {
         },
       ];
       const { getByText } = dom({ tasks });
-      getByText('first task');
-      getByText('seccond task');
+      expect(getByText('first task')).toBeInTheDocument();
+      expect(getByText('seccond task')).toBeInTheDocument();
     });
   });
 });
