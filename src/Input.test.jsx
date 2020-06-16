@@ -36,6 +36,7 @@ describe('Input Component는', () => {
         expect(screen.getByPlaceholderText(placeholderText)).toBeInTheDocument();
       });
     });
+
     describe('비어 있지 않다면', () => {
       test('value 값을 출력한다.', () => {
         const value = '어제보다 열심히 하기';

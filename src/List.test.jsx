@@ -43,7 +43,7 @@ describe('List Component는', () => {
       expect(screen.getByRole('list', { name: '' }).children).toHaveLength(itemSize);
     });
 
-    describe('Item에서 완료 버튼을 클릭했을 때', () => {
+    describe('Item의 완료 버튼을 클릭했을 때', () => {
       test('onClickDelete를 실행한다', () => {
         const { clickDoneButton } = setup(tasks, mockHandleClickDelete);
         clickDoneButton();
