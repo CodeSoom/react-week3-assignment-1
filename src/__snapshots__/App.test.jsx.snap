@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App/> App 1`] = `
+<div>
+  <div>
+    <h1>
+      To-do
+    </h1>
+    <p>
+      <label
+        for="input-task-title"
+      >
+        할 일
+      </label>
+      <input
+        id="input-task-title"
+        placeholder="할 일을 입력해 주세요"
+        type="text"
+        value=""
+      />
+      <button
+        type="button"
+      >
+        추가
+      </button>
+    </p>
+    <p>
+      할 일이 없어요!
+    </p>
+  </div>
+</div>
+`;
