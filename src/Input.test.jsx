@@ -8,7 +8,7 @@ describe('<Input />', () => {
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
 
-  test('사용자가 할 일을 입력하고 추가를 누르면 input의 텍스트가 지워진다.', () => {
+  test('사용자가 할 일을 입력하면 input 값이 해당 글자로 값이 바뀐다.', () => {
     const taskTitle = undefined;
 
     const container = render(
