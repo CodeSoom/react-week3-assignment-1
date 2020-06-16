@@ -10,9 +10,7 @@ function setup(tasks, handleClickDelete) {
     onClickDelete={handleClickDelete}
   />);
   const clickDoneButton = () => fireEvent.click(screen.getAllByRole('button', { name: /완료/i })[0]);
-  return {
-    clickDoneButton,
-  };
+  return { clickDoneButton };
 }
 
 describe('List Component는', () => {

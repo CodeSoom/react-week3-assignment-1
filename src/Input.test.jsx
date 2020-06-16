@@ -13,10 +13,7 @@ function setup(value, handleChange, handleClick) {
   const changeTaskInput = (text) => fireEvent.change(screen.getByLabelText(/할 일/i, { selector: 'input' }),
     { target: { value: text } });
   const clickAddButton = () => fireEvent.click(screen.getByRole('button', { name: /추가/i }));
-  return {
-    changeTaskInput,
-    clickAddButton,
-  };
+  return { changeTaskInput, clickAddButton };
 }
 
 describe('Input Component는', () => {

@@ -17,11 +17,7 @@ function setup(taskTitle, handleChangeTitle,
     { target: { value: text } });
   const clickAddButton = () => fireEvent.click(screen.getByRole('button', { name: /추가/i }));
   const clickDoneButton = () => fireEvent.click(screen.getAllByRole('button', { name: /완료/i })[0]);
-  return {
-    changeTaskInput,
-    clickAddButton,
-    clickDoneButton,
-  };
+  return { changeTaskInput, clickAddButton, clickDoneButton };
 }
 
 describe('Page Component는', () => {
