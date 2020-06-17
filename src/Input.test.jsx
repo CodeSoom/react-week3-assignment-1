@@ -5,8 +5,8 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('<Input />', () => {
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
+  const handleOnChangeTitle = jest.fn();
+  const handleOnClickAddTask = jest.fn();
 
   test('사용자가 할 일을 입력하면 input 값이 해당 글자로 값이 바뀐다.', () => {
     const taskTitle = undefined;
@@ -14,18 +14,18 @@ describe('<Input />', () => {
     const container = render(
       <Input
         value={taskTitle}
-        onChange={onChangeTitle}
-        onClick={onClickAddTask}
+        onChange={handleOnChangeTitle}
+        onClick={handleOnClickAddTask}
       />,
     );
 
-    expect(onChangeTitle).not.toBeCalled();
+    expect(handleOnChangeTitle).not.toBeCalled();
     fireEvent.change(container.getByLabelText('할 일'), {
       target: {
         value: '바뀐다',
       },
     });
-    expect(onChangeTitle).toBeCalledTimes(1);
+    expect(handleOnChangeTitle).toBeCalledTimes(1);
     expect(container.getByLabelText('할 일').value).toBe('바뀐다');
   });
 
@@ -35,16 +35,16 @@ describe('<Input />', () => {
     const container = render(
       <Input
         value={taskTitle}
-        onChange={onChangeTitle}
-        onClick={onClickAddTask}
+        onChange={handleOnChangeTitle}
+        onClick={handleOnClickAddTask}
       />,
     );
 
     expect(container.getByLabelText('할 일').value).toBe('a');
 
-    expect(onClickAddTask).not.toBeCalled();
+    expect(handleOnClickAddTask).not.toBeCalled();
     fireEvent.click(container.getByText('추가'));
-    expect(onClickAddTask).toBeCalledTimes(1);
+    expect(handleOnClickAddTask).toBeCalledTimes(1);
 
     expect(
       container.getByPlaceholderText('할 일을 입력해 주세요'),
