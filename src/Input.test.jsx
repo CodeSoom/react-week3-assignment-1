@@ -10,11 +10,8 @@ describe('<Input />', () => {
 
   context('사용자가 할 일을 입력하면', () => {
     it('input 값이 해당 글자로 값이 바뀐다.', () => {
-      const taskTitle = undefined;
-
       const container = render(
         <Input
-          value={taskTitle}
           onChange={handleOnChangeTitle}
           onClick={handleOnClickAddTask}
         />,
