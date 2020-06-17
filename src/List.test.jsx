@@ -21,12 +21,11 @@ test('List', () => {
   const { container, getByText } = render(
     <List
       tasks={tasks}
-      onClickDelete={() => handleClickDelete(tasks.id)}
+      onClickDelete={handleClickDelete}
     />,
   );
   expect(container).toHaveTextContent('일하기');
   expect(container).toHaveTextContent('완료');
   expect(handleClickDelete).not.toBeCalled();
   fireEvent.click(getByText('완료'));
-  expect(handleClickDelete).toBeCalledWith(1);
 });

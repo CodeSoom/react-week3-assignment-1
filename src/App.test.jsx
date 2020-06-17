@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import App from './App';
 
 test('App', () => {
-  const utils = render(<App />);
+  const { container } = render(<App />);
+  expect(container).toHaveTextContent('To-do');
 });

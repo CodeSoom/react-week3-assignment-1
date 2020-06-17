@@ -5,33 +5,15 @@ import Page from './Page';
 test('Page', () => {
   const taskTitle = '';
   const tasks = [];
-
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
-  const onClickDeleteTask = jest.fn();
+  const handleChangeTitle = jest.fn();
+  const handleAddTask = jest.fn();
+  const handleDeleteTask = jest.fn();
   const { container } = render(<Page
     taskTitle={taskTitle}
-    onChangeTitle={onChangeTitle}
-    onClickAddTask={onClickAddTask}
+    onChangeTitle={handleChangeTitle}
+    onClickAddTask={handleAddTask}
     tasks={tasks}
-    onClickDeleteTask={onClickDeleteTask}
-  />);
-
-  expect(container).toHaveTextContent('To-do');
-});
-
-test('Page', () => {
-  const taskTitle = '';
-  const tasks = [];
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
-  const onClickDeleteTask = jest.fn();
-  const { container } = render(<Page
-    taskTitle={taskTitle}
-    onChangeTitle={onChangeTitle}
-    onClickAddTask={onClickAddTask}
-    tasks={tasks}
-    onClickDeleteTask={onClickDeleteTask}
+    onClickDeleteTask={handleDeleteTask}
   />);
 
   expect(container).toHaveTextContent('To-do');
@@ -40,16 +22,16 @@ test('Page', () => {
 
 test('Page', () => {
   const taskTitle = '';
-  const onChangeTitle = () => {};
-  const onClickAddTask = () => {};
   const tasks = [{ id: 1, title: '할 일이다' }];
-  const onClickDeleteTask = () => {};
+  const handleChangeTitle = jest.fn();
+  const handleAddTask = jest.fn();
+  const handleDeleteTask = jest.fn();
   const { container } = render(<Page
     taskTitle={taskTitle}
-    onChangeTitle={onChangeTitle}
-    onClickAddTask={onClickAddTask}
+    onChangeTitle={handleChangeTitle}
+    onClickAddTask={handleAddTask}
     tasks={tasks}
-    onClickDeleteTask={onClickDeleteTask}
+    onClickDeleteTask={handleDeleteTask}
   />);
 
   expect(container).toHaveTextContent('To-do');
