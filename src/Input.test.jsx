@@ -13,7 +13,7 @@ test('Input', () => {
     onClick={handleClick}
   />);
 
-  expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeTruthy();
+  expect(getByPlaceholderText('할 일을 입력해 주세요'));
   expect(container).toHaveTextContent('추가');
 });
 
