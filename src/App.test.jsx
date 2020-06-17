@@ -5,5 +5,4 @@ import App from './App';
 
 test('App', () => {
   const utils = render(<App />);
-  console.log(utils);
 });
