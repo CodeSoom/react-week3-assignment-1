@@ -4,10 +4,11 @@ import Page from './Page';
 
 test('Page', () => {
   const taskTitle = '';
-  const onChangeTitle = () => {};
-  const onClickAddTask = () => {};
   const tasks = [];
-  const onClickDeleteTask = () => {};
+
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
+  const onClickDeleteTask = jest.fn();
   const { container } = render(<Page
     taskTitle={taskTitle}
     onChangeTitle={onChangeTitle}
@@ -21,10 +22,10 @@ test('Page', () => {
 
 test('Page', () => {
   const taskTitle = '';
-  const onChangeTitle = () => {};
-  const onClickAddTask = () => {};
   const tasks = [];
-  const onClickDeleteTask = () => {};
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
+  const onClickDeleteTask = jest.fn();
   const { container } = render(<Page
     taskTitle={taskTitle}
     onChangeTitle={onChangeTitle}
