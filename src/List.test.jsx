@@ -18,8 +18,8 @@ describe('<List /> ', () => {
       { id: 3, title: '운동하기' },
     ];
 
-    const { container, getAllByText, debug } = render(<List tasks={tasks} />);
-    getAllByText('완료').forEach((node) => debug(node));
+    const { container, getAllByText } = render(<List tasks={tasks} />);
+    getAllByText('완료');
     expect(container).toHaveTextContent('자바스크립트 공부');
     expect(container).toHaveTextContent('git 공부');
     expect(container).toHaveTextContent('운동하기');
