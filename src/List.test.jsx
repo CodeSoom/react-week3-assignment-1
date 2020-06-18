@@ -22,7 +22,9 @@ describe('<List /> ', () => {
       ];
 
       const { container, getAllByText } = render(<List tasks={tasks} />);
-      getAllByText('완료').forEach((button) => expect(button).toHaveAttribute('type', 'button'));
+      getAllByText('완료').forEach(
+        (button) => expect(button).toHaveAttribute('type', 'button'),
+      );
       expect(container).toHaveTextContent(tasks[0].title);
       expect(container).toHaveTextContent(tasks[1].title);
       expect(container).toHaveTextContent(tasks[2].title);
