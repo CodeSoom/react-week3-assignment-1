@@ -22,7 +22,7 @@ describe('<App /> ', () => {
   });
 
   context('추가 버튼을 누르면', () => {
-    it('할 일 추가 테스트', () => {
+    it('TASK가 추가되고 value는 공백으로 바뀐다.', () => {
       const { container, getByText, getByPlaceholderText } = render(<App />);
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -36,6 +36,7 @@ describe('<App /> ', () => {
       fireEvent.click(getByText('추가'));
       // 할 일 목록이 추가된다.
       expect(container).toHaveTextContent(TASK);
+      expect(input.value).toBe('');
     });
   });
 
