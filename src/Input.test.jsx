@@ -8,14 +8,10 @@ const handleChange = jest.fn();
 const handleClick = jest.fn();
 
 test('Input - when type in then changes text field', () => {
-  const value = '';
-
   const { getByPlaceholderText } = render((
     <Input
       id="input-task-title"
-      value={value}
       onChange={handleChange}
-      onClick={handleClick}
     />
   ));
 
