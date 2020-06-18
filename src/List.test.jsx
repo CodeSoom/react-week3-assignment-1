@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import List from './List';
 
@@ -39,28 +39,30 @@ describe('<List />', () => {
       expect(container).toHaveTextContent('완료');
     });
 
-    context('할 일에서 완료 버튼을 클릭하면', () => {
+    context(' "할 일 1"의 완료 버튼을 클릭하면', () => {
       const tasks2 = [
         {
           id: 1,
           title: '할 일1',
         },
       ];
-      it('할 일이 보이지 않는다.', () => {
+
+      it(' "할 일 1"이 보이지 않는다.', async () => {
         const { container, getByText } = render(
           <List tasks={tasks2} onClickDelete={handleClickDeleteTask} />,
         );
-        
+
         expect(container).toHaveTextContent('할 일1');
-        
+
         expect(handleClickDeleteTask).not.toBeCalled();
-        
+
         fireEvent.click(getByText('완료'));
 
-        expect(handleClickDeleteTask).toBeCalledWith(1);
-        
-        expect(container).not.toHaveTextContent('할 일1');
+        expect(handleClickDeleteTask).toBeCalledTimes(1);
 
+        const text = await waitFor(() => getByText('완료'));
+
+        expect(text).not.toHaveTextContent('할 일1');
       });
     });
   });
