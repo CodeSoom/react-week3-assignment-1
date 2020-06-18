@@ -15,13 +15,14 @@ describe('<Page /> ', () => {
 
   context('할 일 목록이 있다면 ', () => {
     it('목록을 보여준다.', () => {
+      const TITLE = '뭐라도 하자';
       const tasks = [
-        { id: 1, title: '뭐라도 하자' },
+        { id: 1, title: TITLE },
       ];
 
       const { getByText, getByTestId } = render(<Page tasks={tasks} />);
       expect(getByText('완료')).toHaveAttribute('type', 'button');
-      expect(getByTestId('todo-list')).toHaveTextContent('뭐라도 하자');
+      expect(getByTestId('todo-list')).toHaveTextContent(TITLE);
     });
   });
 });
