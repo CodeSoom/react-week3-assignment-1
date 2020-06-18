@@ -14,7 +14,7 @@ describe('<List /> ', () => {
   });
 
   context('tasks가 있으면', () => {
-    it('tasks 가 있으면 해당 tasks를 화면에 보여준다.', () => {
+    it('화면에 render 한다.', () => {
       const tasks = [
         { id: 1, title: '자바스크립트 공부' },
         { id: 2, title: 'git 공부' },
@@ -25,9 +25,10 @@ describe('<List /> ', () => {
       getAllByText('완료').forEach(
         (button) => expect(button).toHaveAttribute('type', 'button'),
       );
-      expect(container).toHaveTextContent(tasks[0].title);
-      expect(container).toHaveTextContent(tasks[1].title);
-      expect(container).toHaveTextContent(tasks[2].title);
+
+      tasks.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
+      });
     });
   });
 });

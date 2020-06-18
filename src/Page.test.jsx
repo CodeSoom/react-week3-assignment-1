@@ -6,7 +6,7 @@ import Page from './Page';
 
 describe('<Page /> ', () => {
   context('할 일 목록이 없으면', () => {
-    it('할 일이 없음을 보여준다.', () => {
+    it('"할 일이 없어요!" 를 보여준다.', () => {
       const tasks = [];
       const { container } = render(<Page tasks={tasks} />);
       expect(container).toHaveTextContent('할 일이 없어요!');

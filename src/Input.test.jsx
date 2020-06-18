@@ -13,21 +13,29 @@ describe('<Input /> ', () => {
     });
   });
 
-  context('change 이벤트가 발생하면', () => {
-    it('value의 값이 바뀐다.', () => {
-      const { getByPlaceholderText } = render(<Input />);
+  context('input 박스에 할 일을 입력하면', () => {
+    it('onChange 이벤트가 핸들러가 호출된다.', () => {
+      const TASK = 'codesoom 과제';
+      const handleChangeTitle = jest.fn();
+      const { getByPlaceholderText } = render((
+        <Input
+          value=""
+          onChange={handleChangeTitle}
+        />
+      ));
       const input = getByPlaceholderText('할 일을 입력해 주세요');
+      expect(handleChangeTitle).not.toBeCalled();
       fireEvent.change(input, {
         target: {
-          value: '자바스크립트 공부하기',
+          value: TASK,
         },
       });
-      expect(input.value).toBe('자바스크립트 공부하기');
+      expect(handleChangeTitle).toBeCalled();
     });
   });
 
   context('추가 버튼을 누르면', () => {
-    it('handleClickAddTask 이벤트가 호출된다.', () => {
+    it('onClick 이벤트 핸들러가 호출된다.', () => {
       const handleClickAddTask = jest.fn();
       const { getByText } = render((
         <Input onClick={handleClickAddTask} />
