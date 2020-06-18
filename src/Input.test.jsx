@@ -26,7 +26,7 @@ describe('<Input />', () => {
   });
   context('사용자가 할 일을 입력한 후 추가를 누르면', () => {
     it('input의 텍스트가 지워진다.', () => {
-      const container = render(
+      const { getByLabelText, getByText, getByPlaceholderText } = render(
         <Input
           value="추가될 할일"
           onChange={handleOnChangeTitle}
@@ -34,15 +34,15 @@ describe('<Input />', () => {
         />,
       );
 
-      expect(container.getByLabelText('할 일').value).toBe('추가될 할일');
+      expect(getByLabelText('할 일').value).toBe('추가될 할일');
 
       expect(handleOnClickAddTask).not.toBeCalled();
-      fireEvent.click(container.getByText('추가'));
+
+      fireEvent.click(getByText('추가'));
+
       expect(handleOnClickAddTask).toBeCalledTimes(1);
 
-      expect(
-        container.getByPlaceholderText('할 일을 입력해 주세요'),
-      ).toBeInTheDocument();
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     });
   });
 });
