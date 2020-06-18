@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 test('Page', () => {
@@ -26,7 +26,7 @@ test('Page', () => {
   const handleChangeTitle = jest.fn();
   const handleAddTask = jest.fn();
   const handleDeleteTask = jest.fn();
-  const { container } = render(<Page
+  const { container, getByText } = render(<Page
     taskTitle={taskTitle}
     onChangeTitle={handleChangeTitle}
     onClickAddTask={handleAddTask}
@@ -37,4 +37,6 @@ test('Page', () => {
   expect(container).toHaveTextContent('To-do');
   expect(container).toHaveTextContent('할 일이다');
   expect(container).toHaveTextContent('완료');
+  fireEvent.click(getByText('완료'));
+  expect(handleDeleteTask).toBeCalledWith(1);
 });
