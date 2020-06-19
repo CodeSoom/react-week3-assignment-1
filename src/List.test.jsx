@@ -1,37 +1,50 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-test('List without Item', () => {
-  const tasks = [];
+describe(
+  'List', () => {
+    let handleClickDelete;
 
-  const handleClickDelete = jest.fn();
+    beforeEach(() => {
+      handleClickDelete = jest.fn();
+    });
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClickDelete}
-    />
-  ));
+    context('without tasks', () => {
+      it('renders no task message', () => {
+        const tasks = [];
 
-  expect(container).toHaveTextContent('할 일이 없어요!');
-});
+        const { container } = render((
+          <List
+            tasks={tasks}
+            onClickDelete={handleClickDelete}
+          />
+        ));
 
-test('List with Items', () => {
-  const tasks = [
-    { id: 1, title: '어렵다...ㅠㅠ' },
-  ];
+        expect(container).toHaveTextContent('할 일이 없어요!');
+      });
+    });
+    context('with tasks', () => {
+      it('renders tasks', () => {
+        const tasks = [
+          { id: 1, title: '어렵다...ㅠㅠ' },
+        ];
 
-  const handleClickDelete = jest.fn();
+        const { container, getByText } = render((
+          <List
+            tasks={tasks}
+            onClickDelete={handleClickDelete}
+          />
+        ));
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClickDelete}
-    />
-  ));
+        expect(container).toHaveTextContent('어렵다...ㅠㅠ');
 
-  expect(container).toHaveTextContent('어렵다...ㅠㅠ');
-});
+        expect(handleClickDelete).not.toBeCalled();
+        fireEvent.click(getByText('완료'));
+        expect(handleClickDelete).toBeCalled();
+      });
+    });
+  },
+);
