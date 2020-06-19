@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-test('PageWithoutTasks', () => {
+test('Without tasks', () => {
   const taskTitle = '';
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
@@ -26,7 +26,7 @@ test('PageWithoutTasks', () => {
   expect(container).toHaveTextContent('할 일이 없어요!');
 });
 
-test('PageWithTasks', () => {
+test('With tasks', () => {
   const taskTitle = '두 번째 할 일';
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();

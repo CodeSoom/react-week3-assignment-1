@@ -21,7 +21,7 @@ test('Input', () => {
   expect(container).toHaveTextContent('추가');
 });
 
-test('InputWitValue', () => {
+test('With value', () => {
   const value = '첫 번째 할 일';
   const handleChangText = jest.fn();
   const handleClick = jest.fn();
@@ -39,7 +39,7 @@ test('InputWitValue', () => {
   expect(input.value).toBe('첫 번째 할 일');
 });
 
-test('InputValueChange', () => {
+test('Input text', () => {
   const value = '';
   const handleChangText = jest.fn();
   const handleClick = jest.fn();
