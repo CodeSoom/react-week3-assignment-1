@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { PLACEHOLDER, ADDTASK_TEXT } from './Fixture/UserInterfaceText';
+
 export default function Input({ value, onChange, onClick }) {
   return (
     <p>
@@ -9,12 +11,12 @@ export default function Input({ value, onChange, onClick }) {
       <input
         id="input-task-title"
         type="text"
-        placeholder="할 일을 입력해 주세요"
+        placeholder={PLACEHOLDER}
         value={value}
         onChange={onChange}
       />
       <button type="button" onClick={onClick}>
-        추가
+        {ADDTASK_TEXT}
       </button>
     </p>
   );

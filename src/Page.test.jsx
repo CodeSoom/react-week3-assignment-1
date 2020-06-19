@@ -3,9 +3,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import Page from './Page';
-import {
-  EMPTY_TASKS, EMPTY_TASK_TEXT, TASKS, COMPLETE_TEXT,
-} from './Fixture/Tasks';
+
+import { EMPTY_TASKS, TASKS } from './Fixture/Tasks';
+import { EMPTY_TASK_TEXT, COMPLETE_TEXT } from './Fixture/UserInterfaceText';
 
 describe('<Page /> ', () => {
   context('할 일 목록이 없으면', () => {

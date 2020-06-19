@@ -3,7 +3,9 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
-import { TASK, COMPLETE_TEXT } from './Fixture/Tasks';
+
+import { TASK } from './Fixture/Tasks';
+import { COMPLETE_TEXT } from './Fixture/UserInterfaceText';
 
 describe('<Item />', () => {
   context('task가 존재할 때', () => {

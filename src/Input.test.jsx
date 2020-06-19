@@ -3,7 +3,9 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
-import { PLACEHOLDER, ADDTASK_TEXT, TASK_TITLE } from './Fixture/Tasks';
+
+import { TASK_TITLE } from './Fixture/Tasks';
+import { PLACEHOLDER, ADDTASK_TEXT } from './Fixture/UserInterfaceText';
 
 describe('<Input /> ', () => {
   context('rendering 되면', () => {

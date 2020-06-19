@@ -3,9 +3,9 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
-import {
-  PLACEHOLDER, TASK_TITLE, ADDTASK_TEXT, COMPLETE_TEXT,
-} from './Fixture/Tasks';
+
+import { TASK_TITLE } from './Fixture/Tasks';
+import { PLACEHOLDER, ADDTASK_TEXT, COMPLETE_TEXT } from './Fixture/UserInterfaceText';
 
 describe('<App /> ', () => {
   context('할 일을 입력하면', () => {
