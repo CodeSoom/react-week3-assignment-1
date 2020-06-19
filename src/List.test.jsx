@@ -4,35 +4,28 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-describe('List Test', () => {
-  test('When One Task', () => {
-    const tasks = [
-      {
-        id: 1,
-        title: '테스트 어려운거구나',
-      },
-    ];
+describe('List', () => {
+  context('when tasks is not empty', () => {
+    it('render tasks', () => {
+      const tasks = [
+        {
+          id: 1,
+          title: '테스트 어려운거구나',
+        },
+      ];
 
-    const { container } = render(
-      <List
-        tasks={tasks}
-      />,
-    );
+      const { container } = render(<List tasks={tasks} />);
 
-    expect(container).toHaveTextContent(/테스트/);
-    expect(container.firstChild).toContainHTML('<ol>');
+      expect(container).toHaveTextContent(tasks[0].title);
+      expect(container).toHaveTextContent('완료');
+    });
   });
 
-  test('When Empty Task', () => {
-    const tasks = [];
+  context('when tasks is empty', () => {
+    it('render empty message', () => {
+      const { container } = render(<List tasks={[]} />);
 
-    const { container } = render(
-      <List
-        tasks={tasks}
-      />,
-    );
-
-    expect(container).not.toHaveTextContent(/테스트/);
-    expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
   });
 });

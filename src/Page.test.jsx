@@ -4,15 +4,20 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-test('Page', () => {
-  const tasks = [];
+describe('Page', () => {
+  context('when render', () => {
+    it('exist input element', () => {
+      const { container } = render(<Page tasks={[]} />);
 
-  const { container } = render((
-    <Page
-      tasks={tasks}
-    />
-  ));
+      expect(container.querySelector('input')).toBeInTheDocument();
+    });
+  });
 
-  expect(container).toContainHTML('<h1>To-do</h1>');
-  expect(container).toHaveTextContent('할 일이 없어요!');
+  context('when tasks is empty', () => {
+    it('render empty message', () => {
+      const { container } = render(<Page tasks={[]} />);
+
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 });
