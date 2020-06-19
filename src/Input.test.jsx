@@ -5,42 +5,45 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('<Input />', () => {
-  const handleOnChangeTitle = jest.fn();
-  const handleOnClickAddTask = jest.fn();
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
 
-  context('사용자가 할 일을 입력하면', () => {
-    it('input 값이 해당 글자로 값이 바뀐다.', () => {
+  context('사용자가 "바뀐다"라는 할 일을 입력하면', () => {
+    it('입력창에 "바뀐다"라는 문구 보인다.', () => {
       const { getByLabelText } = render(
-        <Input onChange={handleOnChangeTitle} onClick={handleOnClickAddTask} />,
+        <Input onChange={handleChangeTitle} onClick={handleClickAddTask} />,
       );
 
-      expect(handleOnChangeTitle).not.toBeCalled();
+      expect(handleChangeTitle).not.toBeCalled();
+
       fireEvent.change(getByLabelText('할 일'), {
         target: {
           value: '바뀐다',
         },
       });
-      expect(handleOnChangeTitle).toBeCalledTimes(1);
+
+      expect(handleChangeTitle).toBeCalledTimes(1);
+
       expect(getByLabelText('할 일').value).toBe('바뀐다');
     });
   });
   context('사용자가 할 일을 입력한 후 추가를 누르면', () => {
-    it('input의 텍스트가 지워진다.', () => {
+    it('입력창은 초기화 된다.', () => {
       const { getByLabelText, getByText, getByPlaceholderText } = render(
         <Input
           value="추가될 할일"
-          onChange={handleOnChangeTitle}
-          onClick={handleOnClickAddTask}
+          onChange={handleChangeTitle}
+          onClick={handleClickAddTask}
         />,
       );
 
       expect(getByLabelText('할 일').value).toBe('추가될 할일');
 
-      expect(handleOnClickAddTask).not.toBeCalled();
+      expect(handleClickAddTask).not.toBeCalled();
 
       fireEvent.click(getByText('추가'));
 
-      expect(handleOnClickAddTask).toBeCalledTimes(1);
+      expect(handleClickAddTask).toBeCalledTimes(1);
 
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     });
