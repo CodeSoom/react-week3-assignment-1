@@ -3,6 +3,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
+import { TASK_TITLE } from './Fixture/Tasks';
 
 describe('<Input /> ', () => {
   context('rendering 되면', () => {
@@ -15,7 +16,6 @@ describe('<Input /> ', () => {
 
   context('input 박스에 할 일을 입력하면', () => {
     it('onChange 이벤트가 핸들러가 호출된다.', () => {
-      const TASK = 'codesoom 과제';
       const handleChangeTitle = jest.fn();
       const { getByPlaceholderText } = render((
         <Input
@@ -27,7 +27,7 @@ describe('<Input /> ', () => {
       expect(handleChangeTitle).not.toBeCalled();
       fireEvent.change(input, {
         target: {
-          value: TASK,
+          value: TASK_TITLE,
         },
       });
       expect(handleChangeTitle).toBeCalled();

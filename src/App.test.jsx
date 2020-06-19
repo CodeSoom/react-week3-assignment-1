@@ -3,9 +3,9 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
+import { TASK_TITLE } from './Fixture/Tasks';
 
 describe('<App /> ', () => {
-  const TASK = '자바스크립트 공부하기';
   context('할 일을 입력하면', () => {
     it('input value가 변한다.', () => {
       const { getByPlaceholderText } = render(<App />);
@@ -14,10 +14,10 @@ describe('<App /> ', () => {
       // value를 수정한다.
       fireEvent.change(input, {
         target: {
-          value: '자바스크립트 공부하기',
+          value: TASK_TITLE,
         },
       });
-      expect(input.value).toBe('자바스크립트 공부하기');
+      expect(input.value).toBe(TASK_TITLE);
     });
   });
 
@@ -29,13 +29,13 @@ describe('<App /> ', () => {
       // value를 수정한다.
       fireEvent.change(input, {
         target: {
-          value: TASK,
+          value: TASK_TITLE,
         },
       });
       // 추가 버튼을 누른다.
       fireEvent.click(getByText('추가'));
       // 할 일 목록이 추가된다.
-      expect(container).toHaveTextContent(TASK);
+      expect(container).toHaveTextContent(TASK_TITLE);
       expect(input.value).toBe('');
     });
   });
@@ -48,13 +48,13 @@ describe('<App /> ', () => {
       // value를 수정한다.
       fireEvent.change(input, {
         target: {
-          value: TASK,
+          value: TASK_TITLE,
         },
       });
       // 추가 버튼을 누른다.
       fireEvent.click(getByText('추가'));
-      // 할 일 목록이 추가된다.
-      const task = getByText(TASK);
+
+      const task = getByText(TASK_TITLE);
       const removeButton = getByText('완료');
       // 완료 버튼을 클릭하면
       fireEvent.click(removeButton);
