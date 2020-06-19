@@ -7,41 +7,49 @@ import Input from './Input';
 const handleChange = jest.fn();
 const handleClick = jest.fn();
 
-test('Input - when type in then changes text field', () => {
-  const { getByPlaceholderText } = render((
-    <Input
-      id="input-task-title"
-      onChange={handleChange}
-    />
-  ));
+describe('Input changes', () => {
+  context('when type in', () => {
+    it('changes text field', () => {
+      const { getByPlaceholderText } = render((
+        <Input
+          id="input-task-title"
+          onChange={handleChange}
+        />
+      ));
 
-  const input = getByPlaceholderText('할 일을 입력해 주세요');
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-  fireEvent.change(input, { target: { value: '테스트' } });
+      fireEvent.change(input, { target: { value: '테스트' } });
 
-  expect(input.value).toBe('테스트');
+      expect(input.value).toBe('테스트');
+    });
+  });
 });
 
-test('Input - when click add then empty text field', () => {
-  const value = '';
-  const { getByPlaceholderText, getByText } = render((
-    <Input
-      id="input-task-title"
-      value={value}
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
+describe('Input reset ', () => {
+  context('when click add', () => {
+    it('empty text field', () => {
+      const value = '';
+      const { getByPlaceholderText, getByText } = render((
+        <Input
+          id="input-task-title"
+          value={value}
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
 
-  const input = getByPlaceholderText('할 일을 입력해 주세요');
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-  fireEvent.change(input, { target: { value: '테스트' } });
+      fireEvent.change(input, { target: { value: '테스트' } });
 
-  expect(handleClick).not.toBeCalled();
+      expect(handleClick).not.toBeCalled();
 
-  fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText('추가'));
 
-  expect(handleClick).toBeCalledTimes(1);
+      expect(handleClick).toBeCalledTimes(1);
 
-  expect(input.value).toBe('');
+      expect(input.value).toBe('');
+    });
+  });
 });
