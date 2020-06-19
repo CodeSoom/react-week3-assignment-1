@@ -3,13 +3,15 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
-import { TASK_TITLE } from './Fixture/Tasks';
+import {
+  PLACEHOLDER, TASK_TITLE, ADDTASK_TEXT, COMPLETE_TEXT,
+} from './Fixture/Tasks';
 
 describe('<App /> ', () => {
   context('할 일을 입력하면', () => {
     it('input value가 변한다.', () => {
       const { getByPlaceholderText } = render(<App />);
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+      const input = getByPlaceholderText(PLACEHOLDER);
 
       // value를 수정한다.
       fireEvent.change(input, {
@@ -24,7 +26,7 @@ describe('<App /> ', () => {
   context('추가 버튼을 누르면', () => {
     it('TASK가 추가되고 value는 공백으로 바뀐다.', () => {
       const { container, getByText, getByPlaceholderText } = render(<App />);
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+      const input = getByPlaceholderText(PLACEHOLDER);
 
       // value를 수정한다.
       fireEvent.change(input, {
@@ -33,7 +35,7 @@ describe('<App /> ', () => {
         },
       });
       // 추가 버튼을 누른다.
-      fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText(ADDTASK_TEXT));
       // 할 일 목록이 추가된다.
       expect(container).toHaveTextContent(TASK_TITLE);
       expect(input.value).toBe('');
@@ -43,7 +45,7 @@ describe('<App /> ', () => {
   context('완료 버튼을 누르면', () => {
     it('할 일이 삭제된다.', () => {
       const { getByText, getByPlaceholderText } = render(<App />);
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+      const input = getByPlaceholderText(PLACEHOLDER);
 
       // value를 수정한다.
       fireEvent.change(input, {
@@ -52,10 +54,10 @@ describe('<App /> ', () => {
         },
       });
       // 추가 버튼을 누른다.
-      fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText(ADDTASK_TEXT));
 
       const task = getByText(TASK_TITLE);
-      const removeButton = getByText('완료');
+      const removeButton = getByText(COMPLETE_TEXT);
       // 완료 버튼을 클릭하면
       fireEvent.click(removeButton);
       // 페이지에서 사라진다.

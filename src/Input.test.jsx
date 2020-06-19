@@ -3,14 +3,14 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
-import { TASK_TITLE } from './Fixture/Tasks';
+import { PLACEHOLDER, ADDTASK_TEXT, TASK_TITLE } from './Fixture/Tasks';
 
 describe('<Input /> ', () => {
   context('rendering 되면', () => {
     it('input과 button으로 이루어져 있는지 확인한다.', () => {
       const { getByText, getByPlaceholderText } = render(<Input />);
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveAttribute('type', 'text');
-      expect(getByText('추가')).toHaveAttribute('type', 'button');
+      expect(getByPlaceholderText(PLACEHOLDER)).toHaveAttribute('type', 'text');
+      expect(getByText(ADDTASK_TEXT)).toHaveAttribute('type', 'button');
     });
   });
 
@@ -23,7 +23,7 @@ describe('<Input /> ', () => {
           onChange={handleChangeTitle}
         />
       ));
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+      const input = getByPlaceholderText(PLACEHOLDER);
       expect(handleChangeTitle).not.toBeCalled();
       fireEvent.change(input, {
         target: {
@@ -42,7 +42,7 @@ describe('<Input /> ', () => {
       ));
 
       expect(handleClickAddTask).not.toBeCalled();
-      fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText(ADDTASK_TEXT));
       expect(handleClickAddTask).toBeCalled();
     });
   });
