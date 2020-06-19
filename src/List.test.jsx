@@ -4,8 +4,8 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-import { EMPTY_TASKS, TASKS } from './Fixture/Tasks';
-import { EMPTY_TASK_TEXT, COMPLETE_TEXT } from './Fixture/UserInterfaceText';
+import { EMPTY_TASKS, TASKS } from './Fixtures/Tasks';
+import { EMPTY_TASK_TEXT, COMPLETE_TEXT } from './Fixtures/UserInterfaceText';
 
 describe('<List /> ', () => {
   context('tasks가 없으면', () => {

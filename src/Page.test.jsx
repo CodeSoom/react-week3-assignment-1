@@ -4,12 +4,12 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-import { EMPTY_TASKS, TASKS } from './Fixture/Tasks';
-import { EMPTY_TASK_TEXT, COMPLETE_TEXT } from './Fixture/UserInterfaceText';
+import { EMPTY_TASKS, TASKS } from './Fixtures/Tasks';
+import { EMPTY_TASK_TEXT, COMPLETE_TEXT } from './Fixtures/UserInterfaceText';
 
 describe('<Page /> ', () => {
   context('할 일 목록이 없으면', () => {
-    it(`${EMPTY_TASK_TEXT} 메세지를 표시한다.`, () => {
+    it('빈 메세지를 표시한다.', () => {
       const { container } = render(<Page tasks={EMPTY_TASKS} />);
       expect(container).toHaveTextContent(EMPTY_TASK_TEXT);
     });

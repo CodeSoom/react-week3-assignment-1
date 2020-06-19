@@ -4,8 +4,8 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
-import { TASK_TITLE } from './Fixture/Tasks';
-import { PLACEHOLDER, ADDTASK_TEXT, COMPLETE_TEXT } from './Fixture/UserInterfaceText';
+import { TASK_TITLE } from './Fixtures/Tasks';
+import { PLACEHOLDER, ADDTASK_TEXT, COMPLETE_TEXT } from './Fixtures/UserInterfaceText';
 
 describe('<App /> ', () => {
   context('할 일을 입력하면', () => {
