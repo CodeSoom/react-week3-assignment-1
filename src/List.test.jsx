@@ -23,7 +23,7 @@ describe('<List />', () => {
       {
         id: 1,
         title: '할 일1',
-      }
+      },
     ];
 
     it('추가된 할 일이 보인다.', () => {
@@ -32,7 +32,6 @@ describe('<List />', () => {
       );
 
       expect(container).toHaveTextContent('할 일1');
-
     });
 
     it('할 일을 삭제하는 완료 버튼이 보인다.', () => {
