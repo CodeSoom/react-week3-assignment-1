@@ -2,30 +2,37 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
-test('emptyList', () => {
-  const tasks = [];
+describe('<List /> ', () => {
+  context('할 일에 데이터가 없으면', () => {
+    it('할 일이 없어요', () => {
 
-  const { container } = render((
-    <List tasks={tasks} />
-  ));
+      const tasks = [];
 
-  expect(container).toHaveTextContent('할 일이 없어요');
+      const { container } = render((
+        <List tasks={tasks} />
+      ));
 
-});
+      expect(container).toHaveTextContent('할 일이 없어요');
+    
+    });
+  });
 
-test('List', () => {
-  const tasks = [
-    {id:1, title:'component'},
-    {id:2, title:'list'},
-    {id:3, title:'test'},
-  ];
-
-  const { container } = render((
-    <List tasks={tasks} />
-  ));
-
-  expect(container).toHaveTextContent('component');
-  expect(container).toHaveTextContent('list');
-  expect(container).toHaveTextContent('test');
-
+  context('할 일에 데이터가 있으면', () => {
+    it('task 표출', () => {
+      
+      const tasks = [
+        {id:1, title:'component'},
+        {id:2, title:'list'},
+        {id:3, title:'test'},
+      ];
+    
+      const { container } = render((
+        <List tasks={tasks} />
+      ));
+    
+      tasks.map((task) => (
+        expect(container).toHaveTextContent(task.title)
+      ));
+    });
+  });
 });
