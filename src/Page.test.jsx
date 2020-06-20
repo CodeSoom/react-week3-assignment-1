@@ -27,8 +27,8 @@ test('Page', () => {
   ));
 
   expect(container).toHaveTextContent('To-do');
-  expect(getByDisplayValue('새로운 할 일')).toBeVisible();
+  expect(getByDisplayValue(taskTitle)).toBeVisible();
 
-  expect(container).toHaveTextContent('야식먹기');
-  expect(container).toHaveTextContent('잠자기');
+  expect(container).toHaveTextContent(tasks[0].title);
+  expect(container).toHaveTextContent(tasks[1].title);
 });

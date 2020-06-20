@@ -7,7 +7,7 @@ import App from './App';
 test('App', () => {
   const { container } = render(<App />);
 
-  const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
+  const input = screen.getByLabelText('할 일');
   fireEvent.change(input, {
     target: { value: '왜 안되냐고오옹' },
   });
