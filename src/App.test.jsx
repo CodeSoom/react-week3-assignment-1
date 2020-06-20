@@ -1,21 +1,23 @@
 import React from 'react';
-
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import App from './App';
+import { TASK_TITLE } from './mocks/data';
 
 test('App', () => {
   const { container } = render(<App />);
 
+  const value = TASK_TITLE;
   const input = screen.getByLabelText('할 일');
+
   fireEvent.change(input, {
-    target: { value: '왜 안되냐고오옹' },
+    target: { value },
   });
 
   const addTask = screen.getByText('추가');
   fireEvent.click(addTask);
 
-  expect(container).toHaveTextContent('왜 안되냐고오옹');
+  expect(container).toHaveTextContent(value);
 
   const deleteTask = screen.getByText('완료');
   fireEvent.click(deleteTask);

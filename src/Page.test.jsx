@@ -3,17 +3,15 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import Page from './Page';
+import { TASKS, TASK_TITLE } from './mocks/data';
 
 test('Page', () => {
-  const taskTitle = '새로운 할 일';
+  const taskTitle = TASK_TITLE;
 
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
 
-  const tasks = [
-    { id: 1, title: '야식먹기' },
-    { id: 2, title: '잠자기' },
-  ];
+  const tasks = TASKS;
   const handleClickDelete = jest.fn();
 
   const { container, getByDisplayValue } = render((
@@ -29,6 +27,7 @@ test('Page', () => {
   expect(container).toHaveTextContent('To-do');
   expect(getByDisplayValue(taskTitle)).toBeVisible();
 
-  expect(container).toHaveTextContent(tasks[0].title);
-  expect(container).toHaveTextContent(tasks[1].title);
+  tasks.forEach(
+    (task) => expect(container).toHaveTextContent(task.title),
+  );
 });

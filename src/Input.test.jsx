@@ -3,6 +3,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
+import { TASK_TITLE } from './mocks/data';
 
 describe('Input', () => {
   let handleChange;
@@ -33,7 +34,7 @@ describe('Input', () => {
 
   context('with value', () => {
     it('renders value', () => {
-      const value = '이미 있는 할일';
+      const value = TASK_TITLE;
 
       const { container } = render((
         <Input
@@ -49,8 +50,8 @@ describe('Input', () => {
     });
   });
 
-  context('with events', () => {
-    it('fires change and add event', () => {
+  context('when value is changed and added', () => {
+    it('is saved to tasks', () => {
       const value = '';
 
       const { getByLabelText, getByText } = render((
@@ -64,7 +65,7 @@ describe('Input', () => {
       const input = getByLabelText('할 일');
 
       expect(handleChange).not.toBeCalled();
-      fireEvent.change(input, { target: { value: '새로운 할 일' } });
+      fireEvent.change(input, { target: { value: TASK_TITLE } });
       expect(handleChange).toBeCalled();
 
       const button = getByText('추가');

@@ -3,6 +3,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
+import { TASKS } from './mocks/data';
 
 describe('List', () => {
   let handleClickDelete;
@@ -28,21 +29,23 @@ describe('List', () => {
 
   context('with tasks', () => {
     it('renders tasks', () => {
-      const tasks = [
-        { id: 1, title: '어렵다...ㅠㅠ' },
-      ];
+      const tasks = TASKS;
 
-      const { container, getByText } = render((
+      const { container, getAllByText } = render((
         <List
           tasks={tasks}
           onClickDelete={handleClickDelete}
         />
       ));
 
-      expect(container).toHaveTextContent(tasks[0].title);
+      tasks.forEach(
+        (task) => expect(container).toHaveTextContent(task.title),
+      );
 
       expect(handleClickDelete).not.toBeCalled();
-      fireEvent.click(getByText('완료'));
+      getAllByText('완료').forEach(
+        (button) => fireEvent.click(button),
+      );
       expect(handleClickDelete).toBeCalled();
     });
   });
