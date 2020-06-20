@@ -4,21 +4,18 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import List from './List';
 
-function renderList({ tasks, onClickDelete }) {
+const handleClickDelete = jest.fn();
+
+function renderList(tasks) {
   render(<List
     tasks={tasks}
-    onClickDelete={onClickDelete}
+    onClickDelete={handleClickDelete}
   />);
 
-  const nothingTaskMessageElement = screen.queryByText(/할 일이 없어요!/i);
-  const taskListItems = screen.queryAllByRole('listitem', { name: '' });
-  const doneButtons = screen.queryAllByRole('button', { name: /완료/i });
-
   return {
-    nothingTaskMessageElement,
-    taskListItems,
-    doneButtons,
-    clickDoneButton: (index) => fireEvent.click(doneButtons[index]),
+    nothingTaskMessageElement: screen.queryByText(/할 일이 없어요!/i),
+    taskListItems: screen.queryAllByRole('listitem', { name: '' }),
+    doneButtons: screen.queryAllByRole('button', { name: /완료/i }),
   };
 }
 
@@ -28,7 +25,7 @@ describe('<List />', () => {
       // given
       const tasks = [];
       // when
-      const { nothingTaskMessageElement } = renderList({ tasks, onClickDelete: jest.fn() });
+      const { nothingTaskMessageElement } = renderList(tasks);
       // then
       expect(nothingTaskMessageElement).toBeInTheDocument();
     });
@@ -37,7 +34,7 @@ describe('<List />', () => {
       // given
       const tasks = [];
       // when
-      const { taskListItems } = renderList({ tasks, onClickDelete: jest.fn() });
+      const { taskListItems } = renderList(tasks);
       // then
       expect(taskListItems).toHaveLength(0);
     });
@@ -49,7 +46,7 @@ describe('<List />', () => {
       const taskCount = 10;
       const tasks = [...Array(taskCount)].map((value, index) => ({ id: index + 1, title: `${index} 번째 할 일` }));
       // when
-      const { taskListItems, doneButtons } = renderList({ tasks, onClickDelete: jest.fn() });
+      const { taskListItems, doneButtons } = renderList(tasks);
       // then
       expect(taskListItems).toHaveLength(taskCount);
       expect(doneButtons).toHaveLength(taskCount);
@@ -58,11 +55,11 @@ describe('<List />', () => {
     it('can click the Done buttons', () => {
       // given
       const tasks = [...Array(10)].map((value, index) => ({ id: index + 1, title: `${index} 번째 할 일` }));
-      const handleClickDelete = jest.fn();
+      handleClickDelete.mockClear();
       // when
-      const { clickDoneButton } = renderList({ tasks, onClickDelete: handleClickDelete });
+      const { doneButtons } = renderList(tasks);
       const clickCount = 3;
-      [...Array(clickCount)].forEach((value, index) => clickDoneButton(index));
+      [...Array(clickCount)].forEach((value, index) => fireEvent.click(doneButtons[index]));
       // then
       expect(handleClickDelete).toBeCalledTimes(clickCount);
     });
