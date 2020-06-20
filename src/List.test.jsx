@@ -4,49 +4,67 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import List from './List';
 
-function setup(tasks, handleClickDelete) {
+function renderList({ tasks, onClickDelete }) {
   render(<List
     tasks={tasks}
-    onClickDelete={handleClickDelete}
+    onClickDelete={onClickDelete}
   />);
-  const clickDoneButton = () => fireEvent.click(screen.getAllByRole('button', { name: /완료/i })[0]);
-  return { clickDoneButton };
+
+  const nothingTaskMessageElement = screen.queryByText(/할 일이 없어요!/i);
+  const taskListItems = screen.queryAllByRole('listitem', { name: '' });
+  const doneButtons = screen.queryAllByRole('button', { name: /완료/i });
+
+  return {
+    nothingTaskMessageElement,
+    taskListItems,
+    doneButtons,
+    clickDoneButton: (index) => fireEvent.click(doneButtons[index]),
+  };
 }
 
-describe('List Component는', () => {
-  const mockHandleClickDelete = jest.fn();
+describe('<List />', () => {
+  context('without tasks', () => {
+    it('print message that there is nothing task', () => {
+      // given
+      const tasks = [];
+      // when
+      const { nothingTaskMessageElement } = renderList({ tasks, onClickDelete: jest.fn() });
+      // then
+      expect(nothingTaskMessageElement).toBeInTheDocument();
+    });
 
-  beforeEach(() => {
-    mockHandleClickDelete.mockClear();
+    it('do not print task item', () => {
+      // given
+      const tasks = [];
+      // when
+      const { taskListItems } = renderList({ tasks, onClickDelete: jest.fn() });
+      // then
+      expect(taskListItems).toHaveLength(0);
+    });
   });
 
-  describe('할 일이 없다면', () => {
-    test('안내 메시지를 출력한다', () => {
-      const message = '할 일이 없어요!';
-      setup([], mockHandleClickDelete);
-      expect(screen.getByText(message)).toBeInTheDocument();
+  context('with tasks', () => {
+    it('print the items along with the Done buttons', () => {
+      // given
+      const taskCount = 10;
+      const tasks = [...Array(taskCount)].map((value, index) => ({ id: index + 1, title: `${index} 번째 할 일` }));
+      // when
+      const { taskListItems, doneButtons } = renderList({ tasks, onClickDelete: jest.fn() });
+      // then
+      expect(taskListItems).toHaveLength(taskCount);
+      expect(doneButtons).toHaveLength(taskCount);
     });
 
-    test('출력되는 Item이 없다', () => {
-      setup([], mockHandleClickDelete);
-      expect(screen.queryByRole('listitem', { name: '' })).not.toBeInTheDocument();
-    });
-  });
-
-  describe('할 일이 있다면', () => {
-    const itemSize = 10;
-    const tasks = [...Array(itemSize)].map((value, index) => ({ id: index + 1, title: `${index} 할 일` }));
-    test('Item 리스트를 출력한다', () => {
-      setup(tasks, mockHandleClickDelete);
-      expect(screen.getByRole('list', { name: '' }).children).toHaveLength(itemSize);
-    });
-
-    describe('Item의 완료 버튼을 클릭했을 때', () => {
-      test('onClickDelete를 실행한다', () => {
-        const { clickDoneButton } = setup(tasks, mockHandleClickDelete);
-        clickDoneButton();
-        expect(mockHandleClickDelete).toBeCalledTimes(1);
-      });
+    it('can click the Done buttons', () => {
+      // given
+      const tasks = [...Array(10)].map((value, index) => ({ id: index + 1, title: `${index} 번째 할 일` }));
+      const handleClickDelete = jest.fn();
+      // when
+      const { clickDoneButton } = renderList({ tasks, onClickDelete: handleClickDelete });
+      const clickCount = 3;
+      [...Array(clickCount)].forEach((value, index) => clickDoneButton(index));
+      // then
+      expect(handleClickDelete).toBeCalledTimes(clickCount);
     });
   });
 });
