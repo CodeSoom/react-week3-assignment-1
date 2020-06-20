@@ -4,34 +4,44 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Item from './Item';
 
-function setup(task, handleClickDelete) {
+function renderItem({ task, onClickDelete }) {
   render(<Item
     task={task}
-    onClickDelete={handleClickDelete}
+    onClickDelete={onClickDelete}
   />);
-  const clickDeleteButton = () => fireEvent.click(screen.getByRole('button', { name: /완료/i }));
-  return { clickDeleteButton };
+
+  const titleElement = screen.getByText(task.title);
+  const deleteButton = screen.getByRole('button', { name: /완료/i });
+
+  return {
+    titleElement,
+    clickDeleteButton: () => fireEvent.click(deleteButton),
+  };
 }
 
-describe('Item Component는', () => {
-  const mockHandleClick = jest.fn();
-  const task = { id: 1, title: '뭐라도 하기' };
-
-  beforeEach(() => {
-    mockHandleClick.mockClear();
+describe('<Item />', () => {
+  context('with task', () => {
+    it('print title of task', () => {
+      // given
+      const task = { id: 1, title: '오늘 할 일' };
+      // when
+      const { titleElement } = renderItem({ task, onClickDelete: jest.fn() });
+      // then
+      expect(titleElement).toBeInTheDocument();
+    });
   });
 
-  test('task를 출력한다', () => {
-    setup(task, mockHandleClick);
-    expect(screen.getByText(task.title)).toBeInTheDocument();
-  });
-
-  describe('완료 버튼을 누르면', () => {
-    test('onClickDelete를 실행한다', () => {
-      const { clickDeleteButton } = setup(task, mockHandleClick);
-      expect(mockHandleClick).not.toBeCalled();
+  context('when clicked delete button', () => {
+    it('notify which task has been clicked', () => {
+      // given
+      const task = { id: 1, title: '오늘 할 일' };
+      const handleClickDelete = jest.fn();
+      // when
+      const { clickDeleteButton } = renderItem({ task, onClickDelete: handleClickDelete });
       clickDeleteButton();
-      expect(mockHandleClick).toBeCalledWith(1);
+      // then
+      expect(handleClickDelete).toBeCalledTimes(1);
+      expect(handleClickDelete).toBeCalledWith(task.id);
     });
   });
 });
