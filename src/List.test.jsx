@@ -38,8 +38,6 @@ describe('List', () => {
       todos.forEach((element) => {
         expect(container).toHaveTextContent(element.title);
       });
-
     });
   });
-
 });
