@@ -43,13 +43,13 @@ describe('List', () => {
     ));
 
     expect(handleClickDelete).not.toBeCalled();
-
-
     // [ ] TODO: key
 
     // [ ] TODO: task
-    expect(container).toHaveTextContent('뭐라도 하기 1');
-    expect(container).toHaveTextContent('뭐라도 하기 2');
+    let i;
+    for (i = 0; i < tasks.length; i += 1) {
+      expect(container).toHaveTextContent(tasks[i].title);
+    }
 
     fireEvent.click(getByText('뭐라도 하기 1'));
     expect(handleClickDelete).not.toBeCalledWith(1);
