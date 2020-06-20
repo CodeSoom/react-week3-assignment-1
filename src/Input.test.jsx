@@ -17,8 +17,9 @@ describe('Input', () => {
       const inputBox = container.querySelector('#input-task-title');
 
       expect(container).toHaveTextContent('할 일');
-      expect(inputBox).toBeInTheDocument();
       expect(container).toHaveTextContent('추가');
+
+      expect(inputBox).toBeInTheDocument();
       expect(inputBox.value).toBe('');
 
       expect(handleChangeTitle).not.toBeCalled();
@@ -41,6 +42,7 @@ describe('Input', () => {
 
       fireEvent.change(inputBox, userInputEvent);
       expect(inputBox.value).toBe(userInputText);
+
       expect(handleChangeTitle).toBeCalledTimes(1);
       expect(handleClickAddTask).not.toBeCalled();
     });

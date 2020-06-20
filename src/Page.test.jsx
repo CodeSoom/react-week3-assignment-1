@@ -21,10 +21,11 @@ describe('Page', () => {
 
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
-      expect(inputBox).toBeInTheDocument();
       expect(container).toHaveTextContent('추가');
-      expect(inputBox.value).toBe('');
       expect(container).toHaveTextContent('할 일이 없어요!');
+
+      expect(inputBox).toBeInTheDocument();
+      expect(inputBox.value).toBe('');
 
       expect(handleChangeTitle).not.toBeCalled();
       expect(handleClickAddTask).not.toBeCalled();
