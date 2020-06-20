@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import List from './List';
-import todos from './Todos';
+import { todos } from './TestData';
 
 describe('List', () => {
   context('without todos', () => {

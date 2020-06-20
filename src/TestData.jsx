@@ -1,3 +1,5 @@
+const userInputText = 'Distribute new version';
+
 const todos = [
   {
     id: 1,
@@ -8,4 +10,4 @@ const todos = [
   },
 ];
 
-export { todos as default };
+export { todos, userInputText };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
+import { userInputText } from './TestData';
 
 describe('Input', () => {
   const handleChangeTitle = jest.fn();
@@ -28,8 +29,6 @@ describe('Input', () => {
   });
 
   context('when input todo', () => {
-    const userInputText = 'Distribute new version';
-
     it('renders todo', () => {
       const userInputEvent = { target: { value: userInputText } };
       const { container } = render((

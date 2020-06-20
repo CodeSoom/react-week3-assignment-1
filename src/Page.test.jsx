@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
-import todos from './Todos';
+import { todos, userInputText } from './TestData';
 
 describe('Page', () => {
   const handleChangeTitle = jest.fn();
@@ -34,7 +34,6 @@ describe('Page', () => {
   });
 
   context('when input todo', () => {
-    const userInputText = 'Distribute new version';
     const emptyTodos = [];
     it('renders todo', () => {
       const userInputEvent = { target: { value: userInputText } };

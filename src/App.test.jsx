@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import App from './App';
+import { userInputText } from './TestData';
 
 describe('App', () => {
   context('without todos', () => {
@@ -23,7 +24,6 @@ describe('App', () => {
 
   context('when add todo', () => {
     it('renders added todo and be able to complete todo', () => {
-      const userInputText = 'Distribute new version';
       const userInputEvent = { target: { value: userInputText } };
       const { container, getByText } = render((
         <App />
