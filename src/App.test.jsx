@@ -56,7 +56,6 @@ describe('<App />', () => {
 
       expect(inputTodo.value).toBe('할 일1');
 
-
       fireEvent.click(getByText('추가'));
 
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
