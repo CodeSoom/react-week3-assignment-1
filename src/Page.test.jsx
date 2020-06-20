@@ -2,24 +2,22 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
-import Input from './Input';
-import List from './List';
+import Page from './Page';
 
 describe('Page Input', () => {
   context('when Page loaded', () => {
     it('display Input component', () => {
       const PLACEHOLDER = '할 일을 입력해 주세요';
 
-      const { getByPlaceholderText, getByText } = render((
-        <Input />
+      const { getByPlaceholderText } = render((
+        <Page
+          tasks={[]}
+        />
       ));
 
       const input = getByPlaceholderText(PLACEHOLDER);
-      const button = getByText('추가');
 
-      expect(input.id).toBe('input-task-title');
-
-      expect(button).toBeInTheDocument();
+      expect(input).toBeInTheDocument();
     });
   });
 });
@@ -28,7 +26,7 @@ describe('Page List', () => {
   context('when Page loaded', () => {
     it('display List component', () => {
       const { queryByText } = render((
-        <List
+        <Page
           tasks={[]}
         />
       ));

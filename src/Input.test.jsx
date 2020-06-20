@@ -29,27 +29,16 @@ describe('Input changes', () => {
 describe('Input reset ', () => {
   context('when click add', () => {
     it('empty text field', () => {
-      const value = '';
-      const { getByPlaceholderText, getByText } = render((
+      const { getByText } = render((
         <Input
           id="input-task-title"
-          value={value}
           onChange={handleChange}
           onClick={handleClick}
         />
       ));
 
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
-
-      fireEvent.change(input, { target: { value: '테스트' } });
-
-      expect(handleClick).not.toBeCalled();
-
       fireEvent.click(getByText('추가'));
-
       expect(handleClick).toBeCalledTimes(1);
-
-      expect(input.value).toBe('');
     });
   });
 });
