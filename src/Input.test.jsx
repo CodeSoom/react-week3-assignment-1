@@ -1,29 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
 test('Input', () => {
-  // const [state, setState] = useState({
-  //   taskTitle: '',
-  // });
-
-  // const { taskTitle } = state;
-
   const onChange = jest.fn();
   const handleClick = jest.fn();
-
-  // onChange.mockImplementation((event) => {
-  //   setState({
-  //     taskTitle: event.target.value,
-  //   });
-  // });
-
-  // handleClick.mockImplementation(() => {
-  //   setState({
-  //     taskTitle: '',
-  //   });
-  // });
 
   const { container, getByText, getByPlaceholderText } = render((
     <Input
@@ -32,6 +14,9 @@ test('Input', () => {
       onClick={handleClick}
     />
   ));
+
+  expect(onChange).not.toBeCalled();
+  expect(handleClick).not.toBeCalled();
 
   expect(container).toHaveTextContent('할 일');
   expect(container).toHaveTextContent('추가');
@@ -45,8 +30,10 @@ test('Input', () => {
   expect(input.value).toBe('something');
   fireEvent.change(input, { target: { value: 'something' } });
   expect(input.value).not.toBe('else');
+  expect(onChange).toBeCalled();
 
   // [ ] TODO: onClick을 클릭했을 경우 value가 사리지는가 테스트
   // expect(handleClick).toBeCalled();
   fireEvent.click(getByText('추가'));
+  expect(handleClick).toBeCalledWith(1);
 });
