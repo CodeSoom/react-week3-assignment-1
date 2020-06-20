@@ -1,15 +1,16 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import List from './List';
+import todos from './Todos';
 
 describe('List', () => {
   context('without todos', () => {
     it('renders empty message', () => {
-      const todos = [];
+      const emptyTodos = [];
 
       const { container } = render((
         <List
-          tasks={todos}
+          tasks={emptyTodos}
         />
       ));
 
@@ -21,15 +22,6 @@ describe('List', () => {
   context('with todos', () => {
     it('renders todos', () => {
       const handleClickCompleteTask = jest.fn();
-      const todos = [
-        {
-          id: 1,
-          title: 'Distribute new version',
-        }, {
-          id: 2,
-          title: 'Fix critical error',
-        },
-      ];
 
       const { container, getAllByText } = render((
         <List

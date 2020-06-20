@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
+import todos from './Todos';
 
 describe('Page', () => {
   const handleChangeTitle = jest.fn();
@@ -8,12 +9,12 @@ describe('Page', () => {
 
   context('without todos', () => {
     it('renders empty message', () => {
-      const todos = [];
+      const emptyTodos = [];
       const { container } = render((
         <Page
           onChangeTitle={handleChangeTitle}
           onClickAddTask={handleClickAddTask}
-          tasks={todos}
+          tasks={emptyTodos}
         />
       ));
 
@@ -34,14 +35,14 @@ describe('Page', () => {
 
   context('when input todo', () => {
     const userInputText = 'Distribute new version';
-    const todos = [];
+    const emptyTodos = [];
     it('renders todo', () => {
       const userInputEvent = { target: { value: userInputText } };
       const { container } = render((
         <Page
           onChangeTitle={handleChangeTitle}
           onClickAddTask={handleClickAddTask}
-          tasks={todos}
+          tasks={emptyTodos}
         />
       ));
 
@@ -58,7 +59,7 @@ describe('Page', () => {
           taskTitle={userInputText}
           onChangeTitle={handleChangeTitle}
           onClickAddTask={handleClickAddTask}
-          tasks={todos}
+          tasks={emptyTodos}
         />
       ));
 
@@ -69,25 +70,29 @@ describe('Page', () => {
 
   context('with todos', () => {
     it('renders todos', () => {
-      const todos = [
-        {
-          id: 1,
-          title: 'Distribute new version',
-        }, {
-          id: 2,
-          title: 'Fix critical error',
-        },
-      ];
+      const handleClickCompleteTask = jest.fn();
 
-      const { container } = render((
+      const { container, getAllByText } = render((
         <Page
           tasks={todos}
+          onClickDeleteTask={handleClickCompleteTask}
         />
       ));
 
       todos.forEach((element) => {
         expect(container).toHaveTextContent(element.title);
       });
+
+      expect(container).not.toHaveTextContent('할 일이 없어요!');
+      expect(container).toHaveTextContent('완료');
+
+      expect(handleClickCompleteTask).not.toBeCalled();
+
+      getAllByText('완료').forEach((completeButton) => {
+        fireEvent.click(completeButton);
+      });
+
+      expect(handleClickCompleteTask).toBeCalledTimes(2);
     });
   });
 });
