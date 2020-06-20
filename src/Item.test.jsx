@@ -4,18 +4,17 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Item from './Item';
 
-function renderItem({ task, onClickDelete }) {
+const handleClickDelete = jest.fn();
+
+function renderItem(task) {
   render(<Item
     task={task}
-    onClickDelete={onClickDelete}
+    onClickDelete={handleClickDelete}
   />);
 
-  const titleElement = screen.getByText(task.title);
-  const deleteButton = screen.getByRole('button', { name: /완료/i });
-
   return {
-    titleElement,
-    clickDeleteButton: () => fireEvent.click(deleteButton),
+    titleElement: screen.getByText(task.title),
+    deleteButton: screen.getByRole('button', { name: /완료/i }),
   };
 }
 
@@ -25,7 +24,7 @@ describe('<Item />', () => {
       // given
       const task = { id: 1, title: '오늘 할 일' };
       // when
-      const { titleElement } = renderItem({ task, onClickDelete: jest.fn() });
+      const { titleElement } = renderItem(task);
       // then
       expect(titleElement).toBeInTheDocument();
     });
@@ -35,10 +34,10 @@ describe('<Item />', () => {
     it('notify which task has been clicked', () => {
       // given
       const task = { id: 1, title: '오늘 할 일' };
-      const handleClickDelete = jest.fn();
+      handleClickDelete.mockClear();
       // when
-      const { clickDeleteButton } = renderItem({ task, onClickDelete: handleClickDelete });
-      clickDeleteButton();
+      const { deleteButton } = renderItem(task);
+      fireEvent.click(deleteButton);
       // then
       expect(handleClickDelete).toBeCalledTimes(1);
       expect(handleClickDelete).toBeCalledWith(task.id);
