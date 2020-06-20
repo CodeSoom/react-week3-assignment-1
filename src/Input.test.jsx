@@ -35,5 +35,5 @@ test('Input', () => {
   // [ ] TODO: onClick을 클릭했을 경우 value가 사리지는가 테스트
   // expect(handleClick).toBeCalled();
   fireEvent.click(getByText('추가'));
-  expect(handleClick).toBeCalledWith(1);
+  expect(handleClick).toBeCalled();
 });
