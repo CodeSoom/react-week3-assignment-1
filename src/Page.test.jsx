@@ -6,7 +6,7 @@ describe('Page', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
 
-  context('with empty todos', () => {
+  context('without todos', () => {
     it('renders empty message', () => {
       const todos = [];
       const { container } = render((
@@ -31,7 +31,7 @@ describe('Page', () => {
     });
   });
 
-  context('with input todo', () => {
+  context('when input todo', () => {
     const userInputText = 'Distribute new version';
     const todos = [];
     it('renders todo', () => {

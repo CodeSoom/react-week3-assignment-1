@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  context('with with empty todos', () => {
+  context('without todos', () => {
     it('renders empty message', () => {
       const { container } = render((
         <App />
@@ -21,7 +21,7 @@ describe('App', () => {
     });
   });
 
-  context('with add input todo', () => {
+  context('when add todo', () => {
     const userInputText = 'Distribute new version';
 
     it('renders todo and be able to complete todo', () => {

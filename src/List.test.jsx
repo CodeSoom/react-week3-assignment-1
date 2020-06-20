@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  context('with empty todos', () => {
+  context('without todos', () => {
     it('renders empty message', () => {
       const todos = [];
 

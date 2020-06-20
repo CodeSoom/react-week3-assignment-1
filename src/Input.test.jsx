@@ -6,8 +6,8 @@ describe('Input', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
 
-  context('with empty input todo', () => {
-    it('renders default', () => {
+  context('when do nothing', () => {
+    it('renders default view', () => {
       const { container } = render((
         <Input
           onChange={handleChangeTitle}
@@ -26,7 +26,7 @@ describe('Input', () => {
     });
   });
 
-  context('with input todo', () => {
+  context('when input todo', () => {
     const userInputText = 'Distribute new version';
 
     it('renders todo', () => {
