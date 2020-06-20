@@ -4,32 +4,25 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Page from './Page';
 
-function renderPage({
-  taskTitle, onChangeTitle, onClickAddTask,
-  tasks, onClickDeleteTask,
-}) {
+const handleChangetitle = jest.fn();
+const handleClickAddTask = jest.fn();
+const handleClickDeleteTask = jest.fn();
+
+function renderPage({ taskTitle, tasks }) {
   render(<Page
     taskTitle={taskTitle}
-    onChangeTitle={onChangeTitle}
-    onClickAddTask={onClickAddTask}
+    onChangeTitle={handleChangetitle}
+    onClickAddTask={handleClickAddTask}
     tasks={tasks}
-    onClickDeleteTask={onClickDeleteTask}
+    onClickDeleteTask={handleClickDeleteTask}
   />);
 
-  const taskTitleInput = screen.getByLabelText(/할 일/i, { selector: 'input' });
-  const addTaskButton = screen.getByRole('button', { name: /추가/i });
-  const nothingTaskMessageElement = screen.queryByText(/할 일이 없어요!/i);
-  const taskListItems = screen.queryAllByRole('listitem', { name: '' });
-  const deleteTaskButtons = screen.queryAllByRole('button', { name: /완료/i });
-
   return {
-    taskTitleInput,
-    nothingTaskMessageElement,
-    taskListItems,
-    deleteTaskButtons,
-    changeTitle: (text) => fireEvent.change(taskTitleInput, { target: { value: text } }),
-    clickAddTaskButton: () => fireEvent.click(addTaskButton),
-    clickDeleteButton: (index) => fireEvent.click(deleteTaskButtons[index]),
+    taskTitleInput: screen.getByLabelText(/할 일/i, { selector: 'input' }),
+    addTaskButton: screen.getByRole('button', { name: /추가/i }),
+    nothingTaskMessageElement: screen.queryByText(/할 일이 없어요!/i),
+    taskListItems: screen.queryAllByRole('listitem', { name: '' }),
+    deleteTaskButtons: screen.queryAllByRole('button', { name: /완료/i }),
   };
 }
 
@@ -41,10 +34,7 @@ describe('<Page />', () => {
       // when
       const { taskTitleInput } = renderPage({
         taskTitle,
-        onChangeTitle: jest.fn(),
-        onClickAddTask: jest.fn(),
         tasks: [],
-        onClickDeleteTask: jest.fn(),
       });
       // then
       expect(taskTitleInput.placeholder).toBe('할 일을 입력해 주세요');
@@ -58,10 +48,7 @@ describe('<Page />', () => {
       // when
       const { taskTitleInput } = renderPage({
         taskTitle,
-        onChangeTitle: jest.fn(),
-        onClickAddTask: jest.fn(),
         tasks: [],
-        onClickDeleteTask: jest.fn(),
       });
       // then
       expect(taskTitleInput.value).toBe(taskTitle);
@@ -71,16 +58,13 @@ describe('<Page />', () => {
   context('when clicked add button', () => {
     it('notify that it has been clicked', () => {
       // given
-      const handleClickAddTask = jest.fn();
+      handleClickAddTask.mockClear();
       // when
-      const { clickAddTaskButton } = renderPage({
+      const { addTaskButton } = renderPage({
         taskTitle: '오늘 할 일',
-        onChangeTitle: jest.fn(),
-        onClickAddTask: handleClickAddTask,
         tasks: [],
-        onClickDeleteTask: jest.fn(),
       });
-      clickAddTaskButton();
+      fireEvent.click(addTaskButton);
       // then
       expect(handleClickAddTask).toBeCalledTimes(1);
     });
@@ -89,16 +73,13 @@ describe('<Page />', () => {
   context('when an input field is entered', () => {
     it('notify that it has been entered', () => {
       // given
-      const handleChangetitle = jest.fn();
+      handleChangetitle.mockClear();
       // when
-      const { changeTitle } = renderPage({
+      const { taskTitleInput } = renderPage({
         taskTitle: '오늘 할 일',
-        onChangeTitle: handleChangetitle,
-        onClickAddTask: jest.fn(),
         tasks: [],
-        onClickDeleteTask: jest.fn(),
       });
-      changeTitle('내일 할 일');
+      fireEvent.change(taskTitleInput, { target: { value: '내일 할 일' } });
       // then
       expect(handleChangetitle).toBeCalledTimes(1);
     });
@@ -111,10 +92,7 @@ describe('<Page />', () => {
       // when
       const { nothingTaskMessageElement } = renderPage({
         taskTitle: '',
-        onChangeTitle: jest.fn(),
-        onClickAddTask: jest.fn(),
         tasks,
-        onClickDeleteTask: jest.fn(),
       });
       // then
       expect(nothingTaskMessageElement).toBeInTheDocument();
@@ -126,10 +104,7 @@ describe('<Page />', () => {
       // when
       const { taskListItems } = renderPage({
         taskTitle: '',
-        onChangeTitle: jest.fn(),
-        onClickAddTask: jest.fn(),
         tasks,
-        onClickDeleteTask: jest.fn(),
       });
       // then
       expect(taskListItems).toHaveLength(0);
@@ -144,10 +119,7 @@ describe('<Page />', () => {
       // when
       const { taskListItems, deleteTaskButtons } = renderPage({
         taskTitle: '',
-        onChangeTitle: jest.fn(),
-        onClickAddTask: jest.fn(),
         tasks,
-        onClickDeleteTask: jest.fn(),
       });
       // then
       expect(taskListItems).toHaveLength(taskCount);
@@ -157,17 +129,14 @@ describe('<Page />', () => {
     it('can click the Done buttons', () => {
       // given
       const tasks = [...Array(10)].map((value, index) => ({ id: index + 1, title: `${index} 번째 할 일` }));
-      const handleClickDeleteTask = jest.fn();
+      handleClickDeleteTask.mockClear();
       // when
-      const { clickDeleteButton } = renderPage({
+      const { deleteTaskButtons } = renderPage({
         taskTitle: '',
-        onChangeTitle: jest.fn(),
-        onClickAddTask: jest.fn(),
         tasks,
-        onClickDeleteTask: handleClickDeleteTask,
       });
       const clickCount = 3;
-      [...Array(clickCount)].forEach((value, index) => clickDeleteButton(index));
+      [...Array(clickCount)].forEach((value, index) => fireEvent.click(deleteTaskButtons[index]));
       // then
       expect(handleClickDeleteTask).toBeCalledTimes(clickCount);
     });
