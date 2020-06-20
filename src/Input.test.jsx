@@ -6,8 +6,8 @@ describe('Input', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
 
-  context('with nothing', () => {
-    it('renders empty text', () => {
+  context('with empty input todo', () => {
+    it('renders default', () => {
       const { container } = render((
         <Input
           onChange={handleChangeTitle}
@@ -26,10 +26,10 @@ describe('Input', () => {
     });
   });
 
-  context('with input texts', () => {
+  context('with input todo', () => {
     const userInputText = 'Distribute new version';
 
-    it('renders texts that user input', () => {
+    it('renders todo', () => {
       const userInputEvent = { target: { value: userInputText } };
       const { container } = render((
         <Input
@@ -45,7 +45,7 @@ describe('Input', () => {
       expect(handleClickAddTask).not.toBeCalled();
     });
 
-    it('can clicked by user', () => {
+    it('can clicked to add todo', () => {
       const { getByText } = render((
         <Input
           value={userInputText}
