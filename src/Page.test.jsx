@@ -2,23 +2,12 @@ import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
 
+import Tasks from './__fixtures__/tasks.json';
 import Page from './Page';
 
+
 test('Page', () => {
-  const tasks = [
-    {
-      id: 1,
-      title: '뭐라도 하기',
-    },
-    {
-      id: 2,
-      title: '아무것도 하지 않기',
-    },
-    {
-      id: 3,
-      title: '코드숨 과제하기',
-    },
-  ];
+  const tasks = Tasks;
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
