@@ -1,29 +1,47 @@
 import React from 'react';
 
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input 컴포넌트에', () => {
+describe('Input', () => {
   const inputText = 'hello';
-  const onChange = jest.fn();
-  const onClick = jest.fn();
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
 
-  beforeEach(() => {
-    render(
-      <Input value="" onChange={onChange} onClick={onClick} />,
-    );
+  context('When user does nothing', () => {
+    it('Shows placeholder texts', () => {
+      const { getByPlaceholderText } = render(
+        <Input value="" onChange={handleChange} onClick={handleClick} />,
+      );
+
+      getByPlaceholderText(/할 일을 입력해 주세요/);
+    });
   });
 
-  test('\'추가\' 버튼이 있다.', () => {
-    screen.getByText(/추가/);
-  });
+  context('When user enters texts', () => {
+    it('Shows texts user entered', () => {
+      const { container, getByPlaceholderText } = render(
+        <Input onChange={handleChange} onClick={handleClick} />,
+      );
 
-  test('할 일을 입력 후 추가할 수 있다.', () => {
-    fireEvent.change(screen.getByPlaceholderText(/할 일을 입력해 주세요/), { target: { value: inputText } });
-    fireEvent.click(screen.getByText(/추가/));
+      fireEvent.change(getByPlaceholderText(/할 일을 입력해 주세요/), { target: { value: inputText } });
 
-    expect(onChange).toBeCalledTimes(1);
-    expect(onClick).toBeCalledTimes(1);
+      expect(handleChange).toBeCalledTimes(1);
+      expect(container.querySelector('input').value).toBe(inputText);
+    });
+
+    describe('And user clicks `추가` button', () => {
+      it('Adds new todo item', () => {
+        const { getByText, getByPlaceholderText } = render(
+          <Input onChange={handleChange} onClick={handleClick} />,
+        );
+
+        fireEvent.change(getByPlaceholderText(/할 일을 입력해 주세요/), { target: { value: inputText } });
+        fireEvent.click(getByText(/추가/));
+
+        expect(handleClick).toBeCalledTimes(1);
+      });
+    });
   });
 });
