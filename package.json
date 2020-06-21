@@ -41,7 +41,6 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "enzyme-adapter-react-15": "^1.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
