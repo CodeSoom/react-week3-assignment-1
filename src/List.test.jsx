@@ -3,21 +3,31 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-describe('<List />', () => {
-  test('tasks에 값이 없는 경우 검사', () => {
+const renderList = (tasks) => {
+  const handleDelete = jest.fn();
+  const { container, getByText } = render(
+    <List
+      tasks={tasks}
+      onClickDelete={handleDelete}
+    />,
+  );
+
+  return {
+    handleDelete,
+    container,
+    getByText,
+  };
+};
+
+describe('', () => {
+  test('비어있는 tasks 배열 화면 출력 검사', () => {
     const tasks = [];
-    const handleDelete = jest.fn();
-    const { container } = render(
-      <List
-        tasks={tasks}
-        onClickDelete={handleDelete}
-      />,
-    );
+    const { container } = renderList(tasks);
 
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  test('tasks에 값이 있는 경우 검사', () => {
+  test('데이터가 있는 tasks 배열 화면 출력 검사', () => {
     const tasks = [
       {
         id: 100,
@@ -32,13 +42,7 @@ describe('<List />', () => {
         title: '결과 코드를 깔끔하게 리팩터링(REFACTORING)',
       },
     ];
-    const handleDelete = jest.fn();
-    const { container } = render(
-      <List
-        tasks={tasks}
-        onClickDelete={handleDelete}
-      />,
-    );
+    const { container } = renderList(tasks);
 
     tasks.forEach((task) => {
       expect(container).toHaveTextContent(task.title);
@@ -53,17 +57,13 @@ describe('<List />', () => {
         title: 'handleDelete 이벤트',
       },
     ];
-    const handleDelete = jest.fn();
-    const { getByText } = render(
-      <List
-        tasks={tasks}
-        onClickDelete={handleDelete}
-      />,
-    );
+    const { handleDelete, getByText } = renderList(tasks);
     const button = getByText('완료');
 
     expect(handleDelete).not.toBeCalled();
+
     fireEvent.click(button);
+
     expect(handleDelete).toBeCalled();
   });
 });

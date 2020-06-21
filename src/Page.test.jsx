@@ -3,7 +3,31 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
-describe('<Page />', () => {
+const renderPage = (taskTitle, tasks) => {
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
+  const onClickDeleteTask = jest.fn();
+  const { container, getByPlaceholderText, getByText } = render(
+    <Page
+      taskTitle={taskTitle}
+      onChangeTitle={onChangeTitle}
+      onClickAddTask={onClickAddTask}
+      tasks={tasks}
+      onClickDeleteTask={onClickDeleteTask}
+    />,
+  );
+
+  return {
+    onChangeTitle,
+    onClickAddTask,
+    onClickDeleteTask,
+    container,
+    getByPlaceholderText,
+    getByText,
+  };
+};
+
+describe('', () => {
   test('taskTitle, tasks props 검사', () => {
     const taskTitle = '밥 먹고 3주차 강의 보기!';
     const tasks = [
@@ -20,18 +44,7 @@ describe('<Page />', () => {
         title: '결과 코드를 깔끔하게 리팩터링(REFACTORING)',
       },
     ];
-    const onChangeTitle = jest.fn();
-    const onClickAddTask = jest.fn();
-    const onClickDeleteTask = jest.fn();
-    const { container, getByPlaceholderText } = render(
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={onChangeTitle}
-        onClickAddTask={onClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={onClickDeleteTask}
-      />,
-    );
+    const { container, getByPlaceholderText } = renderPage(taskTitle, tasks);
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
     expect(input).toHaveValue(taskTitle);
@@ -42,46 +55,28 @@ describe('<Page />', () => {
 
   test('onChangeTitle 이벤트 검사', () => {
     const taskTitle = '';
-    const tasks = [];
-    const onChangeTitle = jest.fn();
-    const onClickAddTask = jest.fn();
-    const onClickDeleteTask = jest.fn();
-    const { getByPlaceholderText } = render(
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={onChangeTitle}
-        onClickAddTask={onClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={onClickDeleteTask}
-      />,
-    );
+    const tasks = '';
+    const { onChangeTitle, getByPlaceholderText } = renderPage(taskTitle, tasks);
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
     expect(input).toHaveValue(taskTitle);
     expect(onChangeTitle).not.toBeCalled();
+
     fireEvent.change(input, { target: { value: 'onChangeTitle 이벤트 동작!' } });
+
     expect(onChangeTitle).toBeCalled();
   });
 
   test('onClickAddTask 이벤트 검사', () => {
     const taskTitle = '';
-    const tasks = [];
-    const onChangeTitle = jest.fn();
-    const onClickAddTask = jest.fn();
-    const onClickDeleteTask = jest.fn();
-    const { getByText } = render(
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={onChangeTitle}
-        onClickAddTask={onClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={onClickDeleteTask}
-      />,
-    );
+    const tasks = '';
+    const { onClickAddTask, getByText } = renderPage(taskTitle, tasks);
     const button = getByText('추가');
 
     expect(onClickAddTask).not.toBeCalled();
+
     fireEvent.click(button);
+
     expect(onClickAddTask).toBeCalled();
   });
 
@@ -93,22 +88,13 @@ describe('<Page />', () => {
         title: '통과하지 못하는 테스트 작성(RED)',
       },
     ];
-    const onChangeTitle = jest.fn();
-    const onClickAddTask = jest.fn();
-    const onClickDeleteTask = jest.fn();
-    const { getByText } = render(
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={onChangeTitle}
-        onClickAddTask={onClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={onClickDeleteTask}
-      />,
-    );
+    const { onClickDeleteTask, getByText } = renderPage(taskTitle, tasks);
     const button = getByText('완료');
 
     expect(onClickDeleteTask).not.toBeCalled();
+
     fireEvent.click(button);
+
     expect(onClickDeleteTask).toBeCalledWith(100);
   });
 });
