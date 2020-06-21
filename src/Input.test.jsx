@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  context('When text changed', () => {
+  context('when text changed', () => {
     it('hanlde change values', () => {
       const handleChange = jest.fn();
       const handleClick = jest.fn();
@@ -36,7 +36,7 @@ describe('Input', () => {
       expect(handleClick).toBeCalled();
     });
   });
-  context('When click button', () => {
+  context('when click button', () => {
     it('click add button', () => {
       const handleChange = jest.fn();
       const handleClick = jest.fn();

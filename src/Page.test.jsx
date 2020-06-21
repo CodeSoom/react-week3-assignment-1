@@ -9,22 +9,22 @@ describe('Page', () => {
     it('renders empty message', () => {
       const tasks = [];
 
-      const onChange = jest.fn();
-      const handleClick = jest.fn();
-      const handleClickDelete = jest.fn();
+      const handleChange = jest.fn();
+      const handleClickAddTask = jest.fn();
+      const handleClickDeleteTask = jest.fn();
 
       const { container } = render((
         <Page
           tasks={tasks}
-          onChange={onChange}
-          onClick={handleClick}
-          onClickDelete={handleClickDelete}
+          onChangeTitle={handleChange}
+          onClickAddTask={handleClickAddTask}
+          onClickDeleteTask={handleClickDeleteTask}
         />
       ));
 
-      expect(onChange).not.toBeCalled();
-      expect(handleClick).not.toBeCalled();
-      expect(handleClickDelete).not.toBeCalled();
+      expect(handleChange).not.toBeCalled();
+      expect(handleClickAddTask).not.toBeCalled();
+      expect(handleClickDeleteTask).not.toBeCalled();
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -42,23 +42,22 @@ describe('Page', () => {
         },
       ];
 
-      const onChange = jest.fn();
-      const handleClick = jest.fn();
-      const handleClickDelete = jest.fn();
+      const handleChange = jest.fn();
+      const handleClickAddTask = jest.fn();
+      const handleClickDeleteTask = jest.fn();
 
       const { container, getByText, getAllByText } = render((
         <Page
           tasks={tasks}
-          onChange={onChange}
-          onClick={handleClick}
-          onClickDelete={handleClickDelete}
+          onChangeTitle={handleChange}
+          onClickAddTask={handleClickAddTask}
+          onClickDeleteTask={handleClickDeleteTask}
         />
       ));
 
-
-      expect(onChange).not.toBeCalled();
-      expect(handleClick).not.toBeCalled();
-      expect(handleClickDelete).not.toBeCalled();
+      expect(handleChange).not.toBeCalled();
+      expect(handleClickAddTask).not.toBeCalled();
+      expect(handleClickDeleteTask).not.toBeCalled();
 
       tasks.forEach(({ title }) => {
         expect(container).toHaveTextContent(title);

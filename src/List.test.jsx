@@ -18,8 +18,6 @@ describe('List', () => {
       ));
 
       expect(handleClickDelete).not.toBeCalled();
-
-      // [v] TODO: '할 일이 없어요!' 출력이 되는지 테스트
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
@@ -38,7 +36,6 @@ describe('List', () => {
       const handleClickDelete = jest.fn();
 
       const { container, getByText, getAllByText } = render((
-      // const { container, getByText } = render((
 
         <List
           tasks={tasks}
@@ -49,17 +46,17 @@ describe('List', () => {
       expect(handleClickDelete).not.toBeCalled();
 
       tasks.forEach(({ title }) => {
-        expect(container).toHaveTextContent(title);
+        expect(getByText(title)).toBeInTheDocument();
         fireEvent.click(getByText(title));
       });
 
       tasks.forEach(({ title }, index) => {
-        expect(container).toHaveTextContent(title);
+        expect(getByText(title)).toBeInTheDocument();
         fireEvent.click(getAllByText('완료')[index]);
       });
 
       tasks.forEach(({ title }) => {
-        expect(container).not.toHaveTextContent(title);
+        expect(getByText(title)).not.toBeInTheDocument();
       });
     });
   });
