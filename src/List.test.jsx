@@ -35,7 +35,7 @@ describe('List', () => {
       ];
       const handleClickDelete = jest.fn();
 
-      const { container, getByText, getAllByText } = render((
+      const { getByText, getAllByText } = render((
 
         <List
           tasks={tasks}
@@ -45,10 +45,16 @@ describe('List', () => {
 
       expect(handleClickDelete).not.toBeCalled();
 
+      fireEvent.click(getByText('뭐라도 하기 1'));
+      fireEvent.click(getByText('뭐라도 하기 2'));
+
       tasks.forEach(({ title }) => {
         expect(getByText(title)).toBeInTheDocument();
         fireEvent.click(getByText(title));
       });
+
+      fireEvent.click(getAllByText('완료')[0]);
+      fireEvent.click(getAllByText('완료')[1]);
 
       tasks.forEach(({ title }, index) => {
         expect(getByText(title)).toBeInTheDocument();

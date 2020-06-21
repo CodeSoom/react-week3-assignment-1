@@ -59,10 +59,16 @@ describe('Page', () => {
       expect(handleClickAddTask).not.toBeCalled();
       expect(handleClickDeleteTask).not.toBeCalled();
 
+      fireEvent.click(getByText('뭐라도 하기 1'));
+      fireEvent.click(getByText('뭐라도 하기 2'));
+
       tasks.forEach(({ title }) => {
         expect(container).toHaveTextContent(title);
         fireEvent.click(getByText(title));
       });
+
+      fireEvent.click(getAllByText('완료')[0]);
+      fireEvent.click(getAllByText('완료')[1]);
 
       tasks.forEach(({ title }, index) => {
         expect(container).toHaveTextContent(title);
