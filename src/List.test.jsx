@@ -19,7 +19,6 @@ describe('<List />', () => {
   });
 
   context('할 일이 있다면', () => {
-
     it('추가된 할 일이 보인다.', () => {
       const { container } = render(
         <List tasks={tasks} onClickDelete={handleClickDeleteTask} />,
