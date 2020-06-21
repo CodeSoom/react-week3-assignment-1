@@ -4,7 +4,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Page from './Page';
 
-const getInitialProps = () => ({
+const getPropsForTest = () => ({
   taskTitle: 'hello world',
   onChangeTitle: jest.fn(),
   onClickAddTask: jest.fn(),
@@ -21,70 +21,40 @@ const getInitialProps = () => ({
   onClickDeleteTask: jest.fn(),
 });
 
-test('메인 앱 헤딩(To-do)이 보인다.', () => {
+describe('Page 컴포넌트의', () => {
   const {
     taskTitle, tasks, onChangeTitle, onClickAddTask, onClickDeleteTask,
-  } = getInitialProps();
+  } = getPropsForTest();
 
-  render(<Page
-    taskTitle={taskTitle}
-    tasks={tasks}
-    onChangeTitle={onChangeTitle}
-    onClickAddTask={onClickAddTask}
-    onClickDeleteTask={onClickDeleteTask}
-  />);
-  screen.getByText(/To-do/);
-});
+  beforeEach(() => {
+    render(<Page
+      taskTitle={taskTitle}
+      tasks={tasks}
+      onChangeTitle={onChangeTitle}
+      onClickAddTask={onClickAddTask}
+      onClickDeleteTask={onClickDeleteTask}
+    />);
+  });
 
-test('입력된 taskTitle이 보인다.', () => {
-  const {
-    taskTitle, tasks, onChangeTitle, onClickAddTask, onClickDeleteTask,
-  } = getInitialProps();
+  test('메인 타이틀이 보인다.', () => {
+    screen.getByText('To-do');
+  });
 
-  render(<Page
-    taskTitle={taskTitle}
-    tasks={tasks}
-    onChangeTitle={onChangeTitle}
-    onClickAddTask={onClickAddTask}
-    onClickDeleteTask={onClickDeleteTask}
-  />);
+  describe('할 일 입력에서', () => {
+    test('입력된 taskTitle이 보인다.', () => {
+      screen.getByDisplayValue('hello world');
+    });
 
-  screen.getByDisplayValue(/hello world/);
-});
+    test('추가 버튼을 누르면 할 일이 추가된다.', () => {
+      fireEvent.click(screen.getByText('추가'));
+      expect(onClickAddTask).toHaveBeenCalledTimes(1);
+    });
+  });
 
-test('할 일을 입력하고 추가 버튼을 누르면 관련 함수들(onChangeTitle, onClickDeleteTask)이 실행된다.', () => {
-  const {
-    taskTitle, tasks, onChangeTitle, onClickAddTask, onClickDeleteTask,
-  } = getInitialProps();
-
-  render(<Page
-    taskTitle={taskTitle}
-    tasks={tasks}
-    onChangeTitle={onChangeTitle}
-    onClickAddTask={onClickAddTask}
-    onClickDeleteTask={onClickDeleteTask}
-  />);
-
-  fireEvent.change(screen.getByPlaceholderText(/할 일을 입력해 주세요/), { target: { value: 'world' } });
-  expect(onChangeTitle).toHaveBeenCalledTimes(1);
-
-  fireEvent.click(screen.getByText(/추가/));
-  expect(onClickAddTask).toHaveBeenCalledTimes(1);
-});
-
-test('완료 버튼을 클릭하면 onClickDeleteTask가 실행된다.', () => {
-  const {
-    taskTitle, tasks, onChangeTitle, onClickAddTask, onClickDeleteTask,
-  } = getInitialProps();
-
-  render(<Page
-    taskTitle={taskTitle}
-    tasks={tasks}
-    onChangeTitle={onChangeTitle}
-    onClickAddTask={onClickAddTask}
-    onClickDeleteTask={onClickDeleteTask}
-  />);
-
-  fireEvent.click(screen.getAllByText(/완료/)[0]);
-  expect(onClickDeleteTask).toHaveBeenCalledTimes(1);
+  describe('할 일 목록에서', () => {
+    test('완료 버튼을 클릭하면 완료 처리된다.', () => {
+      fireEvent.click(screen.getAllByText('완료')[0]);
+      expect(onClickDeleteTask).toHaveBeenCalledTimes(1);
+    });
+  });
 });
