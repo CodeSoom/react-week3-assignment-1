@@ -9,7 +9,7 @@ export default function Page({
 }) {
   return (
     <div>
-      <h1>To-do</h1>
+      <h1 id="title">To-do</h1>
       <Input
         value={taskTitle}
         onChange={onChangeTitle}

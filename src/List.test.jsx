@@ -27,7 +27,6 @@ test('List', () => {
   expect(container).toHaveTextContent('일하기');
   expect(container).toHaveTextContent('완료');
   expect(handleClickDelete).not.toBeCalled();
-
   fireEvent.click(getByText('완료'));
 
   expect(handleClickDelete).toBeCalledWith(1);
