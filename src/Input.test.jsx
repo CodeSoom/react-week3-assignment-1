@@ -27,8 +27,8 @@ describe('<Input />', () => {
       expect(getByLabelText('할 일').value).toBe('바뀐다');
     });
   });
-  context('사용자가 할 일을 입력한 후 추가를 누르면', () => {
-    it('입력창은 초기화 된다.', () => {
+  context('사용자가 "추가될 할일"이라는 할 일을 추가하면', () => {
+    it('할 일 입력창에는 "할 일을 입력해 주세요" 이라는 문구가 보인다.', () => {
       const { getByLabelText, getByText, getByPlaceholderText } = render(
         <Input
           value="추가될 할일"
