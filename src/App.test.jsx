@@ -16,7 +16,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  it('App ', () => {
+  it('App function', () => {
     const { container, getByPlaceholderText, getByText } = render((
       <App />
     ));
