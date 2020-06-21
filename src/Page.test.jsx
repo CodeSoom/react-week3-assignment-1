@@ -4,7 +4,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Page from './Page';
 
-const getPropsForTest = () => ({
+const propsForTest = {
   taskTitle: 'hello world',
   onChangeTitle: jest.fn(),
   onClickAddTask: jest.fn(),
@@ -19,12 +19,12 @@ const getPropsForTest = () => ({
     },
   ],
   onClickDeleteTask: jest.fn(),
-});
+};
 
 describe('Page 컴포넌트의', () => {
   const {
     taskTitle, tasks, onChangeTitle, onClickAddTask, onClickDeleteTask,
-  } = getPropsForTest();
+  } = propsForTest;
 
   beforeEach(() => {
     render(<Page
