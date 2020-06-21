@@ -4,27 +4,55 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
+describe('Item', () => {
+  context('with task', () => {
+    it('display task', () => {
+      // Given
+      const task = {
+        id: 1,
+        title: '뭐라도 하기',
+      };
 
-  const handleClick = jest.fn();
+      const handleClick = jest.fn();
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+      // When
+      const { container } = render((
+        <Item
+          task={task}
+          onClickDelete={handleClick}
+        />
+      ));
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+      // Then
+      expect(container).toHaveTextContent(task.title);
+      expect(container).toHaveTextContent('완료');
+    });
+  });
 
-  expect(handleClick).not.toBeCalled();
+  context('when click 완료', () => {
+    it('call handleClick function', () => {
+      // Given
+      const task = {
+        id: 1,
+        title: '뭐라도 하기',
+      };
 
-  fireEvent.click(getByText('완료'));
+      const handleClick = jest.fn();
 
-  expect(handleClick).toBeCalledWith(1);
+      // When
+      const { getByText } = render((
+        <Item
+          task={task}
+          onClickDelete={handleClick}
+        />
+      ));
+
+      // Then
+      expect(handleClick).not.toBeCalled();
+
+      fireEvent.click(getByText('완료'));
+
+      expect(handleClick).toBeCalledWith(1);
+    });
+  });
 });
