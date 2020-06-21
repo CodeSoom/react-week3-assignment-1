@@ -77,7 +77,7 @@ describe('Input', () => {
     });
   });
 
-  context('when click 완료', () => {
+  context('when click 추가', () => {
     it('call handleClick function', () => {
       // Given
       const value = '';
