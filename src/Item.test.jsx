@@ -1,30 +1,46 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
+const handleClickDelete = jest.fn();
+
+function renderItem(task) {
+  render(<Item
+    task={task}
+    onClickDelete={handleClickDelete}
+  />);
+
+  return {
+    titleElement: screen.getByText(task.title),
+    deleteButton: screen.getByRole('button', { name: /완료/i }),
   };
+}
 
-  const handleClick = jest.fn();
+describe('<Item />', () => {
+  context('with task', () => {
+    it('print title of task', () => {
+      // given
+      const task = { id: 1, title: '오늘 할 일' };
+      // when
+      const { titleElement } = renderItem(task);
+      // then
+      expect(titleElement).toBeInTheDocument();
+    });
+  });
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
-
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
-
-  expect(handleClick).not.toBeCalled();
-
-  fireEvent.click(getByText('완료'));
-
-  expect(handleClick).toBeCalledWith(1);
+  context('when clicked delete button', () => {
+    it('notify which task has been clicked', () => {
+      // given
+      const task = { id: 1, title: '오늘 할 일' };
+      handleClickDelete.mockClear();
+      // when
+      const { deleteButton } = renderItem(task);
+      fireEvent.click(deleteButton);
+      // then
+      expect(handleClickDelete).toBeCalledTimes(1);
+      expect(handleClickDelete).toBeCalledWith(task.id);
+    });
+  });
 });
