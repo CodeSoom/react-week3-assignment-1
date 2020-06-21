@@ -4,11 +4,12 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
+
+describe('<Input />', () => {
   const handleChangeInput = jest.fn();
   const handleClickButton = jest.fn();
 
-  const { getByLabelText, getByPlaceholderText, getByText } = render((
+  const renderComponent = () => render((
     <Input
       value=""
       onChange={handleChangeInput}
@@ -16,15 +17,23 @@ test('Input', () => {
     />
   ));
 
-  getByLabelText('할 일');
+  context('input box', () => {
+    it('fire change event', () => {
+      const { getByRole } = renderComponent();
+      const input = getByRole('textbox');
+      expect(handleChangeInput).not.toBeCalled();
+      fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+      expect(handleChangeInput).toBeCalled();
+    });
+  });
 
-  const input = getByPlaceholderText('할 일을 입력해 주세요');
-  expect(handleChangeInput).not.toBeCalled();
-  fireEvent.change(input, { target: { value: '뭐라도 하기' } });
-  expect(handleChangeInput).toBeCalled();
-
-  const button = getByText('추가');
-  expect(handleClickButton).not.toBeCalled();
-  fireEvent.click(button);
-  expect(handleClickButton).toBeCalled();
+  context('button', () => {
+    it('fire click event', () => {
+      const { getByRole } = renderComponent();
+      const button = getByRole('button');
+      expect(handleClickButton).not.toBeCalled();
+      fireEvent.click(button);
+      expect(handleClickButton).toBeCalled();
+    });
+  });
 });
