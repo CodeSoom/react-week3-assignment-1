@@ -54,8 +54,6 @@ describe('<App />', () => {
 
       fireEvent.change(inputTodo, { target: { value: '할 일1' } });
 
-      expect(inputTodo.value).toBe('할 일1');
-
       fireEvent.click(getByText('추가'));
 
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
@@ -66,33 +64,38 @@ describe('<App />', () => {
     });
   });
 
-
   context('사용자가 "할 일1" 할 일에 대한 완료 버튼을 누르면', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: '할 일1',
+      },
+      {
+        id: 2,
+        title: '할 일2',
+      },
+      {
+        id: 3,
+        title: '할 일3',
+      },
+    ];
+
     it(' "할 일1"이 보이지 않는다.', () => {
-      const {
-        container,
-        getByLabelText,
-        getByText,
-        getByPlaceholderText,
-      } = render(<App />);
+      const { container, getByLabelText, getByText, getAllByText } = render(
+        <App />,
+      );
 
       const inputTodo = getByLabelText('할 일');
 
-      fireEvent.change(inputTodo, { target: { value: '할 일1' } });
+      tasks.forEach((item) => {
+        fireEvent.change(inputTodo, { target: { value: item.title } });
 
-      expect(inputTodo.value).toBe('할 일1');
+        fireEvent.click(getByText('추가'));
+      });
 
+      const doneButtons = getAllByText('완료');
 
-      fireEvent.click(getByText('추가'));
-
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
-
-      expect(container).toHaveTextContent('할 일1');
-
-      expect(container).toHaveTextContent('완료');
-
-
-      fireEvent.click(getByText('완료'));
+      doneButtons.forEach((button) => fireEvent.click(button));
 
       expect(container).not.toHaveTextContent('할 일1');
 

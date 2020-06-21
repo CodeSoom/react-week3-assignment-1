@@ -81,8 +81,6 @@ describe('<Page />', () => {
         },
       });
 
-      expect(getByLabelText('할 일').value).toBe('할 일1');
-
       expect(handleClickAddTask).not.toBeCalled();
 
       fireEvent.click(getByText('추가'));
