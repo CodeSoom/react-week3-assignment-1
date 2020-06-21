@@ -6,15 +6,13 @@ import Tasks from './__fixtures__/tasks.json';
 import Page from './Page';
 
 
-test('Page', () => {
-  const tasks = Tasks;
+describe('<Page />', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
+  const tasks = Tasks;
 
-  const {
-    container, getByPlaceholderText, getByText, getAllByText,
-  } = render((
+  const renderComponent = () => render((
     <Page
       taskTitle=""
       onChangeTitle={handleChangeTitle}
@@ -24,22 +22,42 @@ test('Page', () => {
     />
   ));
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('아무것도 하지 않기');
-  expect(container).toHaveTextContent('코드숨 과제하기');
+  context('render', () => {
+    it('display tasks list', () => {
+      const { container } = renderComponent();
+      tasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+      });
+    });
+  });
 
-  const taskInput = getByPlaceholderText('할 일을 입력해 주세요');
-  expect(handleChangeTitle).not.toBeCalled();
-  fireEvent.change(taskInput, { target: { value: '뭐라도 하기' } });
-  expect(handleChangeTitle).toBeCalled();
+  context('input box', () => {
+    it('fire change event', () => {
+      const { getByRole } = renderComponent();
+      const taskInput = getByRole('textbox');
+      expect(handleChangeTitle).not.toBeCalled();
+      fireEvent.change(taskInput, { target: { value: '뭐라도 하기' } });
+      expect(handleChangeTitle).toBeCalled();
+    });
+  });
 
-  const addTaskButton = getByText('추가');
-  expect(handleClickAddTask).not.toBeCalled();
-  fireEvent.click(addTaskButton);
-  expect(handleClickAddTask).toBeCalled();
+  context('task add button', () => {
+    it('fire click event', () => {
+      const { getByRole } = renderComponent();
+      const addTaskButton = getByRole('button', { name: '추가' });
+      expect(handleClickAddTask).not.toBeCalled();
+      fireEvent.click(addTaskButton);
+      expect(handleClickAddTask).toBeCalled();
+    });
+  });
 
-  const confirmButtons = getAllByText('완료');
-  expect(handleClickDeleteTask).not.toBeCalled();
-  confirmButtons.forEach((button) => fireEvent.click(button));
-  expect(handleClickDeleteTask).toBeCalledTimes(tasks.length);
+  context('task confirm buttons', () => {
+    it('fire click event', () => {
+      const { getAllByRole } = renderComponent();
+      const confirmButtons = getAllByRole('button', { name: '완료' });
+      expect(handleClickDeleteTask).not.toBeCalled();
+      confirmButtons.forEach((button) => fireEvent.click(button));
+      expect(handleClickDeleteTask).toBeCalledTimes(tasks.length);
+    });
+  });
 });
