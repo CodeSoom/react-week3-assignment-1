@@ -23,8 +23,6 @@ test('Item', () => {
   expect(container).toHaveTextContent('완료');
 
   expect(handleClick).not.toBeCalled();
-
   fireEvent.click(getByText('완료'));
-
   expect(handleClick).toBeCalledWith(1);
 });
