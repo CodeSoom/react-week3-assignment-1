@@ -30,15 +30,17 @@ describe('<List />', () => {
     });
 
     it('할 일을 삭제하는 완료 버튼이 보인다.', () => {
-      const { getByText } = render(
+      const { getAllByText } = render(
         <List tasks={tasks} onClickDelete={handleClickDeleteTask} />,
       );
 
+      const doneButtons = getAllByText('완료');
+
       expect(handleClickDeleteTask).not.toBeCalled();
 
-      fireEvent.click(getByText('완료'));
+      doneButtons.forEach((doneButton) => fireEvent.click(doneButton));
 
-      expect(handleClickDeleteTask).toBeCalledWith(1);
+      expect(handleClickDeleteTask).toBeCalledWith(doneButtons.length);
     });
   });
 });
