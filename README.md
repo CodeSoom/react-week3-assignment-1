@@ -6,7 +6,7 @@
 
 모든 컴포넌트에 테스트를 작성해주세요. 그리고 모두 테스트 했는지 확인하기 위해 커버리지를 100% 달성해주세요.
 
-![](https://user-images.githubusercontent.com/14071105/84498754-37675680-acec-11ea-83d1-df76261d3c32.png)
+![](https://user-images.githubusercontent.com/47380072/85221643-64a0bc80-b3f0-11ea-850e-c45abc780eab.png
 
 ## 제한 조건
 
