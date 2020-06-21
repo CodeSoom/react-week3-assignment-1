@@ -4,53 +4,92 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-test('Without tasks', () => {
-  const taskTitle = '';
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
-  const tasks = [];
-  const onClickDeleteTask = jest.fn();
+describe('Page', () => {
+  context('without tasks', () => {
+    it('default display', () => {
+      // Given
+      const taskTitle = '';
+      const onChangeTitle = jest.fn();
+      const onClickAddTask = jest.fn();
+      const tasks = [];
+      const onClickDeleteTask = jest.fn();
 
-  const { container } = render(
-    (<Page
-      taskTitle={taskTitle}
-      onChangeTitle={onChangeTitle}
-      onClickAddTask={onClickAddTask}
-      tasks={tasks}
-      onClickDeleteTask={onClickDeleteTask}
-    />),
-  );
+      // When
+      const { container } = render(
+        (<Page
+          taskTitle={taskTitle}
+          onChangeTitle={onChangeTitle}
+          onClickAddTask={onClickAddTask}
+          tasks={tasks}
+          onClickDeleteTask={onClickDeleteTask}
+        />),
+      );
 
-  expect(container).toHaveTextContent('To-do');
-  expect(container).toHaveTextContent('추가');
-  expect(container).toHaveTextContent('할 일이 없어요!');
-});
+      // Then
+      expect(container).toHaveTextContent('To-do');
+      expect(container).toHaveTextContent('할 일');
+      expect(container).toHaveTextContent('추가');
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 
-test('With tasks', () => {
-  const taskTitle = '두 번째 할 일';
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
-  const tasks = [{
-    id: 1,
-    title: '첫 번째 할 일',
-  }];
-  const onClickDeleteTask = jest.fn();
+  context('with tasks', () => {
+    it('display tasks', () => {
+      // Given
+      const taskTitle = '';
+      const onChangeTitle = jest.fn();
+      const onClickAddTask = jest.fn();
+      const tasks = [{
+        id: 1,
+        title: '첫 번째 할 일',
+      }];
+      const onClickDeleteTask = jest.fn();
 
-  const { container, getByLabelText } = render(
-    (<Page
-      taskTitle={taskTitle}
-      onChangeTitle={onChangeTitle}
-      onClickAddTask={onClickAddTask}
-      tasks={tasks}
-      onClickDeleteTask={onClickDeleteTask}
-    />),
-  );
+      // When
+      const { container } = render(
+        (<Page
+          taskTitle={taskTitle}
+          onChangeTitle={onChangeTitle}
+          onClickAddTask={onClickAddTask}
+          tasks={tasks}
+          onClickDeleteTask={onClickDeleteTask}
+        />),
+      );
 
-  expect(container).toHaveTextContent('To-do');
-  expect(container).toHaveTextContent('첫 번째 할 일');
-  expect(container).toHaveTextContent('완료');
+      // Then
+      expect(container).toHaveTextContent('To-do');
+      expect(container).toHaveTextContent('첫 번째 할 일');
+      expect(container).toHaveTextContent('완료');
+    });
+  });
 
-  const input = getByLabelText('할 일');
+  context('with taskTitle', () => {
+    it('display input', () => {
+      // Given
+      const taskTitle = '두 번째 할 일';
+      const onChangeTitle = jest.fn();
+      const onClickAddTask = jest.fn();
+      const tasks = [{
+        id: 1,
+        title: '첫 번째 할 일',
+      }];
+      const onClickDeleteTask = jest.fn();
 
-  expect(input.value).toBe('두 번째 할 일');
+      // When
+      const { getByLabelText } = render(
+        (<Page
+          taskTitle={taskTitle}
+          onChangeTitle={onChangeTitle}
+          onClickAddTask={onClickAddTask}
+          tasks={tasks}
+          onClickDeleteTask={onClickDeleteTask}
+        />),
+      );
+
+      // Then
+      const input = getByLabelText('할 일');
+
+      expect(input.value).toBe(taskTitle);
+    });
+  });
 });

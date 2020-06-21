@@ -4,58 +4,75 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-test('Without tasks', () => {
-  const tasks = [];
+describe('List', () => {
+  context('without tasks', () => {
+    it('display default text', () => {
+      // Given
+      const tasks = [];
 
-  const handleClick = jest.fn();
+      const handleClick = jest.fn();
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClick}
-    />
-  ));
+      // When
+      const { container } = render((
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />
+      ));
 
-  expect(container).toHaveTextContent('할 일이 없어요!');
-});
+      // Then
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 
-test('With tasks', () => {
-  const tasks = [{
-    id: 1,
-    title: '첫 번째 할 일',
-  }];
+  context('with tasks', () => {
+    it('diplays tasks', () => {
+      // Given
+      const tasks = [{
+        id: 1,
+        title: '첫 번째 할 일',
+      }];
 
-  const handleClick = jest.fn();
+      const handleClick = jest.fn();
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClick}
-    />
-  ));
+      // When
+      const { container } = render((
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />
+      ));
 
-  expect(container).toHaveTextContent(tasks[0].title);
-  expect(container).toHaveTextContent('완료');
-});
+      // Then
+      expect(container).toHaveTextContent(tasks[0].title);
+      expect(container).toHaveTextContent('완료');
+    });
+  });
 
-test('Done task', () => {
-  const tasks = [{
-    id: 1,
-    title: '첫 번째 할 일',
-  }];
+  context('완료 button click', () => {
+    it('call handleClick function', () => {
+      // Given
+      const tasks = [{
+        id: 1,
+        title: '첫 번째 할 일',
+      }];
 
-  const handleClick = jest.fn();
+      const handleClick = jest.fn();
 
-  const { getByText } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClick}
-    />
-  ));
+      // When
+      const { getByText } = render((
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />
+      ));
 
-  expect(handleClick).not.toBeCalled();
+      // Then
+      expect(handleClick).not.toBeCalled();
 
-  fireEvent.click(getByText('완료'));
+      fireEvent.click(getByText('완료'));
 
-  expect(handleClick).toBeCalled();
+      expect(handleClick).toBeCalled();
+    });
+  });
 });
