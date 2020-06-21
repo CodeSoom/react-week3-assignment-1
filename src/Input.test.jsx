@@ -20,9 +20,9 @@ describe('<Input />', () => {
     ));
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-    expect(input).toHaveAttribute('value', '');
+    expect(input).toHaveValue('');
     fireEvent.change(input, { target: { value: '뭐라도 하기' } });
-    expect(input.value).toBe('뭐라도 하기');
+    expect(input).toHaveValue('뭐라도 하기');
   });
 
   test('추가 클릭, 인풋창 초기화', () => {
@@ -33,6 +33,6 @@ describe('<Input />', () => {
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
     fireEvent.click(button);
-    expect(input).toHaveAttribute('value', '');
+    expect(input).toHaveValue('');
   });
 });
