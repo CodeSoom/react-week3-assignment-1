@@ -7,7 +7,7 @@ import Input from './Input';
 const handleChange = jest.fn();
 const handleClick = jest.fn();
 
-describe('Input changes', () => {
+describe('Input', () => {
   context('when type in', () => {
     it('changes text field', () => {
       const { getByPlaceholderText } = render((

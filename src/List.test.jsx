@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-describe('Display empty list', () => {
+describe('Empty list', () => {
   context('when no task', () => {
     it('shows default text', () => {
       const tasks = [];
