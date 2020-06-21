@@ -27,7 +27,7 @@ describe('<List />', () => {
       />
     ));
 
-    expect(getByText(tasks[0].title)).toBeTruthy();
+    expect(getByText(tasks[0].title)).toBeInTheDocument();
   });
 
   test('onClickDelete 호출', () => {
