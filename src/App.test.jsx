@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  context('start application', () => {
+  context('when start application', () => {
     it('first display', () => {
       // When
       const { container } = render(
@@ -23,7 +23,7 @@ describe('App', () => {
   });
 
   context('추가 button click', () => {
-    it('add task', () => {
+    it('when add task', () => {
       // Given
       const initState = {
         newId: 100,

@@ -5,10 +5,6 @@ import { render, fireEvent } from '@testing-library/react';
 import Item from './Item';
 
 describe('Item', () => {
-  context('without task', () => {
-    it('no display', () => {});
-  });
-
   context('with task', () => {
     it('display task', () => {
       // Given
@@ -33,7 +29,7 @@ describe('Item', () => {
     });
   });
 
-  context('완료 button click', () => {
+  context('when click 완료', () => {
     it('call handleClick function', () => {
       // Given
       const task = {

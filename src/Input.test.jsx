@@ -13,7 +13,7 @@ describe('Input', () => {
       const handleClick = jest.fn();
 
       // When
-      const { container } = render((
+      const { container, getByLabelText } = render((
         <Input
           value={value}
           onChange={handleChangText}
@@ -24,6 +24,10 @@ describe('Input', () => {
       // Then
       expect(container).toHaveTextContent('할 일');
       expect(container).toHaveTextContent('추가');
+
+      const input = getByLabelText('할 일');
+
+      expect(input.value).toBe('');
     });
   });
 
@@ -50,7 +54,7 @@ describe('Input', () => {
     });
   });
 
-  context('input text', () => {
+  context('when input text', () => {
     it('call handleChangText function', () => {
       // Given
       const value = '';
@@ -73,7 +77,7 @@ describe('Input', () => {
     });
   });
 
-  context('완료 button click', () => {
+  context('when click 완료', () => {
     it('call handleClick function', () => {
       // Given
       const value = '';

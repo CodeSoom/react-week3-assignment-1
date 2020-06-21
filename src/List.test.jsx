@@ -49,7 +49,7 @@ describe('List', () => {
     });
   });
 
-  context('완료 button click', () => {
+  context('when click 완료', () => {
     it('call handleClick function', () => {
       // Given
       const tasks = [{
