@@ -8,10 +8,17 @@ describe('<Page />', () => {
   test('To-do 타이틀 활인', () => {
     const taskTitle = '';
     const tasks = [];
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+
     const { getByText } = render((
       <Page
         taskTitle={taskTitle}
         tasks={tasks}
+        onChangeTitle={handleChangeTitle}
+        onClickAddTask={handleClickAddTask}
+        onClickDeleteTask={handleClickDeleteTask}
       />
     ));
 
@@ -21,10 +28,16 @@ describe('<Page />', () => {
   test('Input, List 컴포넌트 확인', () => {
     const taskTitle = '';
     const tasks = [];
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
     const { getByText, getByPlaceholderText } = render((
       <Page
         taskTitle={taskTitle}
         tasks={tasks}
+        onChangeTitle={handleChangeTitle}
+        onClickAddTask={handleClickAddTask}
+        onClickDeleteTask={handleClickDeleteTask}
       />
     ));
 
