@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-test('Page 화면 구현', () => {
+test('Page', () => {
   const taskTitle = '할일';
   const tasks = [];
 
@@ -23,4 +23,6 @@ test('Page 화면 구현', () => {
   ));
 
   expect(container).toHaveTextContent('To-do');
+  expect(container).toHaveTextContent('할 일');
+  expect(container).toHaveTextContent('할 일이 없어요!');
 });
