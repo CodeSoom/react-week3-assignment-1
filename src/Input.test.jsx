@@ -18,7 +18,7 @@ test('Input', () => {
 
   fireEvent.change(input, { target: { value: '사용자 입력값' } });
 
-  expect(handleChange).toBeCalled();
+  expect(handleChange).toBeCalledWith(expect.anything());
 
   expect(input.value).toBe('사용자 입력값');
 
@@ -26,7 +26,7 @@ test('Input', () => {
 
   fireEvent.click(getByText('추가'));
 
-  expect(handleClick).toBeCalled();
+  expect(handleClick).toBeCalledWith(expect.anything());
 
   fireEvent.change(input, { target: { value: '' } });
 
