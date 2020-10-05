@@ -4,10 +4,10 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
+describe('Input', () => {
   const taskTitle = '';
-  const handleChange = jest.fn();
   const handleClick = jest.fn();
+  const handleChange = jest.fn();
 
   const { container, getByLabelText, getByText } = render((
     <Input
@@ -18,19 +18,21 @@ test('Input', () => {
   ));
 
   const input = getByLabelText('할 일');
-  expect(input).toHaveDisplayValue('');
+  const button = getByText('추가');
 
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
+  test('초기 값', () => {
+    expect(container).toHaveTextContent('할 일');
+    expect(input).toHaveDisplayValue('');
+    expect(container).toHaveTextContent('추가');
+  });
 
-  expect(handleChange).not.toBeCalled();
-  fireEvent.change(input, { target: { value: '입력 값' } });
-  expect(input).toHaveDisplayValue('입력 값');
-  expect(handleChange).toBeCalled();
+  test('값 입력', () => {
+    fireEvent.change(input, { target: { value: '입력 값' } });
+    expect(input).toHaveDisplayValue('입력 값');
+  });
 
-  expect(handleClick).not.toBeCalled();
-  fireEvent.click(getByText('추가'));
-  expect(input).toHaveDisplayValue = '';
-  expect(handleClick).toBeCalled();
-
+  test('추가 버튼 클릭', () => {
+    fireEvent.click(button);
+    expect(input).toHaveDisplayValue = '';
+  });
 });
