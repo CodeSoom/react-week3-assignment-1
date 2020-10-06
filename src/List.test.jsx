@@ -1,19 +1,49 @@
 import React from 'react';
 
-// import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
-// import List from './List';
+import List from './List';
 
 describe('List', () => {
-  it('empty tasks', () => {
-    // TODO: tasks가 비어있는 케이스 test
-    // '할 일이 없어요!' 확인
+  const setup = ({ tasks, handleClick = jest.fn() }) => {
+    const utils = render(<List tasks={tasks} onClickDelete={handleClick} />);
+
+    return { ...utils };
+  };
+
+  context('empty tasks', () => {
+    const tasks = [];
+    it('"할 일이 없어요!" 확인', () => {
+      const { getByText } = setup({ tasks });
+
+      expect(getByText('할 일이 없어요!')).toBeTruthy();
+    });
   });
 
-  it('exist tasks', () => {
-    // TODO: tasks가 존재하는 케이스 test
-    // tasks = [{ id: 1, title: '아무것도 안하기' }]
-    // '아무것도 안하기' 확인
-    // 완료 버튼 클릭시 onClickDelete가 호출되는지 확인
+  context('exist tasks', () => {
+    const tasks = [
+      { id: 1, title: '아무것도 안하기' },
+      { id: 2, title: '본격적으로 아무것도 안하기' },
+    ];
+
+    it('"아무것도 안하기", "본격적으로 아무것도 안하기" 확인', () => {
+      const { getByText } = setup({ tasks });
+
+      expect(getByText(tasks[0].title)).toBeTruthy();
+      expect(getByText(tasks[1].title)).toBeTruthy();
+    });
+
+    it('완료 버튼 클릭 시 handleClick 호출 확인', () => {
+      const handleClick = jest.fn();
+
+      const { getAllByText } = setup({ tasks, handleClick });
+      const buttons = getAllByText('완료');
+
+      expect(handleClick).not.toBeCalled();
+
+      buttons.forEach((button) => fireEvent.click(button));
+
+      expect(handleClick).toBeCalledTimes(2);
+    });
   });
 });
