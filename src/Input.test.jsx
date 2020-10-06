@@ -7,20 +7,17 @@ import {
 import Input from './Input';
 
 describe('Input', () => {
-  const handleClick = jest.fn();
-  const handleChange = jest.fn();
-
-  const { container, getByText, getByLabelText } = render((
-    <Input onClick={handleClick} onChange={handleChange} />
-  ));
-
-  const input = getByLabelText('할 일');
-  const button = getByText('추가');
-
-  expect(container).toHaveTextContent('추가');
+  const setup = ({ handleChange = jest.fn(), handleClick = jest.fn() }) => {
+    const utils = render(<Input onClick={handleClick} onChange={handleChange} />);
+    return { ...utils };
+  };
 
   test('할일 입력', () => {
     const taskTitle = '아무것도 하지 않기';
+    const handleChange = jest.fn();
+    const { getByLabelText } = setup({ handleChange });
+
+    const input = getByLabelText('할 일');
 
     expect(input).toHaveDisplayValue('');
     expect(handleChange).not.toBeCalled();
@@ -32,7 +29,14 @@ describe('Input', () => {
   });
 
   test('추가 버튼 클릭', () => {
-    fireEvent.click(button, handleClick);
-    expect(input).toHaveDisplayValue('');
+    const handleClick = jest.fn();
+    const { getByLabelText, getByText } = setup({ handleClick });
+
+    expect(handleClick).not.toBeCalled();
+
+    fireEvent.click(getByText('추가'));
+
+    expect(handleClick).toBeCalled();
+    expect(getByLabelText('할 일')).toHaveDisplayValue('');
   });
 });
