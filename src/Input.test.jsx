@@ -9,15 +9,22 @@ import Input from './Input';
 describe('Input', () => {
   const setup = ({ handleChange = jest.fn(), handleClick = jest.fn() }) => {
     const utils = render(<Input onClick={handleClick} onChange={handleChange} />);
-    return { ...utils };
+    const { getByLabelText, getByText } = utils;
+    const input = getByLabelText('할 일');
+    const button = getByText('추가');
+    const taskTitle = '아무것도 하지 않기';
+
+    return {
+      ...utils,
+      input,
+      button,
+      taskTitle,
+    };
   };
 
   test('할일 입력', () => {
-    const taskTitle = '아무것도 하지 않기';
     const handleChange = jest.fn();
-    const { getByLabelText } = setup({ handleChange });
-
-    const input = getByLabelText('할 일');
+    const { input, taskTitle } = setup({ handleChange });
 
     expect(input).toHaveDisplayValue('');
     expect(handleChange).not.toBeCalled();
@@ -25,18 +32,20 @@ describe('Input', () => {
     fireEvent.change(input, { target: { value: taskTitle } });
 
     expect(handleChange).toBeCalled();
-    expect(input).toHaveDisplayValue('아무것도 하지 않기');
+    expect(input).toHaveDisplayValue(taskTitle);
   });
 
   test('추가 버튼 클릭', () => {
     const handleClick = jest.fn();
-    const { getByLabelText, getByText } = setup({ handleClick });
+    const { input, button, taskTitle } = setup({ handleClick });
 
     expect(handleClick).not.toBeCalled();
 
-    fireEvent.click(getByText('추가'));
+    fireEvent.change(input, { target: { value: taskTitle } });
+
+    fireEvent.click(button);
 
     expect(handleClick).toBeCalled();
-    expect(getByLabelText('할 일')).toHaveDisplayValue('');
+    expect(input).toHaveDisplayValue('');
   });
 });
