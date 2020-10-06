@@ -4,20 +4,14 @@ import { render } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input Component test', () => {
-  const givenValue = '밥먹기';
+describe('Input Component', () => {
+  context('without user action', () => {
+    it('show input, label, button elements', () => {
+      const { getByText, getByPlaceholderText } = render(<Input />);
 
-  const { container, getByLabelText } = render((
-    <Input value={givenValue} onChange={() => {}} />
-  ));
-  it('renders label, button text', () => {
-    expect(container).toHaveTextContent('할 일');
-    expect(container).toHaveTextContent('추가');
-  });
-
-  const input = getByLabelText('할 일');
-
-  it('renders given value on input', () => {
-    expect(input).toHaveValue(givenValue);
+      getByText('할 일');
+      getByPlaceholderText('할 일을 입력해 주세요');
+      getByText('추가');
+    });
   });
 });
