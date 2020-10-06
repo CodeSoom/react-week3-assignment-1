@@ -63,49 +63,55 @@ describe('<App />', () => {
   });
 
   describe('task', () => {
-    it('입력할 수 있다.', () => {
-      // Given
-      renderApp();
+    context('타이핑시', () => {
+      it('입력된 값이 출력된다.', () => {
+        // Given
+        renderApp();
 
-      // When
-      fireEvent.change(screen.getByRole('textbox'), {
-        target: { value: '청소하기' },
+        // When
+        fireEvent.change(screen.getByRole('textbox'), {
+          target: { value: '청소하기' },
+        });
+
+        // Then
+        expect(screen.getByRole('textbox')).toHaveValue('청소하기');
       });
-
-      // Then
-      expect(screen.getByRole('textbox')).toHaveValue('청소하기');
     });
 
-    it('추가할 수 있다.', () => {
-      // Given
-      renderApp();
+    context('추가시', () => {
+      it('목록에 task가 출력된다.', () => {
+        // Given
+        renderApp();
 
-      // When
-      fireEvent.change(screen.getByRole('textbox'), {
-        target: { value: '선물사기' },
+        fireEvent.change(screen.getByRole('textbox'), {
+          target: { value: '선물사기' },
+        });
+
+        // When
+        fireEvent.click(screen.getByText('추가'));
+
+        // Then
+        expect(screen.getByRole('list')).toHaveTextContent('선물사기');
       });
-
-      fireEvent.click(screen.getByText('추가'));
-
-      // Then
-      expect(screen.getByRole('list')).toHaveTextContent('선물사기');
     });
 
-    it('삭제할 수 있다.', () => {
-      // Given
-      renderApp();
+    context('삭제시', () => {
+      it('목록에서 task가 삭제된다.', () => {
+        // Given
+        renderApp();
 
-      fireEvent.change(screen.getByRole('textbox'), {
-        target: { value: '운동하기' },
+        fireEvent.change(screen.getByRole('textbox'), {
+          target: { value: '운동하기' },
+        });
+
+        fireEvent.click(screen.getByText('추가'));
+
+        // When
+        fireEvent.click(screen.getByText('완료'));
+
+        // Then
+        expect(screen.queryByRole('list')).not.toBeInTheDocument();
       });
-
-      fireEvent.click(screen.getByText('추가'));
-
-      // When
-      fireEvent.click(screen.getByText('완료'));
-
-      // Then
-      expect(screen.queryByRole('list')).not.toBeInTheDocument();
     });
   });
 });
