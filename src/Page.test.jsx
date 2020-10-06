@@ -12,7 +12,7 @@ describe('Page', () => {
   context('초기 화면일 때', () => {
     const taskTitle = '';
     const tasks = [];
-    it('To-do문구를 화면에 보인다', () => {
+    it('"To-do"가 화면에 보인다', () => {
       const { container } = render((
         <Page tasks={tasks} />
       ));
@@ -20,29 +20,44 @@ describe('Page', () => {
       expect(container).toHaveTextContent('To-do');
     });
 
-    it('라벨과 인풋과 버튼이 화면에 보인다', () => {
-      const { container, getByPlaceholderText } = render((
+    it('"할 일"이 화면에 보인다', () => {
+      const { container } = render((
         <Page
           taskTitle={taskTitle}
           tasks={tasks}
-          onChangeTitle={handleChangeTitle}
-          onClickAddTask={handleClickAddTask}
-          onClickDeleteTask={handleClickDeleteTask}
         />
       ));
 
       expect(container).toHaveTextContent('할 일');
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
-      expect(container).toHaveTextContent('추가');
     });
 
-    it('리스트에 텍스트가 보인다.', () => { });
+    it('인풋창이 화면에 보인다', () => {
+      const { getByPlaceholderText } = render((
+        <Page
+          taskTitle={taskTitle}
+          tasks={tasks}
+        />
+      ));
+
+      getByPlaceholderText('할 일을 입력해 주세요');
+    });
+
+    it('"추가"버튼이 화면에 보인다', () => {
+      const { container } = render((
+        <Page
+          taskTitle={taskTitle}
+          tasks={tasks}
+        />
+      ));
+
+      expect(container).toHaveTextContent('추가');
+    });
   });
 
-  context('인풋에 글자를 입력할 때마다', () => {
+  context('인풋창에 글자를 입력할 때마다', () => {
     const tasks = [];
 
-    it('onChangeTitle 함수가 실행된다', () => {
+    it('onChangeTitle함수가 실행된다', () => {
       const taskTitle = '';
 
       const { getByPlaceholderText } = render((
@@ -56,8 +71,23 @@ describe('Page', () => {
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
       expect(handleChangeTitle).not.toBeCalled();
+
       fireEvent.change(input, { target: { value: '입력한 문자' } });
+
       expect(handleChangeTitle).toBeCalled();
+    });
+
+    it('taskTitle값을 받아서 인풋창에 표기한다', () => {
+      const taskTitle = '입력한 문자';
+
+      const { getByPlaceholderText } = render((
+        <Page
+          taskTitle={taskTitle}
+          tasks={tasks}
+        />
+      ));
+
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('입력한 문자');
     });
   });
 
@@ -75,12 +105,14 @@ describe('Page', () => {
       ));
 
       expect(handleClickAddTask).not.toBeCalled();
+
       fireEvent.click(getByText('추가'));
+
       expect(handleClickAddTask).toBeCalled();
     });
   });
 
-  context('삭제버튼을 누르면', () => {
+  context('삭제버튼을 클릭하면', () => {
     const taskTitle = '';
     const tasks = [
       { id: 1, title: '첫번째 할 일' },
@@ -88,15 +120,15 @@ describe('Page', () => {
       { id: 3, title: '세번째 할 일' },
     ];
 
-    it('onClickDeleteTask 함수가 실행된다', () => {
-      const { queryAllByText } = render((
+    it('클릭한 횟수만큼 onClickDeleteTask 함수가 실행된다', () => {
+      const { getAllByText } = render((
         <Page
           tasks={tasks}
           taskTitle={taskTitle}
           onClickDeleteTask={handleClickDeleteTask}
         />
       ));
-      const deleteButtons = queryAllByText('완료');
+      const deleteButtons = getAllByText('완료');
 
       expect(handleClickDeleteTask).not.toBeCalled();
       deleteButtons.forEach((deleteButton) => {
