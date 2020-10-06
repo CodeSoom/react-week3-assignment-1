@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
+describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
@@ -14,21 +14,37 @@ test('Input', () => {
 
   const input = getByLabelText('할 일');
 
-  expect(handleChange).not.toBeCalled();
+  context('typing text', () => {
+    expect(handleChange).not.toBeCalled();
 
-  fireEvent.change(input, { target: { value: '사용자 입력값' } });
+    it('change input value', () => {
+      fireEvent.change(input, { target: { value: 'text' } });
+    });
 
-  expect(handleChange).toBeCalledWith(expect.anything());
+    it('onChange function to be called', () => {
+      expect(handleChange).toBeCalledWith(expect.anything());
+    });
 
-  expect(input.value).toBe('사용자 입력값');
+    it('Verify that the value has changed', () => {
+      expect(input.value).toBe('text');
+    });
+  });
 
-  expect(handleClick).not.toBeCalled();
+  context('click Button or press Enter', () => {
+    expect(handleClick).not.toBeCalled();
 
-  fireEvent.click(getByText('추가'));
+    fireEvent.click(getByText('추가'));
 
-  expect(handleClick).toBeCalledWith(expect.anything());
+    it('onClick function to be called', () => {
+      expect(handleClick).toBeCalledWith(expect.anything());
+    });
 
-  fireEvent.change(input, { target: { value: '' } });
+    it('initialize input value', () => {
+      fireEvent.change(input, { target: { value: '' } });
+    });
 
-  expect(input.value).toBe('');
+    it('Verify that the value has changed', () => {
+      expect(input.value).toBe('');
+    });
+  });
 });
