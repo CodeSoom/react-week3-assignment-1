@@ -4,10 +4,14 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('<App />', () => {
+  const renderApp = () => render((
+    <App />
+  ));
+
   describe('render', () => {
     it('제목 To-do를 출력한다.', () => {
       // When
-      render(<App />);
+      renderApp();
 
       // Then
       expect(screen.getByText('To-do')).toBeInTheDocument();
@@ -15,7 +19,7 @@ describe('<App />', () => {
 
     it('input을 출력한다.', () => {
       // When
-      render(<App />);
+      renderApp();
 
       // Then
       expect(screen.getByRole('textbox')).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
@@ -23,7 +27,7 @@ describe('<App />', () => {
 
     it('추가 button을 출력한다.', () => {
       // When
-      render(<App />);
+      renderApp();
 
       // Then
       expect(screen.getByRole('button')).toHaveTextContent('추가');
@@ -32,7 +36,7 @@ describe('<App />', () => {
     context('tasks가 없을 때', () => {
       it('빈 메세지를 출력한다.', () => {
         // When
-        render(<App />);
+        renderApp();
 
         // Then
         expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
@@ -43,7 +47,7 @@ describe('<App />', () => {
     context('tasks가 있을 때', () => {
       it('tasks 목록을 출력한다.', () => {
         // Given
-        render(<App />);
+        renderApp();
 
         // When
         fireEvent.change(screen.getByRole('textbox'), {
@@ -61,7 +65,7 @@ describe('<App />', () => {
   describe('task', () => {
     it('입력할 수 있다.', () => {
       // Given
-      render(<App />);
+      renderApp();
 
       // When
       fireEvent.change(screen.getByRole('textbox'), {
@@ -74,7 +78,7 @@ describe('<App />', () => {
 
     it('추가할 수 있다.', () => {
       // Given
-      render(<App />);
+      renderApp();
 
       // When
       fireEvent.change(screen.getByRole('textbox'), {
@@ -89,7 +93,7 @@ describe('<App />', () => {
 
     it('삭제할 수 있다.', () => {
       // Given
-      render(<App />);
+      renderApp();
 
       fireEvent.change(screen.getByRole('textbox'), {
         target: { value: '운동하기' },
