@@ -71,9 +71,9 @@ describe('Page', () => {
       });
 
       it('"할 일이 없어요!" 확인', () => {
-        const { getByText } = setup({ taskTitle, tasks });
+        const { container } = setup({ taskTitle, tasks });
 
-        expect(getByText(emptyTasksText)).toBeTruthy();
+        expect(container).toHaveTextContent(emptyTasksText);
       });
 
       it('onChangeTitle 호출 확인', () => {
@@ -108,11 +108,11 @@ describe('Page', () => {
       });
 
       it('tasks 확인', () => {
-        const { getByText } = setup({ taskTitle, tasks });
+        const { container } = setup({ taskTitle, tasks });
 
-        expect(getByText(tasks[0].title)).toBeTruthy();
-        expect(getByText(tasks[1].title)).toBeTruthy();
-        expect(getByText(tasks[2].title)).toBeTruthy();
+        expect(container).toHaveTextContent(tasks[0].title);
+        expect(container).toHaveTextContent(tasks[1].title);
+        expect(container).toHaveTextContent(tasks[2].title);
       });
 
       it('완료 버튼 클릭시 onClickDeleteTask 호출 확인', () => {
@@ -160,9 +160,9 @@ describe('Page', () => {
       });
 
       it('"할 일이 없어요!" 확인', () => {
-        const { getByText } = setup({ taskTitle, tasks });
+        const { container } = setup({ taskTitle, tasks });
 
-        expect(getByText(emptyTasksText)).toBeTruthy();
+        expect(container).toHaveTextContent(emptyTasksText);
       });
 
       it('onChangeTitle 호출 확인', () => {
@@ -197,11 +197,11 @@ describe('Page', () => {
       });
 
       it('tasks 확인', () => {
-        const { getByText } = setup({ taskTitle, tasks });
+        const { container } = setup({ taskTitle, tasks });
 
-        expect(getByText(tasks[0].title)).toBeTruthy();
-        expect(getByText(tasks[1].title)).toBeTruthy();
-        expect(getByText(tasks[2].title)).toBeTruthy();
+        expect(container).toHaveTextContent(tasks[0].title);
+        expect(container).toHaveTextContent(tasks[1].title);
+        expect(container).toHaveTextContent(tasks[2].title);
       });
 
       it('완료 버튼 클릭시 onClickDeleteTask 호출 확인', () => {

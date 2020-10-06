@@ -15,9 +15,9 @@ describe('List', () => {
     const tasks = [];
 
     it('"할 일이 없어요!" 확인', () => {
-      const { getByText } = setup({ tasks });
+      const { container } = setup({ tasks });
 
-      expect(getByText('할 일이 없어요!')).toBeTruthy();
+      expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
@@ -28,10 +28,10 @@ describe('List', () => {
     ];
 
     it('"아무것도 안하기", "본격적으로 아무것도 안하기" 확인', () => {
-      const { getByText } = setup({ tasks });
+      const { container } = setup({ tasks });
 
-      expect(getByText(tasks[0].title)).toBeTruthy();
-      expect(getByText(tasks[1].title)).toBeTruthy();
+      expect(container).toHaveTextContent(tasks[0].title);
+      expect(container).toHaveTextContent(tasks[1].title);
     });
 
     it('완료 버튼 클릭 시 handleClick 호출 확인', () => {
