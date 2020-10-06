@@ -5,11 +5,12 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
+
   context('초기 화면일 때', () => {
     it('라벨과 인풋과 버튼이 화면에 보인다.', () => {
       const value = '';
-      const handleChange = jest.fn();
-      const handleClick = jest.fn();
 
       const { container, getByRole } = render((
         <Input value={value} onChange={handleChange} onClick={handleClick} />
@@ -22,8 +23,6 @@ describe('Input', () => {
 
     it('인풋창에 value가 빈값으로 나타난다.', () => {
       const value = '';
-      const handleChange = jest.fn();
-      const handleClick = jest.fn();
 
       const { getByPlaceholderText } = render((
         <Input value={value} onChange={handleChange} onClick={handleClick} />
@@ -36,8 +35,6 @@ describe('Input', () => {
   context('인풋에 문자를 입력할 때마다', () => {
     it('handleChange 함수가 실행된다', () => {
       const value = '';
-      const handleChange = jest.fn();
-      const handleClick = jest.fn();
 
       const { getByPlaceholderText } = render((
         <Input value={value} onChange={handleChange} onClick={handleClick} />
@@ -54,8 +51,6 @@ describe('Input', () => {
 
     it('value값을 받아서 input에 표기한다', () => {
       const value = '입력한 문자';
-      const handleChange = jest.fn();
-      const handleClick = jest.fn();
 
       const { getByPlaceholderText } = render((
         <Input value={value} onChange={handleChange} onClick={handleClick} />
@@ -70,8 +65,6 @@ describe('Input', () => {
   context('추가버튼을 클릭하면', () => {
     it('handleClick 함수가 실행된다', () => {
       const value = 'task 타이틀';
-      const handleChange = jest.fn();
-      const handleClick = jest.fn();
 
       const { getByText } = render((
         <Input value={value} onChange={handleChange} onClick={handleClick} />
@@ -86,8 +79,6 @@ describe('Input', () => {
 
     it('인풋 value가 초기화된다.', () => {
       const value = 'task 타이틀';
-      const handleChange = jest.fn();
-      const handleClick = jest.fn();
 
       const { getByPlaceholderText, getByText } = render((
         <Input value={value} onChange={handleChange} onClick={handleClick} />

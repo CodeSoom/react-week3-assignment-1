@@ -5,34 +5,22 @@ import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 describe('초기 화면일 때', () => {
-  it('To-do문구를 화면에 보인다', () => {
-    const taskTitle = '';
-    const tasks = [];
+  const taskTitle = '';
+  const tasks = [];
 
-    const handleChangeTitle = jest.fn();
-    const handleClickDeleteTask = jest.fn();
-    const handleClickAddTask = jest.fn();
+  const handleChangeTitle = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+  const handleClickAddTask = jest.fn();
+
+  it('To-do문구를 화면에 보인다', () => {
     const { container } = render((
-      <Page
-        taskTitle={taskTitle}
-        tasks={tasks}
-        onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
-        onClickDeleteTask={handleClickDeleteTask}
-      />
+      <Page tasks={tasks} />
     ));
 
     expect(container).toHaveTextContent('To-do');
   });
 
   it('라벨과 인풋과 버튼이 화면에 보인다', () => {
-    const taskTitle = '';
-    const tasks = [];
-
-    const handleChangeTitle = jest.fn();
-    const handleClickDeleteTask = jest.fn();
-    const handleClickAddTask = jest.fn();
-
     const { container, getByPlaceholderText } = render((
       <Page
         taskTitle={taskTitle}
@@ -52,21 +40,17 @@ describe('초기 화면일 때', () => {
 });
 
 context('인풋에 글자를 입력할 때마다', () => {
+  const taskTitle = '';
+  const tasks = [];
+
+  const handleChangeTitle = jest.fn();
+
   it('onChangeTitle 함수가 실행된다', () => {
-    const taskTitle = '';
-    const tasks = [];
-
-    const handleChangeTitle = jest.fn();
-    const handleClickDeleteTask = jest.fn();
-    const handleClickAddTask = jest.fn();
-
     const { getByPlaceholderText } = render((
       <Page
         taskTitle={taskTitle}
         tasks={tasks}
         onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
-        onClickDeleteTask={handleClickDeleteTask}
       />
     ));
 
@@ -79,21 +63,17 @@ context('인풋에 글자를 입력할 때마다', () => {
 });
 
 context('추가버튼을 클릭하면', () => {
-  it('onClickAddTask 함수가 실행된다', () => {
-    const taskTitle = '첫번째 할 일';
-    const tasks = [];
+  const taskTitle = '첫번째 할 일';
+  const tasks = [];
 
-    const handleChangeTitle = jest.fn();
-    const handleClickDeleteTask = jest.fn();
+  it('onClickAddTask 함수가 실행된다', () => {
     const handleClickAddTask = jest.fn();
 
     const { getByText } = render((
       <Page
         taskTitle={taskTitle}
         tasks={tasks}
-        onChangeTitle={handleChangeTitle}
         onClickAddTask={handleClickAddTask}
-        onClickDeleteTask={handleClickDeleteTask}
       />
     ));
 
@@ -104,24 +84,19 @@ context('추가버튼을 클릭하면', () => {
 });
 
 context('삭제버튼을 누르면', () => {
+  const taskTitle = '';
+  const tasks = [
+    { id: 1, title: '첫번째 할 일' },
+    { id: 2, title: '두번째 할 일' },
+    { id: 3, title: '세번째 할 일' },
+  ];
   it('onClickDeleteTask 함수가 실행된다', () => {
-    const taskTitle = '';
-    const tasks = [
-      { id: 1, title: '첫번째 할 일' },
-      { id: 2, title: '두번째 할 일' },
-      { id: 3, title: '세번째 할 일' },
-    ];
-
-    const handleChangeTitle = jest.fn();
     const handleClickDeleteTask = jest.fn();
-    const handleClickAddTask = jest.fn();
 
     const { queryAllByText } = render((
       <Page
-        taskTitle={taskTitle}
         tasks={tasks}
-        onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
+        taskTitle={taskTitle}
         onClickDeleteTask={handleClickDeleteTask}
       />
     ));
