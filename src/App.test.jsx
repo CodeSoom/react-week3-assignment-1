@@ -33,8 +33,8 @@ describe('App', () => {
     });
   });
 
-  context('인풋에 문자를 입력할 때마다', () => {
-    it('입력한 문자가 화면 인풋에 보인다', () => {
+  context('인풋창에 문자를 입력할 때', () => {
+    it('입력한 문자가 화면 인풋창에 보인다', () => {
       const { getByPlaceholderText } = render((
         <App />
       ));
@@ -52,8 +52,8 @@ describe('App', () => {
     });
   });
 
-  context('추가버튼을 클릭하면', () => {
-    it('인풋창이 초기화된다', () => {
+  context('추가버튼을 클릭할 때', () => {
+    it('인풋창이 빈값으로 초기화된다', () => {
       const { getByPlaceholderText, getByText } = render((
         <App />
       ));
@@ -69,7 +69,7 @@ describe('App', () => {
       expect(input).toHaveDisplayValue('');
     });
 
-    it('목록에 추가된 task가 보여진다.', () => {
+    it('목록에 추가된 할 일이 보여진다.', () => {
       const { container, getByPlaceholderText, getByText } = render((
         <App />
       ));
@@ -83,14 +83,15 @@ describe('App', () => {
     });
   });
 
-  context('세개의 task를 추가한다면', () => {
+  context('세개의 할 일을 추가할 때', () => {
     it('세개가 순서 대로 보여진다.', () => {
       const tasks = [
         { id: 1, title: '첫번째 할 일' },
         { id: 2, title: '두번째 할 일' },
         { id: 3, title: '세번째 할 일' },
       ];
-      const { container, getByPlaceholderText, getByText } = render((
+
+      const { getByPlaceholderText, getByText, getAllByRole } = render((
         <App />
       ));
 
@@ -101,11 +102,15 @@ describe('App', () => {
         fireEvent.click(getByText('추가'));
       });
 
-      expect(container).toHaveTextContent('첫번째 할 일완료두번째 할 일완료세번째 할 일완료');
+      const taskTitles = getAllByRole('listitem');
+
+      taskTitles.forEach((listItem, index) => {
+        expect(listItem).toHaveTextContent(tasks[index].title);
+      });
     });
   });
 
-  context('삭제버튼을 누르면', () => {
+  context('3개의 할 일 목록의 삭제버튼을 누를 때', () => {
     it('클릭한 순서 대로 할 일이 삭제된다.', () => {
       const tasks = [
         { id: 1, title: '첫번째 할 일' },
@@ -113,7 +118,7 @@ describe('App', () => {
         { id: 3, title: '세번째 할 일' },
       ];
       const {
-        container, getByPlaceholderText, getByText, queryAllByText,
+        container, getByPlaceholderText, getByText, getAllByText,
       } = render((
         <App />
       ));
@@ -125,11 +130,7 @@ describe('App', () => {
         fireEvent.click(getByText('추가'));
       });
 
-      expect(container).toHaveTextContent('첫번째 할 일');
-      expect(container).toHaveTextContent('두번째 할 일');
-      expect(container).toHaveTextContent('세번째 할 일');
-
-      const firstbutton = queryAllByText('완료');
+      const firstbutton = getAllByText('완료');
 
       fireEvent.click(firstbutton[1]);
       expect(container).toHaveTextContent('첫번째 할 일');
