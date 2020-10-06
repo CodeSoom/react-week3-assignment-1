@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-test('Page', () => {
+describe('Page', () => {
   const tasks = [];
   const taskTitle = '';
 
@@ -12,7 +12,7 @@ test('Page', () => {
   const handleClickAdd = jest.fn();
   const handleClickDelete = jest.fn();
 
-  const { getByText, getByLabelText } = render((
+  const { container } = render((
     <Page
       taskTitle={taskTitle}
       onChangeTitle={handleChange}
@@ -22,6 +22,9 @@ test('Page', () => {
     />
   ));
 
-  expect(getByText('To-do')).toHaveTextContent('To-do');
-  expect(getByLabelText('할 일')).toHaveAttribute('type', 'text');
+  context('render', () => {
+    it('visible', () => {
+      expect(container).toBeVisible();
+    });
+  });
 });
