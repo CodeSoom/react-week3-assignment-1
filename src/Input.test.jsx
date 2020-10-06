@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -32,6 +32,32 @@ describe('Input Component', () => {
       const input = getByLabelText('할 일');
 
       expect(input).toHaveValue(value);
+    });
+  });
+
+  context('when user input', () => {
+    it('call change handler', () => {
+      const onChange = jest.fn();
+      const { getByLabelText } = renderInput({ onChange });
+      const input = getByLabelText('할 일');
+      fireEvent.change(input, {
+        target: {
+          value: '밥 먹기',
+        },
+      });
+
+      expect(onChange).toBeCalled();
+    });
+  });
+
+  context('when user click button', () => {
+    it('call click handler', () => {
+      const onClick = jest.fn();
+      const { getByText } = renderInput({ onClick });
+      const button = getByText('추가');
+      fireEvent.click(button);
+
+      expect(onClick).toBeCalled();
     });
   });
 });
