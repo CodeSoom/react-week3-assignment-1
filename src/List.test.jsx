@@ -13,6 +13,7 @@ describe('List', () => {
 
   context('empty tasks', () => {
     const tasks = [];
+
     it('"할 일이 없어요!" 확인', () => {
       const { getByText } = setup({ tasks });
 

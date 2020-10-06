@@ -1,58 +1,71 @@
 import React from 'react';
 
-// import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
-// import App from './App';
+import App from './App';
 
 describe('App', () => {
-  it('initial status', () => {
-    // TODO: 아무것도 하지 않았을 때 나오는 기본 상태 test
-    // placeholder 확인. '할 일을 입력해 주세요'
-    // '할 일이 없어요!' 확인
+  const placeholder = '할 일을 입력해 주세요';
+  const emptyTasksText = '할 일이 없어요!';
+
+  context('initial status', () => {
+    it('placeholder 확인', () => {
+      const { getByPlaceholderText } = render(<App />);
+      const input = getByPlaceholderText(placeholder);
+
+      expect(input.getAttribute('placeholder')).toEqual(placeholder);
+    });
+
+    it('"할 일이 없어요!" 확인', () => {
+      const { container } = render(<App />);
+
+      expect(container).toHaveTextContent(emptyTasksText);
+    });
   });
 
-  it('add 3 tasks', () => {
-    // TODO: task를 3개 추가하는 test
-    // '아무것도 안하기' 입력
-    // 추가 버튼 클릭
-    // input이 빈칸이 되고 placeholder가 표시됨을 확인
-    // '아무것도 안하기' 가 추가됨을 확인
-    // 완료 버튼이 1개임을 확인
-    //
-    // '더욱 더 아무것도 안하기' 입력
-    // 추가 버튼 클릭
-    // input이 빈칸이 되고 placeholder가 표시됨을 확인
-    // '더욱 더 아무것도 안하기' 가 추가됨을 확인
-    // 완료 버튼이 2개임을 확인
-    //
-    // '본격적으로 아무것도 안하기' 입력
-    // 추가 버튼 클릭
-    // input이 빈칸이 되고 placeholder가 표시됨을 확인
-    // '본격적으로 아무것도 안하기' 가 추가됨을 확인
-    // 완료 버튼이 3개임을 확인
-  });
+  context('function test', () => {
+    const tasks = [
+      '아무것도 안하기',
+      '더욱 더 아무것도 안하기',
+      '본격적으로 아무것도 안하기',
+      '',
+    ];
 
-  it('add empty tasks', () => {
-    // TODO: 내용이 없는 task를 하나 추가하는 test
-    // input이 빈칸이고 placeholder가 표시됨을 확인
-    // 추가 버튼 클릭
-    // input이 빈칸이고 placeholder가 표시됨을 확인
-    // '' 가 추가됨을 확인
-    // 완료 버튼이 4개임을 확인
-  });
+    function addTaskTest({ utils, task, numberOfTasks }) {
+      const input = utils.getByPlaceholderText(placeholder);
+      const addTaskButton = utils.getByText('추가');
 
-  it('delete empty task', () => {
-    // TODO: 방금 추가했던 비어있는 task를 완료하는 test
-    // 마지막의 완료 버튼을 클릭
-    // '아무것도 안하기' 확인
-    // '더욱 더 아무것도 안하기' 확인
-    // '본격적으로 아무것도 안하기' 확인
-    // 완료 버튼이 3개임을 확인
-  });
+      fireEvent.change(input, { target: { value: task } });
 
-  it('delete all tasks', () => {
-    // TODO: 모든 tasks를 완료하는 test
-    // 모든 완료 버튼을 클릭
-    // '할 일이 없어요!' 확인
+      expect(input.value).toEqual(task);
+
+      fireEvent.click(addTaskButton);
+
+      expect(input.value).toEqual('');
+      if (task !== '') expect(utils.container).toHaveTextContent(task);
+      expect(utils.getAllByText('완료').length).toEqual(numberOfTasks);
+    }
+
+    it('task 4개 추가 후 전부 삭제하는 시나리오', () => {
+      const utils = render(<App />);
+
+      addTaskTest({ utils, task: tasks[0], numberOfTasks: 1 });
+      addTaskTest({ utils, task: tasks[1], numberOfTasks: 2 });
+      addTaskTest({ utils, task: tasks[2], numberOfTasks: 3 });
+      addTaskTest({ utils, task: tasks[3], numberOfTasks: 4 });
+
+      fireEvent.click(utils.getAllByText('완료')[3]);
+
+      expect(utils.container).toHaveTextContent(tasks[0]);
+      expect(utils.container).toHaveTextContent(tasks[1]);
+      expect(utils.container).toHaveTextContent(tasks[2]);
+      expect(utils.getAllByText('완료').length).toEqual(3);
+
+      utils.getAllByText('완료').forEach((button) => {
+        fireEvent.click(button);
+      });
+
+      expect(utils.container).toHaveTextContent(emptyTasksText);
+    });
   });
 });
