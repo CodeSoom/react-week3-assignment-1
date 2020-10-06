@@ -4,37 +4,36 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('List', () => {
+describe('List', () => {
+  context('tasks가 없을 때', () => {
+    const tasks = [];
 
-  // with 3 tasks
-  const tasks = [
-    {
-      id: 1,
-      title: '뭐라도 하기1',
-    },
-    {
-      id: 2,
-      title: '뭐라도 하기2',
-    },
-    {
-      id: 3,
-      title: '뭐라도 하기3',
-    },
-  ];
+    it('빈 메세지를 표시합니다.', () => {
+      const { container } = render(<List tasks={tasks} />);
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 
-  const { container, getAllByText, rerender } = render((
-    <List tasks={tasks} />
-  ));
+  context('tasks가 있을 때', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: '뭐라도 하기1',
+      },
+      {
+        id: 2,
+        title: '뭐라도 하기2',
+      },
+      {
+        id: 3,
+        title: '뭐라도 하기3',
+      },
+    ];
 
-  expect(getAllByText(/뭐라도 하기/)).toHaveLength(3);
+    it('tasks 목록을 출력한다.', () => {
+      const { getByText } = render((<List tasks={tasks} />));
 
-  expect(getAllByText(/뭐라도 하기/)[0]).toHaveTextContent('뭐라도 하기1');
-  expect(getAllByText(/뭐라도 하기/)[1]).toHaveTextContent('뭐라도 하기2');
-  expect(getAllByText(/뭐라도 하기/)[2]).toHaveTextContent('뭐라도 하기3');
-
-  // with empty task
-  const emptyTask = [];
-  rerender((<List tasks={emptyTask} />));
-
-  expect(container).toHaveTextContent('할 일이 없어요!');
+      tasks.map((task) => expect(getByText(task.title)).toHaveTextContent(task.title));
+    });
+  });
 });
