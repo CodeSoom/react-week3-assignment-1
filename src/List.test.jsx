@@ -23,17 +23,21 @@ describe('List', () => {
     tasks.concat([
       {
         id: 1,
-        task: '할일1',
+        title: '할일1',
       },
       {
         id: 2,
-        task: '할일2',
+        title: '할일2',
+      },
+      {
+        id: 3,
+        title: '할일2',
       },
     ]);
 
     it('할 일 모두 표시', () => {
       tasks.forEach((task) => {
-        expect(container).toHaveTextContent(`${task.title}`);
+        expect(container).toHaveTextContent(task.title);
       });
     });
   });
