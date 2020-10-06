@@ -9,35 +9,43 @@ describe('Input', () => {
   const handleClick = jest.fn();
 
   context('초기 화면일 때', () => {
-    it('라벨과 인풋과 버튼이 화면에 보인다.', () => {
+    it('"할 일"이 화면에 보인다', () => {
       const value = '';
 
-      const { container, getByRole } = render((
-        <Input value={value} onChange={handleChange} onClick={handleClick} />
+      const { container } = render((
+        <Input value={value} />
       ));
 
       expect(container).toHaveTextContent('할 일');
-      expect(container).toHaveTextContent('추가');
-      getByRole('textbox');
     });
 
-    it('인풋창에 value가 빈값으로 나타난다.', () => {
+    it('인풋창이 화면에 보인다', () => {
       const value = '';
 
       const { getByPlaceholderText } = render((
-        <Input value={value} onChange={handleChange} onClick={handleClick} />
+        <Input value={value} />
       ));
 
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('');
+      getByPlaceholderText('할 일을 입력해 주세요');
+    });
+
+    it('"추가"버튼이 화면에 보인다', () => {
+      const value = '';
+
+      const { container } = render((
+        <Input value={value} />
+      ));
+
+      expect(container).toHaveTextContent('추가');
     });
   });
 
-  context('인풋에 문자를 입력할 때마다', () => {
-    it('handleChange 함수가 실행된다', () => {
+  context('인풋에 문자를 입력할 때', () => {
+    it('handleChange함수가 실행된다', () => {
       const value = '';
 
       const { getByPlaceholderText } = render((
-        <Input value={value} onChange={handleChange} onClick={handleClick} />
+        <Input value={value} onChange={handleChange} />
       ));
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
@@ -53,7 +61,7 @@ describe('Input', () => {
       const value = '입력한 문자';
 
       const { getByPlaceholderText } = render((
-        <Input value={value} onChange={handleChange} onClick={handleClick} />
+        <Input value={value} />
       ));
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
@@ -62,12 +70,12 @@ describe('Input', () => {
     });
   });
 
-  context('추가버튼을 클릭하면', () => {
-    it('handleClick 함수가 실행된다', () => {
+  context('추가 버튼을 클릭하면', () => {
+    it('handleClick함수가 실행된다', () => {
       const value = 'task 타이틀';
 
       const { getByText } = render((
-        <Input value={value} onChange={handleChange} onClick={handleClick} />
+        <Input value={value} onClick={handleClick} />
       ));
 
       expect(handleClick).not.toBeCalled();
@@ -77,16 +85,16 @@ describe('Input', () => {
       expect(handleClick).toBeCalled();
     });
 
-    it('인풋 value가 초기화된다.', () => {
-      const value = 'task 타이틀';
+    it('인풋창이 빈값으로 초기화된다.', () => {
+      const value = '첫번째 할 일';
 
       const { getByPlaceholderText, getByText } = render((
-        <Input value={value} onChange={handleChange} onClick={handleClick} />
+        <Input value={value} onClick={handleClick} />
       ));
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-      expect(input).toHaveDisplayValue('task 타이틀');
+      expect(input).toHaveDisplayValue('첫번째 할 일');
 
       fireEvent.click(getByText('추가'));
 
