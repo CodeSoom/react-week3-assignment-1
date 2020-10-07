@@ -9,20 +9,22 @@ describe('Page', () => {
   const handleClickDeleteTask = jest.fn();
   const handleClickAddTask = jest.fn();
 
+  const pageRender = (tasks, taskTitle) => render((
+    <Page
+      tasks={tasks}
+      taskTitle={taskTitle}
+      onClickDeleteTask={handleClickDeleteTask}
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+    />
+  ));
+
   context('without tasks & taskTitle', () => {
     const taskTitle = '';
     const tasks = [];
 
     it('show placeholder', () => {
-      const { container, getByPlaceholderText } = render((
-        <Page
-          tasks={tasks}
-          taskTitle={taskTitle}
-          onClickDeleteTask={handleClickDeleteTask}
-          onChangeTitle={handleChangeTitle}
-          onClickAddTask={handleClickAddTask}
-        />
-      ));
+      const { container, getByPlaceholderText } = pageRender(tasks, taskTitle);
 
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
@@ -31,15 +33,7 @@ describe('Page', () => {
     });
 
     it('show "할 일이 없어요!"', () => {
-      const { container } = render((
-        <Page
-          tasks={tasks}
-          taskTitle={taskTitle}
-          onClickDeleteTask={handleClickDeleteTask}
-          onChangeTitle={handleChangeTitle}
-          onClickAddTask={handleClickAddTask}
-        />
-      ));
+      const { container } = pageRender(tasks, taskTitle);
 
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일이 없어요!');
@@ -56,15 +50,7 @@ describe('Page', () => {
     ];
 
     it('show taskTitle in inputbox', () => {
-      const { container, getByPlaceholderText } = render((
-        <Page
-          tasks={tasks}
-          taskTitle={taskTitle}
-          onClickDeleteTask={handleClickDeleteTask}
-          onChangeTitle={handleChangeTitle}
-          onClickAddTask={handleClickAddTask}
-        />
-      ));
+      const { container, getByPlaceholderText } = pageRender(tasks, taskTitle);
 
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
@@ -73,15 +59,7 @@ describe('Page', () => {
     });
 
     it('show tasks list', () => {
-      const { container, getAllByRole } = render((
-        <Page
-          tasks={tasks}
-          taskTitle={taskTitle}
-          onClickDeleteTask={handleClickDeleteTask}
-          onChangeTitle={handleChangeTitle}
-          onClickAddTask={handleClickAddTask}
-        />
-      ));
+      const { container, getAllByRole } = pageRender(tasks, taskTitle);
 
       expect(container).toHaveTextContent('To-do');
 

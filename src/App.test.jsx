@@ -5,20 +5,18 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
+  const appRender = () => render((<App />));
+
   context('when initial state', () => {
     it('show placeholder', () => {
-      const { container, getByPlaceholderText } = render((
-        <App />
-      ));
+      const { container, getByPlaceholderText } = appRender();
 
       expect(container).toHaveTextContent('To-do');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
     });
 
     it('show "할 일이 없어요!"', () => {
-      const { container } = render((
-        <App />
-      ));
+      const { container } = appRender();
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -32,9 +30,7 @@ describe('App', () => {
         { id: 3, title: '세번째 할 일' },
       ];
 
-      const { getByPlaceholderText, getByText, getAllByRole } = render((
-        <App />
-      ));
+      const { getByPlaceholderText, getByText, getAllByRole } = appRender();
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -60,10 +56,11 @@ describe('App', () => {
       ];
 
       const {
-        container, getByPlaceholderText, getByText, getAllByText,
-      } = render((
-        <App />
-      ));
+        container,
+        getByPlaceholderText,
+        getByText,
+        getAllByText,
+      } = appRender();
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 

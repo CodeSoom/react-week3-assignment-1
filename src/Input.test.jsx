@@ -8,13 +8,15 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
+  const inputRender = (value) => render((
+    <Input value={value} onChange={handleChange} onClick={handleClick} />
+  ));
+
   context('with value', () => {
     const value = '';
 
     it('show placeholder', () => {
-      const { container, getByPlaceholderText } = render((
-        <Input value={value} onChange={handleChange} />
-      ));
+      const { container, getByPlaceholderText } = inputRender(value);
 
       expect(container).toHaveTextContent('할 일');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('');
@@ -25,9 +27,7 @@ describe('Input', () => {
   context('whitout value', () => {
     const value = '받아온 문자';
     it('show value.', () => {
-      const { container, getByPlaceholderText } = render((
-        <Input value={value} onChange={handleChange} />
-      ));
+      const { container, getByPlaceholderText } = inputRender(value);
 
       expect(container).toHaveTextContent('할 일');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('받아온 문자');
@@ -39,9 +39,7 @@ describe('Input', () => {
     it('run onChange event', () => {
       const value = '';
 
-      const { container, getByPlaceholderText } = render((
-        <Input value={value} onChange={handleChange} />
-      ));
+      const { container, getByPlaceholderText } = inputRender(value);
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -61,9 +59,7 @@ describe('Input', () => {
     it('run onClick event', () => {
       const value = '입력한 문자';
 
-      const { getByText, getByPlaceholderText } = render((
-        <Input value={value} onClick={handleClick} />
-      ));
+      const { getByText, getByPlaceholderText } = inputRender(value);
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 

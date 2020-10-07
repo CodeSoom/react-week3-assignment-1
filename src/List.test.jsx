@@ -5,13 +5,15 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
+  const listRender = (tasks) => render((
+    <List tasks={tasks} />
+  ));
+
   context('without tasks', () => {
     const tasks = [];
 
     it('show "할 일이 없어요!"', () => {
-      const { container } = render((
-        <List tasks={tasks} />
-      ));
+      const { container } = listRender(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(container).not.toHaveTextContent('완료');
@@ -25,9 +27,8 @@ describe('List', () => {
     ];
 
     it('show tasks list', () => {
-      const { getAllByRole } = render((
-        <List tasks={tasks} />
-      ));
+      const { getAllByRole } = listRender(tasks);
+
       const taskTitles = getAllByRole('listitem');
 
       taskTitles.forEach((listItem, index) => {
@@ -36,9 +37,7 @@ describe('List', () => {
     });
 
     it('show delete button', () => {
-      const { container } = render((
-        <List tasks={tasks} />
-      ));
+      const { container } = listRender(tasks);
 
       expect(container).toHaveTextContent('완료');
     });
