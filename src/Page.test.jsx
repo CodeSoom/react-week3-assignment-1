@@ -23,6 +23,12 @@ describe('Page', () => {
   ));
 
   context('랜더링 되면', () => {
+    test('Headings를 표시한다', () => {
+      const { getByText } = renderPage();
+
+      expect(getByText('To-do')).toBeInTheDocument();
+    });
+
     test('label, 버튼, placeholder를 표시한다', () => {
       const { getByText, getByPlaceholderText } = renderPage();
 
