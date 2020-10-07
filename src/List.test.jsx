@@ -15,7 +15,7 @@ describe('List Component', () => {
     jest.clearAllMocks();
   });
 
-  context('when tasks empty', () => {
+  context('when empty tasks', () => {
     it('show default text', () => {
       const defaultText = '할 일이 없어요!';
       const { getByText } = renderList();
@@ -24,7 +24,7 @@ describe('List Component', () => {
     });
   });
 
-  context('when tasks not empty', () => {
+  context('with not empty tasks', () => {
     const givenTasks = [
       {
         id: 1,
@@ -48,7 +48,7 @@ describe('List Component', () => {
     });
   });
 
-  context('when tasks invalid type', () => {
+  context('with invalid tasks type', () => {
     it('show error message', () => {
       const { getByText } = renderList('invalid');
 
