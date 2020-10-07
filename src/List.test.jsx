@@ -12,21 +12,27 @@ describe('List', () => {
     return { ...utils };
   };
 
-  test('tasks의 값이 없을 때', () => {
+  context('tasks의 값이 없을 때', () => {
     const tasks = [];
 
-    const { getByText } = setup({ tasks });
-    expect(getByText('할 일이 없어요!'));
+    it('"할 일이 없어요!"를 표시한다.', () => {
+      const { container } = setup({ tasks });
+
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
   });
 
-  test('tasks의 값이 존재할 때', () => {
+  context('tasks의 값이 존재할 때', () => {
     const tasks = [
       { id: 1, title: '코드숨 과제하기' },
       { id: 2, title: '아무것도 하지 않기' },
     ];
 
-    const { container } = setup({ tasks });
-    expect(container).toHaveTextContent(tasks[0].title);
-    expect(container).toHaveTextContent(tasks[1].title);
+    it('"tasks.title이 화면에 표시되는지 확인한다."', () => {
+      const { container } = setup({ tasks });
+
+      expect(container).toHaveTextContent(tasks[0].title);
+      expect(container).toHaveTextContent(tasks[1].title);
+    });
   });
 });
