@@ -33,7 +33,7 @@ describe('List', () => {
     it('tasks 목록을 출력한다.', () => {
       const { getByText } = render((<List tasks={tasks} />));
 
-      tasks.map((task) => expect(getByText(task.title)).toHaveTextContent(task.title));
+      tasks.forEach((task) => expect(getByText(task.title)).toHaveTextContent(task.title));
     });
   });
 });
