@@ -12,7 +12,7 @@ describe('List', () => {
     return { ...utils };
   };
 
-  context('tasks의 값이 없을 때', () => {
+  context('empty tasks', () => {
     const tasks = [];
 
     it('"할 일이 없어요!"를 표시한다.', () => {
@@ -22,7 +22,7 @@ describe('List', () => {
     });
   });
 
-  context('tasks의 값이 존재할 때', () => {
+  context('exist tasks', () => {
     const tasks = [
       { id: 1, title: '코드숨 과제하기' },
       { id: 2, title: '아무것도 하지 않기' },
