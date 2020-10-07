@@ -5,22 +5,22 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const handleClick = jest.fn();
-
-  const tasks = [];
-
-  const { container } = render((
-    <List tasks={tasks} onClickDelete={handleClick} />
-  ));
-
   context('test length is 0', () => {
+    const handleClick = jest.fn();
+
+    const tasks = [];
+
     it('할 일이 없어요! 표시', () => {
+      const { container } = render((
+        <List tasks={tasks} onClickDelete={handleClick} />
+      ));
+
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
   context('test length is over 1', () => {
-    tasks.concat([
+    const tasks = [
       {
         id: 1,
         title: '할일1',
@@ -33,9 +33,13 @@ describe('List', () => {
         id: 3,
         title: '할일2',
       },
-    ]);
+    ];
 
     it('할 일 모두 표시', () => {
+      const { container } = render((
+        <List tasks={tasks} />
+      ));
+
       tasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
       });
