@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
 describe('List', () => {
+  const handleClickDelete = jest.fn();
   const listRender = (tasks) => render((
-    <List tasks={tasks} />
+    <List tasks={tasks} onClickDelete={handleClickDelete} />
   ));
 
   context('without tasks', () => {
@@ -37,9 +38,14 @@ describe('List', () => {
     });
 
     it('show delete button', () => {
-      const { container } = listRender(tasks);
+      const { container, getAllByText } = listRender(tasks);
 
       expect(container).toHaveTextContent('완료');
+
+      expect(handleClickDelete).not.toBeCalled();
+      const deleteButtons = getAllByText('완료');
+      deleteButtons.forEach((deleteButton) => fireEvent.click(deleteButton));
+      expect(handleClickDelete).toBeCalledTimes(deleteButtons.length);
     });
   });
 });

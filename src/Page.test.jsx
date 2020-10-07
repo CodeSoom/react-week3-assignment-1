@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -50,16 +50,26 @@ describe('Page', () => {
     ];
 
     it('show taskTitle in inputbox', () => {
-      const { container, getByPlaceholderText } = pageRender(tasks, taskTitle);
+      const { container, getByPlaceholderText, getByText } = pageRender(tasks, taskTitle);
+
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
 
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('네번째 할 일');
+      expect(input).toHaveDisplayValue('네번째 할 일');
       expect(container).toHaveTextContent('추가');
+
+      expect(handleChangeTitle).not.toBeCalled();
+      fireEvent.change(input, { target: { value: '입력된 문자' } });
+      expect(handleChangeTitle).toBeCalled();
+
+      expect(handleClickAddTask).not.toBeCalled();
+      fireEvent.click(getByText('추가'));
+      expect(handleClickAddTask).toBeCalled();
     });
 
     it('show tasks list', () => {
-      const { container, getAllByRole } = pageRender(tasks, taskTitle);
+      const { container, getAllByRole, getAllByText } = pageRender(tasks, taskTitle);
 
       expect(container).toHaveTextContent('To-do');
 
@@ -68,6 +78,11 @@ describe('Page', () => {
         expect(task).toHaveTextContent(tasks[index].title);
         expect(task).toHaveTextContent('완료');
       });
+
+      expect(handleClickDeleteTask).not.toBeCalled();
+      const deleteButtons = getAllByText('완료');
+      deleteButtons.forEach((deleteButton) => fireEvent.click(deleteButton));
+      expect(handleClickDeleteTask).toBeCalledTimes(taskItems.length);
     });
   });
 });
