@@ -32,6 +32,17 @@ describe('Input', () => {
     cleanup();
   });
 
+  it('handleChange가 호출되는 지 확인', () => {
+    const { getByDisplayValue } = renderInput('');
+    const taskTitleInput = getByDisplayValue('');
+
+    expect(handleChange).not.toBeCalled();
+    fireEvent.change(taskTitleInput, { target: { value: '뭐라도 하기' } });
+    expect(handleChange).toBeCalled();
+
+    cleanup();
+  });
+
   context('value가 없을 때', () => {
     const value = '';
 
@@ -52,22 +63,6 @@ describe('Input', () => {
       const taskTitleInput = getByDisplayValue(value);
 
       expect(taskTitleInput).toHaveValue(value);
-      cleanup();
-    });
-
-  });
-
-  context('value가 변경되었을 때', () => {
-    const value = '';
-
-    it('input이 변경되었을 때, handleChange가 호출되는 지 확인', () => {
-      const { getByDisplayValue } = renderInput(value);
-      const taskTitleInput = getByDisplayValue(value);
-
-      expect(handleChange).not.toBeCalled();
-      fireEvent.change(taskTitleInput, { target: { value: '뭐라도 하기' } });
-      expect(handleChange).toBeCalled();
-
       cleanup();
     });
   });
