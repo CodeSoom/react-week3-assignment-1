@@ -11,15 +11,13 @@ describe('Input', () => {
   const handleClick = jest.fn();
   const taskTitle = '아무것도 하지 않기';
 
-  const renderInput = render((
-    <Input
-      onClick={handleClick}
-      onChange={handleChange}
-    />
-  ));
-
   test('할 일 입력', () => {
-    const { getByLabelText } = renderInput;
+    const { getByLabelText } = render((
+      <Input
+        onClick={handleClick}
+        onChange={handleChange}
+      />
+    ));
     const input = getByLabelText('할 일');
 
     expect(input).toHaveDisplayValue('');
@@ -32,7 +30,12 @@ describe('Input', () => {
   });
 
   test('추가 버튼 클릭', () => {
-    const { getByLabelText, getByText } = renderInput;
+    const { getByLabelText, getByText } = render((
+      <Input
+        onClick={handleClick}
+        onChange={handleChange}
+      />
+    ));
     const input = getByLabelText('할 일');
     const button = getByText('추가');
 
