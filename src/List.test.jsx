@@ -42,6 +42,6 @@ test('List - tasks have task', () => {
   ));
 
   expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('뭐라도 하기');
+  expect(container).toHaveTextContent('코드숨 과제하기');
   expect(handleClick).not.toBeCalled();
 });
