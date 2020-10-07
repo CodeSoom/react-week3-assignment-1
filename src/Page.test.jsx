@@ -8,9 +8,11 @@ import {
 import Page from './Page';
 
 describe('Page', () => {
+  const taskTitle = '아무것도 하지 않기';
+  const inputLabel = '할 일';
+
   context('empty tasks', () => {
     const tasks = [];
-    const taskTitle = '아무것도 하지 않기';
 
     it('"할 일이 없어요!"를 표시한다.', () => {
       const { container } = render(<Page tasks={tasks} />);
@@ -26,7 +28,7 @@ describe('Page', () => {
           onChangeTitle={handleChangeTitle}
         />
       ));
-      const input = getByLabelText('할 일');
+      const input = getByLabelText(inputLabel);
 
       expect(input).toHaveDisplayValue('');
       expect(handleChangeTitle).not.toBeCalled();
@@ -43,7 +45,6 @@ describe('Page', () => {
       { id: 1, title: '코드숨 과제하기' },
       { id: 2, title: '아무것도 하지 않기' },
     ];
-    const taskTitle = '아무것도 하지 않기';
 
     it('tasks.title이 화면에 표시되는지 확인한다.', () => {
       const { container } = render(<Page tasks={tasks} />);
@@ -76,7 +77,7 @@ describe('Page', () => {
           onChangeTitle={handleChangeTitle}
         />
       ));
-      const input = getByLabelText('할 일');
+      const input = getByLabelText(inputLabel);
 
       expect(input).toHaveDisplayValue('');
       expect(handleChangeTitle).not.toBeCalled();
@@ -95,7 +96,7 @@ describe('Page', () => {
           onClickAddTask={handleClickAddTask}
         />
       ));
-      const input = getByLabelText('할 일');
+      const input = getByLabelText(inputLabel);
       const button = getByText('추가');
 
       expect(handleClickAddTask).not.toBeCalled();
