@@ -2,12 +2,11 @@ import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
 
-import Input from '../src/Input';
+import Input from './Input';
 
 test('Input', () => {
   const props = {
     value: 'PR 보내기',
-
   };
 
   const handleChange = jest.fn();

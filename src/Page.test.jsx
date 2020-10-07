@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
-import Page from '../src/Page';
+import Page from './Page';
 
 test('Page', () => {
   const tasks = [];
