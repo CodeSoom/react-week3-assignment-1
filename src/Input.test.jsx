@@ -8,10 +8,10 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  context('value가 존재하지 않으면', () => {
+  context('with value', () => {
     const value = '';
 
-    it('placeholder를 보여준다', () => {
+    it('show placeholder', () => {
       const { container, getByPlaceholderText } = render((
         <Input value={value} onChange={handleChange} />
       ));
@@ -22,9 +22,9 @@ describe('Input', () => {
     });
   });
 
-  context('value가 존재하면', () => {
+  context('whitout value', () => {
     const value = '받아온 문자';
-    it('값을 보여준다.', () => {
+    it('show value.', () => {
       const { container, getByPlaceholderText } = render((
         <Input value={value} onChange={handleChange} />
       ));
@@ -35,8 +35,8 @@ describe('Input', () => {
     });
   });
 
-  context('value가 변하면', () => {
-    it('onChange 이벤트가 실행된다.', () => {
+  context('when value changed', () => {
+    it('run onChange event', () => {
       const value = '';
 
       const { container, getByPlaceholderText } = render((
@@ -57,8 +57,8 @@ describe('Input', () => {
     });
   });
 
-  context('추가 버튼을 클릭하면', () => {
-    it('onClick 이벤트가 실행된다', () => {
+  context('when add button clicked', () => {
+    it('run onClick event', () => {
       const value = '입력한 문자';
 
       const { getByText, getByPlaceholderText } = render((

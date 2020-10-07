@@ -5,10 +5,10 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  context('tasks가 존재하지 않으면', () => {
+  context('without tasks', () => {
     const tasks = [];
 
-    it('"할 일이 없어요!"를 보여준다.', () => {
+    it('show "할 일이 없어요!"', () => {
       const { container } = render((
         <List tasks={tasks} />
       ));
@@ -18,13 +18,13 @@ describe('List', () => {
     });
   });
 
-  context('tasks가 존재한다면', () => {
+  context('with tasks', () => {
     const tasks = [
       { id: 1, title: '첫번째 할 일' },
       { id: 2, title: '두번째 할 일' },
     ];
 
-    it('할 일 목록이 순서대로 보여준다.', () => {
+    it('show tasks list', () => {
       const { getAllByRole } = render((
         <List tasks={tasks} />
       ));
@@ -35,7 +35,7 @@ describe('List', () => {
       });
     });
 
-    it('삭제버튼을 보여준다.', () => {
+    it('show delete button', () => {
       const { container } = render((
         <List tasks={tasks} />
       ));
