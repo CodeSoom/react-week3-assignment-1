@@ -26,6 +26,7 @@ describe('Input', () => {
 
   context('whitout value', () => {
     const value = '받아온 문자';
+
     it('show value.', () => {
       const { container, getByPlaceholderText } = inputRender(value);
 
