@@ -5,25 +5,27 @@ import { fireEvent, render } from '@testing-library/react';
 import Input from './Input';
 
 test('Input', () => {
-  const textInput = '뭐라도 하기';
+  const value = '';
   const onChange = jest.fn;
+  const onClick = jest.fn;
 
-  const {container, getByText } = render((
+  const { container, getByText, queryByPlaceholderText } = render((
     <Input
-      value={textInput}
-      placeholder={"할 일을 입력해주세요."}
+      value={value}
+      placeholder="할 일을 입력해주세요"
       onChange={onChange}
+      onClick={onClick}
     />
   ));
 
   expect(container).toHaveTextContent('할 일');
   expect(container).toHaveTextContent('추가');
 
-  const button = getByText('추가');
+  const searchInput = queryByPlaceholderText('할 일을 입력해주세요');
+  fireEvent.change(searchInput, { target: { value: '뭐라도 하기' } });
+  expect(searchInput.value).toBe('뭐라도 하기');
 
-  expect(value).not.toBeCalledWith('');
-  fireEvent.input(value);
-  expect(value).toBeCalledWith('뭐라도 하기');
+  const button = getByText('추가');
 
   expect(onClick).not.toBeCalled();
   fireEvent.click(button);
