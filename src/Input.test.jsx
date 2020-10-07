@@ -1,0 +1,74 @@
+import React from 'react';
+
+import { render, fireEvent, cleanup } from '@testing-library/react';
+
+import Input from './Input';
+
+describe('Input', () => {
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
+
+  const renderInput = (value) => render((
+    <Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />
+  ));
+
+  context('value가 없을 때', () => {
+    const value = '';
+
+    it('라벨에 "할 일"이 출력되는 지 확인합니다', () => {
+      const { getByText } = renderInput(value);
+      const taskTitleLabel = getByText('할 일');
+
+      expect(taskTitleLabel).toHaveTextContent('할 일');
+      cleanup();
+    });
+
+    it('input의 placeholder에 "할 일을 입력해주세요" 가 잘 출력되는 지 확인합니다.', () => {
+      const { getByPlaceholderText } = renderInput(value);
+      const taskTitleInput = getByPlaceholderText('할 일을 입력해 주세요');
+
+      expect(taskTitleInput).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
+      cleanup();
+    });
+
+    it('버튼에 "추가"가 출력되는 지 확인합니다.', () => {
+      const { getByText } = renderInput(value);
+      const addButton = getByText('추가');
+
+      expect(addButton).toHaveTextContent('추가');
+      cleanup();
+    });
+  });
+
+  context('value가 있을 때', () => {
+    const value = '뭐라도 하기';
+
+    it('input의 value가 잘 출력되는 지 확인합니다.', () => {
+      const { getByDisplayValue } = renderInput(value);
+      const taskTitleInput = getByDisplayValue(value);
+
+      expect(taskTitleInput).toHaveValue(value);
+      cleanup();
+    });
+
+  });
+
+  context('value가 변경되었을 때', () => {
+    const value = '';
+
+    it('input이 변경되었을 때, handleChange가 호출되는 지 확인', () => {
+      const { getByDisplayValue } = renderInput(value);
+      const taskTitleInput = getByDisplayValue(value);
+
+      expect(handleChange).not.toBeCalled();
+      fireEvent.change(taskTitleInput, { target: { value: '뭐라도 하기' } });
+      expect(handleChange).toBeCalled();
+
+      cleanup();
+    });
+  });
+});
