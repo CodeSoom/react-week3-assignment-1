@@ -7,101 +7,50 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  test('Label을 확인한다', () => {
-    const { container } = render(
-      <Input
-        value=""
-        onChange={handleChange}
-        onClick={handleClick}
-      />,
-    );
+  const renderInput = (value = '') => render((
+    <Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />
+  ));
 
-    expect(container).toHaveTextContent('할 일');
-  });
+  context('랜더링 되면', () => {
+    test('Label, 버튼, placeholder를 표시한다', () => {
+      const { getByText, getByPlaceholderText } = renderInput();
 
-  test('버튼 텍스트를 확인한다', () => {
-    const { container } = render(
-      <Input
-        value=""
-        onChange={handleChange}
-        onClick={handleClick}
-      />,
-    );
-
-    expect(container).toHaveTextContent('추가');
-  });
-
-  context('입력이 없을 때', () => {
-    test('placeholder를 확인한다', () => {
-      const { getByRole } = render(
-        <Input
-          value=""
-          onChange={handleChange}
-          onClick={handleClick}
-        />,
-      );
-
-      expect(getByRole('textbox')).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
-    });
-
-    test('handleChange()가 호출되지 않는다', () => {
-      render(
-        <Input
-          value=""
-          onChange={handleChange}
-          onClick={handleClick}
-        />,
-      );
-
-      expect(handleChange).not.toHaveBeenCalled();
+      expect(getByText('할 일')).toBeInTheDocument();
+      expect(getByText('추가')).toBeInTheDocument();
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     });
   });
 
-  context('입력이 있을 때', () => {
-    test('handleChange()가 호출된다', () => {
-      const { getByRole } = render(
-        <Input
-          value=""
-          onChange={handleChange}
-          onClick={handleClick}
-        />,
-      );
+  context('텍스트가 입력되면', () => {
+    test('handleChange()를 호출한다', () => {
+      const { getByLabelText } = renderInput();
+      const input = getByLabelText('할 일');
 
-      fireEvent.change(getByRole('textbox'), {
-        target: { value: '산책하기' },
+      fireEvent.change(input, {
+        target: { value: '운동하기' },
       });
 
       expect(handleChange).toHaveBeenCalled();
     });
   });
 
-  context('추가버튼을 클릭하지 않으면', () => {
-    test('handleClick()가 호출되지 않는다', () => {
-      render(
-        <Input
-          value=""
-          onChange={handleChange}
-          onClick={handleClick}
-        />,
-      );
+  context('추가 버튼을 클릭하면', () => {
+    test('handleClick()를 호출한다', () => {
+      const value = '운동하기';
 
-      expect(handleClick).not.toHaveBeenCalled();
-    });
-  });
+      const { getByLabelText, getByText } = renderInput(value);
+      const input = getByLabelText('할 일');
 
-  context('추가버튼을 클릭하면', () => {
-    test('handleClick()가 호출된다', () => {
-      const { getByRole } = render(
-        <Input
-          value="산책하기"
-          onChange={handleChange}
-          onClick={handleClick}
-        />,
-      );
+      expect(input).toHaveDisplayValue('운동하기');
 
-      fireEvent.click(getByRole('button'));
+      fireEvent.click(getByText('추가'));
 
       expect(handleClick).toHaveBeenCalled();
+      expect(input).toHaveDisplayValue('');
     });
   });
 });
