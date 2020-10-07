@@ -43,6 +43,17 @@ describe('Input', () => {
     cleanup();
   });
 
+  it('handleClick이 호출되는 지 확인', () => {
+    const { getByText } = renderInput('');
+    const addButton = getByText('추가');
+
+    expect(handleClick).not.toBeCalled();
+    fireEvent.click(addButton);
+    expect(handleClick).toBeCalled();
+
+    cleanup();
+  });
+
   context('value가 없을 때', () => {
     const value = '';
 
