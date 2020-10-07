@@ -9,7 +9,7 @@ describe('Page', () => {
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
 
-  const renderPage = (taskTitle = '', tasks = '') => render((
+  const renderPage = (taskTitle = '', tasks = []) => render((
     <Page
       taskTitle={taskTitle}
       onChangeTitle={handleChangeTitle}
