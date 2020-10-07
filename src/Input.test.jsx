@@ -8,10 +8,10 @@ describe('Input 컴포넌트', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  context('값이 없으면', () => {
+  context('화면을 그릴때', () => {
     const taskTitle = '';
 
-    it('placeholder 값을 보여준다', () => {
+    it('label, input, button을 보여준다.', () => {
       const { container, getByLabelText } = render((
         <Input
           value={taskTitle}
@@ -26,25 +26,7 @@ describe('Input 컴포넌트', () => {
     });
   });
 
-  context('값이 있으면', () => {
-    const taskTitle = 'taskTitle';
-
-    it('값을 보여준다', () => {
-      const { container, getByLabelText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
-
-      expect(container).toHaveTextContent('할 일');
-      expect(getByLabelText('할 일')).toHaveDisplayValue('taskTitle');
-      expect(container).toHaveTextContent('추가');
-    });
-  });
-
-  context('값이 변하면', () => {
+  context('input 값이 변하면', () => {
     const taskTitle = '';
 
     it('onChange 이벤트가 발생한다', () => {
