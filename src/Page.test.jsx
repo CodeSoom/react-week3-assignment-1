@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 import Page from './Page';
 
 describe('Page', () => {
-  const placeholder = '할 일을 입력해 주세요';
+  const placeholderText = '할 일을 입력해 주세요';
   const emptyTasksText = '할 일이 없어요!';
+  const addTaskButtonText = '추가';
+  const deleteButtonText = '완료';
 
   const setup = ({
     taskTitle, onChangeTitle = jest.fn(),
@@ -23,214 +25,147 @@ describe('Page', () => {
     return { ...utils };
   };
 
-  function onChangeTitleTest(input, onClickAddTask) {
-    expect(onClickAddTask).not.toBeCalled();
+  function onChangeTitleTest({ onChangeTitle }) {
+    const { getByRole } = screen;
+    const input = getByRole('textbox');
 
-    fireEvent.change(
-      input,
-      { target: { value: 'any' } },
-    );
+    expect(onChangeTitle).not.toBeCalled();
 
-    expect(onClickAddTask).toBeCalledTimes(1);
+    fireEvent.change(input, { target: { value: 'any' } });
 
-    for (let i = 0; i < 4; i += 1) {
-      fireEvent.change(
-        input,
-        { target: { value: `${i}` } },
-      );
-    }
-
-    expect(onClickAddTask).toBeCalledTimes(5);
+    expect(onChangeTitle).toBeCalledTimes(1);
   }
 
-  function onClickAddTaskTest(button, onClickAddTask) {
+  function onClickAddTaskTest({ onClickAddTask }) {
+    const { getByText } = screen;
+
     expect(onClickAddTask).not.toBeCalled();
 
-    fireEvent.click(button);
+    fireEvent.click(getByText(addTaskButtonText));
 
     expect(onClickAddTask).toBeCalledTimes(1);
-
-    for (let i = 0; i < 8; i += 1) {
-      fireEvent.click(button);
-    }
-
-    expect(onClickAddTask).toBeCalledTimes(9);
   }
 
-  context('empty taskTitle', () => {
+  function onClickDeleteTaskTest({ onClickDeleteTask, tasks }) {
+    const { getAllByText } = screen;
+    const buttons = getAllByText(deleteButtonText);
+
+    expect(buttons).toHaveLength(tasks.length);
+    expect(onClickDeleteTask).not.toBeCalled();
+
+    buttons.forEach((button) => fireEvent.click(button));
+
+    expect(onClickDeleteTask).toBeCalledTimes(tasks.length);
+  }
+
+  context('without taskTitle', () => {
     const taskTitle = '';
 
-    context('empty tasks', () => {
+    context('without tasks', () => {
       const tasks = [];
+      const onChangeTitle = jest.fn();
+      const onClickAddTask = jest.fn();
 
-      it('placeholder 확인', () => {
-        const { getByPlaceholderText } = setup({ taskTitle, tasks });
-        const input = getByPlaceholderText(placeholder);
+      it('check elements', () => {
+        const { getByText, getByPlaceholderText } = setup({ taskTitle, tasks });
 
-        expect(input.getAttribute('placeholder')).toEqual(placeholder);
+        getByPlaceholderText(placeholderText);
+        getByText(addTaskButtonText);
+        getByText(emptyTasksText);
       });
 
-      it('"할 일이 없어요!" 확인', () => {
-        const { container } = setup({ taskTitle, tasks });
+      it('check functions', () => {
+        setup({
+          taskTitle, onChangeTitle, tasks, onClickAddTask,
+        });
 
-        expect(container).toHaveTextContent(emptyTasksText);
-      });
-
-      it('onChangeTitle 호출 확인', () => {
-        const onChangeTitle = jest.fn();
-
-        const { getByPlaceholderText } = setup({ taskTitle, tasks, onChangeTitle });
-
-        onChangeTitleTest(getByPlaceholderText(placeholder), onChangeTitle);
-      });
-
-      it('onClickAddTask 호출 확인', () => {
-        const onClickAddTask = jest.fn();
-
-        const { getByText } = setup({ taskTitle, tasks, onClickAddTask });
-
-        onClickAddTaskTest(getByText('추가'), onClickAddTask);
+        onChangeTitleTest({ onChangeTitle });
+        onClickAddTaskTest({ onClickAddTask });
       });
     });
 
-    context('exist tasks', () => {
+    context('with tasks', () => {
+      const onClickDeleteTask = jest.fn();
+      const onClickAddTask = jest.fn();
+      const onChangeTitle = jest.fn();
       const tasks = [
         { id: 1, title: '아무것도 안하기' },
         { id: 2, title: '더욱 더 아무것도 안하기' },
         { id: 3, title: '본격적으로 아무것도 안하기' },
       ];
 
-      it('placeholder 확인', () => {
-        const { getByPlaceholderText } = setup({ taskTitle, tasks });
-        const input = getByPlaceholderText(placeholder);
+      it('check elements', () => {
+        const { getByText, getByPlaceholderText } = setup({ taskTitle, tasks });
 
-        expect(input.getAttribute('placeholder')).toEqual(placeholder);
+        getByPlaceholderText(placeholderText);
+        getByText(addTaskButtonText);
+        tasks.forEach((task) => getByText(task.title));
       });
 
-      it('tasks 확인', () => {
-        const { container } = setup({ taskTitle, tasks });
+      it('check functions', () => {
+        setup({
+          taskTitle, onChangeTitle, tasks, onClickDeleteTask, onClickAddTask,
+        });
 
-        expect(container).toHaveTextContent(tasks[0].title);
-        expect(container).toHaveTextContent(tasks[1].title);
-        expect(container).toHaveTextContent(tasks[2].title);
-      });
-
-      it('완료 버튼 클릭시 onClickDeleteTask 호출 확인', () => {
-        const onClickDeleteTask = jest.fn();
-
-        const { getAllByText } = setup({ taskTitle, tasks, onClickDeleteTask });
-        const buttons = getAllByText('완료');
-
-        expect(onClickDeleteTask).not.toBeCalled();
-
-        buttons.forEach((button) => fireEvent.click(button));
-
-        expect(onClickDeleteTask).toBeCalledTimes(tasks.length);
-      });
-
-      it('onChangeTitle 호출 확인', () => {
-        const onChangeTitle = jest.fn();
-
-        const { getByPlaceholderText } = setup({ taskTitle, tasks, onChangeTitle });
-
-        onChangeTitleTest(getByPlaceholderText(placeholder), onChangeTitle);
-      });
-
-      it('onClickAddTask 호출 확인', () => {
-        const onClickAddTask = jest.fn();
-
-        const { getByText } = setup({ taskTitle, tasks, onClickAddTask });
-
-        onClickAddTaskTest(getByText('추가'), onClickAddTask);
+        onClickAddTaskTest({ onClickAddTask });
+        onChangeTitleTest({ onChangeTitle });
+        onClickDeleteTaskTest({ onClickDeleteTask, tasks });
       });
     });
   });
 
-  context('exist taskTitle', () => {
+  context('with taskTitle', () => {
     const taskTitle = 'some text';
 
-    context('empty tasks', () => {
+    context('without tasks', () => {
+      const onClickAddTask = jest.fn();
+      const onChangeTitle = jest.fn();
       const tasks = [];
 
-      it('input.value equal taskTitle 확인', () => {
-        const { getByDisplayValue } = setup({ taskTitle, tasks });
-        const input = getByDisplayValue(taskTitle);
+      it('check elements', () => {
+        const { getByText, getByDisplayValue } = setup({ taskTitle, tasks });
 
-        expect(input.value).toEqual(taskTitle);
+        getByDisplayValue(taskTitle);
+        getByText(addTaskButtonText);
+        getByText(emptyTasksText);
       });
 
-      it('"할 일이 없어요!" 확인', () => {
-        const { container } = setup({ taskTitle, tasks });
+      it('check functions', () => {
+        setup({
+          taskTitle, tasks, onChangeTitle, onClickAddTask,
+        });
 
-        expect(container).toHaveTextContent(emptyTasksText);
-      });
-
-      it('onChangeTitle 호출 확인', () => {
-        const onChangeTitle = jest.fn();
-
-        const { getByPlaceholderText } = setup({ taskTitle, tasks, onChangeTitle });
-
-        onChangeTitleTest(getByPlaceholderText(placeholder), onChangeTitle);
-      });
-
-      it('onClickAddTask 호출 확인', () => {
-        const onClickAddTask = jest.fn();
-
-        const { getByText } = setup({ taskTitle, tasks, onClickAddTask });
-
-        onClickAddTaskTest(getByText('추가'), onClickAddTask);
+        onChangeTitleTest({ onChangeTitle });
+        onClickAddTaskTest({ onClickAddTask });
       });
     });
 
-    context('exist tasks', () => {
+    context('with tasks', () => {
+      const onClickDeleteTask = jest.fn();
+      const onChangeTitle = jest.fn();
+      const onClickAddTask = jest.fn();
       const tasks = [
         { id: 1, title: '아무것도 안하기' },
         { id: 2, title: '더욱 더 아무것도 안하기' },
         { id: 3, title: '본격적으로 아무것도 안하기' },
       ];
 
-      it('input.value equal taskTitle 확인', () => {
-        const { getByDisplayValue } = setup({ taskTitle, tasks });
-        const input = getByDisplayValue(taskTitle);
+      it('check elements', () => {
+        const { getByText, getByPlaceholderText } = setup({ taskTitle, tasks });
 
-        expect(input.value).toEqual(taskTitle);
+        getByPlaceholderText(placeholderText);
+        getByText(addTaskButtonText);
+        tasks.forEach((task) => getByText(task.title));
       });
 
-      it('tasks 확인', () => {
-        const { container } = setup({ taskTitle, tasks });
+      it('check functions', () => {
+        setup({
+          taskTitle, onChangeTitle, tasks, onClickDeleteTask, onClickAddTask,
+        });
 
-        expect(container).toHaveTextContent(tasks[0].title);
-        expect(container).toHaveTextContent(tasks[1].title);
-        expect(container).toHaveTextContent(tasks[2].title);
-      });
-
-      it('완료 버튼 클릭시 onClickDeleteTask 호출 확인', () => {
-        const onClickDeleteTask = jest.fn();
-
-        const { getAllByText } = setup({ taskTitle, tasks, onClickDeleteTask });
-        const buttons = getAllByText('완료');
-
-        expect(onClickDeleteTask).not.toBeCalled();
-
-        buttons.forEach((button) => fireEvent.click(button));
-
-        expect(onClickDeleteTask).toBeCalledTimes(tasks.length);
-      });
-
-      it('onChangeTitle 호출 확인', () => {
-        const onChangeTitle = jest.fn();
-
-        const { getByPlaceholderText } = setup({ taskTitle, tasks, onChangeTitle });
-
-        onChangeTitleTest(getByPlaceholderText(placeholder), onChangeTitle);
-      });
-
-      it('onClickAddTask 호출 확인', () => {
-        const onClickAddTask = jest.fn();
-
-        const { getByText } = setup({ taskTitle, tasks, onClickAddTask });
-
-        onClickAddTaskTest(getByText('추가'), onClickAddTask);
+        onClickAddTaskTest({ onClickAddTask });
+        onChangeTitleTest({ onChangeTitle });
+        onClickDeleteTaskTest({ onClickDeleteTask, tasks });
       });
     });
   });

@@ -5,46 +5,52 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const setup = ({ tasks, handleClick = jest.fn() }) => {
-    const utils = render(<List tasks={tasks} onClickDelete={handleClick} />);
+  const emptyTasksText = '할 일이 없어요!';
+  const deleteTaskButtonText = '완료';
+
+  const setup = ({ tasks, onClickDelete = jest.fn() }) => {
+    const utils = render((
+      <List
+        tasks={tasks}
+        onClickDelete={onClickDelete}
+      />
+    ));
 
     return { ...utils };
   };
 
-  context('empty tasks', () => {
+  context('without tasks', () => {
     const tasks = [];
 
-    it('"할 일이 없어요!" 확인', () => {
-      const { container } = setup({ tasks });
+    it('check element', () => {
+      const { getByText } = setup({ tasks });
 
-      expect(container).toHaveTextContent('할 일이 없어요!');
+      getByText(emptyTasksText);
     });
   });
 
-  context('exist tasks', () => {
+  context('with tasks', () => {
+    const onClickDelete = jest.fn();
     const tasks = [
       { id: 1, title: '아무것도 안하기' },
       { id: 2, title: '본격적으로 아무것도 안하기' },
     ];
 
-    it('"아무것도 안하기", "본격적으로 아무것도 안하기" 확인', () => {
-      const { container } = setup({ tasks });
+    it('check elements', () => {
+      const { getByText } = setup({ tasks });
 
-      expect(container).toHaveTextContent(tasks[0].title);
-      expect(container).toHaveTextContent(tasks[1].title);
+      tasks.forEach((task) => getByText(task.title));
     });
 
-    it('완료 버튼 클릭 시 handleClick 호출 확인', () => {
-      const handleClick = jest.fn();
+    it('check functions', () => {
+      const { getAllByText } = setup({ tasks, onClickDelete });
 
-      const { getAllByText } = setup({ tasks, handleClick });
-      const buttons = getAllByText('완료');
+      expect(onClickDelete).not.toBeCalled();
 
-      expect(handleClick).not.toBeCalled();
+      getAllByText(deleteTaskButtonText)
+        .forEach((button) => fireEvent.click(button));
 
-      buttons.forEach((button) => fireEvent.click(button));
-
-      expect(handleClick).toBeCalledTimes(2);
+      expect(onClickDelete).toBeCalledTimes(2);
     });
   });
 });
