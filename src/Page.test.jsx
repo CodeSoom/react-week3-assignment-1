@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -23,4 +23,4 @@ describe('Page', () => {
     const { getByText } = renderPage();
     expect(getByText('To-do')).toHaveTextContent('To-do');
   });
-})
+});
