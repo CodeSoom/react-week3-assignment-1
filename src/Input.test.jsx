@@ -24,7 +24,7 @@ describe('Input', () => {
     });
   });
 
-  context('whitout value', () => {
+  context('without value', () => {
     const value = '받아온 문자';
 
     it('show value.', () => {
