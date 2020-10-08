@@ -4,10 +4,21 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
+function renderInput(onChange, onClick) {
+  return render((
+    <Input
+      onChange={onChange}
+      onClick={onClick}
+    />
+  ));
+}
+
 describe('Input', () => {
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
   context('when it renders', () => {
     it('renders a label, an input, and a button', () => {
-      const { container } = render((<Input />));
+      const { container } = renderInput(handleChange, handleClick);
 
       expect(container).toContainHTML('<label');
       expect(container).toHaveTextContent('할 일');
@@ -23,10 +34,7 @@ describe('Input', () => {
     const value = '공부하기';
 
     it('calls change handler', () => {
-      const handleChange = jest.fn();
-      const { getByLabelText } = render((
-        <Input onChange={handleChange} />
-      ));
+      const { getByLabelText } = renderInput(handleChange, handleClick);
 
       expect(handleChange).not.toBeCalled();
 
@@ -38,10 +46,7 @@ describe('Input', () => {
 
   context('when 추가 button is clicked', () => {
     it('calls click handler', () => {
-      const handleClick = jest.fn();
-      const { getByText } = render((
-        <Input onClick={handleClick} />
-      ));
+      const { getByText } = renderInput(handleChange, handleClick);
 
       expect(handleClick).not.toBeCalled();
 

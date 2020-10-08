@@ -4,10 +4,16 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
+function renderApp() {
+  return render((
+    <App />
+  ));
+}
+
 describe('App', () => {
   context('when it renders', () => {
     it('renders a div', () => {
-      const { container } = render((<App />));
+      const { container } = renderApp();
 
       expect(container).toContainHTML('<div');
     });
@@ -17,7 +23,7 @@ describe('App', () => {
     const value = '커버리지 높이기';
 
     it('changes taskTitle', () => {
-      const { getByLabelText } = render((<App />));
+      const { getByLabelText } = renderApp();
       const input = getByLabelText('할 일');
 
       expect(input.value).not.toBe(value);
@@ -34,7 +40,7 @@ describe('App', () => {
     const value = '커버리지 높이기';
 
     it('adds new task', () => {
-      const { getByLabelText, getByText, container } = render((<App />));
+      const { getByLabelText, getByText, container } = renderApp();
       const input = getByLabelText('할 일');
 
       fireEvent.change(input, {
@@ -51,7 +57,7 @@ describe('App', () => {
     const value = '커버리지 높이기';
 
     it('removes completed task', () => {
-      const { getByLabelText, getByText, container } = render((<App />));
+      const { getByLabelText, getByText, container } = renderApp();
       const input = getByLabelText('할 일');
 
       fireEvent.change(input, {

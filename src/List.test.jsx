@@ -4,14 +4,18 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
+function renderList(tasks) {
+  return render((
+    <List tasks={tasks} />
+  ));
+}
+
 describe('List', () => {
   context('when there are no tasks', () => {
     const tasks = [];
 
     it('renders 할 일이 없어요!', () => {
-      const { container } = render((
-        <List tasks={tasks} />
-      ));
+      const { container } = renderList(tasks);
 
       expect(container).toContainHTML('할 일이 없어요!');
     });
@@ -28,9 +32,7 @@ describe('List', () => {
     }];
 
     it('renders a list of tasks', () => {
-      const { container } = render((
-        <List tasks={tasks} />
-      ));
+      const { container } = renderList(tasks);
 
       expect(container).toContainHTML('<ol');
       expect(container).toContainHTML('쉬기');
