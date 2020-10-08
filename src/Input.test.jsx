@@ -32,7 +32,7 @@ describe('Input', () => {
       expect(input).toHaveDisplayValue(taskTitle);
     });
 
-    test('추가 버튼 클릭을 클릭한다.', () => {
+    it('추가 버튼 클릭을 클릭한다.', () => {
       const { getByLabelText, getByText } = renderInput();
       const input = getByLabelText(inputLabel);
 
