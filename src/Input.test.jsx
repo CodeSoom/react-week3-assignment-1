@@ -64,12 +64,14 @@ describe('Input', () => {
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-      expect(handleClick).not.toBeCalled();
       expect(input).toHaveDisplayValue('입력한 문자');
+
+      expect(handleClick).not.toBeCalled();
 
       fireEvent.click(getByText('추가'));
 
       expect(handleClick).toBeCalled();
+
       expect(input).toHaveDisplayValue('');
     });
   });

@@ -72,14 +72,19 @@ describe('App', () => {
       const firstbutton = getAllByText('완료');
 
       fireEvent.click(firstbutton[1]);
+
       expect(container).toHaveTextContent('첫번째 할 일');
       expect(container).not.toHaveTextContent('두번째 할 일');
       expect(container).toHaveTextContent('세번째 할 일');
+
       fireEvent.click(firstbutton[0]);
+
       expect(container).not.toHaveTextContent('첫번째 할 일');
       expect(container).not.toHaveTextContent('두번째 할 일');
       expect(container).toHaveTextContent('세번째 할 일');
+
       fireEvent.click(firstbutton[2]);
+
       expect(container).not.toHaveTextContent('첫번째 할 일');
       expect(container).not.toHaveTextContent('두번째 할 일');
       expect(container).not.toHaveTextContent('세번째 할 일');

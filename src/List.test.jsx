@@ -43,8 +43,13 @@ describe('List', () => {
       expect(container).toHaveTextContent('완료');
 
       expect(handleClickDelete).not.toBeCalled();
+
       const deleteButtons = getAllByText('완료');
-      deleteButtons.forEach((deleteButton) => fireEvent.click(deleteButton));
+
+      deleteButtons.forEach((deleteButton) => {
+        fireEvent.click(deleteButton);
+      });
+
       expect(handleClickDelete).toBeCalledTimes(deleteButtons.length);
     });
   });

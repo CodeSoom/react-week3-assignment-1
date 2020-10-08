@@ -60,11 +60,15 @@ describe('Page', () => {
       expect(container).toHaveTextContent('추가');
 
       expect(handleChangeTitle).not.toBeCalled();
+
       fireEvent.change(input, { target: { value: '입력된 문자' } });
+
       expect(handleChangeTitle).toBeCalled();
 
       expect(handleClickAddTask).not.toBeCalled();
+
       fireEvent.click(getByText('추가'));
+
       expect(handleClickAddTask).toBeCalled();
     });
 
@@ -80,8 +84,11 @@ describe('Page', () => {
       });
 
       expect(handleClickDeleteTask).not.toBeCalled();
+
       const deleteButtons = getAllByText('완료');
+
       deleteButtons.forEach((deleteButton) => fireEvent.click(deleteButton));
+
       expect(handleClickDeleteTask).toBeCalledTimes(taskItems.length);
     });
   });
