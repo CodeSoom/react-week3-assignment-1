@@ -14,7 +14,7 @@ describe('List', () => {
   ));
 
   context('tasks가 없을 때', () => {
-    test('빈 메시지를 표시한다', () => {
+    it('빈 메시지를 표시한다', () => {
       const { getByText } = renderList();
 
       expect(getByText('할 일이 없어요!')).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('List', () => {
   });
 
   context('tasks가 있을 때', () => {
-    test('할 일 목록과 완료 버튼을 표시한다', () => {
+    it('할 일 목록과 완료 버튼을 표시한다', () => {
       const tasks = [
         { id: 1, title: '운동하기' },
       ];
@@ -35,7 +35,7 @@ describe('List', () => {
   });
 
   context('완료 버튼을 클릭하면', () => {
-    test('handleClickDelete()를 호출한다', () => {
+    it('handleClickDelete()를 호출한다', () => {
       const tasks = [
         { id: 1, title: '운동하기' },
       ];

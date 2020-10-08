@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
+it('Item', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',

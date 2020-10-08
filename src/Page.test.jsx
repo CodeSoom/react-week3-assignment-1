@@ -23,13 +23,13 @@ describe('Page', () => {
   ));
 
   context('랜더링 되면', () => {
-    test('Headings를 표시한다', () => {
+    it('Headings를 표시한다', () => {
       const { getByText } = renderPage();
 
       expect(getByText('To-do')).toBeInTheDocument();
     });
 
-    test('label, 버튼, placeholder를 표시한다', () => {
+    it('label, 버튼, placeholder를 표시한다', () => {
       const { getByText, getByPlaceholderText } = renderPage();
 
       expect(getByText('할 일')).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('Page', () => {
   });
 
   context('tasks가 없을 때', () => {
-    test('빈 메시지를 표시한다', () => {
+    it('빈 메시지를 표시한다', () => {
       const { container } = renderPage();
 
       expect(container).toHaveTextContent('할 일이 없어요!');
@@ -47,7 +47,7 @@ describe('Page', () => {
   });
 
   context('tasks가 있을 때', () => {
-    test('할일 목록과 완료 버튼을 표시한다', () => {
+    it('할일 목록과 완료 버튼을 표시한다', () => {
       const tasks = [
         { id: 1, title: '운동하기' },
       ];
@@ -60,7 +60,7 @@ describe('Page', () => {
   });
 
   context('완료 버튼을 클릭하면', () => {
-    test('handleClickDeleteTask()를 호출한다', () => {
+    it('handleClickDeleteTask()를 호출한다', () => {
       const tasks = [
         { id: 1, title: '운동하기' },
       ];
@@ -75,7 +75,7 @@ describe('Page', () => {
   });
 
   context('taskTitle을 입력되면', () => {
-    test('handleChangeTitle()을 호출한다', () => {
+    it('handleChangeTitle()을 호출한다', () => {
       const { getByLabelText } = renderPage();
 
       const input = getByLabelText('할 일');
@@ -89,7 +89,7 @@ describe('Page', () => {
   });
 
   context('추가 버튼을 클릭하면', () => {
-    test('handleClickAddTask()를 호출한다', () => {
+    it('handleClickAddTask()를 호출한다', () => {
       const taskTitle = '운동하기';
 
       const { getByLabelText, getByText } = renderPage(taskTitle);

@@ -16,7 +16,7 @@ describe('Input', () => {
   ));
 
   context('랜더링 되면', () => {
-    test('Label, 버튼, placeholder를 표시한다', () => {
+    it('Label, 버튼, placeholder를 표시한다', () => {
       const { getByText, getByPlaceholderText } = renderInput();
 
       expect(getByText('할 일')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('Input', () => {
   });
 
   context('텍스트가 입력되면', () => {
-    test('handleChange()를 호출한다', () => {
+    it('handleChange()를 호출한다', () => {
       const { getByLabelText } = renderInput();
       const input = getByLabelText('할 일');
 
@@ -39,7 +39,7 @@ describe('Input', () => {
   });
 
   context('추가 버튼을 클릭하면', () => {
-    test('handleClick()를 호출한다', () => {
+    it('handleClick()를 호출한다', () => {
       const value = '운동하기';
 
       const { getByLabelText, getByText } = renderInput(value);

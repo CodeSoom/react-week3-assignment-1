@@ -6,13 +6,13 @@ import App from './App';
 
 describe('App', () => {
   context('랜더링 되면', () => {
-    test('Headings를 표시한다', () => {
+    it('Headings를 표시한다', () => {
       const { getByText } = render(<App />);
 
       expect(getByText('To-do')).toBeInTheDocument();
     });
 
-    test('label, 버튼, placeholder를 표시한다', () => {
+    it('label, 버튼, placeholder를 표시한다', () => {
       const { getByText, getByPlaceholderText } = render(<App />);
 
       expect(getByText('할 일')).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('App', () => {
   });
 
   context('tasks가 없을 때', () => {
-    test('빈 메시지를 표시한다', () => {
+    it('빈 메시지를 표시한다', () => {
       const { container } = render(<App />);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
@@ -30,7 +30,7 @@ describe('App', () => {
   });
 
   context('tasks가 추가하면', () => {
-    test('할일 목록을 표시한다', () => {
+    it('할일 목록을 표시한다', () => {
       const tasks = [
         { id: 1, title: '운동하기' },
         { id: 2, title: '생각하기' },
@@ -54,7 +54,7 @@ describe('App', () => {
   });
 
   context('tasks를 삭제하면', () => {
-    test('할일 목록을 제거한다', () => {
+    it('할일 목록을 제거한다', () => {
       const tasks = [
         { id: 1, title: '운동하기' },
         { id: 2, title: '생각하기' },
