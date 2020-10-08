@@ -22,8 +22,19 @@ describe('App', () => {
     });
   });
 
-  context('when add 3 tasks', () => {
-    it('show tasks list', () => {
+  context('When entering text', () => {
+    it('show text in inputbox', () => {
+      const { getByPlaceholderText } = appRender();
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
+
+      expect(input).toHaveValue('');
+      fireEvent.change(input, { target: { value: '입력한 문자' } });
+      expect(input).toHaveValue('입력한 문자');
+    });
+  });
+
+  context('when clicking "추가" button', () => {
+    it('add task to tasks', () => {
       const tasks = [
         { id: 1, title: '첫번째 할 일' },
         { id: 2, title: '두번째 할 일' },
@@ -39,16 +50,14 @@ describe('App', () => {
         fireEvent.click(getByText('추가'));
       });
 
-      const taskTitles = getAllByRole('listitem');
-
-      taskTitles.forEach((listItem, index) => {
+      getAllByRole('listitem').forEach((listItem, index) => {
         expect(listItem).toHaveTextContent(tasks[index].title);
       });
     });
   });
 
-  context('when delete 3 tasks', () => {
-    it('click delete button', () => {
+  context('when clicking "완료" button', () => {
+    it('delete selected task from tasks', () => {
       const tasks = [
         { id: 1, title: '첫번째 할 일' },
         { id: 2, title: '두번째 할 일' },
