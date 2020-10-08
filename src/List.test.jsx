@@ -5,19 +5,23 @@
 ​ */
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
 describe('List', () => {
+
+  const handleClickDelete = jest.fn();
+  const renderHelper = (tasks = []) => render((
+    <List
+      tasks={tasks}
+      onClickDelete={handleClickDelete}
+    />
+  ));
+
   context('할 일이 없을 때', () => {
     it('할 일이 없어요! 라는 글을 보여 준다', () => {
-      const tasks = [];
-      const { container } = render((
-        <List
-          tasks={tasks}
-        />
-      ));
+      const { container } = renderHelper();
 
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(container).not.toHaveTextContent('완료');
@@ -37,16 +41,31 @@ describe('List', () => {
         },
       ];
 
-      const { container, queryAllByText } = render((
-        <List
-          tasks={tasks}
-        />
-      ));
+      const { container, queryAllByText } = renderHelper(tasks);
       const buttons = queryAllByText('완료');
 
       expect(container).toHaveTextContent('뭐라도 하기');
       expect(container).toHaveTextContent('잠이라도 자기');
       expect(tasks.length).toBe(buttons.length);
+    });
+
+    it('할 일 완료 버튼 클릭시 삭제가 되야 한다', () => {
+      const tasks = [
+        {
+          id: 1,
+          title: '뭐라도 하기',
+        },
+      ];
+
+      const { container, getByText } = renderHelper(tasks);
+
+      expect(container).toHaveTextContent('뭐라도 하기');
+
+      expect(handleClickDelete).not.toBeCalled();
+
+      fireEvent.click(getByText('완료'));
+
+      expect(handleClickDelete).toBeCalledWith(tasks[0].id);
     });
   });
 });

@@ -25,10 +25,23 @@ import { fireEvent, render } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+
   context('처음 렌더링 되면', () => {
     it('To-do 타이틀을 보여준다.', () => {
+      const taskTitle = '';
       const tasks = [];
-      const { container } = render(<Page tasks={tasks} />);
+      const { container } = render(
+        <Page
+          taskTitle={taskTitle}
+          tasks={tasks}
+          onChangeTitle={handleChangeTitle}
+          onClickAddTask={handleClickAddTask}
+          onClickDeleteTask={handleClickDeleteTask}
+        />
+      );
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
     });
@@ -39,13 +52,13 @@ describe('Page', () => {
       const taskTitle = '';
       const tasks = [];
 
-      const handleChange = jest.fn();
-
       const { getByPlaceholderText } = render(
         <Page
           taskTitle={taskTitle}
           tasks={tasks}
-          onChangeTitle={handleChange}
+          onChangeTitle={handleChangeTitle}
+          onClickAddTask={handleClickAddTask}
+          onClickDeleteTask={handleClickDeleteTask}
         />
       );
 
@@ -60,14 +73,13 @@ describe('Page', () => {
     it('입력창에 입력된 값을 보여 준다', () => {
       const taskTitle = '테스트 하기';
 
-      const handleClick = jest.fn();
-      const handleChange = jest.fn();
       const { getByPlaceholderText } = render(
         <Page
           taskTitle={taskTitle}
-          onChangeTitle={handleChange}
-          onClick={handleClick}
           tasks={[]}
+          onChangeTitle={handleChangeTitle}
+          onClickAddTask={handleClickAddTask}
+          onClickDeleteTask={handleClickDeleteTask}
         />
       );
 
@@ -83,21 +95,19 @@ describe('Page', () => {
     it('추가 버튼을 클릭하면 입력창의 글이 삭제 된다', () => {
       const taskTitle = '테스트 하기';
 
-      const handleClick = jest.fn();
-      const handleChange = jest.fn();
-
       const { getByText } = render(
         <Page
           taskTitle={taskTitle}
           tasks={[]}
-          onClickAddTask={handleClick}
-          onChangeTitle={handleChange}
+          onChangeTitle={handleChangeTitle}
+          onClickAddTask={handleClickAddTask}
+          onClickDeleteTask={handleClickDeleteTask}
         />
       );
 
       fireEvent.click(getByText('추가'));
 
-      expect(handleClick).toBeCalled();
+      expect(handleClickAddTask).toBeCalled();
     });
   });
 
@@ -122,9 +132,15 @@ describe('Page', () => {
     });
 
     it('완료 버튼 클릭시 글이 삭제 된다', () => {
-      const handleClick = jest.fn();
+      const taskTitle = '';
       const { queryAllByText } = render(
-        <Page tasks={tasks} onClickDeleteTask={handleClick} />
+        <Page
+          taskTitle={taskTitle}
+          tasks={tasks}
+          onChangeTitle={handleChangeTitle}
+          onClickAddTask={handleClickAddTask}
+          onClickDeleteTask={handleClickDeleteTask}
+        />
       );
 
       const buttons = queryAllByText('완료');
@@ -134,7 +150,7 @@ describe('Page', () => {
       });
 
       tasks.map((task) => {
-        expect(handleClick).toBeCalledWith(task.id);
+        expect(handleClickDeleteTask).toBeCalledWith(task.id);
       });
     });
   });
