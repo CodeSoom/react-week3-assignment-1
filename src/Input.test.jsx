@@ -50,8 +50,6 @@ describe('Input', () => {
     expect(handleClick).not.toBeCalled();
     fireEvent.click(addButton);
     expect(handleClick).toBeCalled();
-
-    cleanup();
   });
 
   context('value가 없을 때', () => {
@@ -62,7 +60,6 @@ describe('Input', () => {
       const taskTitleInput = getByPlaceholderText('할 일을 입력해 주세요');
 
       expect(taskTitleInput).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
-      cleanup();
     });
   });
 
@@ -74,7 +71,6 @@ describe('Input', () => {
       const taskTitleInput = getByDisplayValue(value);
 
       expect(taskTitleInput).toHaveValue(value);
-      cleanup();
     });
   });
 });
