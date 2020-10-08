@@ -7,12 +7,10 @@ import Input from './Input';
 describe('Input', () => {
   const placeholdeText = '할 일을 입력해 주세요';
   const buttonText = '추가';
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
 
-  const setup = ({
-    value,
-    handleChange = jest.fn(),
-    handleClick = jest.fn(),
-  }) => {
+  const setup = (value) => {
     const utils = render((
       <Input
         value={value}
@@ -24,7 +22,7 @@ describe('Input', () => {
     return { ...utils };
   };
 
-  function onChangeTest({ handleChange }) {
+  function onChangeTest() {
     const input = screen.getByRole('textbox');
 
     expect(handleChange).not.toBeCalled();
@@ -34,7 +32,7 @@ describe('Input', () => {
     expect(handleChange).toBeCalledTimes(1);
   }
 
-  function onClickTest({ handleClick }) {
+  function onClickTest() {
     const { getByText } = screen;
 
     expect(handleClick).not.toBeCalled();
@@ -46,11 +44,9 @@ describe('Input', () => {
 
   context('without value', () => {
     const value = '';
-    const handleChange = jest.fn();
-    const handleClick = jest.fn();
 
     it('check elements', () => {
-      const { getByText, getByPlaceholderText } = setup({ value });
+      const { getByText, getByPlaceholderText } = setup(value);
 
       getByPlaceholderText(placeholdeText);
       getByText(buttonText);
@@ -59,18 +55,16 @@ describe('Input', () => {
     it('check functions', () => {
       setup({ value, handleChange, handleClick });
 
-      onChangeTest({ handleChange });
-      onClickTest({ handleClick });
+      onChangeTest();
+      onClickTest();
     });
   });
 
   context('with value', () => {
     const value = 'some text';
-    const handleChange = jest.fn();
-    const handleClick = jest.fn();
 
     it('check elements', () => {
-      const { getByText, getByDisplayValue } = setup({ value });
+      const { getByText, getByDisplayValue } = setup(value);
 
       getByDisplayValue(value);
       getByText(buttonText);
@@ -79,8 +73,8 @@ describe('Input', () => {
     it('check functions', () => {
       setup({ value, handleChange, handleClick });
 
-      onChangeTest({ handleChange });
-      onClickTest({ handleClick });
+      onChangeTest();
+      onClickTest();
     });
   });
 });
