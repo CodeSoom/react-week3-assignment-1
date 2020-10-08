@@ -5,9 +5,9 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  context('test length is 0', () => {
-    const handleClick = jest.fn();
+  const handleClick = jest.fn();
 
+  context('test length is 0', () => {
     const tasks = [];
 
     it('할 일이 없어요! 표시', () => {
