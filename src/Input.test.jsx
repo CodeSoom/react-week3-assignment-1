@@ -5,6 +5,10 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input Component', () => {
+  const labelText = '할 일';
+  const inputPlaceholderText = '할 일을 입력해 주세요';
+  const buttonText = '추가';
+
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
@@ -16,32 +20,32 @@ describe('Input Component', () => {
     />,
   );
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
   context('without user action', () => {
-    it('show input, label, button elements', () => {
+    it('shows input, label, button elements', () => {
       const { getByText, getByPlaceholderText } = renderInput();
 
-      expect(getByText('할 일')).toBeInTheDocument();
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
-      expect(getByText('추가')).toBeInTheDocument();
+      expect(getByText(labelText)).toBeInTheDocument();
+      expect(getByPlaceholderText(inputPlaceholderText)).toBeInTheDocument();
+      expect(getByText(buttonText)).toBeInTheDocument();
     });
 
-    it('show given value on input', () => {
+    it('shows given value on input', () => {
       const value = '밥 먹기';
       const { getByLabelText } = renderInput(value);
-      const input = getByLabelText('할 일');
+      const input = getByLabelText(labelText);
 
       expect(input).toHaveValue(value);
     });
   });
 
   context('when user input', () => {
-    it('call change handler', () => {
+    it('calls change handler', () => {
       const { getByLabelText } = renderInput();
-      const input = getByLabelText('할 일');
+      const input = getByLabelText(labelText);
 
       expect(handleChange).not.toBeCalled();
 
@@ -58,7 +62,7 @@ describe('Input Component', () => {
   context('when user click button', () => {
     it('call click handler', () => {
       const { getByText } = renderInput();
-      const button = getByText('추가');
+      const button = getByText(buttonText);
 
       expect(handleClick).not.toBeCalled();
 

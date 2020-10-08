@@ -5,6 +5,9 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List Component', () => {
+  const defaultText = '할 일이 없어요!';
+  const errorText = '오류가 발생했습니다';
+
   const handleClickDelete = jest.fn();
 
   const renderList = (tasks = []) => render(
@@ -15,36 +18,27 @@ describe('List Component', () => {
     jest.clearAllMocks();
   });
 
-  context('when empty tasks', () => {
-    it('show default text', () => {
-      const defaultText = '할 일이 없어요!';
-      const { getByText } = renderList();
+  context('with tasks', () => {
+    const tasks = [
+      { id: 1, title: '밥먹기' },
+      { id: 2, title: '빨래하기' },
+      { id: 3, title: '청소하기' },
+    ];
 
-      expect(getByText(defaultText)).toBeInTheDocument();
+    it('show information of tasks', () => {
+      const { getByText } = renderList(tasks);
+
+      tasks.forEach(({ title }) => {
+        expect(getByText(title)).toBeInTheDocument();
+      });
     });
   });
 
-  context('with not empty tasks', () => {
-    const givenTasks = [
-      {
-        id: 1,
-        title: '밥먹기',
-      },
-      {
-        id: 2,
-        title: '빨래하기',
-      },
-      {
-        id: 3,
-        title: '청소하기',
-      },
-    ];
-    it('show information of tasks', () => {
-      const { getByText } = renderList(givenTasks);
+  context('with empty tasks', () => {
+    it('show default text', () => {
+      const { getByText } = renderList();
 
-      givenTasks.forEach(({ title }) => {
-        expect(getByText(title)).toBeInTheDocument();
-      });
+      expect(getByText(defaultText)).toBeInTheDocument();
     });
   });
 
@@ -52,7 +46,7 @@ describe('List Component', () => {
     it('show error message', () => {
       const { getByText } = renderList('invalid');
 
-      expect(getByText('오류가 발생했습니다')).toBeInTheDocument();
+      expect(getByText(errorText)).toBeInTheDocument();
     });
   });
 });
