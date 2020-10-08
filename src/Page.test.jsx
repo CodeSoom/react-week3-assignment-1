@@ -51,7 +51,7 @@ describe('Page', () => {
     });
 
     it('show tasks list', () => {
-      const { container, getAllByRole, getAllByText } = pageRender(tasks, taskTitle);
+      const { container, getAllByRole } = pageRender(tasks, taskTitle);
 
       expect(container).toHaveTextContent('To-do');
 
@@ -60,14 +60,6 @@ describe('Page', () => {
         expect(task).toHaveTextContent(tasks[index].title);
         expect(task).toHaveTextContent('완료');
       });
-
-      expect(handleClickDeleteTask).not.toBeCalled();
-
-      const deleteButtons = getAllByText('완료');
-
-      deleteButtons.forEach((deleteButton) => fireEvent.click(deleteButton));
-
-      expect(handleClickDeleteTask).toBeCalledTimes(taskItems.length);
     });
   });
 
