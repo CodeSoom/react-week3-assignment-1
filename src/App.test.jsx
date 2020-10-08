@@ -10,8 +10,8 @@ describe('App', () => {
 
     const inputTaskTitle = getByDisplayValue('');
 
-    expect(inputTaskTitle).toHaveValue('');
     fireEvent.change(inputTaskTitle, { target: { value: '뭐라도 하기' } });
+
     expect(inputTaskTitle).toHaveValue('뭐라도 하기');
   });
 
@@ -20,11 +20,10 @@ describe('App', () => {
 
     const inputTaskTitle = getByDisplayValue('');
     const addButton = getByText('추가');
-    const emptyList = getByText('할 일이 없어요!');
 
-    expect(emptyList).toHaveTextContent('할 일이 없어요!');
     fireEvent.change(inputTaskTitle, { target: { value: '뭐라도 하기' } });
     fireEvent.click(addButton);
+
     const listTasks = getByText('뭐라도 하기');
     expect(listTasks).toHaveTextContent('뭐라도 하기');
   });
@@ -36,8 +35,8 @@ describe('App', () => {
     const addButton = getByText('추가');
 
     fireEvent.change(inputTaskTitle, { target: { value: '뭐라도 하기' } });
-    expect(inputTaskTitle).toHaveValue('뭐라도 하기');
     fireEvent.click(addButton);
+
     expect(inputTaskTitle).toHaveValue('');
   });
 
@@ -49,10 +48,6 @@ describe('App', () => {
 
     fireEvent.change(inputTaskTitle, { target: { value: '뭐라도 하기' } });
     fireEvent.click(addButton);
-
-    const listTasks = getByText('뭐라도 하기');
-    expect(listTasks).toHaveTextContent('뭐라도 하기');
-    expect(listTasks).not.toHaveTextContent('할 일이 없어요!');
 
     const deleteButton = getByText('완료');
     fireEvent.click(deleteButton);
