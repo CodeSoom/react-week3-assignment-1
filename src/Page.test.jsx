@@ -17,3 +17,135 @@
  * 		6-1. 할 일 목록에 추가 되야 한다.
  *    6-2. 입력창에 값이 비워진다.
  */
+
+import React from 'react';
+
+import { fireEvent, render } from '@testing-library/react';
+
+import Page from './Page';
+
+describe('Page', () => {
+  context('처음 렌더링 되면', () => {
+    it('To-do 타이틀을 보여준다.', () => {
+      const tasks = [];
+      const { container } = render(<Page tasks={tasks} />);
+      expect(container).toHaveTextContent('To-do');
+      expect(container).toHaveTextContent('할 일');
+    });
+  });
+
+  context('Input 에 입력값이 없을 때', () => {
+    it('할 일을 입력해 주세요 라는 placeholder 값을 보여준다', () => {
+      const taskTitle = '';
+      const tasks = [];
+
+      const handleChange = jest.fn();
+
+      const { getByPlaceholderText } = render(
+        <Page
+          taskTitle={taskTitle}
+          tasks={tasks}
+          onChangeTitle={handleChange}
+        />
+      );
+
+      const inputNode = getByPlaceholderText('할 일을 입력해 주세요');
+
+      expect(inputNode).toBeTruthy();
+      expect(inputNode).toHaveProperty('value', '');
+    });
+  });
+
+  context('Input 에 입력값이 있을 때', () => {
+    it('입력창에 입력된 값을 보여 준다', () => {
+      const taskTitle = '테스트 하기';
+
+      const handleClick = jest.fn();
+      const handleChange = jest.fn();
+      const { getByPlaceholderText } = render(
+        <Page
+          taskTitle={taskTitle}
+          onChangeTitle={handleChange}
+          onClick={handleClick}
+          tasks={[]}
+        />
+      );
+
+      const InputNode = getByPlaceholderText('할 일을 입력해 주세요');
+
+      fireEvent.change(InputNode, {
+        target: { value: taskTitle },
+      });
+
+      expect(InputNode).toHaveProperty('value', '테스트 하기');
+    });
+
+    it('추가 버튼을 클릭하면 입력창의 글이 삭제 된다', () => {
+      const taskTitle = '테스트 하기';
+
+      const handleClick = jest.fn();
+      const handleChange = jest.fn();
+
+      const { getByText } = render(
+        <Page
+          taskTitle={taskTitle}
+          tasks={[]}
+          onClickAddTask={handleClick}
+          onChangeTitle={handleChange}
+        />
+      );
+
+      fireEvent.click(getByText('추가'));
+
+      expect(handleClick).toBeCalled();
+    });
+  });
+
+  context('할일 목록의 글이 있을 때', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: '테스트하기',
+      },
+      {
+        id: 2,
+        title: '운동하기',
+      },
+    ];
+
+    it('할 일 목록과 완료 버튼이 보여야 한다', () => {
+      const { container, queryAllByText } = render(<Page tasks={tasks} />);
+      const buttons = queryAllByText('완료');
+      expect(container).toHaveTextContent('테스트하기');
+      expect(container).toHaveTextContent('운동하기');
+      expect(tasks.length).toBe(buttons.length);
+    });
+
+    it('완료 버튼 클릭시 글이 삭제 된다', () => {
+      const handleClick = jest.fn();
+      const { queryAllByText } = render(
+        <Page tasks={tasks} onClickDeleteTask={handleClick} />
+      );
+
+      const buttons = queryAllByText('완료');
+
+      buttons.map((button) => {
+        fireEvent.click(button);
+      });
+
+      tasks.map((task) => {
+        expect(handleClick).toBeCalledWith(task.id);
+      });
+    });
+  });
+
+  context('할일 목록의 글이 없을 때', () => {
+    it('할 일이 없어요! 라는 글을 보여 준다', () => {
+      const tasks = [];
+      const { container } = render(<Page tasks={tasks} />);
+
+      expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(container).not.toHaveTextContent('완료');
+    });
+  });
+});

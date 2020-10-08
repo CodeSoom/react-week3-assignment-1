@@ -11,7 +11,7 @@ import List from './List';
 
 describe('List', () => {
   context('할 일이 없을 때', () => {
-    it('할 일이 없어요! 라는 placehoder 값을 보여 준다', () => {
+    it('할 일이 없어요! 라는 글을 보여 준다', () => {
       const tasks = [];
       const { container } = render((
         <List
