@@ -5,16 +5,20 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  it('renders app', () => {
-    const { container } = render((<App />));
-    expect(container).toContainHTML('<div');
+  context('when it renders', () => {
+    it('renders a div', () => {
+      const { container } = render((<App />));
+
+      expect(container).toContainHTML('<div');
+    });
   });
 
-  describe('when new task is input', () => {
+  context('when a new task is input', () => {
+    const value = '커버리지 높이기';
+
     it('changes taskTitle', () => {
       const { getByLabelText } = render((<App />));
       const input = getByLabelText('할 일');
-      const value = '커버리지 높이기';
 
       expect(input.value).not.toBe(value);
 
@@ -26,12 +30,12 @@ describe('App', () => {
     });
   });
 
-  describe('when 추가 button is clicked', () => {
+  context('when 추가 button is clicked after task input', () => {
+    const value = '커버리지 높이기';
+
     it('adds new task', () => {
       const { getByLabelText, getByText, container } = render((<App />));
-
       const input = getByLabelText('할 일');
-      const value = '커버리지 높이기';
 
       fireEvent.change(input, {
         target: { value },
@@ -43,12 +47,12 @@ describe('App', () => {
     });
   });
 
-  describe('when 완료 button is clicked', () => {
+  context('when 완료 button is clicked on an existing task', () => {
+    const value = '커버리지 높이기';
+
     it('removes completed task', () => {
       const { getByLabelText, getByText, container } = render((<App />));
-
       const input = getByLabelText('할 일');
-      const value = '커버리지 높이기';
 
       fireEvent.change(input, {
         target: { value },

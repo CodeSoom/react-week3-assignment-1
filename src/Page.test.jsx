@@ -4,14 +4,12 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-test('Page', () => {
-  const tasks = [];
+describe('Page', () => {
+  context('when it renders', () => {
+    it('renders a heading', () => {
+      const { container } = render((<Page />));
 
-  const { container } = render((
-    <Page
-      tasks={tasks}
-    />
-  ));
-
-  expect(container).toContainHTML('<h1');
+      expect(container).toContainHTML('<h1');
+    });
+  });
 });
