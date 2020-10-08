@@ -8,7 +8,7 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const renderInput = (value) => render((
+  const renderInput = (value = '') => render((
     <Input
       value={value}
       onChange={handleChange}
@@ -17,7 +17,7 @@ describe('Input', () => {
   ));
 
   it('라벨에 "할 일"이 출력되는 지 확인합니다', () => {
-    const { getByText } = renderInput('');
+    const { getByText } = renderInput();
     const taskTitleLabel = getByText('할 일');
 
     expect(taskTitleLabel).toHaveTextContent('할 일');
@@ -25,7 +25,7 @@ describe('Input', () => {
   });
 
   it('버튼에 "추가"가 출력되는 지 확인합니다.', () => {
-    const { getByText } = renderInput('');
+    const { getByText } = renderInput();
     const addButton = getByText('추가');
 
     expect(addButton).toHaveTextContent('추가');
@@ -33,7 +33,7 @@ describe('Input', () => {
   });
 
   it('handleChange가 호출되는 지 확인', () => {
-    const { getByDisplayValue } = renderInput('');
+    const { getByDisplayValue } = renderInput();
     const taskTitleInput = getByDisplayValue('');
 
     expect(handleChange).not.toBeCalled();
@@ -44,7 +44,7 @@ describe('Input', () => {
   });
 
   it('handleClick이 호출되는 지 확인', () => {
-    const { getByText } = renderInput('');
+    const { getByText } = renderInput();
     const addButton = getByText('추가');
 
     expect(handleClick).not.toBeCalled();
