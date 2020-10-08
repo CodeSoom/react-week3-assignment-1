@@ -13,18 +13,6 @@ describe('Input', () => {
   ));
 
   context('with value', () => {
-    const value = '';
-
-    it('show placeholder', () => {
-      const { container, getByPlaceholderText } = inputRender(value);
-
-      expect(container).toHaveTextContent('할 일');
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('');
-      expect(container).toHaveTextContent('추가');
-    });
-  });
-
-  context('without value', () => {
     const value = '받아온 문자';
 
     it('show value.', () => {
@@ -36,17 +24,25 @@ describe('Input', () => {
     });
   });
 
-  context('when value changed', () => {
-    it('run onChange event', () => {
-      const value = '';
+  context('without value', () => {
+    const value = '';
 
+    it('show placeholder', () => {
       const { container, getByPlaceholderText } = inputRender(value);
 
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
-
       expect(container).toHaveTextContent('할 일');
-      expect(input).toHaveDisplayValue('');
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('');
       expect(container).toHaveTextContent('추가');
+    });
+  });
+
+  context('when value changed', () => {
+    const value = '';
+
+    it('run onChange event', () => {
+      const { getByPlaceholderText } = inputRender(value);
+
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
 
       expect(handleChange).not.toBeCalled();
 
@@ -57,22 +53,16 @@ describe('Input', () => {
   });
 
   context('when add button clicked', () => {
+    const value = '입력한 문자';
+
     it('run onClick event', () => {
-      const value = '입력한 문자';
-
-      const { getByText, getByPlaceholderText } = inputRender(value);
-
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
-
-      expect(input).toHaveDisplayValue('입력한 문자');
+      const { getByText } = inputRender(value);
 
       expect(handleClick).not.toBeCalled();
 
       fireEvent.click(getByText('추가'));
 
       expect(handleClick).toBeCalled();
-
-      expect(input).toHaveDisplayValue('');
     });
   });
 });
