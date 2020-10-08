@@ -21,7 +21,6 @@ describe('<List />', () => {
 
         // Then
         expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
-        expect(screen.queryByRole('list')).not.toBeInTheDocument();
       });
     });
 
@@ -38,8 +37,6 @@ describe('<List />', () => {
         renderList({ tasks });
 
         // Then
-        expect(screen.queryByText('할 일이 없어요!')).not.toBeInTheDocument();
-        expect(screen.getByRole('list')).toBeInTheDocument();
         expect(screen.getByRole('list')).toHaveTextContent(title);
       });
     });

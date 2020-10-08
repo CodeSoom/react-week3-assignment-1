@@ -40,7 +40,6 @@ describe('<App />', () => {
 
         // Then
         expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
-        expect(screen.queryByRole('list')).not.toBeInTheDocument();
       });
     });
 

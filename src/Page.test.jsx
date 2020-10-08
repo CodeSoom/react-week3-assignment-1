@@ -35,7 +35,7 @@ describe('<Page />', () => {
       renderPage({ tasks: emptyTasks });
 
       // Then
-      expect(screen.getByRole('button')).toHaveTextContent('추가');
+      expect(screen.getByText('추가')).toBeInTheDocument();
     });
 
     context('tasks가 없을 때', () => {
@@ -45,7 +45,6 @@ describe('<Page />', () => {
 
         // Then
         expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
-        expect(screen.queryByRole('list')).not.toBeInTheDocument();
       });
     });
 
@@ -62,8 +61,6 @@ describe('<Page />', () => {
         renderPage({ tasks });
 
         // Then
-        expect(screen.queryByText('할 일이 없어요!')).not.toBeInTheDocument();
-        expect(screen.getByRole('list')).toBeInTheDocument();
         expect(screen.getByRole('list')).toHaveTextContent(title);
       });
     });
