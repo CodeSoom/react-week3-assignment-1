@@ -4,50 +4,86 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
-  const value = '';
-  const handleChange = jest.fn();
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+describe('Input Component', () => {
+  const titleLabel = '할 일';
+  const placeholder = '할 일을 입력해 주세요';
+  const buttonText = '추가';
+
+  const userEnterValue = '뭐라도 하자!';
+
   const handleClick = jest.fn();
+  const handleChange = jest.fn();
 
-  const {
-    container,
-    queryByPlaceholderText,
-    getByText,
-  } = render((
-    <Input
-      value={value}
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
+  const init = ({
+    value = '',
+    onClick = handleClick,
+    onChange = handleChange,
+  }) => {
+    const utils = render((
+      <Input
+        value={value}
+        onClick={onClick}
+        onChange={onChange}
+      />
+    ));
+    return { ...utils };
+  };
 
-  /*
-   * Check label
-   */
-  expect(container).toHaveTextContent('할 일');
+  test('main label test', () => {
+    const { container } = init({});
+    expect(container).toHaveTextContent(titleLabel);
+  });
 
-  /*
-   * Check input
-   */
-  const inputNode = queryByPlaceholderText('할 일을 입력해 주세요');
-  expect(inputNode).not.toBeNull();
+  context('without input value', () => {
+    it('test input shows placeholder', () => {
+      const { getByPlaceholderText } = init({});
+      getByPlaceholderText(placeholder);
+    });
 
-  expect(handleChange).not.toBeCalled();
+    it('test handler click button', () => {
+      const { getByText } = init({});
 
-  fireEvent.change(inputNode, { target: { value: '뭐라도 하기' } });
-  expect(inputNode.value).toBe('뭐라도 하기');
+      expect(handleClick).not.toBeCalled();
 
-  expect(handleChange).toHaveBeenCalledTimes(1);
+      fireEvent.click(getByText(buttonText));
 
-  /*
-   * Check button
-   */
-  expect(container).toHaveTextContent('추가');
+      expect(handleClick).toBeCalledTimes(1);
+    });
+  });
 
-  expect(handleClick).not.toBeCalled();
+  context('test input shows value', () => {
+    
 
-  const buttonNode = getByText('추가');
-  fireEvent.click(buttonNode);
+    it('test input value', () => {
+      const { getByDisplayValue } = init({ value: userEnterValue });
+      getByDisplayValue(userEnterValue);
+    });
 
-  // expect(handleClick).toBeCalledWith(1);
+    it('test handler change input value', () => {
+      const { getByPlaceholderText } = init({});
+
+      expect(handleChange).not.toBeCalled();
+
+      fireEvent.change(
+        getByPlaceholderText(placeholder),
+        { target: { value: userEnterValue } },
+      );
+
+      expect(handleChange).toBeCalledTimes(1);
+    });
+
+    it('test handler click button', () => {
+      const { getByText } = init({ value: userEnterValue });
+
+      expect(handleClick).not.toBeCalled();
+
+      fireEvent.click(getByText(buttonText));
+
+      expect(handleClick).toBeCalledTimes(1);
+    });
+  });
 });
