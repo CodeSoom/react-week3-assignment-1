@@ -5,8 +5,8 @@ import { fireEvent, render } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  const renderUtil = (tasks = []) => render((
-    <App tasks={tasks} />
+  const renderUtil = () => render((
+    <App />
   ));
 
   context('when rendering text', () => {
@@ -32,8 +32,7 @@ describe('App', () => {
   });
 
   context('when click', () => {
-    const mockFn = jest.fn();
-    const handleList = (list) => mockFn.mockReturnValue(list);
+    const handleList = (list) => jest.fn().mockReturnValue(list);
 
     it('"추가" button return rendering list', () => {
       const tasks = [];
@@ -64,9 +63,20 @@ describe('App', () => {
           title: '할일2',
         },
       ];
-      tasks.forEach();
 
-      const { getByText } = renderUtil(tasks);
+      const addedList = tasks.map((task) => (`<li>${task.title}</li>`));
+
+      document.body.div.ol.innerHTML = addedList;
+
+      const { getByText, getByLabelText } = renderUtil();
+
+      const input = getByLabelText('할 일');
+
+      const button = getByText('추가');
+
+      input.value = tasks.forEach((task) => task.title);
+
+      fireEvent.click(button);
 
       const task = { id: 1, title: '할일1' };
 
