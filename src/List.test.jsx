@@ -7,13 +7,15 @@ import List from './List';
 describe('List', () => {
   const handleClick = jest.fn();
 
+  const renderUtil = (tasks = []) => render((
+    <List tasks={tasks} onClickDelete={handleClick} />
+  ));
+
   context('test length is 0', () => {
     const tasks = [];
 
     it('할 일이 없어요! 표시', () => {
-      const { container } = render((
-        <List tasks={tasks} onClickDelete={handleClick} />
-      ));
+      const { container } = renderUtil(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -36,9 +38,7 @@ describe('List', () => {
     ];
 
     it('할 일 모두 표시', () => {
-      const { container } = render((
-        <List tasks={tasks} />
-      ));
+      const { container } = renderUtil(tasks);
 
       tasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);

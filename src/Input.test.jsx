@@ -8,29 +8,32 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  context('typing text', () => {
-    const { getByLabelText } = render((
-      <Input onChange={handleChange} />
-    ));
+  const renderUtil = (value) => render((
+    <Input
+      value={value}
+      onClick={handleClick}
+      onChange={handleChange}
+    />));
 
-    const input = getByLabelText('할 일');
-
-    expect(handleChange).not.toBeCalled();
-
-    it('change input value', () => {
-      fireEvent.change(input, { target: { value: 'text' } });
-    });
-
+  context('when typing text', () => {
     it('onChange function to be called', () => {
+      const { getByLabelText } = renderUtil();
+
+      expect(handleChange).not.toBeCalled();
+
+      fireEvent.change(getByLabelText('할 일'), { target: { value: 'text' } });
+
       expect(handleChange).toBeCalledWith(expect.anything());
     });
 
     it('Verify that the value has changed', () => {
-      expect(input.value).toBe('text');
+      const { getByLabelText } = renderUtil('text');
+
+      expect(getByLabelText('할 일').value).toBe('text');
     });
   });
 
-  context('typing Empty', () => {
+  context('when typing Empty', () => {
     window.alert = jest.fn();
 
     it('alert "할일을 입력하세요!"', () => {
@@ -38,27 +41,27 @@ describe('Input', () => {
     });
   });
 
-  context('click Button or press Enter', () => {
-    const { getByLabelText, getByText } = render((
-      <Input onClick={handleClick} />
-    ));
-
-    const input = getByLabelText('할 일');
-
-    expect(handleClick).not.toBeCalled();
-
-    fireEvent.click(getByText('추가'));
-
+  context('when click Button or press Enter', () => {
     it('onClick function to be called', () => {
+      const { getByText } = renderUtil();
+
+      expect(handleClick).not.toBeCalled();
+
+      fireEvent.click(getByText('추가'));
+
       expect(handleClick).toBeCalledWith(expect.anything());
     });
 
     it('initialize input value', () => {
-      fireEvent.change(input, { target: { value: '' } });
+      const { getByLabelText } = renderUtil();
+
+      fireEvent.change(getByLabelText('할 일'), { target: { value: '' } });
     });
 
     it('Verify that the value has changed', () => {
-      expect(input.value).toBe('');
+      const { getByLabelText } = renderUtil('');
+
+      expect(getByLabelText('할 일').value).toBe('');
     });
   });
 });
