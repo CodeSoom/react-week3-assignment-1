@@ -1,35 +1,92 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
-  const value = '';
+describe('Input', () => {
+  const placeholderText = '할 일을 입력해 주세요';
+  const buttonText = '추가';
 
-  const onChange = jest.fn();
-  const onClick = jest.fn();
+  const setup = ({
+    value,
+    handleClick = jest.fn(),
+    handleChange = jest.fn(),
+  }) => {
+    const utils = render((
+      <Input
+        value={value}
+        onClick={handleClick}
+        onChange={handleChange}
+      />
+    ));
 
-  const { container, getByText } = render((
-    <Input
-      value={value}
-      onChange={onChange}
-      onClick={onClick}
-    />
-  ));
+    return { ...utils };
+  };
 
-  // Basic Test
-  // value 값이 비어 있는 것을 체크하기
-  expect(value).toHaveValue('');
-  expect(container).toHaveTextContent('할 일');
+  const onClickTest = ({ handleClick }) => {
+    const { getByText } = screen;
 
-  // onChange Test
-  // onChange로 할일을 입력 후 적용되었는지 체크하기
-  fireEvent.change(getByText('어떤 할일 입력 중'));
-  expect(onChange).toBeCalledWith('어떤 할일 입력 중');
+    expect(handleClick).not.toBeCalled();
+    fireEvent.click(getByText(buttonText));
+    expect(handleClick).toBeCalledTimes(1);
+  };
 
-  // onClick Test
-  // onClick 후 value 값이 비어있는지 확인하기
-  fireEvent.click(getByText('추가'));
-  expect(value).toHaveValue('');
+  const onChangeTest = ({ handleChange }) => {
+    const input = screen.getByRole('textbox');
+
+    expect(handleChange).not.toBeCalled();
+    fireEvent.change(input, { target: { value: 'any' } });
+    expect(handleChange).toBeCalledTimes(1);
+  };
+
+  context('without value', () => {
+    const value = '';
+    const handleClick = jest.fn();
+    const handleChange = jest.fn();
+
+    it('Basic', () => {
+      const { getByText, getByPlaceholderText } = setup({ value });
+
+      getByPlaceholderText(placeholderText);
+      getByText(buttonText);
+    });
+
+    it('onChange', () => {
+      setup({ handleChange });
+
+      onChangeTest({ handleChange });
+    });
+
+    it('onClick', () => {
+      setup({ handleClick });
+
+      onClickTest({ handleClick });
+    });
+  });
+
+  context('with value', () => {
+    const value = '추가된 할 일';
+    const handleClick = jest.fn();
+    const handleChange = jest.fn();
+
+    it('Basic', () => {
+      const { getByText, getByPlaceholderText } = setup({ value });
+
+      getByPlaceholderText(placeholderText);
+      getByText(buttonText);
+    });
+
+    it('onChange', () => {
+      setup({ handleChange });
+
+      onChangeTest({ handleChange });
+    });
+
+    it('onClick', () => {
+      setup({ handleClick });
+
+      onClickTest({ handleClick });
+    });
+  });
 });
