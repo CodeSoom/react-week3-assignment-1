@@ -45,7 +45,7 @@ describe('App', () => {
 
       fireEvent.click(addButton);
 
-      handleList(task);
+      tasks.concat(handleList(task));
 
       tasks.forEach(({ title }) => {
         expect(title).toBe(title);
@@ -58,33 +58,25 @@ describe('App', () => {
           id: 1,
           title: '할일1',
         },
-        {
-          id: 2,
-          title: '할일2',
-        },
       ];
 
-      const addedList = tasks.map((task) => (`<li>${task.title}</li>`));
-
+      const addedList = tasks.map((task) => (`
+      <li>${task.title}</li>
+      <button>완료</button>
+      `));
       document.body.innerHTML = addedList;
 
-      const { getByText, getByLabelText } = renderUtil();
-
-      const input = getByLabelText('할 일');
-
-      const button = getByText('추가');
-
-      input.value = tasks.forEach((task) => task.title);
-
-      fireEvent.click(button);
+      const { getByText } = renderUtil();
 
       const task = { id: 1, title: '할일1' };
+
+      const deleteList = handleList(task);
 
       const deleteButton = getByText('완료');
 
       fireEvent.click(deleteButton);
 
-      handleList(task);
+      tasks.filter(({ id }) => id !== deleteList.id);
     });
   });
 });
