@@ -14,7 +14,8 @@ function renderItem(task, onClickDelete) {
 }
 
 describe('Item', () => {
-  const handleClick = jest.fn();
+  const onClickDelete = jest.fn();
+
   context('when there is a task', () => {
     const task = {
       id: 1,
@@ -22,7 +23,7 @@ describe('Item', () => {
     };
 
     it('renders a list item with a 완료 button', () => {
-      const { container } = renderItem(task, handleClick);
+      const { container } = renderItem(task, onClickDelete);
 
       expect(container).toHaveTextContent('뭐라도 하기');
       expect(container).toHaveTextContent('완료');
@@ -30,13 +31,13 @@ describe('Item', () => {
 
     context('when 완료 button is pressed', () => {
       it('calls click handler', () => {
-        const { getByText } = renderItem(task, handleClick);
+        const { getByText } = renderItem(task, onClickDelete);
 
-        expect(handleClick).not.toBeCalled();
+        expect(onClickDelete).not.toBeCalled();
 
         fireEvent.click(getByText('완료'));
 
-        expect(handleClick).toBeCalledWith(1);
+        expect(onClickDelete).toBeCalledWith(1);
       });
     });
   });
