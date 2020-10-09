@@ -12,6 +12,10 @@ describe('Input', () => {
     <Input value={value} onChange={handleChange} onClick={handleClick} />
   ));
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   context('with value', () => {
     const value = '받아온 문자';
 
