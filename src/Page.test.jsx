@@ -4,16 +4,20 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Page from './Page';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('Page', () => {
   const placeholderText = '할 일을 입력해 주세요';
   const emptyTasksText = '할 일이 없어요!';
   const addTaskButtonText = '추가';
   const deleteButtonText = '완료';
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
+  const onClickDeleteTask = jest.fn();
 
-  const setup = ({
-    taskTitle, onChangeTitle = jest.fn(),
-    onClickAddTask = jest.fn(), tasks, onClickDeleteTask = jest.fn(),
-  }) => {
+  const renderPage = ({ taskTitle, tasks }) => {
     const utils = render(<Page
       taskTitle={taskTitle}
       onChangeTitle={onChangeTitle}
@@ -25,7 +29,7 @@ describe('Page', () => {
     return { ...utils };
   };
 
-  function onChangeTitleTest({ onChangeTitle }) {
+  function onChangeTitleTest() {
     const { getByRole } = screen;
     const input = getByRole('textbox');
 
@@ -36,7 +40,7 @@ describe('Page', () => {
     expect(onChangeTitle).toBeCalledTimes(1);
   }
 
-  function onClickAddTaskTest({ onClickAddTask }) {
+  function onClickAddTaskTest() {
     const { getByText } = screen;
 
     expect(onClickAddTask).not.toBeCalled();
@@ -46,7 +50,7 @@ describe('Page', () => {
     expect(onClickAddTask).toBeCalledTimes(1);
   }
 
-  function onClickDeleteTaskTest({ onClickDeleteTask, tasks }) {
+  function onClickDeleteTaskTest(tasks) {
     const { getAllByText } = screen;
     const buttons = getAllByText(deleteButtonText);
 
@@ -63,11 +67,9 @@ describe('Page', () => {
 
     context('without tasks', () => {
       const tasks = [];
-      const onChangeTitle = jest.fn();
-      const onClickAddTask = jest.fn();
 
       it('check elements', () => {
-        const { getByText, getByPlaceholderText } = setup({ taskTitle, tasks });
+        const { getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
         getByPlaceholderText(placeholderText);
         getByText(addTaskButtonText);
@@ -75,19 +77,14 @@ describe('Page', () => {
       });
 
       it('check functions', () => {
-        setup({
-          taskTitle, onChangeTitle, tasks, onClickAddTask,
-        });
+        renderPage({ taskTitle, tasks });
 
-        onChangeTitleTest({ onChangeTitle });
-        onClickAddTaskTest({ onClickAddTask });
+        onChangeTitleTest();
+        onClickAddTaskTest();
       });
     });
 
     context('with tasks', () => {
-      const onClickDeleteTask = jest.fn();
-      const onClickAddTask = jest.fn();
-      const onChangeTitle = jest.fn();
       const tasks = [
         { id: 1, title: '아무것도 안하기' },
         { id: 2, title: '더욱 더 아무것도 안하기' },
@@ -95,7 +92,7 @@ describe('Page', () => {
       ];
 
       it('check elements', () => {
-        const { getByText, getByPlaceholderText } = setup({ taskTitle, tasks });
+        const { getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
         getByPlaceholderText(placeholderText);
         getByText(addTaskButtonText);
@@ -103,13 +100,11 @@ describe('Page', () => {
       });
 
       it('check functions', () => {
-        setup({
-          taskTitle, onChangeTitle, tasks, onClickDeleteTask, onClickAddTask,
-        });
+        renderPage({ taskTitle, tasks });
 
-        onClickAddTaskTest({ onClickAddTask });
-        onChangeTitleTest({ onChangeTitle });
-        onClickDeleteTaskTest({ onClickDeleteTask, tasks });
+        onClickAddTaskTest();
+        onChangeTitleTest();
+        onClickDeleteTaskTest(tasks);
       });
     });
   });
@@ -118,12 +113,10 @@ describe('Page', () => {
     const taskTitle = 'some text';
 
     context('without tasks', () => {
-      const onClickAddTask = jest.fn();
-      const onChangeTitle = jest.fn();
       const tasks = [];
 
       it('check elements', () => {
-        const { getByText, getByDisplayValue } = setup({ taskTitle, tasks });
+        const { getByText, getByDisplayValue } = renderPage({ taskTitle, tasks });
 
         getByDisplayValue(taskTitle);
         getByText(addTaskButtonText);
@@ -131,19 +124,14 @@ describe('Page', () => {
       });
 
       it('check functions', () => {
-        setup({
-          taskTitle, tasks, onChangeTitle, onClickAddTask,
-        });
+        renderPage({ taskTitle, tasks });
 
-        onChangeTitleTest({ onChangeTitle });
-        onClickAddTaskTest({ onClickAddTask });
+        onChangeTitleTest();
+        onClickAddTaskTest();
       });
     });
 
     context('with tasks', () => {
-      const onClickDeleteTask = jest.fn();
-      const onChangeTitle = jest.fn();
-      const onClickAddTask = jest.fn();
       const tasks = [
         { id: 1, title: '아무것도 안하기' },
         { id: 2, title: '더욱 더 아무것도 안하기' },
@@ -151,7 +139,7 @@ describe('Page', () => {
       ];
 
       it('check elements', () => {
-        const { getByText, getByPlaceholderText } = setup({ taskTitle, tasks });
+        const { getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
         getByPlaceholderText(placeholderText);
         getByText(addTaskButtonText);
@@ -159,13 +147,11 @@ describe('Page', () => {
       });
 
       it('check functions', () => {
-        setup({
-          taskTitle, onChangeTitle, tasks, onClickDeleteTask, onClickAddTask,
-        });
+        renderPage({ taskTitle, tasks });
 
-        onClickAddTaskTest({ onClickAddTask });
-        onChangeTitleTest({ onChangeTitle });
-        onClickDeleteTaskTest({ onClickDeleteTask, tasks });
+        onClickAddTaskTest();
+        onChangeTitleTest();
+        onClickDeleteTaskTest(tasks);
       });
     });
   });

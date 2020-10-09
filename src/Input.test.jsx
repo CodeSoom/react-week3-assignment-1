@@ -4,13 +4,17 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Input from './Input';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('Input', () => {
   const placeholdeText = '할 일을 입력해 주세요';
   const buttonText = '추가';
-  const handleChange = jest.fn();
   const handleClick = jest.fn();
+  const handleChange = jest.fn();
 
-  const setup = (value) => {
+  const renderInput = (value) => {
     const utils = render((
       <Input
         value={value}
@@ -23,21 +27,20 @@ describe('Input', () => {
   };
 
   function onChangeTest() {
-    const input = screen.getByRole('textbox');
-
     expect(handleChange).not.toBeCalled();
 
-    fireEvent.change(input, { target: { value: 'any' } });
+    fireEvent.change(
+      screen.getByRole('textbox'),
+      { target: { value: 'any' } },
+    );
 
     expect(handleChange).toBeCalledTimes(1);
   }
 
   function onClickTest() {
-    const { getByText } = screen;
-
     expect(handleClick).not.toBeCalled();
 
-    fireEvent.click(getByText(buttonText));
+    fireEvent.click(screen.getByText(buttonText));
 
     expect(handleClick).toBeCalledTimes(1);
   }
@@ -46,14 +49,14 @@ describe('Input', () => {
     const value = '';
 
     it('check elements', () => {
-      const { getByText, getByPlaceholderText } = setup(value);
+      const { getByText, getByPlaceholderText } = renderInput(value);
 
       getByPlaceholderText(placeholdeText);
       getByText(buttonText);
     });
 
     it('check functions', () => {
-      setup({ value, handleChange, handleClick });
+      renderInput(value);
 
       onChangeTest();
       onClickTest();
@@ -64,14 +67,14 @@ describe('Input', () => {
     const value = 'some text';
 
     it('check elements', () => {
-      const { getByText, getByDisplayValue } = setup(value);
+      const { getByText, getByDisplayValue } = renderInput(value);
 
       getByDisplayValue(value);
       getByText(buttonText);
     });
 
     it('check functions', () => {
-      setup({ value, handleChange, handleClick });
+      renderInput(value);
 
       onChangeTest();
       onClickTest();
