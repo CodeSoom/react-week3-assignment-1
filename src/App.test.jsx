@@ -4,13 +4,28 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
-function renderApp() {
-  return render((
-    <App />
-  ));
+const { click } = fireEvent;
+
+function change(target, { value }) {
+  fireEvent.change(target, {
+    target: { value },
+  });
 }
 
 describe('App', () => {
+  function renderApp() {
+    const { container, getByLabelText, getByText } = render((
+      <App />
+    ));
+
+    return {
+      container,
+      input: getByLabelText('할 일'),
+      buttonAdd: getByText('추가'),
+      findButtonComplete: () => getByText('완료'),
+    };
+  }
+
   context('when it renders', () => {
     it('renders a div', () => {
       const { container } = renderApp();
@@ -19,37 +34,17 @@ describe('App', () => {
     });
   });
 
-  context('when a new task is input', () => {
-    const value = '커버리지 높이기';
-
-    it('changes taskTitle', () => {
-      const { getByLabelText } = renderApp();
-      const input = getByLabelText('할 일');
-
-      expect(input.value).not.toBe(value);
-
-      fireEvent.change(input, {
-        target: { value },
-      });
-
-      expect(input.value).toBe(value);
-    });
-  });
-
   context('when 추가 button is clicked after task input', () => {
     const value = '커버리지 높이기';
 
     it('adds new task', () => {
-      const { getByLabelText, getByText, container } = renderApp();
-      const input = getByLabelText('할 일');
+      const { input, buttonAdd, container } = renderApp();
 
-      fireEvent.change(input, {
-        target: { value },
-      });
+      change(input, { value });
+      click(buttonAdd);
 
-      fireEvent.click(getByText('추가'));
-
-      expect(container).toContainHTML(value);
+      expect(container).toHaveTextContent(value);
+      expect(container).toHaveTextContent('완료');
     });
   });
 
@@ -57,18 +52,16 @@ describe('App', () => {
     const value = '커버리지 높이기';
 
     it('removes completed task', () => {
-      const { getByLabelText, getByText, container } = renderApp();
-      const input = getByLabelText('할 일');
+      const {
+        input, buttonAdd, findButtonComplete, container,
+      } = renderApp();
 
-      fireEvent.change(input, {
-        target: { value },
-      });
+      change(input, { value });
+      click(buttonAdd);
 
-      fireEvent.click(getByText('추가'));
+      click(findButtonComplete());
 
-      fireEvent.click(getByText('완료'), 1);
-
-      expect(container).not.toContainHTML(value);
+      expect(container).not.toHaveTextContent(value);
     });
   });
 });

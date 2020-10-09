@@ -2,7 +2,7 @@ import React from 'react';
 
 import Item from './Item';
 
-export default function List({ tasks = [], onClickDelete }) {
+export default function List({ tasks, onClickDelete }) {
   if (tasks.length === 0) {
     return (
       <p>할 일이 없어요!</p>

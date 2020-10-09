@@ -4,17 +4,17 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-function renderItem(task, onClickDelete) {
-  return render((
-    <Item
-      task={task}
-      onClickDelete={onClickDelete}
-    />
-  ));
-}
-
 describe('Item', () => {
   const onClickDelete = jest.fn();
+
+  function renderItem({ task }) {
+    return render((
+      <Item
+        task={task}
+        onClickDelete={onClickDelete}
+      />
+    ));
+  }
 
   context('when there is a task', () => {
     const task = {
@@ -23,7 +23,7 @@ describe('Item', () => {
     };
 
     it('renders a list item with a 완료 button', () => {
-      const { container } = renderItem(task, onClickDelete);
+      const { container } = renderItem({ task });
 
       expect(container).toHaveTextContent('뭐라도 하기');
       expect(container).toHaveTextContent('완료');
@@ -31,7 +31,7 @@ describe('Item', () => {
 
     context('when 완료 button is pressed', () => {
       it('calls click handler', () => {
-        const { getByText } = renderItem(task, onClickDelete);
+        const { getByText } = renderItem({ task });
 
         expect(onClickDelete).not.toBeCalled();
 

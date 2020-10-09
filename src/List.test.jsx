@@ -4,23 +4,23 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-function renderList(tasks, onClickDelete) {
-  return render((
-    <List
-      tasks={tasks}
-      onClickDelete={onClickDelete}
-    />
-  ));
-}
-
 describe('List', () => {
   const onClickDelete = jest.fn();
+
+  function renderList({ tasks }) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={onClickDelete}
+      />
+    ));
+  }
 
   context('when there are no tasks', () => {
     const tasks = [];
 
     it('renders 할 일이 없어요!', () => {
-      const { container } = renderList(tasks, onClickDelete);
+      const { container } = renderList({ tasks });
 
       expect(container).toContainHTML('할 일이 없어요!');
     });
@@ -37,7 +37,7 @@ describe('List', () => {
     }];
 
     it('renders a list of tasks', () => {
-      const { container } = renderList(tasks, onClickDelete);
+      const { container } = renderList({ tasks });
 
       expect(container).toContainHTML('<ol');
       expect(container).toContainHTML('쉬기');
