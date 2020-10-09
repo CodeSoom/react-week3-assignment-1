@@ -6,7 +6,7 @@ import List from './List';
 
 describe('List', () => {
   const handleClickDelete = jest.fn();
-  const listRender = (tasks) => render((
+  const renderList = (tasks) => render((
     <List tasks={tasks} onClickDelete={handleClickDelete} />
   ));
 
@@ -17,7 +17,7 @@ describe('List', () => {
     ];
 
     it('show tasks list', () => {
-      const { getAllByRole } = listRender(tasks);
+      const { getAllByRole } = renderList(tasks);
 
       const taskTitles = getAllByRole('listitem');
 
@@ -27,7 +27,7 @@ describe('List', () => {
     });
 
     it('show delete button', () => {
-      const { container, getAllByText } = listRender(tasks);
+      const { container, getAllByText } = renderList(tasks);
 
       expect(container).toHaveTextContent('완료');
 
@@ -47,7 +47,7 @@ describe('List', () => {
     const tasks = [];
 
     it('show "할 일이 없어요!"', () => {
-      const { container } = listRender(tasks);
+      const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(container).not.toHaveTextContent('완료');

@@ -5,18 +5,18 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  const appRender = () => render((<App />));
+  const renderApp = () => render((<App />));
 
-  context('when render App', () => {
+  context('when initial state', () => {
     it('show placeholder in inputbox', () => {
-      const { container, getByPlaceholderText } = appRender();
+      const { container, getByPlaceholderText } = renderApp();
 
       expect(container).toHaveTextContent('To-do');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
     });
 
     it('show "할 일이 없어요!"', () => {
-      const { container } = appRender();
+      const { container } = renderApp();
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -24,7 +24,7 @@ describe('App', () => {
 
   context('When entering text', () => {
     it('show text in inputbox', () => {
-      const { getByPlaceholderText } = appRender();
+      const { getByPlaceholderText } = renderApp();
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -44,7 +44,7 @@ describe('App', () => {
         { id: 3, title: '세번째 할 일' },
       ];
 
-      const { getByPlaceholderText, getByText, getAllByRole } = appRender();
+      const { getByPlaceholderText, getByText, getAllByRole } = renderApp();
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -72,7 +72,7 @@ describe('App', () => {
         getByPlaceholderText,
         getByText,
         getAllByText,
-      } = appRender();
+      } = renderApp();
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
