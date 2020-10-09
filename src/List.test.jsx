@@ -7,6 +7,7 @@ import List from './List';
 describe('List Component', () => {
   const defaultText = '할 일이 없어요!';
   const errorText = '오류가 발생했습니다';
+  const itemButtonText = '완료';
 
   const handleClickDelete = jest.fn();
 
@@ -14,7 +15,7 @@ describe('List Component', () => {
     <List tasks={tasks} onClickDelete={handleClickDelete} />,
   );
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
@@ -25,26 +26,35 @@ describe('List Component', () => {
       { id: 3, title: '청소하기' },
     ];
 
-    it('show information of tasks', () => {
+    it('shows titles of tasks', () => {
       const { getByText } = renderList(tasks);
 
       tasks.forEach(({ title }) => {
         expect(getByText(title)).toBeInTheDocument();
       });
     });
+
+    it('shows button on each task', () => {
+      const { getAllByText } = renderList(tasks);
+      expect(getAllByText(itemButtonText).length).toBe(3);
+    });
   });
 
   context('with empty tasks', () => {
-    it('show default text', () => {
-      const { getByText } = renderList();
+    const tasks = [];
+
+    it('shows default text', () => {
+      const { getByText } = renderList(tasks);
 
       expect(getByText(defaultText)).toBeInTheDocument();
     });
   });
 
   context('with invalid tasks type', () => {
-    it('show error message', () => {
-      const { getByText } = renderList('invalid');
+    const tasks = 'invalid';
+
+    it('shows error message', () => {
+      const { getByText } = renderList(tasks);
 
       expect(getByText(errorText)).toBeInTheDocument();
     });

@@ -24,22 +24,20 @@ describe('Input Component', () => {
     jest.clearAllMocks();
   });
 
-  context('without user action', () => {
-    it('shows input, label, button elements', () => {
-      const { getByText, getByPlaceholderText } = renderInput();
+  it('shows input, label, button elements', () => {
+    const { getByText, getByPlaceholderText } = renderInput();
 
-      expect(getByText(labelText)).toBeInTheDocument();
-      expect(getByPlaceholderText(inputPlaceholderText)).toBeInTheDocument();
-      expect(getByText(buttonText)).toBeInTheDocument();
-    });
+    expect(getByText(labelText)).toBeInTheDocument();
+    expect(getByPlaceholderText(inputPlaceholderText)).toBeInTheDocument();
+    expect(getByText(buttonText)).toBeInTheDocument();
+  });
 
-    it('shows given value on input', () => {
-      const value = '밥 먹기';
-      const { getByLabelText } = renderInput(value);
-      const input = getByLabelText(labelText);
+  it('shows given value on input', () => {
+    const value = '밥 먹기';
+    const { getByLabelText } = renderInput(value);
+    const input = getByLabelText(labelText);
 
-      expect(input).toHaveValue(value);
-    });
+    expect(input).toHaveValue(value);
   });
 
   context('when user input', () => {
@@ -60,7 +58,7 @@ describe('Input Component', () => {
   });
 
   context('when user click button', () => {
-    it('call click handler', () => {
+    it('calls click handler', () => {
       const { getByText } = renderInput();
       const button = getByText(buttonText);
 
