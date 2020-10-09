@@ -66,7 +66,7 @@ describe('App', () => {
 
       const addedList = tasks.map((task) => (`<li>${task.title}</li>`));
 
-      document.body.div.ol.innerHTML = addedList;
+      document.body.innerHTML = addedList;
 
       const { getByText, getByLabelText } = renderUtil();
 
@@ -82,7 +82,7 @@ describe('App', () => {
 
       const deleteButton = getByText('완료');
 
-      fireEvent(deleteButton);
+      fireEvent.click(deleteButton);
 
       handleList(task);
     });
