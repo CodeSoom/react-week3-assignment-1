@@ -8,10 +8,6 @@ const handleChange = jest.fn();
 const handleClick = jest.fn();
 
 describe('<Input />', () => {
-  const handleClickAddTask = {
-    id: 1,
-    taskTitle: '',
-  };
 
   it('has input and a button', () => {
     const { getByPlaceholderText } = render(<Input />);
@@ -44,7 +40,6 @@ describe('<Input />', () => {
     const { getByText } = render((
       <Input
         onClick={handleClick}
-        handleClickAddTask={handleClickAddTask}
       />
     ));
 
@@ -52,6 +47,6 @@ describe('<Input />', () => {
 
     fireEvent.click(getByText('추가'));
 
-    expect(handleClick).toBeCalledWith(1);
+    expect(handleClick).toBeCalled();
   });
 });

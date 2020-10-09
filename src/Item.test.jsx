@@ -30,6 +30,3 @@ test('Item', () => {
   expect(handleClick).toBeCalledWith(1);
 });
 
-test('simple', () => {
-  expect(1 + 1).toBe(2);
-});
