@@ -5,8 +5,9 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  const placeholderText = '할 일을 입력해 주세요';
+  const labelText = '할 일';
   const buttonText = '추가';
+  const placeholderText = '할 일을 입력해 주세요';
 
   const setup = ({
     value,
@@ -24,6 +25,10 @@ describe('Input', () => {
     return { ...utils };
   };
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const onClickTest = ({ handleClick }) => {
     const { getByText } = screen;
 
@@ -40,28 +45,31 @@ describe('Input', () => {
     expect(handleChange).toBeCalledTimes(1);
   };
 
+  test('Basic', () => {
+    const { getByLabelText, getByText, getByPlaceholderText } = setup({ value: '' });
+
+    expect(getByLabelText(labelText)).toBeInTheDocument();
+    expect(getByText(buttonText)).toBeInTheDocument();
+    expect(getByPlaceholderText(placeholderText)).toBeInTheDocument();
+  });
+
   context('without value', () => {
     const value = '';
     const handleClick = jest.fn();
     const handleChange = jest.fn();
 
-    it('Basic', () => {
-      const { getByText, getByPlaceholderText } = setup({ value });
-
-      getByPlaceholderText(placeholderText);
-      getByText(buttonText);
-    });
-
-    it('onChange', () => {
+    test('onChange', () => {
       setup({ handleChange });
 
       onChangeTest({ handleChange });
+      screen.getByDisplayValue(value);
     });
 
-    it('onClick', () => {
+    test('onClick', () => {
       setup({ handleClick });
 
       onClickTest({ handleClick });
+      screen.getByDisplayValue(value);
     });
   });
 
@@ -70,23 +78,18 @@ describe('Input', () => {
     const handleClick = jest.fn();
     const handleChange = jest.fn();
 
-    it('Basic', () => {
-      const { getByText, getByPlaceholderText } = setup({ value });
-
-      getByPlaceholderText(placeholderText);
-      getByText(buttonText);
-    });
-
-    it('onChange', () => {
+    test('onChange', () => {
       setup({ handleChange });
 
       onChangeTest({ handleChange });
+      screen.getByDisplayValue(value);
     });
 
-    it('onClick', () => {
+    test('onClick', () => {
       setup({ handleClick });
 
       onClickTest({ handleClick });
+      screen.getByDisplayValue('');
     });
   });
 });
