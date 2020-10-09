@@ -41,7 +41,8 @@ describe('Input Component', () => {
   context('without input value', () => {
     it('test input shows placeholder', () => {
       const { getByPlaceholderText } = init({});
-      getByPlaceholderText(placeholder);
+      const input = getByPlaceholderText(placeholder);
+      expect(input.value).toBe('');
     });
 
     it('test handler click button', () => {
