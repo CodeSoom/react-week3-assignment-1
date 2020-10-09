@@ -52,11 +52,19 @@ describe('Page', () => {
     ];
 
     it('verify visible list', () => {
-      const { getByText } = renderUtil(tasks, '');
+      const { getByText } = renderUtil(tasks);
 
-      tasks.forEach((task) => {
-        expect(getByText(`${task.title}`)).toBe(`${task.title}`);
+      tasks.forEach(({ title }) => {
+        expect(getByText(title)).toBeVisible();
       });
+    });
+
+    it('verify visible button', () => {
+      const { getAllByText } = renderUtil(tasks);
+
+      const buttons = Array.from(expect(getAllByText('완료')));
+
+      buttons.forEach((button) => button.toBeVisible());
     });
   });
 });
