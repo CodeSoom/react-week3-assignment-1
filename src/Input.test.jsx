@@ -33,14 +33,6 @@ describe('Input', () => {
     });
   });
 
-  context('when typing Empty', () => {
-    window.alert = jest.fn();
-
-    it('alert "할일을 입력하세요!"', () => {
-
-    });
-  });
-
   context('when click Button or press Enter', () => {
     it('onClick function to be called', () => {
       const { getByText } = renderUtil();
