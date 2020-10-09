@@ -4,83 +4,29 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input 컴포넌트', () => {
+test('Input', () => {
+  const taskTitle = '';
+
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  context('값이 없으면', () => {
-    const taskTitle = '';
+  const { container, getByLabelText, getByText } = render((
+    <Input
+      value={taskTitle}
+      onChange={handleChange}
+      onClick={handleClick}
+    />
+  ));
 
-    it('placeholder 값을 보여준다', () => {
-      const { container, getByLabelText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
+  expect(container).toHaveTextContent('할 일');
+  expect(getByLabelText('할 일')).not.toBeNull();
+  expect(container).toHaveTextContent('추가');
 
-      expect(container).toHaveTextContent('할 일');
-      expect(getByLabelText('할 일')).toHaveDisplayValue('');
-      expect(container).toHaveTextContent('추가');
-    });
-  });
+  fireEvent.change(getByLabelText('할 일'), { target: { value: '입력 값' } });
 
-  context('값이 있으면', () => {
-    const taskTitle = 'taskTitle';
+  expect(handleChange).toBeCalledTimes(1);
 
-    it('값을 보여준다', () => {
-      const { container, getByLabelText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
+  fireEvent.click(getByText('추가'));
 
-      expect(container).toHaveTextContent('할 일');
-      expect(getByLabelText('할 일')).toHaveDisplayValue('taskTitle');
-      expect(container).toHaveTextContent('추가');
-    });
-  });
-
-  context('값이 변하면', () => {
-    const taskTitle = '';
-
-    it('onChange 이벤트가 발생한다', () => {
-      const { getByLabelText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
-
-      expect(handleChange).not.toBeCalled();
-
-      fireEvent.change(getByLabelText('할 일'), { target: { value: '입력 값' } });
-
-      expect(handleChange).toBeCalledTimes(1);
-    });
-  });
-
-  context('추가를 누르면', () => {
-    const taskTitle = 'taskTitle';
-
-    it('onClick 이벤트가 발생한다', () => {
-      const { getByText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
-
-      expect(handleClick).not.toBeCalled();
-
-      fireEvent.click(getByText('추가'));
-
-      expect(handleClick).toBeCalledTimes(1);
-    });
-  });
+  expect(handleClick).toBeCalledTimes(1);
 });
