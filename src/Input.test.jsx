@@ -19,7 +19,7 @@ describe('Input', () => {
   context('with value', () => {
     const value = '받아온 문자';
 
-    it('show value.', () => {
+    it('show value in inputbox', () => {
       const { container, getByPlaceholderText } = inputRender(value);
 
       expect(container).toHaveTextContent('할 일');
@@ -31,7 +31,7 @@ describe('Input', () => {
   context('without value', () => {
     const value = '';
 
-    it('show placeholder', () => {
+    it('show placeholder in inputbox', () => {
       const { container, getByPlaceholderText } = inputRender(value);
 
       expect(container).toHaveTextContent('할 일');
@@ -40,7 +40,7 @@ describe('Input', () => {
     });
   });
 
-  context('when value changed', () => {
+  context('when changing value', () => {
     const value = '';
 
     it('run onChange event', () => {
@@ -56,7 +56,7 @@ describe('Input', () => {
     });
   });
 
-  context('when add button clicked', () => {
+  context('when clicking "추가" button', () => {
     const value = '입력한 문자';
 
     it('run onClick event', () => {

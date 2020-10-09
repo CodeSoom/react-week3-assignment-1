@@ -67,7 +67,7 @@ describe('Page', () => {
     const taskTitle = '';
     const tasks = [];
 
-    it('show placeholder', () => {
+    it('show placeholder in inputbox', () => {
       const { container, getByPlaceholderText } = pageRender(tasks, taskTitle);
 
       expect(container).toHaveTextContent('To-do');
