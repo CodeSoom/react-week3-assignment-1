@@ -56,8 +56,6 @@ describe('Input Component', () => {
   });
 
   context('test input shows value', () => {
-    
-
     it('test input value', () => {
       const { getByDisplayValue } = init({ value: userEnterValue });
       getByDisplayValue(userEnterValue);
