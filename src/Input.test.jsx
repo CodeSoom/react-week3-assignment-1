@@ -7,7 +7,7 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const renderInput = (value = '') => render((
+  const renderInput = (value) => render((
     <Input
       value={value}
       onChange={handleChange}
@@ -15,9 +15,15 @@ describe('Input', () => {
     />
   ));
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   context('랜더링 되면', () => {
     it('Label, 버튼, placeholder를 표시한다', () => {
-      const { getByText, getByPlaceholderText } = renderInput();
+      const value = '';
+
+      const { getByText, getByPlaceholderText } = renderInput(value);
 
       expect(getByText('할 일')).toBeInTheDocument();
       expect(getByText('추가')).toBeInTheDocument();
@@ -26,12 +32,22 @@ describe('Input', () => {
   });
 
   context('텍스트가 입력되면', () => {
+    it('화면에 표시한다', () => {
+      const value = '운동하기';
+
+      const { getByLabelText } = renderInput(value);
+
+      expect(getByLabelText('할 일')).toHaveDisplayValue('운동하기');
+    });
+
     it('handleChange()를 호출한다', () => {
-      const { getByLabelText } = renderInput();
+      const value = '운동하기';
+
+      const { getByLabelText } = renderInput(value);
       const input = getByLabelText('할 일');
 
       fireEvent.change(input, {
-        target: { value: '운동하기' },
+        target: { value: '산책하기' },
       });
 
       expect(handleChange).toHaveBeenCalled();
@@ -42,15 +58,13 @@ describe('Input', () => {
     it('handleClick()를 호출한다', () => {
       const value = '운동하기';
 
-      const { getByLabelText, getByText } = renderInput(value);
-      const input = getByLabelText('할 일');
+      const { getByText } = renderInput(value);
 
-      expect(input).toHaveDisplayValue('운동하기');
+      expect(handleClick).not.toHaveBeenCalled();
 
       fireEvent.click(getByText('추가'));
 
       expect(handleClick).toHaveBeenCalled();
-      expect(input).toHaveDisplayValue('');
     });
   });
 });
