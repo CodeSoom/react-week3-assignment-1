@@ -7,8 +7,8 @@ import App from './App';
 describe('App', () => {
   const appRender = () => render((<App />));
 
-  context('when initial state', () => {
-    it('show placeholder', () => {
+  context('when render App', () => {
+    it('show placeholder in inputbox', () => {
       const { container, getByPlaceholderText } = appRender();
 
       expect(container).toHaveTextContent('To-do');
@@ -25,10 +25,13 @@ describe('App', () => {
   context('When entering text', () => {
     it('show text in inputbox', () => {
       const { getByPlaceholderText } = appRender();
+
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
       expect(input).toHaveValue('');
+
       fireEvent.change(input, { target: { value: '입력한 문자' } });
+
       expect(input).toHaveValue('입력한 문자');
     });
   });
@@ -78,21 +81,21 @@ describe('App', () => {
         fireEvent.click(getByText('추가'));
       });
 
-      const firstbutton = getAllByText('완료');
+      const deletebuttons = getAllByText('완료');
 
-      fireEvent.click(firstbutton[1]);
+      fireEvent.click(deletebuttons[1]);
 
       expect(container).toHaveTextContent('첫번째 할 일');
       expect(container).not.toHaveTextContent('두번째 할 일');
       expect(container).toHaveTextContent('세번째 할 일');
 
-      fireEvent.click(firstbutton[0]);
+      fireEvent.click(deletebuttons[0]);
 
       expect(container).not.toHaveTextContent('첫번째 할 일');
       expect(container).not.toHaveTextContent('두번째 할 일');
       expect(container).toHaveTextContent('세번째 할 일');
 
-      fireEvent.click(firstbutton[2]);
+      fireEvent.click(deletebuttons[2]);
 
       expect(container).not.toHaveTextContent('첫번째 할 일');
       expect(container).not.toHaveTextContent('두번째 할 일');
