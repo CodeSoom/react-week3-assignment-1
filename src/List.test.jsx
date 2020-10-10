@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
@@ -14,7 +14,7 @@ describe('List', () => {
     />
   ));
 
-  context('empty tasks', () => {
+  context('without tasks', () => {
     const tasks = [];
 
     it('"할 일이 없어요!"를 표시한다.', () => {
@@ -24,7 +24,7 @@ describe('List', () => {
     });
   });
 
-  context('exist tasks', () => {
+  context('with tasks', () => {
     const tasks = [
       { id: 1, title: '코드숨 과제하기' },
       { id: 2, title: '아무것도 하지 않기' },
@@ -35,6 +35,18 @@ describe('List', () => {
 
       expect(container).toHaveTextContent(tasks[0].title);
       expect(container).toHaveTextContent(tasks[1].title);
+    });
+
+    it('완료 버튼을 클릭한다.', () => {
+      const { getAllByText } = renderList(tasks);
+      const buttons = getAllByText('완료');
+
+      expect(handleClickDelete).not.toBeCalled();
+
+      buttons.forEach((button) => fireEvent.click(button));
+
+      expect(handleClickDelete).toBeCalledWith(1);
+      expect(handleClickDelete).toBeCalledWith(2);
     });
   });
 });

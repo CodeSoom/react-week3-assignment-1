@@ -4,6 +4,10 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Page from './Page';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('Page', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
@@ -18,7 +22,7 @@ describe('Page', () => {
     />
   ));
 
-  context('empty tasks', () => {
+  context('without tasks', () => {
     const tasks = [];
     const inputLabel = '할 일';
     const task = '아무것도 하지 않기';
@@ -43,7 +47,7 @@ describe('Page', () => {
     });
   });
 
-  context('exist tasks', () => {
+  context('with tasks', () => {
     const tasks = [
       { id: 1, title: '코드숨 과제하기' },
       { id: 2, title: '아무것도 하지 않기' },
@@ -75,6 +79,8 @@ describe('Page', () => {
       const input = getByLabelText(inputLabel);
 
       expect(input).toHaveDisplayValue(task);
+      expect(handleClickAddTask).not.toBeCalled();
+
       fireEvent.click(getByText('추가'));
 
       expect(handleClickAddTask).toBeCalled();
