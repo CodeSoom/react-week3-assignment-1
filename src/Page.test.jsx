@@ -12,7 +12,7 @@ test('Page - has no tasks', () => {
   const onClickDeleteTask = jest.fn();
   const onClickAddTask = jest.fn();
 
-  const { container } = render((
+  const { container, getByText, getByLabelText } = render((
     <Page
       taskTitle={taskTitle}
       tasks={tasks}
@@ -25,32 +25,4 @@ test('Page - has no tasks', () => {
   expect(onChangeTitle).not.toBeCalled();
   expect(onClickDeleteTask).not.toBeCalled();
   expect(onClickAddTask).not.toBeCalled();
-});
-
-test('Page - has title', () => {
-  const taskTitle = '뭐라도 하기';
-  const tasks = [];
-
-  const onChangeTitle = jest.fn();
-  const onClickDeleteTask = jest.fn();
-  const onClickAddTask = jest.fn();
-
-  const { container, getByText } = render((
-    <Page
-      taskTitle={taskTitle}
-      tasks={tasks}
-      onChangeTitle={onChangeTitle}
-      onClickDeleteTask={onClickDeleteTask}
-      onClickAddTask={onClickAddTask}
-    />
-  ));
-
-  expect(onChangeTitle).not.toBeCalled();
-  expect(onClickDeleteTask).not.toBeCalled();
-  expect(onClickAddTask).not.toBeCalled();
-
-  fireEvent.click(getByText('추가'));
-
-  expect(onChangeTitle).toBeCalled();
-  expect(onClickAddTask).toBeCalled();
 });
