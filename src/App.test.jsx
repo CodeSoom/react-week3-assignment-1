@@ -40,7 +40,7 @@ describe('App', () => {
   });
 
   it('"삭제" 버튼이 클릭하면 list에 선택된 task가 삭제된다.', () => {
-    const { getByLabelText, getByText } = render(<App />);
+    const { container, getByLabelText, getByText } = render(<App />);
 
     const inputTaskTitle = getByLabelText('할 일');
     const addButton = getByText('추가');
@@ -51,8 +51,7 @@ describe('App', () => {
     const deleteButton = getByText('완료');
     fireEvent.click(deleteButton);
 
-    const emptyList = getByText('할 일이 없어요!');
-    expect(emptyList).toHaveTextContent('할 일이 없어요!');
-    expect(emptyList).not.toHaveTextContent('뭐라도 하기');
+    expect(container).toHaveTextContent('할 일이 없어요!');
+    expect(container).not.toHaveTextContent('뭐라도 하기');
   });
 });
