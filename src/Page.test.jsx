@@ -4,6 +4,10 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('Page', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
