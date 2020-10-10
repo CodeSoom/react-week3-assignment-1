@@ -9,22 +9,21 @@ test('Item', () => {
     id: 1,
     title: '뭐라도 하기',
   };
-
+  
   const handleClick = jest.fn();
 
   const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
+    <Item task={task} onClickDelete={handleClick} />
   ));
 
   expect(container).toHaveTextContent('뭐라도 하기');
   expect(container).toHaveTextContent('완료');
 
+  const button = getByText('완료');
+
   expect(handleClick).not.toBeCalled();
 
-  fireEvent.click(getByText('완료'));
+  fireEvent.click(button);
 
   expect(handleClick).toBeCalledWith(1);
 });
