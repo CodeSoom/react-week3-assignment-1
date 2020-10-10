@@ -6,7 +6,7 @@ import App from './App';
 
 describe('App', () => {
   it('input에 값이 변경하면 input의 값이 변경된다', () => {
-    const { getByDisplayValue } = render(<App />);
+    const { getByLabelText } = render(<App />);
 
     const inputTaskTitle = getByLabelText('할 일');
 
@@ -16,7 +16,7 @@ describe('App', () => {
   });
 
   it('"추가" 버튼을 클릭하면 list에 task가 추가된다', () => {
-    const { getByDisplayValue, getByText } = render(<App />);
+    const { getByLabelText, getByText } = render(<App />);
 
     const inputTaskTitle = getByLabelText('할 일');
     const addButton = getByText('추가');
@@ -29,7 +29,7 @@ describe('App', () => {
   });
 
   it('"추가" 버튼이 클릭하면 input의 값이 초기화된다', () => {
-    const { getByDisplayValue, getByText } = render(<App />);
+    const { getByLabelText, getByText } = render(<App />);
 
     const inputTaskTitle = getByLabelText('할 일');
     const addButton = getByText('추가');
