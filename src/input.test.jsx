@@ -8,7 +8,6 @@ const handleChange = jest.fn();
 const handleClick = jest.fn();
 
 describe('<Input />', () => {
-
   it('has input and a button', () => {
     const { getByPlaceholderText } = render(<Input />);
     getByPlaceholderText('할 일을 입력해 주세요');
