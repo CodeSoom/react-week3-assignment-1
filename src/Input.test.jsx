@@ -24,7 +24,7 @@ describe('Input Component', () => {
     jest.clearAllMocks();
   });
 
-  it('shows input, label, button elements', () => {
+  it('shows elements correctly', () => {
     const { getByText, getByPlaceholderText } = renderInput();
 
     expect(getByText(labelText)).toBeInTheDocument();
