@@ -28,11 +28,11 @@ describe('App', () => {
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-      expect(input).toHaveValue('');
+      expect(input).toHaveDisplayValue('');
 
       fireEvent.change(input, { target: { value: '오늘 할 일' } });
 
-      expect(input).toHaveValue('오늘 할 일');
+      expect(input).toHaveDisplayValue('오늘 할 일');
     });
   });
 
