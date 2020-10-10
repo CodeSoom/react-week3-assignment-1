@@ -5,15 +5,17 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  context('랜더링 되면', () => {
-    it('Headings를 표시한다', () => {
-      const { getByText } = render(<App />);
+  const renderApp = () => render(<App />);
 
-      expect(getByText('To-do')).toBeInTheDocument();
+  context('랜더링 되면', () => {
+    it('To-do를 표시한다', () => {
+      const { container } = renderApp();
+
+      expect(container).toHaveTextContent('To-do');
     });
 
     it('label, 버튼, placeholder를 표시한다', () => {
-      const { getByText, getByPlaceholderText } = render(<App />);
+      const { getByText, getByPlaceholderText } = renderApp();
 
       expect(getByText('할 일')).toBeInTheDocument();
       expect(getByText('추가')).toBeInTheDocument();
@@ -23,7 +25,7 @@ describe('App', () => {
 
   context('tasks가 없을 때', () => {
     it('빈 메시지를 표시한다', () => {
-      const { container } = render(<App />);
+      const { container } = renderApp();
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -36,7 +38,7 @@ describe('App', () => {
         { id: 2, title: '생각하기' },
       ];
 
-      const { getByLabelText, getByText, getAllByRole } = render(<App />);
+      const { getByLabelText, getByText, getAllByRole } = renderApp();
 
       const input = getByLabelText('할 일');
 
@@ -62,7 +64,7 @@ describe('App', () => {
 
       const {
         getByLabelText, getByText, getAllByText, container,
-      } = render(<App />);
+      } = renderApp();
 
       const input = getByLabelText('할 일');
 
