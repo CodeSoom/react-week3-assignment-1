@@ -16,7 +16,7 @@ describe('App', () => {
   });
 
   it('"추가" 버튼을 클릭하면 list에 task가 추가된다', () => {
-    const { getByLabelText, getByText } = render(<App />);
+    const { container, getByLabelText, getByText } = render(<App />);
 
     const inputTaskTitle = getByLabelText('할 일');
     const addButton = getByText('추가');
@@ -24,8 +24,7 @@ describe('App', () => {
     fireEvent.change(inputTaskTitle, { target: { value: '뭐라도 하기' } });
     fireEvent.click(addButton);
 
-    const listTasks = getByText('뭐라도 하기');
-    expect(listTasks).toHaveTextContent('뭐라도 하기');
+    expect(container).toHaveTextContent('뭐라도 하기');
   });
 
   it('"추가" 버튼이 클릭하면 input의 값이 초기화된다', () => {
