@@ -5,45 +5,48 @@ import { fireEvent, render } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  const renderUtil = () => render((
+  const renderApp = () => render((
     <App />
   ));
 
-  context('when rendering text', () => {
-    it('verify Input visible', () => {
-      const { getByLabelText } = renderUtil();
+  context('when rendering initial state', () => {
+    it('input 이 있는지 확인', () => {
+      const { getByLabelText } = renderApp();
 
       expect(getByLabelText('할 일')).toBeVisible();
     });
 
-    it('verify List visible', () => {
-      const { getByText } = renderUtil();
+    it('할일이없어요 text가 있는지 확인', () => {
+      const { getByText } = renderApp();
 
       expect(getByText('할 일이 없어요!')).toBeVisible();
     });
-  });
 
-  context('when rendering buttons', () => {
-    it('verify "추가" button visible', () => {
-      const { getByText } = renderUtil();
+    it('input "추가" button 있는지 확인', () => {
+      const { getByText } = renderApp();
 
       expect(getByText('추가')).toBeVisible();
     });
   });
 
-  context('when click', () => {
+  context('when click 추가 button', () => {
+    const handleClick = jest.fn();
     const handleList = (list) => jest.fn().mockReturnValue(list);
 
-    it('"추가" button return rendering list', () => {
+    it('리스트에 할일 목록 추가됨', () => {
       const tasks = [];
 
-      const { getByText } = renderUtil(tasks);
+      const { getByText } = renderApp();
 
-      const task = { id: 1, title: '할일1' };
+      const task = { id: 1, title: '' };
 
       const addButton = getByText('추가');
 
+      expect(handleClick).not.toBeCalled();
+
       fireEvent.click(addButton);
+
+      expect(handleClick).toBeCalled();
 
       tasks.concat(handleList(task));
 
@@ -53,6 +56,8 @@ describe('App', () => {
     });
 
     it('"완료" button return delete list', () => {
+      const { getByText } = renderApp();
+
       const tasks = [
         {
           id: 1,
@@ -64,9 +69,8 @@ describe('App', () => {
       <li>${task.title}</li>
       <button>완료</button>
       `));
-      document.body.innerHTML = addedList;
 
-      const { getByText } = renderUtil();
+      document.body.innerHTML = addedList;
 
       const task = { id: 1, title: '할일1' };
 
