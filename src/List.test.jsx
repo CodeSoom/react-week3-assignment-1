@@ -4,53 +4,34 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('task List', () => {
-  const tasks = [
-    {
-      id: 1,
-      title: '테스트 코드 작성',
-    },
-  ];
+describe('List', () => {
+  context('tasks가 없을 때', () => {
+    const tasks = [];
 
-  const handleClick = jest.fn();
+    it('빈 메시지를 표현한다', () => {
+      const { container } = render(<List tasks={tasks} />);
 
-  const { container } = render((
-    <List tasks={tasks} onClickDelete={handleClick} />
-  ));
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 
-  expect(container).toHaveTextContent('테스트 코드 작성');
-});
+  context('tasks가 있을 때', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: '테스트 코드 작성',
+      },
+      {
+        id: 2,
+        title: '공부 하기',
+      },
+    ];
 
-test('no data List', () => {
-  const tasks = [];
+    it('tasks 목록을 출력한다', () => {
+      const { container } = render(<List tasks={tasks} />);
 
-  const handleClick = jest.fn();
-
-  const { container } = render((
-    <List tasks={tasks} onClickDelete={handleClick} />
-  ));
-
-  expect(container).toHaveTextContent('할 일이 없어요!');
-});
-
-test('tasks List', () => {
-  const tasks = [
-    {
-      id: 1,
-      title: '테스트 코드 작성',
-    },
-    {
-      id: 2,
-      title: '공부 하기',
-    },
-  ];
-
-  const handleClick = jest.fn();
-
-  const { container } = render((
-    <List tasks={tasks} onClickDelete={handleClick} />
-  ));
-
-  expect(container).toHaveTextContent('테스트 코드 작성');
-  expect(container).toHaveTextContent('공부 하기');
+      expect(container).toHaveTextContent('테스트 코드 작성');
+      expect(container).toHaveTextContent('공부 하기');
+    });
+  });
 });
