@@ -53,7 +53,7 @@ describe('Input Component', () => {
       const handleClick = jest.fn();
       const handleChange = jest.fn();
 
-      const { getByText, getByPlaceholderText } = render(
+      const { getByText } = render(
         <Input
           value={taskTitle}
           onChange={handleChange}
@@ -61,14 +61,9 @@ describe('Input Component', () => {
         />,
       );
 
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
-      const button = getByText('추가');
-
-      expect(handleChange).not.toHaveBeenCalled();
-      fireEvent.change(input, { target: { value: taskTitle } });
-      fireEvent.click(button);
-      expect(input).toBeCalledWith('추가된 할 일');
-      expect(input).toHaveAttribute('value', '');
+      expect(handleClick).not.toHaveBeenCalled();
+      fireEvent.click(getByText('추가'));
+      expect(handleClick).toHaveBeenCalledTimes(1);
     });
   });
 });
