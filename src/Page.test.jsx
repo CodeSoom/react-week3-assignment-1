@@ -11,16 +11,12 @@ beforeEach(() => {
 describe('Page Component', () => {
   const pageTitle = 'To-do';
 
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
-  const onClickDeleteTask = jest.fn();
-
   const init = ({
     taskTitle = '',
-    handleChangeTitle = onChangeTitle,
-    handleClickAddTask = onClickAddTask,
+    handleChangeTitle = jest.fn(),
+    handleClickAddTask = jest.fn(),
     tasks = [],
-    handleClickDeleteTask = onClickDeleteTask,
+    handleClickDeleteTask = jest.fn(),
   }) => {
     const utils = render((
       <Page
