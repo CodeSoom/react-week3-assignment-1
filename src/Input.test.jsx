@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -9,7 +9,7 @@ test('Input - no task title', () => {
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
 
-  const { container } = render((
+  const { container, getByText, getByPlaceholderText } = render((
     <Input
       value={taskTitle}
       onChange={onChangeTitle}
@@ -17,12 +17,13 @@ test('Input - no task title', () => {
     />
   ));
 
-  expect(container).toHaveTextContent('할 일');
   expect(container).toHaveTextContent('추가');
 
-  const inputNode = screen.getByLabelText('username');
+  fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '뭐라도 하기' } });
 
-  expect(inputNode).toHaveTextContent('');
+  fireEvent.click(getByText('추가'));
+
+  expect(taskTitle).toEqual('');
 });
 
 test('Input - has task title', () => {
@@ -30,7 +31,7 @@ test('Input - has task title', () => {
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
 
-  const { container } = render((
+  const { container, getByPlaceholderText } = render((
     <Input
       value={taskTitle}
       onChange={onChangeTitle}
@@ -39,6 +40,7 @@ test('Input - has task title', () => {
   ));
 
   expect(container).toHaveTextContent('추가');
+  expect(getByPlaceholderText('할 일을 입력해 주세요')).toBe('');
 });
 
 test('Input - clear on click', () => {
@@ -46,15 +48,13 @@ test('Input - clear on click', () => {
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
 
-  const { container, getByLabelText, getByText } = render((
+  const { getByText } = render((
     <Input
       value={taskTitle}
       onChange={onChangeTitle}
       onClick={onClickAddTask}
     />
   ));
-
-  expect(container).toHaveTextContent('뭐라도 하기');
 
   fireEvent.click(getByText('추가'));
 
