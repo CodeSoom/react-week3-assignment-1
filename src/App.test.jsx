@@ -4,10 +4,6 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('App Component', () => {
   const addTaskButton = '추가';
   const deleteTaskButton = '완료';
@@ -71,13 +67,25 @@ describe('App Component', () => {
     });
   });
 
-  context('Can this app delete to-do?', () => {
-    it('when there is one', () => {
+  it('Can this app delete to-do list?', () => {
+    const {
+      container, getByPlaceholderText, getByText, getAllByText,
+    } = init();
 
+    const input = getByPlaceholderText(taskInputPlaceholder);
+    const addButton = getByText(addTaskButton);
+
+    newTasks.forEach((task) => {
+      fireEvent.change(input, { target: { value: task } });
+      fireEvent.click(addButton);
     });
 
-    it('when there are more than one', () => {
+    const deleteButtons = getAllByText(deleteTaskButton);
 
-    });
+    expect(deleteButtons).toHaveLength(newTasks.length);
+
+    deleteButtons.forEach((button) => fireEvent.click(button));
+
+    expect(container).toHaveTextContent(isEmptyTaskNotice);
   });
 });
