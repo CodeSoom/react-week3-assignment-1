@@ -16,7 +16,7 @@ describe('Input', () => {
     />
   ));
 
-  it('라벨에 "할 일"이 출력되는 지 확인합니다', () => {
+  it('라벨에 "할 일"이 출력된다', () => {
     const { getByText } = renderInput();
     const taskTitleLabel = getByText('할 일');
 
@@ -24,7 +24,7 @@ describe('Input', () => {
     cleanup();
   });
 
-  it('버튼에 "추가"가 출력되는 지 확인합니다.', () => {
+  it('버튼에 "추가"가 출력된다', () => {
     const { getByText } = renderInput();
     const addButton = getByText('추가');
 
@@ -32,7 +32,7 @@ describe('Input', () => {
     cleanup();
   });
 
-  it('handleChange가 호출되는 지 확인', () => {
+  it('handleChange가 호출된다', () => {
     const { getByDisplayValue } = renderInput();
     const taskTitleInput = getByDisplayValue('');
 
@@ -43,7 +43,7 @@ describe('Input', () => {
     cleanup();
   });
 
-  it('handleClick이 호출되는 지 확인', () => {
+  it('handleClick이 호출된다', () => {
     const { getByText } = renderInput();
     const addButton = getByText('추가');
 
@@ -55,7 +55,7 @@ describe('Input', () => {
   context('value가 없을 때', () => {
     const value = '';
 
-    it('input의 placeholder에 "할 일을 입력해주세요" 가 잘 출력되는 지 확인합니다.', () => {
+    it('input의 placeholder에 "할 일을 입력해주세요" 가 출력된다', () => {
       const { getByPlaceholderText } = renderInput(value);
       const taskTitleInput = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -66,7 +66,7 @@ describe('Input', () => {
   context('value가 있을 때', () => {
     const value = '뭐라도 하기';
 
-    it('input의 value가 잘 출력되는 지 확인합니다.', () => {
+    it('input의 value가 출력된다', () => {
       const { getByDisplayValue } = renderInput(value);
       const taskTitleInput = getByDisplayValue(value);
 

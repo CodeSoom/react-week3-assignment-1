@@ -8,7 +8,7 @@ describe('List', () => {
   context('tasks가 없을 때', () => {
     const tasks = [];
 
-    it('빈 메세지를 표시합니다.', () => {
+    it('빈 메세지를 표시한다', () => {
       const { container } = render(<List tasks={tasks} />);
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -30,7 +30,7 @@ describe('List', () => {
       },
     ];
 
-    it('tasks 목록을 출력한다.', () => {
+    it('tasks 목록을 출력한다', () => {
       const { getByText } = render(<List tasks={tasks} />);
 
       tasks.forEach((task) => expect(getByText(task.title)).toHaveTextContent(task.title));

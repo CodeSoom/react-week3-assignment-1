@@ -19,7 +19,7 @@ describe('Page', () => {
     />
   ));
 
-  it('Page Title에 "To-do"가 출력되는 지 확인', () => {
+  it('Page Title에 "To-do"가 출력된다', () => {
     const { getByText } = renderPage();
     expect(getByText('To-do')).toHaveTextContent('To-do');
   });
