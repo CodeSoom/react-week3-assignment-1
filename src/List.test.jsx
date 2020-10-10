@@ -34,7 +34,7 @@ describe('List', () => {
       const { getByText } = render(<List tasks={tasks} />);
 
       tasks.forEach((task) => {
-        expect(getByText(task.title)).toHaveTextContent(task.title)
+        expect(getByText(task.title)).toHaveTextContent(task.title);
       });
     });
   });
