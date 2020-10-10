@@ -1,95 +1,74 @@
 import React from 'react';
 
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input', () => {
-  const labelText = '할 일';
-  const buttonText = '추가';
-  const placeholderText = '할 일을 입력해 주세요';
+describe('Input Component', () => {
+  context('Initialize', () => {
+    it('render', () => {
+      const taskTitle = '';
+      const handleClick = jest.fn();
+      const handleChange = jest.fn();
 
-  const setup = ({
-    value,
-    handleClick = jest.fn(),
-    handleChange = jest.fn(),
-  }) => {
-    const utils = render((
-      <Input
-        value={value}
-        onClick={handleClick}
-        onChange={handleChange}
-      />
-    ));
+      const { getByLabelText, getByText, getByPlaceholderText } = render(
+        <Input
+          value={taskTitle}
+          onChange={handleChange}
+          onClick={handleClick}
+        />,
+      );
 
-    return { ...utils };
-  };
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  const onClickTest = ({ handleClick }) => {
-    const { getByText } = screen;
-
-    expect(handleClick).not.toBeCalled();
-    fireEvent.click(getByText(buttonText));
-    expect(handleClick).toBeCalledTimes(1);
-  };
-
-  const onChangeTest = ({ handleChange }) => {
-    const input = screen.getByRole('textbox');
-
-    expect(handleChange).not.toBeCalled();
-    fireEvent.change(input, { target: { value: 'any' } });
-    expect(handleChange).toBeCalledTimes(1);
-  };
-
-  test('Basic', () => {
-    const { getByLabelText, getByText, getByPlaceholderText } = setup({ value: '' });
-
-    expect(getByLabelText(labelText)).toBeInTheDocument();
-    expect(getByText(buttonText)).toBeInTheDocument();
-    expect(getByPlaceholderText(placeholderText)).toBeInTheDocument();
-  });
-
-  context('without value', () => {
-    const value = '';
-    const handleClick = jest.fn();
-    const handleChange = jest.fn();
-
-    test('onChange', () => {
-      setup({ handleChange });
-
-      onChangeTest({ handleChange });
-      screen.getByDisplayValue(value);
-    });
-
-    test('onClick', () => {
-      setup({ handleClick });
-
-      onClickTest({ handleClick });
-      screen.getByDisplayValue(value);
+      expect(getByLabelText('할 일')).toBeInTheDocument();
+      expect(getByText('추가')).toBeInTheDocument();
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     });
   });
 
-  context('with value', () => {
-    const value = '추가된 할 일';
-    const handleClick = jest.fn();
-    const handleChange = jest.fn();
+  context('onChange', () => {
+    it('taskTitle', () => {
+      const taskTitle = '추가된 할 일';
+      const handleClick = jest.fn();
+      const handleChange = jest.fn();
 
-    test('onChange', () => {
-      setup({ handleChange });
+      const { getByPlaceholderText } = render(
+        <Input
+          value={taskTitle}
+          onChange={handleChange}
+          onClick={handleClick}
+        />,
+      );
 
-      onChangeTest({ handleChange });
-      screen.getByDisplayValue(value);
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
+
+      expect(handleChange).not.toHaveBeenCalled();
+      fireEvent.change(input, { target: { value: taskTitle } });
+      expect(input).toHaveAttribute('value', '추가된 할 일');
     });
+  });
 
-    test('onClick', () => {
-      setup({ handleClick });
+  context('onClick', () => {
+    it('add task', () => {
+      const taskTitle = '추가된 할 일';
+      const handleClick = jest.fn();
+      const handleChange = jest.fn();
 
-      onClickTest({ handleClick });
-      screen.getByDisplayValue('');
+      const { getByText, getByPlaceholderText } = render(
+        <Input
+          value={taskTitle}
+          onChange={handleChange}
+          onClick={handleClick}
+        />,
+      );
+
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
+      const button = getByText('추가');
+
+      expect(handleChange).not.toHaveBeenCalled();
+      fireEvent.change(input, { target: { value: taskTitle } });
+      fireEvent.click(button);
+      expect(input).toBeCalledWith('추가된 할 일');
+      expect(input).toHaveAttribute('value', '');
     });
   });
 });
