@@ -23,7 +23,7 @@ describe('Input', () => {
       const { container, getByPlaceholderText } = renderInput(value);
 
       expect(container).toHaveTextContent('할 일');
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('받아온 문자');
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue(value);
       expect(container).toHaveTextContent('추가');
     });
   });
@@ -35,7 +35,7 @@ describe('Input', () => {
       const { container, getByPlaceholderText } = renderInput(value);
 
       expect(container).toHaveTextContent('할 일');
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue('');
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveDisplayValue(value);
       expect(container).toHaveTextContent('추가');
     });
   });
