@@ -41,9 +41,9 @@ describe('App', () => {
   });
 
   it('"삭제" 버튼이 클릭하면 list에 선택된 task가 삭제된다.', () => {
-    const { getByDisplayValue, getByText } = render(<App />);
+    const { getByLabelText, getByText } = render(<App />);
 
-    const inputTaskTitle = getByDisplayValue('');
+    const inputTaskTitle = getByLabelText('할 일');
     const addButton = getByText('추가');
 
     fireEvent.change(inputTaskTitle, { target: { value: '뭐라도 하기' } });
