@@ -5,8 +5,6 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  const placeholdeText = '할 일을 입력해 주세요';
-  const buttonText = '추가';
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
@@ -24,7 +22,7 @@ describe('Input', () => {
     it('"할 일을 입력해주세요" placeholder 확인', () => {
       const { getByPlaceholderText } = renderInput(value);
 
-      getByPlaceholderText(placeholdeText);
+      getByPlaceholderText('할 일을 입력해 주세요');
     });
 
     it('input change 이벤트 테스트', () => {
@@ -45,7 +43,7 @@ describe('Input', () => {
 
       expect(handleClick).not.toBeCalled();
 
-      fireEvent.click(getByText(buttonText));
+      fireEvent.click(getByText('추가'));
 
       expect(handleClick).toBeCalledTimes(1);
     });
