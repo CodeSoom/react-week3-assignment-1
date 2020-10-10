@@ -22,11 +22,15 @@ describe('Page', () => {
     />
   ));
 
-  context('랜더링 되면', () => {
-    it('Headings를 표시한다', () => {
-      const { getByText } = renderPage();
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-      expect(getByText('To-do')).toBeInTheDocument();
+  context('랜더링 되면', () => {
+    it('To-do를 표시한다', () => {
+      const { container } = renderPage();
+
+      expect(container).toHaveTextContent('To-do');
     });
 
     it('label, 버튼, placeholder를 표시한다', () => {
@@ -47,30 +51,42 @@ describe('Page', () => {
   });
 
   context('tasks가 있을 때', () => {
-    it('할일 목록과 완료 버튼을 표시한다', () => {
+    it('할일 목록들을 표시한다', () => {
+      const taskTitle = '';
       const tasks = [
         { id: 1, title: '운동하기' },
+        { id: 2, title: '산책하기' },
       ];
 
-      const { getByText } = renderPage('', tasks);
+      const { getAllByRole } = renderPage(taskTitle, tasks);
+      const taskLists = getAllByRole('listitem');
 
-      expect(getByText('운동하기')).toBeInTheDocument();
-      expect(getByText('완료')).toBeInTheDocument();
+      taskLists.forEach((task, index) => {
+        expect(task).toHaveTextContent(tasks[index].title);
+        expect(task).toHaveTextContent('완료');
+      });
     });
   });
 
   context('완료 버튼을 클릭하면', () => {
     it('handleClickDeleteTask()를 호출한다', () => {
+      const taskTitle = '';
       const tasks = [
         { id: 1, title: '운동하기' },
+        { id: 2, title: '산책하기' },
       ];
 
-      const { getByText } = renderPage('', tasks);
+      const { getAllByText } = renderPage(taskTitle, tasks);
+
       expect(handleClickDeleteTask).not.toHaveBeenCalled();
 
-      fireEvent.click(getByText('완료'));
+      const buttons = getAllByText('완료');
 
-      expect(handleClickDeleteTask).toHaveBeenCalled();
+      buttons.forEach((button) => {
+        fireEvent.click(button);
+      });
+
+      expect(handleClickDeleteTask).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -92,15 +108,13 @@ describe('Page', () => {
     it('handleClickAddTask()를 호출한다', () => {
       const taskTitle = '운동하기';
 
-      const { getByLabelText, getByText } = renderPage(taskTitle);
-      const input = getByLabelText('할 일');
+      const { getByText } = renderPage(taskTitle);
 
-      expect(input).toHaveDisplayValue('운동하기');
+      expect(handleClickAddTask).not.toHaveBeenCalled();
 
       fireEvent.click(getByText('추가'));
 
       expect(handleClickAddTask).toHaveBeenCalled();
-      expect(input).toHaveDisplayValue('');
     });
   });
 });
