@@ -11,7 +11,7 @@ describe('App Component', () => {
   const newTitle = '밥 먹기';
 
   context('when user enter new title', () => {
-    it('input has new title', () => {
+    it('input has the new title', () => {
       const { getByLabelText } = render(<App />);
       const input = getByLabelText(inputLabelText);
 
@@ -24,7 +24,7 @@ describe('App Component', () => {
   });
 
   context('when user click add-button', () => {
-    it('shows new task', () => {
+    it('added task appears', () => {
       const { queryByText, getByText, getByLabelText } = render(<App />);
       const addButton = getByText(addButtonText);
       const input = getByLabelText(inputLabelText);
@@ -41,7 +41,7 @@ describe('App Component', () => {
   });
 
   context('when user click complete-button', () => {
-    it('the task disappears', () => {
+    it('completed task disappears', () => {
       const { getByText, getByLabelText, queryByText } = render(<App />);
       const addButton = getByText(addButtonText);
       const input = getByLabelText(inputLabelText);
