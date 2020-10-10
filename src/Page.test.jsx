@@ -9,7 +9,9 @@ describe('Page', () => {
   const handleClickAdd = jest.fn();
   const handleClickDelete = jest.fn();
 
-  const renderUtil = (tasks = [], taskTitle = '') => render((
+  beforeEach(() => jest.clearAllMocks());
+
+  const renderPage = (tasks = [], taskTitle = '') => render((
     <Page
       tasks={tasks}
       taskTitle={taskTitle}
@@ -19,27 +21,27 @@ describe('Page', () => {
     />
   ));
 
-  context('when loading complete', () => {
-    it('verify visible input', () => {
-      const { getByLabelText } = renderUtil();
+  context('페이지 로딩이 완료되었을 때', () => {
+    it('input 이 보이는지 확인', () => {
+      const { getByLabelText } = renderPage();
 
       expect(getByLabelText('할 일')).toBeVisible();
     });
 
-    it('verify visible input button', () => {
-      const { getByText } = renderUtil();
+    it('input 옆 추가 버튼이 보이는지 확인', () => {
+      const { getByText } = renderPage();
 
       expect(getByText('추가')).toBeVisible();
     });
 
-    it('verify visible 할 일이 없어요! text', () => {
-      const { getByText } = renderUtil();
+    it('할 일이 없어요! 텍스트가 보이는지', () => {
+      const { getByText } = renderPage();
 
       expect(getByText('할 일이 없어요!')).toBeVisible();
     });
   });
 
-  context('when exist list over 1 in page', () => {
+  context('리스트가 한개 이상인 페이지 상태일 때', () => {
     const tasks = [
       {
         id: 1,
@@ -51,16 +53,16 @@ describe('Page', () => {
       },
     ];
 
-    it('verify visible list', () => {
-      const { getByText } = renderUtil(tasks);
+    it('리스트 목록 모두 보이는지 확인', () => {
+      const { getByText } = renderPage(tasks);
 
       tasks.forEach(({ title }) => {
         expect(getByText(title)).toBeVisible();
       });
     });
 
-    it('verify visible button', () => {
-      const { getAllByText } = renderUtil(tasks);
+    it('완료 버튼들이 모두 보이는지 확인', () => {
+      const { getAllByText } = renderPage(tasks);
 
       const buttons = Array.from(expect(getAllByText('완료')));
 
