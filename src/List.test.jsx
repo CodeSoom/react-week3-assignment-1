@@ -36,7 +36,8 @@ describe('List Component', () => {
 
     it('shows button on each task', () => {
       const { getAllByText } = renderList(tasks);
-      expect(getAllByText(itemButtonText).length).toBe(3);
+
+      expect(getAllByText(itemButtonText).length).toBe(tasks.length);
     });
   });
 
