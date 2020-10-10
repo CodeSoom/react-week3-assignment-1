@@ -21,7 +21,6 @@ describe('Input', () => {
     const taskTitleLabel = getByText('할 일');
 
     expect(taskTitleLabel).toHaveTextContent('할 일');
-    cleanup();
   });
 
   it('버튼에 "추가"가 출력된다', () => {
@@ -29,7 +28,6 @@ describe('Input', () => {
     const addButton = getByText('추가');
 
     expect(addButton).toHaveTextContent('추가');
-    cleanup();
   });
 
   it('handleChange가 호출된다', () => {
@@ -39,8 +37,6 @@ describe('Input', () => {
     expect(handleChange).not.toBeCalled();
     fireEvent.change(taskTitleInput, { target: { value: '뭐라도 하기' } });
     expect(handleChange).toBeCalled();
-
-    cleanup();
   });
 
   it('handleClick이 호출된다', () => {
