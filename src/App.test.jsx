@@ -30,9 +30,9 @@ describe('App', () => {
 
       expect(input).toHaveValue('');
 
-      fireEvent.change(input, { target: { value: '입력한 문자' } });
+      fireEvent.change(input, { target: { value: '오늘 할 일' } });
 
-      expect(input).toHaveValue('입력한 문자');
+      expect(input).toHaveValue('오늘 할 일');
     });
   });
 

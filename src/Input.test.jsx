@@ -17,7 +17,7 @@ describe('Input', () => {
   });
 
   context('with value', () => {
-    const value = '받아온 문자';
+    const value = '저녁에 할 일';
 
     it('show value in inputbox', () => {
       const { container, getByPlaceholderText } = renderInput(value);
@@ -50,14 +50,14 @@ describe('Input', () => {
 
       expect(handleChange).not.toBeCalled();
 
-      fireEvent.change(input, { target: { value: '입력한 문자' } });
+      fireEvent.change(input, { target: { value: '낮에 할 일' } });
 
       expect(handleChange).toBeCalled();
     });
   });
 
   context('when clicking "추가" button', () => {
-    const value = '입력한 문자';
+    const value = '저녁에 할 일';
 
     it('run onClick event', () => {
       const { getByText } = renderInput(value);

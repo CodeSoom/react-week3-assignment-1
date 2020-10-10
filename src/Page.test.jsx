@@ -17,7 +17,7 @@ test('Page', () => {
   const { getByText } = render((
     <Page
       tasks={tasks}
-      taskTitle="받은 문자"
+      taskTitle="세번째 할 일"
       onClickDeleteTask={handleClickDeleteTask}
       onChangeTitle={handleChangeTitle}
       onClickAddTask={handleClickAddTask}
