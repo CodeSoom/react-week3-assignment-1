@@ -1,12 +1,8 @@
 import React from 'react';
 
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
-
-beforeEach(() => {
-  jest.clearAllMocks();
-});
 
 describe('Input', () => {
   const placeholdeText = '할 일을 입력해 주세요';
@@ -14,70 +10,54 @@ describe('Input', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  const renderInput = (value) => {
-    const utils = render((
-      <Input
-        value={value}
-        onClick={handleClick}
-        onChange={handleChange}
-      />
-    ));
-
-    return { ...utils };
-  };
-
-  function onChangeTest() {
-    expect(handleChange).not.toBeCalled();
-
-    fireEvent.change(
-      screen.getByRole('textbox'),
-      { target: { value: 'any' } },
-    );
-
-    expect(handleChange).toBeCalledTimes(1);
-  }
-
-  function onClickTest() {
-    expect(handleClick).not.toBeCalled();
-
-    fireEvent.click(screen.getByText(buttonText));
-
-    expect(handleClick).toBeCalledTimes(1);
-  }
+  const renderInput = (value) => render((
+    <Input
+      value={value}
+      onClick={handleClick}
+      onChange={handleChange}
+    />
+  ));
 
   context('without value', () => {
     const value = '';
 
-    it('check elements', () => {
-      const { getByText, getByPlaceholderText } = renderInput(value);
+    it('"할 일을 입력해주세요" placeholder 확인', () => {
+      const { getByPlaceholderText } = renderInput(value);
 
       getByPlaceholderText(placeholdeText);
-      getByText(buttonText);
     });
 
-    it('check functions', () => {
-      renderInput(value);
+    it('input change 이벤트 테스트', () => {
+      const { getByRole } = renderInput(value);
 
-      onChangeTest();
-      onClickTest();
+      expect(handleChange).not.toBeCalled();
+
+      fireEvent.change(
+        getByRole('textbox'),
+        { target: { value: 'any' } },
+      );
+
+      expect(handleChange).toBeCalledTimes(1);
+    });
+
+    it('"추가" 버튼 클릭 테스트', () => {
+      const { getByText } = renderInput(value);
+
+      expect(handleClick).not.toBeCalled();
+
+      fireEvent.click(getByText(buttonText));
+
+      expect(handleClick).toBeCalledTimes(1);
     });
   });
 
   context('with value', () => {
     const value = 'some text';
 
-    it('check elements', () => {
-      const { getByText, getByDisplayValue } = renderInput(value);
+    it('value값이 입력된 값과 동일한 input 확인', () => {
+      const { getByDisplayValue } = renderInput(value);
 
       getByDisplayValue(value);
-      getByText(buttonText);
-    });
-
-    it('check functions', () => {
-      renderInput(value);
-
-      onChangeTest();
-      onClickTest();
     });
   });
 });
