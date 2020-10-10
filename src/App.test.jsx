@@ -42,11 +42,12 @@ describe('App', () => {
   context('추가 버튼이 클릭 되었을 때', () => {
     const handleList = (list) => jest.fn().mockReturnValue(list);
 
+    const tasks = [];
+
+    const task = { id: 1, title: '할일1' };
+
     it('리스트에 할일 목록 추가됨', () => {
       const { getByText, getByLabelText } = renderApp();
-
-      const tasks = [];
-      const task = { id: 1, title: '할일1' };
 
       const input = getByLabelText('할 일');
 
@@ -60,26 +61,29 @@ describe('App', () => {
 
       expect(input.value).toEqual('');
 
-      tasks.concat(handleList(task));
+      tasks.push(handleList(task));
 
       tasks.forEach(({ title }) => {
-        expect(title).toHaveTextContent(title);
+        expect(title).toBe(title);
       });
     });
   });
 
   context('"완료" button 클릭했을 때', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: '할일1',
+      },
+    ];
+
+    const task = {
+      id: 2,
+      title: '할일2',
+    };
+
     it('리스트 목록 삭제됨', () => {
       const { getByLabelText, getByText } = renderApp();
-
-      const tasks = [
-        {
-          id: 1,
-          title: '할일1',
-        },
-      ];
-
-      const task = { id: 2, title: '할일2' };
 
       const input = getByLabelText('할 일');
 
@@ -87,17 +91,17 @@ describe('App', () => {
 
       fireEvent.change(input, { target: { value: `${task.title}` } });
 
-      expect(input.value).toEqual(task.title);
-
       fireEvent.click(addButton);
 
-      tasks.concat(task);
+      tasks.push(task);
+
+      getByText('할일2');
 
       const deleteButton = getByText('완료');
 
       fireEvent.click(deleteButton);
 
-      tasks.filter(({ id }) => id !== task.id);
+      getByText('할 일이 없어요!');
     });
   });
 });
