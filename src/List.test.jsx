@@ -5,28 +5,20 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const emptyTasksText = '할 일이 없어요!';
-  const deleteTaskButtonText = '완료';
   const onClickDelete = jest.fn();
 
-  const renderList = (tasks) => {
-    const utils = render((
-      <List
-        tasks={tasks}
-        onClickDelete={onClickDelete}
-      />
-    ));
-
-    return { ...utils };
-  };
+  const renderList = (tasks) => render((
+    <List
+      tasks={tasks}
+      onClickDelete={onClickDelete}
+    />
+  ));
 
   context('without tasks', () => {
-    const tasks = [];
+    it('"할 일이 없어요!" 확인', () => {
+      const { getByText } = renderList([]);
 
-    it('check element', () => {
-      const { getByText } = renderList(tasks);
-
-      getByText(emptyTasksText);
+      getByText('할 일이 없어요!');
     });
   });
 
@@ -36,15 +28,15 @@ describe('List', () => {
       { id: 2, title: '본격적으로 아무것도 안하기' },
     ];
 
-    it('check elements', () => {
+    it('입력된 task 확인', () => {
       const { getByText } = renderList(tasks);
 
       tasks.forEach((task) => getByText(task.title));
     });
 
-    it('check functions', () => {
+    it('"완료" 버튼 갯수, 클릭시 동작 확인', () => {
       const { getAllByText } = renderList(tasks);
-      const buttons = getAllByText(deleteTaskButtonText);
+      const buttons = getAllByText('완료');
 
       expect(buttons).toHaveLength(tasks.length);
       expect(onClickDelete).not.toBeCalled();
