@@ -4,10 +4,6 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('Page Component', () => {
   const pageTitle = 'To-do';
 
@@ -30,7 +26,7 @@ describe('Page Component', () => {
     return { ...utils };
   };
 
-  test('has title label', () => {
+  it('has title label', () => {
     const { container } = init({});
     expect(container).toHaveTextContent(pageTitle);
   });
