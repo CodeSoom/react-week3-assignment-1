@@ -8,6 +8,10 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   context('input 값을 변경할 때', () => {
     it('input 값이 표시된다', () => {
       const { getByPlaceholderText } = render(<Input onChange={handleChange} />);
@@ -27,8 +31,11 @@ describe('Input', () => {
   context('추가 버튼을 누를 때', () => {
     it('버튼 이벤트가 실행된다', () => {
       const { getByText } = render(<Input onClick={handleClick} />);
+
       expect(handleClick).not.toBeCalled();
+
       fireEvent.click(getByText('추가'));
+
       expect(handleClick).toBeCalled();
     });
   });

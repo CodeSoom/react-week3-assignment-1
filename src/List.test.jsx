@@ -30,8 +30,8 @@ describe('List', () => {
     it('tasks 목록을 출력한다', () => {
       const { container } = render(<List tasks={tasks} />);
 
-      expect(container).toHaveTextContent('테스트 코드 작성');
-      expect(container).toHaveTextContent('공부 하기');
+      expect(container).toHaveTextContent(tasks[0].title);
+      expect(container).toHaveTextContent(tasks[1].title);
     });
   });
 });
