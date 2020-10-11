@@ -24,7 +24,7 @@ describe('App Component', () => {
     return { ...utils };
   };
 
-  context('Can this app enter what I have to to-do?', () => {
+  context('Can this app enter to-do title?', () => {
     it('when empty value', () => {
       const { getByPlaceholderText } = init();
 

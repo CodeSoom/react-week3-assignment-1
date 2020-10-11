@@ -4,11 +4,11 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('Input Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const titleLabel = '할 일';
   const placeholder = '할 일을 입력해 주세요';
   const buttonText = '추가';
@@ -18,35 +18,28 @@ describe('Input Component', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  const init = ({
-    value = '',
-    onClick = handleClick,
-    onChange = handleChange,
-  }) => {
-    const utils = render((
-      <Input
-        value={value}
-        onClick={onClick}
-        onChange={onChange}
-      />
-    ));
-    return { ...utils };
-  };
+  const init = (value = '') => render((
+    <Input
+      value={value}
+      onClick={handleClick}
+      onChange={handleChange}
+    />
+  ));
 
   test('main label test', () => {
-    const { container } = init({});
+    const { container } = init();
     expect(container).toHaveTextContent(titleLabel);
   });
 
   context('without input value', () => {
     it('test input shows placeholder', () => {
-      const { getByPlaceholderText } = init({});
+      const { getByPlaceholderText } = init();
       const input = getByPlaceholderText(placeholder);
       expect(input.value).toBe('');
     });
 
     it('test handler click button', () => {
-      const { getByText } = init({});
+      const { getByText } = init();
 
       expect(handleClick).not.toBeCalled();
 
@@ -58,12 +51,12 @@ describe('Input Component', () => {
 
   context('test input shows value', () => {
     it('test input value', () => {
-      const { getByDisplayValue } = init({ value: userEnterValue });
+      const { getByDisplayValue } = init(userEnterValue);
       getByDisplayValue(userEnterValue);
     });
 
     it('test handler change input value', () => {
-      const { getByPlaceholderText } = init({});
+      const { getByPlaceholderText } = init();
 
       expect(handleChange).not.toBeCalled();
 
@@ -76,7 +69,7 @@ describe('Input Component', () => {
     });
 
     it('test handler click button', () => {
-      const { getByText } = init({ value: userEnterValue });
+      const { getByText } = init(userEnterValue);
 
       expect(handleClick).not.toBeCalled();
 

@@ -35,26 +35,24 @@ describe('List Component', () => {
   });
 
   context('Exist only one task', () => {
-    const task = [
-      { id: 100, title: '뭐라도 하자!' },
-    ];
+    const task = { id: 100, title: '뭐라도 하자!' };
 
     it('No notification that nothing todo item', () => {
-      const { container } = init({ tasks: task });
+      const { container } = init({ tasks: [task] });
 
       expect(container).not.toHaveTextContent(isEmptyTaskNotice);
     });
 
     it('Show only one task', () => {
-      const { getByText } = init({ tasks: task });
+      const { getByText } = init({ tasks: [task] });
 
       // Item component
-      getByText(task[0].title);
-      getByText(deleteButtonText);
+      // expect(getByText(task.title)).toBeInTheDocumnet();
+      // expect(getByText(deleteButtonText)).toBeInTheDocumnet();
     });
 
     it('Test button for clicking', () => {
-      const { getByText } = init({ tasks: task });
+      const { getByText } = init({ tasks: [task] });
 
       expect(onClickDeleteTask).not.toBeCalled();
 
