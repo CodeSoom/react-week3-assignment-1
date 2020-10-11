@@ -28,12 +28,12 @@ describe('Page', () => {
   it('List 컴포넌트 "할 일이 없어요!" 확인', () => {
     const { getByText } = renderPage({});
 
-    getByText('할 일이 없어요!');
+    expect(getByText('할 일이 없어요!')).toBeInTheDocument();
   });
 
   it('Input 컴포넌트 "할 일을 입력해주세요" placeholder 확인', () => {
     const { getByPlaceholderText } = renderPage({});
 
-    getByPlaceholderText('할 일을 입력해 주세요');
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
   });
 });

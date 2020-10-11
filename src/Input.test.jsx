@@ -22,7 +22,7 @@ describe('Input', () => {
     it('"할 일을 입력해주세요" placeholder 확인', () => {
       const { getByPlaceholderText } = renderInput(value);
 
-      getByPlaceholderText('할 일을 입력해 주세요');
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     });
 
     it('input change 이벤트 테스트', () => {
@@ -39,11 +39,11 @@ describe('Input', () => {
     });
 
     it('"추가" 버튼 클릭 테스트', () => {
-      const { getByText } = renderInput(value);
+      const { getByRole } = renderInput(value);
 
       expect(handleClick).not.toBeCalled();
 
-      fireEvent.click(getByText('추가'));
+      fireEvent.click(getByRole('button', { name: '추가' }));
 
       expect(handleClick).toBeCalledTimes(1);
     });
@@ -55,7 +55,7 @@ describe('Input', () => {
     it('value값이 입력된 값과 동일한 input 확인', () => {
       const { getByDisplayValue } = renderInput(value);
 
-      getByDisplayValue(value);
+      expect(getByDisplayValue(value)).toBeInTheDocument();
     });
   });
 });

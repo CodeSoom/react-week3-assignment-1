@@ -18,7 +18,7 @@ describe('List', () => {
     it('"할 일이 없어요!" 확인', () => {
       const { getByText } = renderList([]);
 
-      getByText('할 일이 없어요!');
+      expect(getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 
@@ -31,7 +31,9 @@ describe('List', () => {
     it('입력된 task 확인', () => {
       const { getByText } = renderList(tasks);
 
-      tasks.forEach((task) => getByText(task.title));
+      tasks.forEach((task) => {
+        expect(getByText(task.title)).toBeInTheDocument();
+      });
     });
 
     it('"완료" 버튼 갯수, 클릭시 동작 확인', () => {
