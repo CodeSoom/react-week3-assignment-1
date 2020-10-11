@@ -12,11 +12,11 @@ function change(target, { value }) {
   });
 }
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('App', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   function renderApp() {
     const { container, getByLabelText, getByText } = render((
       <App />

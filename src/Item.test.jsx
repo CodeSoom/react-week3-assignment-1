@@ -4,11 +4,11 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('Item', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const onClickDelete = jest.fn();
 
   function renderItem({ task }) {

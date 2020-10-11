@@ -4,11 +4,11 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('Page', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const taskTitle = '할 일을 입력해 주세요';
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
