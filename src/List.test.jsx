@@ -27,11 +27,7 @@ describe('List', () => {
     });
 
     it('show delete button', () => {
-      const { container, getAllByText } = renderList(tasks);
-
-      expect(container).toHaveTextContent('완료');
-
-      expect(handleClickDelete).not.toBeCalled();
+      const { getAllByText } = renderList(tasks);
 
       const deleteButtons = getAllByText('완료');
 
