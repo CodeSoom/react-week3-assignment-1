@@ -10,7 +10,6 @@ import { fireEvent, render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-
   const handleClickDelete = jest.fn();
   const renderHelper = (tasks = []) => render((
     <List
