@@ -24,6 +24,8 @@ test('Input', () => {
   expect(searchInput.value).toBe('뭐라도 해보기');
 
   expect(onClick).not.toBeCalled();
+
   fireEvent.click(getByText('추가'));
+
   expect(onClick).toBeCalled();
 });
