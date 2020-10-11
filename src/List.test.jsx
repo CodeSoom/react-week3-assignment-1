@@ -34,7 +34,7 @@ describe('List', () => {
       const { container } = render(<List tasks={tasks} />);
 
       tasks.forEach(({ title }) => {
-        expect(container.toHaveTextContent(title));
+        expect(container).toHaveTextContent(title);
       });
     });
   });

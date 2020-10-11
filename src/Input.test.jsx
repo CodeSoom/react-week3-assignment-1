@@ -5,7 +5,6 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
