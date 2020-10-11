@@ -6,6 +6,8 @@ import App from './App';
 
 describe('App', () => {
   const inputText = '할 일';
+  const task = '아무것도 하지 않기';
+
   const renderApp = () => render((
     <App />
   ));
@@ -25,30 +27,23 @@ describe('App', () => {
     });
   });
 
-  context('all flow test', () => {
-    const task = '아무것도 하지 않기';
+  it('"taskTitle" 추가하기 후 추가 버튼 클릭 후 완료 버튼 클릭', () => {
+    const { getByLabelText, getByText, container } = renderApp();
+    const input = getByLabelText(inputText);
 
-    it('"taskTitle" 추가하기 후 추가 버튼 클릭 후 완료 버튼 클릭', () => {
-      const { getByLabelText, getByText, container } = renderApp();
-      const input = getByLabelText(inputText);
-      const addButton = getByText('추가');
+    expect(input).toHaveDisplayValue('');
 
-      expect(input).toHaveDisplayValue('');
+    fireEvent.change(input, { target: { value: task } });
 
-      fireEvent.change(input, { target: { value: task } });
+    expect(input).toHaveDisplayValue(task);
 
-      expect(input).toHaveDisplayValue(task);
+    fireEvent.click(getByText('추가'));
 
-      fireEvent.click(addButton);
+    expect(input).toHaveDisplayValue('');
+    expect(container).toHaveTextContent(task);
 
-      expect(input).toHaveDisplayValue('');
-      expect(container).toHaveTextContent(task);
+    fireEvent.click(getByText('완료'));
 
-      const finishButton = getByText('완료');
-
-      fireEvent.click(finishButton);
-
-      expect(container).toHaveTextContent('할 일이 없어요!');
-    });
+    expect(container).toHaveTextContent('할 일이 없어요!');
   });
 });

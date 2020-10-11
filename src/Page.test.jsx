@@ -12,6 +12,7 @@ describe('Page', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
+
   const renderPage = ({ task, tasks }) => render((
     <Page
       taskTitle={task}
@@ -22,10 +23,11 @@ describe('Page', () => {
     />
   ));
 
+  const inputLabel = '할 일';
+  const task = '아무것도 하지 않기';
+
   context('without tasks', () => {
     const tasks = [];
-    const inputLabel = '할 일';
-    const task = '아무것도 하지 않기';
 
     it('"할 일이 없어요!"를 표시한다.', () => {
       const { container } = renderPage({ tasks });
@@ -52,17 +54,15 @@ describe('Page', () => {
       { id: 1, title: '코드숨 과제하기' },
       { id: 2, title: '아무것도 하지 않기' },
     ];
-    const inputLabel = '할 일';
-    const task = '아무것도 하지 않기';
 
-    it('tasks.title이 화면에 표시되는지 확인한다.', () => {
+    it('"tasks.title"이 화면에 표시되는지 확인한다.', () => {
       const { container } = renderPage({ tasks });
 
       expect(container).toHaveTextContent(tasks[0].title);
       expect(container).toHaveTextContent(tasks[1].title);
     });
 
-    it('완료 버튼 클릭시 onClickDeleteTask호출되었는지 확인한다.', () => {
+    it('완료 버튼 클릭시 "onClickDeleteTask"호출되었는지 확인한다.', () => {
       const { getAllByText } = renderPage({ tasks });
       const buttons = getAllByText('완료');
 

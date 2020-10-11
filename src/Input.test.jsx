@@ -52,8 +52,8 @@ describe('Input', () => {
     it('해당 태그가 존재하는지 확인한다.', () => {
       const { getByLabelText, getByText } = renderInput(value);
 
-      getByLabelText(inputLabel);
-      getByText('추가');
+      expect(getByLabelText(inputLabel)).not.toBeNull();
+      expect(getByText('추가')).not.toBeNull();
     });
   });
 });
