@@ -5,6 +5,11 @@ import { render, fireEvent } from '@testing-library/react';
 import Item from './Item';
 
 test('Item', () => {
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const task = {
     id: 1,
     title: '뭐라도 하기',

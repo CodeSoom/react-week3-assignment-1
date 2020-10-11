@@ -4,11 +4,12 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('Page', () => {
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
