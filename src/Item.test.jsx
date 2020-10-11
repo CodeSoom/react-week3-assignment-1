@@ -4,27 +4,45 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
+describe('Item', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  const handleClick = jest.fn();
+  const onClickDelete = jest.fn();
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+  function renderItem({ task }) {
+    return render((
+      <Item
+        task={task}
+        onClickDelete={onClickDelete}
+      />
+    ));
+  }
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  context('when there is a task', () => {
+    const task = {
+      id: 1,
+      title: '뭐라도 하기',
+    };
 
-  expect(handleClick).not.toBeCalled();
+    it('renders a list item with a 완료 button', () => {
+      const { container } = renderItem({ task });
 
-  fireEvent.click(getByText('완료'));
+      expect(container).toHaveTextContent('뭐라도 하기');
+      expect(container).toHaveTextContent('완료');
+    });
 
-  expect(handleClick).toBeCalledWith(1);
+    context('when 완료 button is pressed', () => {
+      it('calls click handler', () => {
+        const { getByText } = renderItem({ task });
+
+        expect(onClickDelete).not.toBeCalled();
+
+        fireEvent.click(getByText('완료'));
+
+        expect(onClickDelete).toBeCalledWith(1);
+      });
+    });
+  });
 });
