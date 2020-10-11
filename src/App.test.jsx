@@ -26,13 +26,26 @@ describe('App Component', () => {
         <App />,
       );
 
-      fireEvent.change(
-        getByRole('textbox'),
-        { target: { value: tasks[0] } },
-      );
+      fireEvent.change(getByRole('textbox'), { target: { value: tasks[0] } });
       fireEvent.click(getByText('추가'));
 
       expect(getByText(tasks[0])).toBeInTheDocument();
+    });
+  });
+
+  context('onDelete', () => {
+    it('remove to tasks', () => {
+      const { getByRole, getByText } = render(
+        <App />,
+      );
+
+      fireEvent.change(getByRole('textbox'), { target: { value: tasks[0] } });
+      fireEvent.click(getByText('추가'));
+
+      expect(getByText(tasks[0])).toBeInTheDocument();
+
+      fireEvent.click(getByText('완료'));
+      expect(getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 });
