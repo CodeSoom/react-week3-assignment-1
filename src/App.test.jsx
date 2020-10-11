@@ -1,30 +1,18 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import App from './App';
 
-/**
- * App : state관리에 대한 테스트를 진행한다.
- */
+import testIds from './componentTestID';
+
 describe('App', () => {
-  const state = {
-    newId: 100,
-    taskTitle: '',
-    tasks: [],
-  };
+  const { container, getByTestId } = render((<App />));
 
-  const { newId, taskTitle, tasks } = state;
-
-  context('When called handleChangeTitle', () => {
-
-  });
-
-  context('When called handleClickAddTask', () => {
-
-  });
-
-  context('When called handleClickDeleteTask', () => {
-
+  context('When loaded', () => {
+    it('show page component', () => {
+      const pageComponent = getByTestId(testIds.Page);
+      expect(container).toContainElement(pageComponent);
+    });
   });
 });

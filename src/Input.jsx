@@ -1,8 +1,10 @@
 import React from 'react';
 
+import testId from './componentTestID';
+
 export default function Input({ value, onChange, onClick }) {
   return (
-    <p>
+    <p data-testid={testId.Input}>
       <label htmlFor="input-task-title">
         할 일
       </label>

@@ -32,10 +32,10 @@ describe('Input', () => {
     });
   });
 
-  context('When click add button', () => {
+  context('When click add-button', () => {
     const addButton = getByText('추가');
 
-    it('handelChange is called', () => {
+    it('handleClick is called', () => {
       expect(handleClick).not.toBeCalled();
 
       fireEvent.click(addButton);
