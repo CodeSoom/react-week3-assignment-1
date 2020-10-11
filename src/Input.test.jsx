@@ -26,19 +26,19 @@ describe('Input Component', () => {
     />
   ));
 
-  test('main label test', () => {
+  test('shows label text', () => {
     const { container } = init();
     expect(container).toHaveTextContent(titleLabel);
   });
 
   context('without input value', () => {
-    it('test input shows placeholder', () => {
+    it('shows input placeholder', () => {
       const { getByPlaceholderText } = init();
       const input = getByPlaceholderText(placeholder);
       expect(input.value).toBe('');
     });
 
-    it('test handler click button', () => {
+    it('click add button', () => {
       const { getByText } = init();
 
       expect(handleClick).not.toBeCalled();
@@ -49,13 +49,13 @@ describe('Input Component', () => {
     });
   });
 
-  context('test input shows value', () => {
-    it('test input value', () => {
+  context('shows input value', () => {
+    it('shows entered value', () => {
       const { getByDisplayValue } = init(userEnterValue);
       getByDisplayValue(userEnterValue);
     });
 
-    it('test handler change input value', () => {
+    it('change to entered value', () => {
       const { getByPlaceholderText } = init();
 
       expect(handleChange).not.toBeCalled();
@@ -68,7 +68,7 @@ describe('Input Component', () => {
       expect(handleChange).toBeCalledTimes(1);
     });
 
-    it('test handler click button', () => {
+    it('click add button', () => {
       const { getByText } = init(userEnterValue);
 
       expect(handleClick).not.toBeCalled();
