@@ -10,38 +10,28 @@ describe('App Component', () => {
     '두번째 할 일',
   ];
 
-  context('Initialize', () => {
-    it('show message 할 일이 없어요!', () => {
-      const { getByText } = render(
-        <App />,
-      );
+  context('when tasks empty', () => {
+    it('show default empty message', () => {
+      const { getByText } = render(<App />);
 
       expect(getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 
-  context('onClick', () => {
-    it('update to tasks', () => {
-      const { getByRole, getByText } = render(
-        <App />,
-      );
+  context('when two tasks', () => {
+    it('onClick and update tasks', () => {
+      const { getByRole, getByText } = render(<App />);
 
       fireEvent.change(getByRole('textbox'), { target: { value: tasks[0] } });
       fireEvent.click(getByText('추가'));
-
       expect(getByText(tasks[0])).toBeInTheDocument();
     });
-  });
 
-  context('onDelete', () => {
-    it('remove to tasks', () => {
-      const { getByRole, getByText } = render(
-        <App />,
-      );
+    it('onDelete and remove tasks', () => {
+      const { getByRole, getByText } = render(<App />);
 
       fireEvent.change(getByRole('textbox'), { target: { value: tasks[0] } });
       fireEvent.click(getByText('추가'));
-
       expect(getByText(tasks[0])).toBeInTheDocument();
 
       fireEvent.click(getByText('완료'));
