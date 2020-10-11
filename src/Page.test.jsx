@@ -34,15 +34,6 @@ describe('Page', () => {
       { id: 4, title: '동료들과 함께하기' },
     ];
 
-    it('컴포넌트 랜딩 시, tasks 목록을 출력합니다.', () => {
-      const { getByText } = renderPage({ tasks });
-      // When
-      // Then
-      tasks.forEach((task) => {
-        expect(getByText(task.title)).toBeInTheDocument();
-      });
-    });
-
     it('추가버튼 클릭 시, task를 추가한 tasks 목록을 출력합니다.', () => {
       const { getByText, rerender } = renderPage({ tasks });
       const addedOneTaskInTasks = [...tasks, { id: 5, title: '잠자기' }];
@@ -56,45 +47,15 @@ describe('Page', () => {
       });
     });
 
-    it('제거 버튼 클릭 시, task가 제거된 tasks 목록을 출력합니다.', () => {
+    it('모든 완료 버튼 클릭 시, 빈 메시지를 출력합니다.', () => {
       const { getByText, getAllByText, rerender } = renderPage({ tasks });
-      const removedOneTaskInTasks = [...tasks].filter((_, idx) => idx !== 4);
 
       // When
-      fireEvent.click(getAllByText('제거'));
-      rerender({ tasks: removedOneTaskInTasks });
+      fireEvent.click(getAllByText('완료'));
+      rerender({ tasks: [] });
 
       // Then
-      removedOneTaskInTasks.forEach((task) => {
-        expect(getByText(task.title)).toBeInTheDocument();
-      });
-    });
-  });
-
-  context('tasks가 없으면서 입력값이 없을 때', () => {
-    // Given
-    // const { getByTestId } = render(<Page />);
-    // const input = getByTestId('input-task');
-    // const inputValue = '게임하기';
-
-    it('컴포넌트 호출 시, 빈 메시지를 출력합니다.', () => {
-      // When
-      // Then
-    });
-
-    it('onChange 이벤트 발생 시, value 가 입력값이 된다.', () => {
-      // When
-      // Then
-    });
-
-    it('추가버튼 클릭 시, task를 추가한 tasks 목록을 출력합니다.', () => {
-      // When
-      // Then
-    });
-
-    it('제거 버튼 클릭 시, 빈 메시지를 출력합니다.', () => {
-      // When
-      // Then
+      expect(getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 });

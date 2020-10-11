@@ -6,9 +6,11 @@ import context from 'jest-plugin-context';
 import List from './List';
 
 describe('List', () => {
+  const handleClickDeleteTask = jest.fn();
   const renderList = (tasks = []) => render(
     <List
       tasks={tasks}
+      onClickDelete={handleClickDeleteTask}
     />,
   );
 

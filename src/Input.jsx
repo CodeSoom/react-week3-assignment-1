@@ -8,7 +8,6 @@ export default function Input({ value, onChange, onClick }) {
       </label>
       <input
         id="input-task-title"
-        data-testid="input-task"
         type="text"
         placeholder="할 일을 입력해 주세요"
         value={value}

@@ -22,7 +22,7 @@ test('컴포넌트 렌딩 시, labal, placeholder, button 텍스트를 출력한
   expect(container).toHaveTextContent('블로그 글쓰기');
 });
 
-test('제거 버튼 클릭 시, onClickDelete가 호출된다.', () => {
+test('완료 버튼 클릭 시, onClickDelete가 호출된다.', () => {
   const { getByText } = renderItem();
 
   expect(handleClick).not.toBeCalled();
