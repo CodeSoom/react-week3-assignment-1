@@ -7,27 +7,25 @@ import Page from './Page';
 describe('Page Component', () => {
   const pageTitle = 'To-do';
 
-  const init = ({
-    taskTitle = '',
-    handleChangeTitle = jest.fn(),
-    handleClickAddTask = jest.fn(),
-    tasks = [],
-    handleClickDeleteTask = jest.fn(),
-  }) => {
-    const utils = render((
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={handleClickDeleteTask}
-      />
-    ));
-    return { ...utils };
-  };
+  const defaultTaskTitle = '';
+  const defaultTasks = [];
+
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+
+  const init = () => render((
+    <Page
+      taskTitle={defaultTaskTitle}
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      tasks={defaultTasks}
+      onClickDeleteTask={handleClickDeleteTask}
+    />
+  ));
 
   it('has title label', () => {
-    const { container } = init({});
+    const { container } = init();
     expect(container).toHaveTextContent(pageTitle);
   });
 });

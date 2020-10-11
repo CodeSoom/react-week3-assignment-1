@@ -4,55 +4,48 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('List Component', () => {
   const isEmptyTaskNotice = '할 일이 없어요!';
   const deleteButtonText = '완료';
 
   const onClickDeleteTask = jest.fn();
 
-  const init = ({
-    tasks = [],
-    onClickDelete = onClickDeleteTask,
-  }) => {
-    const utils = render((
-      <List
-        tasks={tasks}
-        onClickDelete={onClickDelete}
-      />
-    ));
-    return { ...utils };
-  };
+  const init = (tasks = []) => render((
+    <List
+      tasks={tasks}
+      onClickDelete={onClickDeleteTask}
+    />
+  ));
 
-  context('Empty task', () => {
-    it('Notification that nothing todo item', () => {
-      const { container } = init({});
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  context('Empty to-do list', () => {
+    it('Notification that nothing to-do item', () => {
+      const { container } = init();
       expect(container).toHaveTextContent(isEmptyTaskNotice);
     });
   });
 
-  context('Exist only one task', () => {
-    const task = { id: 100, title: '뭐라도 하자!' };
+  context('Exist only one to-do item', () => {
+    const newTask = { id: 100, title: '뭐라도 하자!' };
 
-    it('No notification that nothing todo item', () => {
-      const { container } = init({ tasks: [task] });
+    it('No notification that nothing to-do item', () => {
+      const { container } = init([newTask]);
 
       expect(container).not.toHaveTextContent(isEmptyTaskNotice);
     });
 
-    it('Show only one task', () => {
-      const { getByText } = init({ tasks: [task] });
+    it('Show only one to-do item', () => {
+      const { container } = init([newTask]);
 
-      // Item component
-      // expect(getByText(task.title)).toBeInTheDocumnet();
-      // expect(getByText(deleteButtonText)).toBeInTheDocumnet();
+      expect(container).toHaveTextContent(newTask.title);
+      expect(container).toHaveTextContent(deleteButtonText);
     });
 
-    it('Test button for clicking', () => {
-      const { getByText } = init({ tasks: [task] });
+    it('Click button next to to-do title', () => {
+      const { getByText } = init([newTask]);
 
       expect(onClickDeleteTask).not.toBeCalled();
 
@@ -62,24 +55,24 @@ describe('List Component', () => {
     });
   });
 
-  context('Exist more than one tasks', () => {
+  context('Exist more than one to-do items', () => {
     const taskList = [
       { id: 101, title: 'Make test for Input component!' },
       { id: 102, title: 'Make test for Item component!' },
       { id: 103, title: 'Make test for List component!' },
     ];
 
-    it('No notification that nothing todo item', () => {
-      const { container } = init({ tasks: taskList });
+    it('No notification that nothing to-do item', () => {
+      const { container } = init(taskList);
 
       expect(container).not.toHaveTextContent(isEmptyTaskNotice);
     });
 
-    it('Show tasks contain label and button', () => {
-      const { getByText, getAllByText } = init({ tasks: taskList });
+    it('Show to-do list contains title and button', () => {
+      const { getByText, getAllByText } = init(taskList);
 
-      taskList.forEach((task) => {
-        getByText(task.title);
+      taskList.forEach(({ title }) => {
+        expect(getByText(title)).toBeInTheDocument();
       });
 
       const buttonList = getAllByText(deleteButtonText);
@@ -87,8 +80,8 @@ describe('List Component', () => {
       expect(buttonList.length).toBe(taskList.length);
     });
 
-    it('Test buttons for clicking', () => {
-      const { getAllByText } = init({ tasks: taskList });
+    it('Click all buttons next to to-do title', () => {
+      const { getAllByText } = init(taskList);
 
       const buttonList = getAllByText(deleteButtonText);
 
