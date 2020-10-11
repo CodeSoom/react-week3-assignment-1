@@ -8,7 +8,7 @@ test('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const { getByPlaceholderText, getByText, getByRole } = render((
+  const { getByPlaceholderText, getByText } = render((
     <Input
       value="오늘 할 일"
       onChange={handleChange}
