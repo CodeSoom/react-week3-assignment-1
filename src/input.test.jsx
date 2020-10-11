@@ -7,26 +7,28 @@
  * 5. 추가 버튼을 클릭하면 입력값을 할일 목록에 저장한다.
  * 6. 추가 버튼을 클릭하면 입력창에 있는 입력값이 없어지고 다시 안내글이 보여야 한다.
 ​ */
+
 import React from 'react';
 
 import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input Test', () => {
+describe('Input', () => {
+  const handleClick = jest.fn();
+  const handleChange = jest.fn();
+
+  const renderHelper = (taskTitle = '') => render((
+    <Input
+      value={taskTitle}
+      onChange={handleChange}
+      onClick={handleClick}
+    />
+  ));
   context('입력값이 없을 때', () => {
     it('할 일을 입력해 주세요 라는 placeholder 값을 보여준다', () => {
-      const taskTitle = '';
+      const { getByPlaceholderText } = renderHelper();
 
-      const handleClick = jest.fn();
-      const handleChange = jest.fn();
-      const { getByPlaceholderText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
       const inputNode = getByPlaceholderText('할 일을 입력해 주세요');
 
       expect(inputNode).toBeTruthy();
@@ -35,23 +37,13 @@ describe('Input Test', () => {
 
   context('입력값이 있을 때', () => {
     it('입력창에 입력된 값을 보여 준다', () => {
-      const taskTitle = '뭐라도 하기';
-
-      const handleClick = jest.fn();
-      const handleChange = jest.fn();
-      const { getByPlaceholderText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
+      const { getByPlaceholderText } = renderHelper('뭐라도 하기');
 
       const InputNode = getByPlaceholderText('할 일을 입력해 주세요');
 
       fireEvent.change(
         InputNode, {
-          target: { value: taskTitle },
+          target: { value: '뭐라도 하기' },
         },
       );
 
@@ -59,17 +51,7 @@ describe('Input Test', () => {
     });
 
     it('추가 버튼을 클릭하면 글이 추가 된다', () => {
-      const taskTitle = '뭐라도 하기';
-
-      const handleClick = jest.fn();
-      const handleChange = jest.fn();
-      const { getByText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
+      const { getByText } = renderHelper('뭐라도 하기');
 
       fireEvent.click(getByText('추가'));
 
