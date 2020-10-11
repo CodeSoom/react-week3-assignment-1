@@ -5,23 +5,30 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List Component', () => {
-  context('tasks empty', () => {
-    it('show message 할 일이 없어요!', () => {
-      const tasks = [];
-      const onClickDelete = jest.fn();
+  const onClickDelete = jest.fn();
 
-      const { getByText } = render(
-        <List
-          tasks={tasks}
-          onClickDelete={onClickDelete}
-        />,
-      );
+  const renderList = (value) => render((
+    <List
+      tasks={value}
+      onClickDelete={onClickDelete}
+    />
+  ));
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  context('when tasks empty', () => {
+    it('show default message', () => {
+      const tasks = [];
+
+      const { getByText } = renderList(tasks);
 
       expect(getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 
-  context('have 2 tasks', () => {
+  context('when two tasks', () => {
     it('show tasks', () => {
       const tasks = [
         {
@@ -33,14 +40,8 @@ describe('List Component', () => {
           title: '두번째 할일',
         },
       ];
-      const onClickDelete = jest.fn();
 
-      const { getByText } = render(
-        <List
-          tasks={tasks}
-          onClickDelete={onClickDelete}
-        />,
-      );
+      const { getByText } = renderList(tasks);
 
       expect(getByText(tasks[0].title)).toBeInTheDocument();
       expect(getByText(tasks[1].title)).toBeInTheDocument();
