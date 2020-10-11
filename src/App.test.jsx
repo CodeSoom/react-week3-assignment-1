@@ -12,6 +12,10 @@ function change(target, { value }) {
   });
 }
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('App', () => {
   function renderApp() {
     const { container, getByLabelText, getByText } = render((
@@ -27,10 +31,10 @@ describe('App', () => {
   }
 
   context('when it renders', () => {
-    it('renders a div', () => {
+    it('renders Page', () => {
       const { container } = renderApp();
 
-      expect(container).toContainHTML('<div');
+      expect(container).toHaveTextContent('To-do');
     });
   });
 
