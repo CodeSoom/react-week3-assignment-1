@@ -1,29 +1,57 @@
-import { getByText, render } from '@testing-library/react';
 import React from 'react';
+
+import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
+describe('List', () => {
+  const handleClickDelete = jest.fn();
 
+  function renderList(tasks) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClickDelete}
+      />
+    ));
+  }
 
-test('List', () => {
+  context('with tasks', () => {
+    const tasks = [
+      { id: 1, title: 'Task-1' },
+      { id: 2, title: 'Task-2' },
+    ];
 
-  const tasks = [];
+    it('renders tasks', () => {
+      const { getByText } = renderList(tasks);
 
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
+      expect(getByText(/Task-1/)).not.toBeNull();
+      expect(getByText(/Task-2/)).not.toBeNull();
+    });
 
-  const { container } = render((
-    <List tasks={tasks} />
-  ));
-  
-  expect(container).toHaveTextContent('할 일이 없어요!');   
-  //task.length가 0일 때 할일이 없어요가 나오는지
+    it('renders "완료" button to delete a task', () => {
+      const { getAllByText } = render((
+        <List
+          tasks={tasks}
+          onClickDelete={handleClickDelete}
+        />
+      ));
 
-  tasks.push(task);
+      const buttons = getAllByText('완료');
 
-  expect(container).toHaveTextContent('뭐라도 하기');   
+      fireEvent.click(buttons[0]);
 
+      expect(handleClickDelete).toBeCalledWith(1);
+    });
+  });
 
+  context('without tasks', () => {
+    it('renders no-task messages', () => {
+      const tasks = [];
+
+      const { getByText } = renderList(tasks);
+
+      expect(getByText(/할 일이 없어요/)).not.toBeNull();
+    });
+  });
 });
