@@ -20,7 +20,6 @@ test('Input', () => {
 
   expect(getByText('할 일')).not.toBeNull();
   expect(input).toHaveDisplayValue('오늘 할 일');
-  expect(getByRole('button')).toHaveTextContent('추가');
 
   fireEvent.change(input, { target: { value: '낮에 할 일' } });
 
