@@ -4,48 +4,27 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-const handleChange = jest.fn();
-const handleClick = jest.fn();
+test('Input', () => {
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
+  const { getByDisplayValue, getByLabelText, getByText } = render((
+    <Input
+      value="기존 할 일"
+      onChange={handleChange}
+      onClick={handleClick}
+    />
+  ));
 
-describe('<Input />', () => {
-  it('has input and a button', () => {
-    const { getByPlaceholderText } = render(<Input />);
-    getByPlaceholderText('할 일을 입력해 주세요');
+  expect(getByDisplayValue('기존 할 일')).not.toBeNull();
+
+  fireEvent.change(getByLabelText('할 일'), {
+    target: { value: '무언가 하기' },
   });
 
-  it('changes input', () => {
-    const { getByPlaceholderText } = render(
-      <Input
-        onChange={handleChange}
-      />,
-    );
-    const input = getByPlaceholderText('할 일을 입력해 주세요');
+  expect(handleChange).toBeCalled();
 
-    expect(input).toHaveDisplayValue('');
+  fireEvent.click(getByText('추가'));
 
-    expect(handleChange).not.toBeCalled();
+  expect(handleClick).toBeCalled();
 
-    fireEvent.change(input, {
-      target: {
-        value: 'TDD 연습',
-      },
-    });
-
-    expect(handleChange).toBeCalled();
-    expect(input).toHaveDisplayValue('TDD 연습');
-  });
-
-  it('Click button', () => {
-    const { getByText } = render((
-      <Input
-        onClick={handleClick}
-      />
-    ));
-
-    expect(handleClick).not.toBeCalled();
-
-    fireEvent.click(getByText('추가'));
-
-    expect(handleClick).toBeCalled();
-  });
 });

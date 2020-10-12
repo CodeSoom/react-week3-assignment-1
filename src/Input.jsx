@@ -14,7 +14,7 @@ export default function Input({ value, onChange, onClick }) {
         onChange={onChange}
       />
       <button type="button" onClick={onClick}>
-        추가 
+        추가
       </button>
     </p>
   );

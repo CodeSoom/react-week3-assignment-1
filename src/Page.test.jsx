@@ -1,41 +1,32 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
-describe('<Page />', () => {
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
-  const onClickDeleteTask = jest.fn();
-  const taskTitle = '';
-  const tasks = [];
+test('Page', () => {
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
 
-  context('when rendering', () => {
-    it('To-do', () => {
-      const { container } = render((<Page tasks={tasks} />));
+  const tasks = [
+    { id: 1, title: 'Task-1' },
+    { id: 2, title: 'Task2' },
+  ];
+  const { getByText } = render((
+    <Page
+      taskTitle="New Task"
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      tasks={tasks}
+      onClickDeleteTask={handleClickDeleteTask}
+    />
+  ));
 
-      expect(container).toHaveTextContent('To-do');
-    });
+  expect(getByText(/Task-1/)).not.toBeNull();
+  expect(getByText(/Task2/)).not.toBeNull();
 
-    it('deliver props to Input', () => {
-      render((
-        <Page
-          tasks={tasks}
-          taskTitle={taskTitle}
-          onChangeTitle={onChangeTitle}
-          onClickAddTask={onClickAddTask}
-        />
-      ));
-    });
+  fireEvent.click(getByText('추가'));
 
-    it('deliver props to List', () => {
-      render((
-        <Page
-          tasks={tasks}
-          onClickDeleteTask={onClickDeleteTask}
-        />
-      ));
-    });
-  });
+  expect(handleClickAddTask).toBeCalled();
 });
