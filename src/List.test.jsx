@@ -5,12 +5,12 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List Component', () => {
-  const onClickDelete = jest.fn();
+  const handleClickDelete = jest.fn();
 
   const renderList = (value) => render((
     <List
       tasks={value}
-      onClickDelete={onClickDelete}
+      onClickDelete={handleClickDelete}
     />
   ));
 
@@ -43,8 +43,9 @@ describe('List Component', () => {
 
       const { getByText } = renderList(tasks);
 
-      expect(getByText(tasks[0].title)).toBeInTheDocument();
-      expect(getByText(tasks[1].title)).toBeInTheDocument();
+      tasks.forEach((task) => {
+        expect(getByText(task.title)).toBeInTheDocument();
+      });
     });
   });
 });
