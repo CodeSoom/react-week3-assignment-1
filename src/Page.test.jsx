@@ -1,28 +1,33 @@
 import React from 'react';
 
-import { fireEvent, render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
-test('Page - has no tasks', () => {
-  const taskTitle = '';
-  const tasks = [];
+test('Page', () => {
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
 
-  const onChangeTitle = jest.fn();
-  const onClickDeleteTask = jest.fn();
-  const onClickAddTask = jest.fn();
+  const tasks = [
+    { id: 1, title: 'Task-1' },
+    { id: 2, title: 'Task-2' },
+  ];
 
-  const { container, getByText, getByLabelText } = render((
+  const { getByText } = render((
     <Page
-      taskTitle={taskTitle}
+      taskTitle=""
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
       tasks={tasks}
-      onChangeTitle={onChangeTitle}
-      onClickDeleteTask={onClickDeleteTask}
-      onClickAddTask={onClickAddTask}
+      onClickDeleteTask={handleClickDeleteTask}
     />
   ));
 
-  expect(onChangeTitle).not.toBeCalled();
-  expect(onClickDeleteTask).not.toBeCalled();
-  expect(onClickAddTask).not.toBeCalled();
+  expect(getByText(/Task-1/)).not.toBeNull();
+  expect(getByText(/Task-2/)).not.toBeNull();
+
+  fireEvent.click(getByText('추가'));
+
+  expect(handleClickAddTask).toBeCalled();
 });
