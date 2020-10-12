@@ -7,7 +7,6 @@ import App from './App';
 describe('App Component', () => {
   const tasks = [
     '첫번째 할 일',
-    '두번째 할 일',
   ];
 
   context('when tasks empty', () => {
