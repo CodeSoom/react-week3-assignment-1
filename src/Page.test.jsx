@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent, re } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import context from 'jest-plugin-context';
 
 import Page from './Page';
@@ -34,28 +34,13 @@ describe('Page', () => {
       { id: 4, title: '동료들과 함께하기' },
     ];
 
-    it('추가버튼 클릭 시, task를 추가한 tasks 목록을 출력합니다.', () => {
-      const { getByText, rerender } = renderPage({ tasks });
+    it('task를 추가한 tasks 목록을 출력합니다.', () => {
       const addedOneTaskInTasks = [...tasks, { id: 5, title: '잠자기' }];
+      const { getByText } = renderPage({ tasks: addedOneTaskInTasks });
 
-      // When
-      fireEvent.click(getByText('추가'));
-      rerender({ tasks: addedOneTaskInTasks });
-      // Then
       addedOneTaskInTasks.forEach((task) => {
-        expect(getByText(task.title)).toBeInTheDocument();
+        expect(getByText(task.title)).not.toBeNull();
       });
-    });
-
-    it('모든 완료 버튼 클릭 시, 빈 메시지를 출력합니다.', () => {
-      const { getByText, getAllByText, rerender } = renderPage({ tasks });
-
-      // When
-      fireEvent.click(getAllByText('완료'));
-      rerender({ tasks: [] });
-
-      // Then
-      expect(getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 });

@@ -34,17 +34,12 @@ test('추가 버튼 클릭 시, onClick()가 호출된다.', () => {
 test('onChange 이벤트 발생 시, value 가 입력값이 된다.', () => {
   const { getByLabelText } = renderInput();
 
-  const input = getByLabelText('input-task-title');
-  console.log(input);
+  const input = getByLabelText('할 일');
   const inputTitle = '캠핑하기';
 
-  fireEvent.change(
-    input,
-    {
-      selector: 'input',
-      target: { value: inputTitle },
-    },
-  );
+  fireEvent.change(input, {
+    target: { value: inputTitle },
+  });
 
-  expect(input.value).toBe(inputTitle);
+  expect(handleChange).toBeCalled();
 });
