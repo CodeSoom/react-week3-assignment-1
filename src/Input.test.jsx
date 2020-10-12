@@ -28,8 +28,10 @@ describe('Input Component', () => {
       expect(getByText('추가')).toBeInTheDocument();
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     });
+  });
 
-    it('onChange taskTitle', () => {
+  describe('onChange input text', () => {
+    it('change input value', () => {
       const taskTitle = '추가된 할 일';
 
       const { getByPlaceholderText } = renderInput(taskTitle);
@@ -40,8 +42,10 @@ describe('Input Component', () => {
       fireEvent.change(input, { target: { value: taskTitle } });
       expect(input).toHaveValue(taskTitle);
     });
+  });
 
-    it('onClick addTask', () => {
+  describe('Click addTask button', () => {
+    it('calls onClick handler', () => {
       const taskTitle = '추가된 할 일';
       const { getByText } = renderInput(taskTitle);
 
