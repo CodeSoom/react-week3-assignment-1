@@ -3,12 +3,14 @@ import React from 'react';
 import Input from './Input';
 import List from './List';
 
+import testId from './componentTestID';
+
 export default function Page({
   taskTitle, onChangeTitle, onClickAddTask,
   tasks, onClickDeleteTask,
 }) {
   return (
-    <div>
+    <div data-testid={testId.Page}>
       <h1>To-do</h1>
       <Input
         value={taskTitle}
