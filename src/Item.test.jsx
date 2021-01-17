@@ -4,26 +4,28 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
+const task = {
+  id: 1,
+  title: '블로그 글쓰기',
+};
+const handleClick = jest.fn();
+const renderItem = () => render(
+  <Item
+    task={task}
+    onClickDelete={handleClick}
+  />,
+);
 
-  const handleClick = jest.fn();
+test('컴포넌트 렌딩 시, labal, placeholder, button 텍스트를 출력한다.', () => {
+  const { container } = renderItem();
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+  expect(container).toHaveTextContent('블로그 글쓰기');
+});
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+test('완료 버튼 클릭 시, onClickDelete가 호출된다.', () => {
+  const { getByText } = renderItem();
 
   expect(handleClick).not.toBeCalled();
-
   fireEvent.click(getByText('완료'));
 
   expect(handleClick).toBeCalledWith(1);

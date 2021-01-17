@@ -13,7 +13,7 @@ export default function Input({ value, onChange, onClick }) {
         value={value}
         onChange={onChange}
       />
-      <button type="button" onClick={onClick}>
+      <button id="btn-add" type="button" onClick={onClick}>
         추가
       </button>
     </p>
