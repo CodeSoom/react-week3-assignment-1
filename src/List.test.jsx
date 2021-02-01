@@ -47,8 +47,10 @@ test('Clicking 완료 button invokes onClickDelete function', () => {
 
   const { container, getByText } = render((
     <List
-      tasks={[]}
-      onClickDelete={null}
+      tasks={[
+        { id: 1, title: '어서와 TDD는 처음이지?' },
+      ]}
+      onClickDelete={onClickDelete}
     />
   ));
   expect(onClickDelete).not.toBeCalled();
