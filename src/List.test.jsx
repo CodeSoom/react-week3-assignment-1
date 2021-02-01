@@ -4,7 +4,16 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 test('EmptyList', () => {
-  expect([]).toHaveTextContent('할 일이 없어요!');
+  const task = {};
+  const tasks = [];
+
+  const { container } = render((
+    <List
+      task={task}
+      tasks={tasks}
+    />
+  ));
+  expect(container).toHaveTextContent('할 일이 없어요!');
 });
 
 test('List', () => {
