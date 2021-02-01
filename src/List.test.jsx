@@ -27,12 +27,14 @@ test('List with Task', () => {
 });
 
 test('List with multiple Tasks', () => {
+  const tasks = [
+    { id: 1, title: '어서와 TDD는 처음이지?' },
+    { id: 2, title: '아직 시작도 안했어 ^^' },
+  ];
+
   const { container } = render((
     <List
-      tasks={[
-        { id: 1, title: '어서와 TDD는 처음이지?' },
-        { id: 2, title: '아직 시작도 안했어 ^^' },
-      ]}
+      tasks={tasks}
     />
   ));
 
