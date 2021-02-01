@@ -3,16 +3,16 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
+test('EmptyList', () => {
+  expect([]).toHaveTextContent('할 일이 없어요!');
+});
+
 test('List', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
   };
   const tasks = [task];
-
-  function NoEmptyCase(container) {
-    expect(container).toHaveTextContent('뭐라도 하기');
-  }
 
   const { container } = render((
     <List
@@ -23,9 +23,5 @@ test('List', () => {
     />
   ));
 
-  const containerTasksLen = container.tasksLen;
-
-  if (containerTasksLen !== 0) {
-    NoEmptyCase(container);
-  }
+  expect(container).toHaveTextContent('뭐라도 하기');
 });
