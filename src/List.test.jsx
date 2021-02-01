@@ -25,5 +25,5 @@ test('tasks exist', () => {
     />
   ));
 
-  expect(container).toHaveTextContent('할 일이 없어요!');
+  expect(container).toHaveTextContent('할일1');
 });
