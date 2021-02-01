@@ -4,12 +4,10 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 test('EmptyList', () => {
-  const task = {};
   const tasks = [];
 
   const { container } = render((
     <List
-      task={task}
       tasks={tasks}
     />
   ));
