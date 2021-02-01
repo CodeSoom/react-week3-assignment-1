@@ -25,3 +25,12 @@ test('List with Task', () => {
 
   expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
 });
+
+test('List with multiple Tasks', () => {
+  const { container } = render((
+    <List tasks={[]} />
+  ));
+
+  expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
+  expect(container).toHaveTextContent('아직 시작도 안했어 ^^');
+});
