@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('List', () => {
+test('Empty List', () => {
   const tasks = [];
 
   const { container } = render((
