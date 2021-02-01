@@ -15,8 +15,12 @@ test('Empty List', () => {
 });
 
 test('List with Task', () => {
+  const tasks = [
+    { id: 1, title: '어서와 TDD는 처음이지?' },
+  ];
+
   const { container } = render((
-    <List tasks={[{ id: 1, title: '어서와 TDD는 처음이지?' }]} />
+    <List tasks={tasks} />
   ));
 
   expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
