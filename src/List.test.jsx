@@ -43,13 +43,14 @@ test('List with multiple Tasks', () => {
 });
 
 test('Clicking 완료 button invokes onClickDelete function', () => {
+  const tasks = [
+    { id: 1, title: '어서와 TDD는 처음이지?' },
+  ];
   const onClickDelete = jest.fn();
 
   const { container, getByText } = render((
     <List
-      tasks={[
-        { id: 1, title: '어서와 TDD는 처음이지?' },
-      ]}
+      tasks={tasks}
       onClickDelete={onClickDelete}
     />
   ));
