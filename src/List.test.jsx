@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
@@ -40,4 +40,22 @@ test('List with multiple Tasks', () => {
 
   expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
   expect(container).toHaveTextContent('아직 시작도 안했어 ^^');
+});
+
+test('Clicking 완료 button invokes onClickDelete function', () => {
+  const onClickDelete = jest.fn();
+
+  const { container, getByText } = render((
+    <List
+      tasks={[]}
+      onClickDelete={null}
+    />
+  ));
+  expect(onClickDelete).not.toBeCalled();
+
+  expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
+
+  fireEvent.click(getByText('완료'));
+
+  expect(onClickDelete).toBeCalledWith(1);
 });
