@@ -13,3 +13,11 @@ test('Empty List', () => {
 
   expect(container).toHaveTextContent('할 일이 없어요!');
 });
+
+test('List with Task', () => {
+  const { container } = render((
+    <List tasks={[]} />
+  ));
+
+  expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
+});
