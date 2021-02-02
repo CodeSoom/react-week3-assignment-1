@@ -9,6 +9,7 @@ const onClickDelete = jest.fn();
 const tasks = [
   { id: 1, title: '어서와 TDD는 처음이지?' },
   { id: 2, title: '아직 시작도 안했어 ^^' },
+  { id: 3, title: '재미난 TDD 출바알~' },
 ];
 
 const renderListTemplate = (items = []) => render((
