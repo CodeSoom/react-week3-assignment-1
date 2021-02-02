@@ -32,13 +32,15 @@ describe('List', () => {
       }
     ];
 
-    it('"공부하기!"를 표시한다.', () => {
-      const { container } = render((
+    it('tasks의 항목들을 모두 표시한다.', () => {
+      const { container, getAllByText, getAllByTestId  } = render((
         <List
           tasks={tasks}
         />
       ));
 
+      expect(getAllByTestId('todo-item').length).toEqual(2);
+      expect(getAllByText('완료').length).toEqual(2);
       expect(container).toHaveTextContent('공부하기');
       expect(container).toHaveTextContent('운동하기');
     });
