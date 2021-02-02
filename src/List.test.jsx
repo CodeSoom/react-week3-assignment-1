@@ -11,8 +11,8 @@ const tasks = [
   { id: 2, title: '아직 시작도 안했어 ^^' },
 ];
 
-const renderTemplate = (tasks = []) => render((
-  <List tasks={tasks} onClickDelete={onClickDelete} />
+const renderTemplate = (items = []) => render((
+  <List tasks={items} onClickDelete={onClickDelete} />
 ));
 
 test('Empty List', () => {
