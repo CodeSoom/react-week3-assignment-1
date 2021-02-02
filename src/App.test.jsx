@@ -1,10 +1,25 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import App from './App';
+import App from './Page';
 
 test('Page 컴포넌트 출력확인', () => {
-  render(<App />);
+  const state = {
+    taskTitle: '',
+    tasks: [],
+  };
+  const { taskTitle, tasks } = state;
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+
+  render(<App
+    taskTitle={taskTitle}
+    tasks={tasks}
+    onChangeTitle={handleChangeTitle}
+    onClickAddTask={handleClickAddTask}
+    onClickDeleteTask={handleClickDeleteTask}
+  />);
 
   const header = screen.getByText('To-do');
   const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
