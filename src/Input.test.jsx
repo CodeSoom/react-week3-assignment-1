@@ -20,5 +20,12 @@ describe('Input Component', () => {
 
       expect(addButton).toHaveTextContent('추가');
     });
+    it('input element appears', () => {
+      const { getByLabelText } = renderInputTemplate('123');
+
+      const input = getByLabelText('input-task');
+
+      expect(input).toHaveValue('');
+    });
   });
 });
