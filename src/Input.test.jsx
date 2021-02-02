@@ -60,4 +60,13 @@ describe('Input Component', () => {
       expect(onClick).toBeCalledWith(expect.anything());
     });
   });
+  context('when typing on input', () => {
+    it('onChange event is called', () => {
+      const { getByLabelText } = renderInputTemplate(testValue);
+
+      fireEvent.change(getByLabelText('input-task'), { target: { value: 'a' } });
+
+      expect(onChange).toBeCalledWith(1);
+    });
+  });
 });
