@@ -4,9 +4,9 @@ import { render } from '@testing-library/react';
 import Input from './Input';
 
 test('Input', () => {
-  render(
+  const { container } = render(
     <Input />,
   );
-  expect().toHaveTextContent('할 일');
-  expect().toHaveTextContent('완료');
+  expect(container).toHaveTextContent('할 일');
+  expect(container).toHaveTextContent('추가');
 });
