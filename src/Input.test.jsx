@@ -27,5 +27,12 @@ describe('Input Component', () => {
 
       expect(input).toHaveValue('');
     });
+    it('label element appears', () => {
+      const { getByText } = renderInputTemplate();
+
+      const label = getByText('할 일');
+
+      expect(label).toHaveTextContent('할 일');
+    });
   });
 });
