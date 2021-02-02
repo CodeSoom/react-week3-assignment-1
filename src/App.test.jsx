@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  render, fireEvent,
+  render, fireEvent, screen,
 } from '@testing-library/react';
 
 import App from './App';
@@ -33,10 +33,16 @@ describe('App', () => {
     const { getByDisplayValue, getByPlaceholderText, getByText } = renderApp();
 
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '홈트 하기' } });
     expect(getByDisplayValue('홈트 하기')).toBeInTheDocument();
 
     fireEvent.click(getByText('추가'));
+
+    // screen.debug();
+    // 디버거를 통해 input value가 빈문자열이 된것을 확인했는데
+    // 왜 아래의 테스트에서는 여전히 value가 "홈트하기"로 나오는지 모르겠습니다 ...
+    expect(getByPlaceholderText('할 일을 입력해 주세요').value).toBe('');
 
     expect(getByText('홈트 하기')).toBeInTheDocument();
   });
