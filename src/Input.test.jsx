@@ -37,7 +37,7 @@ describe('Input Component', () => {
   });
   context('with value', () => {
     it('displays value', () => {
-      const { getByLabelText } = renderInputTemplate();
+      const { getByLabelText } = renderInputTemplate('123');
       const input = getByLabelText('input-task');
       expect(input).toHaveDisplayValue('123');
     });
