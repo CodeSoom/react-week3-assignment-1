@@ -11,25 +11,25 @@ const tasks = [
   { id: 2, title: '아직 시작도 안했어 ^^' },
 ];
 
-const renderTemplate = (items = []) => render((
+const renderListTemplate = (items = []) => render((
   <List tasks={items} onClickDelete={onClickDelete} />
 ));
 
 test('Empty List', () => {
-  const { container } = renderTemplate();
+  const { container } = renderListTemplate();
 
   expect(container).toHaveTextContent('할 일이 없어요!');
 });
 
 test('List with tasks', () => {
-  const { container } = renderTemplate(tasks);
+  const { container } = renderListTemplate(tasks);
 
   expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
   expect(container).toHaveTextContent('아직 시작도 안했어 ^^');
 });
 
 test('List with 완료 buttons', () => {
-  const { getAllByText } = renderTemplate(tasks);
+  const { getAllByText } = renderListTemplate(tasks);
 
   const completeButtonLength = getAllByText('완료').length;
 
@@ -37,7 +37,7 @@ test('List with 완료 buttons', () => {
 });
 
 test('Buttons with event', () => {
-  const { getAllByText } = renderTemplate(tasks);
+  const { getAllByText } = renderListTemplate(tasks);
 
   const completeButton = getAllByText('완료');
 
