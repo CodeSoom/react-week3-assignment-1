@@ -4,38 +4,40 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('When List have several Task', () => {
-  const tasks = [
-    { id: 1, title: '볶음밥 만들기' },
-    { id: 2, title: '누워있기' },
-    { id: 3, title: '계속 누워있기' },
-  ];
+const onClickDelete = jest.fn();
 
-  const onClickDelete = jest.fn();
-
-  const { container } = render((
+function showListWith(tasks, handleClick = onClickDelete) {
+  return render((
     <List
       tasks={tasks}
-      onClickDelete={onClickDelete}
+      onClickDelete={handleClick}
     />
   ));
+}
 
-  expect(container).toHaveTextContent('볶음밥 만들기');
-  expect(container).toHaveTextContent('누워있기');
-  expect(container).toHaveTextContent('계속 누워있기');
-});
+describe('List에서', () => {
+  context('tasks의 길이가 0일 때', () => {
+    const tasks = [];
 
-test('Nothing to do', () => {
-  const tasks = [];
+    it('할 일이 없다는 것을 보여준다.', () => {
+      const { container } = showListWith(tasks);
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 
-  const onClickDelete = jest.fn();
+  context('tasks에 여러가지 할 일들이 있을 때', () => {
+    const tasks = [
+      { id: 1, title: '볶음밥 만들기' },
+      { id: 2, title: '누워있기' },
+      { id: 3, title: '계속 누워있기' },
+    ];
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={onClickDelete}
-    />
-  ));
+    it('그 일들을 모두 보여준다.', () => {
+      const { container } = showListWith(tasks);
 
-  expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(container).toHaveTextContent('볶음밥 만들기');
+      expect(container).toHaveTextContent('누워있기');
+      expect(container).toHaveTextContent('계속 누워있기');
+    });
+  });
 });
