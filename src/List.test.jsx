@@ -4,7 +4,9 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-const renderTemplate = (tasks = [], onClickDelete = () => null) => render((
+const onClickDelete = jest.fn();
+
+const renderTemplate = (tasks = []) => render((
   <List tasks={tasks} onClickDelete={onClickDelete} />
 ));
 
@@ -41,9 +43,7 @@ test('Clicking 완료 button invokes onClickDelete function', () => {
     { id: 1, title: '어서와 TDD는 처음이지?' },
   ];
 
-  const onClickDelete = jest.fn();
-
-  const { container, getByText } = renderTemplate(tasks, onClickDelete);
+  const { container, getByText } = renderTemplate(tasks);
 
   expect(onClickDelete).not.toBeCalled();
 
