@@ -24,8 +24,9 @@ test('Empty List', () => {
 test('List with tasks', () => {
   const { container } = renderListTemplate(tasks);
 
-  expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
-  expect(container).toHaveTextContent('아직 시작도 안했어 ^^');
+  tasks.forEach(({ title }) => {
+    expect(container).toHaveTextContent(title);
+  });
 });
 
 test('List with 완료 buttons', () => {
