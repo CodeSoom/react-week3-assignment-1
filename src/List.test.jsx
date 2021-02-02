@@ -3,33 +3,39 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('EmptyList', () => {
-  const tasks = [];
+describe('List', () => {
+  context('test의 length가 0인 경우', () => {
+    const tasks = [];
+    const handleClick = jest.fn();
 
-  const handleClick = jest.fn();
+    it('"할 일이 없어요!"를 표시한다.', () => {
+      const { container } = render((
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />
+      ));
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClick}
-    />
-  ));
-  expect(container).toHaveTextContent('할 일이 없어요!');
-});
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 
-test('List', () => {
-  const tasks = [
-    {
-      id: 1,
-      title: '뭐라도 하기',
-    },
-  ];
+  context('test의 length가 1이상인 경우', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: '뭐라도 하기',
+      },
+    ];
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-    />
-  ));
+    it('입력된 할 일을 표시한다.', () => {
+      const { container } = render((
+        <List
+          tasks={tasks}
+        />
+      ));
 
-  expect(container).toHaveTextContent('뭐라도 하기');
+      expect(container).toHaveTextContent('뭐라도 하기');
+    });
+  });
 });
