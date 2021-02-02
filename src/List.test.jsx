@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
@@ -38,6 +38,14 @@ describe('List에서', () => {
       expect(container).toHaveTextContent('볶음밥 만들기');
       expect(container).toHaveTextContent('누워있기');
       expect(container).toHaveTextContent('계속 누워있기');
+    });
+
+    it('완료버튼을 누르면 onClickDelete 함수를 실행한다.', () => {
+      const { getAllByText } = showListWith(tasks);
+      getAllByText('완료').forEach((button) => {
+        fireEvent.click(button);
+        expect(onClickDelete).toBeCalled();
+      });
     });
   });
 });
