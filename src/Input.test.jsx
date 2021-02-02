@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { getByLabelText, render } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -33,6 +33,13 @@ describe('Input Component', () => {
       const label = getByText('할 일');
 
       expect(label).toHaveTextContent('할 일');
+    });
+  });
+  context('with value', () => {
+    it('displays value', () => {
+      const { getByLabelText } = renderInputTemplate();
+      const input = getByLabelText('input-task');
+      expect(input).toHaveDisplayValue('123');
     });
   });
 });
