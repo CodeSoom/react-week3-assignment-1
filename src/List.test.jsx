@@ -27,3 +27,11 @@ test('List with tasks', () => {
   expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
   expect(container).toHaveTextContent('아직 시작도 안했어 ^^');
 });
+
+test('List with 완료 buttons', () => {
+  const { container, getAllByText } = renderTemplate([]);
+
+  const completeButtonLength = getAllByText('완료').length;
+
+  expect(completeButtonLength).toBe(2);
+});
