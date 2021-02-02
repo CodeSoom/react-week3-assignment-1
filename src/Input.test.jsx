@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -14,6 +14,8 @@ const renderInputTemplate = (value = '') => render((
 ));
 
 describe('Input Component', () => {
+  beforeEach(() => jest.clearAllMocks());
+
   context('when render', () => {
     it('add button appears', () => {
       const { getByText } = renderInputTemplate();
@@ -44,6 +46,18 @@ describe('Input Component', () => {
       const input = getByLabelText('input-task');
 
       expect(input).toHaveDisplayValue('123');
+    });
+
+    it('add button has event', async () => {
+      const { getByText } = renderInputTemplate();
+
+      const addButton = getByText('추가');
+
+      expect(onClick).not.toBeCalled();
+
+      fireEvent.click(addButton);
+
+      expect(onClick).toBeCalledWith(1);
     });
   });
 });
