@@ -57,7 +57,7 @@ describe('Input Component', () => {
 
       fireEvent.click(addButton);
 
-      expect(onClick).toBeCalledWith(1);
+      expect(onClick).toBeCalledWith(expect.anything());
     });
   });
 });
