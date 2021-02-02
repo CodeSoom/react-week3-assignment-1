@@ -48,3 +48,9 @@ test('Buttons with event', () => {
 
   expect(onClickDelete).toBeCalledWith(tasks.length);
 });
+
+test('List with null type', () => {
+  const { container } = renderListTemplate(null);
+
+  expect(container).toHaveTextContent('할 일이 없어요!');
+});
