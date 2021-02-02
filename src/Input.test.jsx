@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { getByLabelText, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import Input from './Input';
 
 const onChange = jest.fn();
 const onClick = jest.fn();
+
+const testValue = '123';
 
 const renderInputTemplate = (value = '') => render((
   <Input value={value} onChange={onChange} onClick={onClick} />
@@ -37,8 +39,10 @@ describe('Input Component', () => {
   });
   context('with value', () => {
     it('displays value', () => {
-      const { getByLabelText } = renderInputTemplate('123');
+      const { getByLabelText } = renderInputTemplate(testValue);
+
       const input = getByLabelText('input-task');
+
       expect(input).toHaveDisplayValue('123');
     });
   });
