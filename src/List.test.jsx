@@ -5,13 +5,13 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const handleClickDelete = jest.fn();
+  const onClickDelete = jest.fn();
 
   function renderList(tasks) {
     return render((
       <List
         tasks={tasks}
-        onClick={handleClickDelete}
+        onClickDelete={onClickDelete}
       />
     ));
   }
@@ -42,7 +42,7 @@ describe('List', () => {
 
       fireEvent.click(getAllByText('완료')[0]);
 
-      expect(handleClickDelete).toBeCalled();
+      expect(onClickDelete).toBeCalled();
     });
   });
 });
