@@ -29,7 +29,7 @@ test('List with tasks', () => {
 });
 
 test('List with 완료 buttons', () => {
-  const { container, getAllByText } = renderTemplate(tasks);
+  const { getAllByText } = renderTemplate(tasks);
 
   const completeButtonLength = getAllByText('완료').length;
 
