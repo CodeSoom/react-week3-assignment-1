@@ -14,6 +14,7 @@ test('Input', () => {
   expect(container).toHaveTextContent('할 일');
   expect(container).toHaveTextContent('추가');
 
+  expect(handleClick).not.toBeCalled();
   fireEvent.click(getByText('추가'));
   expect(handleClick).toBeCalled();
 });
