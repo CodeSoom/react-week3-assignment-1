@@ -35,3 +35,15 @@ test('List with 완료 buttons', () => {
 
   expect(completeButtonLength).toBe(tasks.length);
 });
+
+test('Buttons with event', () => {
+  const { getAllByText } = renderTemplate([]);
+
+  const completeButton = getAllByText('완료');
+
+  completeButton.forEach((button) => {
+    fireEvent.click(button);
+  });
+
+  expect(onClickDelete).toBeCalledWith(2);
+});
