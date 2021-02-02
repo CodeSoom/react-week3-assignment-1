@@ -37,10 +37,7 @@ test('List with 완료 buttons', () => {
 });
 
 test('Buttons with event', () => {
-  const { getAllByText } = renderTemplate([
-    { id: 1, title: '어서와 TDD는 처음이지?' },
-    { id: 2, title: '아직 시작도 안했어 ^^' },
-  ]);
+  const { getAllByText } = renderTemplate(tasks);
 
   const completeButton = getAllByText('완료');
 
@@ -48,5 +45,5 @@ test('Buttons with event', () => {
     fireEvent.click(button);
   });
 
-  expect(onClickDelete).toBeCalledWith(2);
+  expect(onClickDelete).toBeCalledWith(tasks.length);
 });
