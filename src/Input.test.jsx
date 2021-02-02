@@ -21,7 +21,7 @@ describe('Input Component', () => {
       expect(addButton).toHaveTextContent('추가');
     });
     it('input element appears', () => {
-      const { getByLabelText } = renderInputTemplate('');
+      const { getByLabelText } = renderInputTemplate();
 
       const input = getByLabelText('input-task');
 
