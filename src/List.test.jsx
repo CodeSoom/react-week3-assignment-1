@@ -16,17 +16,7 @@ test('Empty List', () => {
   expect(container).toHaveTextContent('할 일이 없어요!');
 });
 
-test('List with Task', () => {
-  const tasks = [
-    { id: 1, title: '어서와 TDD는 처음이지?' },
-  ];
-
-  const { container } = renderTemplate(tasks);
-
-  expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
-});
-
-test('List with multiple Tasks', () => {
+test('List with tasks', () => {
   const tasks = [
     { id: 1, title: '어서와 TDD는 처음이지?' },
     { id: 2, title: '아직 시작도 안했어 ^^' },
