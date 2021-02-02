@@ -66,7 +66,7 @@ describe('Input Component', () => {
 
       fireEvent.change(getByLabelText('input-task'), { target: { value: 'a' } });
 
-      expect(onChange).toBeCalledWith(1);
+      expect(onChange).toBeCalledWith(expect.anything());
     });
   });
 });
