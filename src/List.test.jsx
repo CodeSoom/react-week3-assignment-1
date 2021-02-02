@@ -6,6 +6,11 @@ import List from './List';
 
 const onClickDelete = jest.fn();
 
+const tasks = [
+  { id: 1, title: '어서와 TDD는 처음이지?' },
+  { id: 2, title: '아직 시작도 안했어 ^^' },
+];
+
 const renderTemplate = (tasks = []) => render((
   <List tasks={tasks} onClickDelete={onClickDelete} />
 ));
@@ -17,11 +22,6 @@ test('Empty List', () => {
 });
 
 test('List with tasks', () => {
-  const tasks = [
-    { id: 1, title: '어서와 TDD는 처음이지?' },
-    { id: 2, title: '아직 시작도 안했어 ^^' },
-  ];
-
   const { container } = renderTemplate(tasks);
 
   expect(container).toHaveTextContent('어서와 TDD는 처음이지?');
@@ -29,11 +29,6 @@ test('List with tasks', () => {
 });
 
 test('List with 완료 buttons', () => {
-  const tasks = [
-    { id: 1, title: '어서와 TDD는 처음이지?' },
-    { id: 2, title: '아직 시작도 안했어 ^^' },
-  ];
-
   const { container, getAllByText } = renderTemplate(tasks);
 
   const completeButtonLength = getAllByText('완료').length;
