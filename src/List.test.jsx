@@ -4,7 +4,6 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-
 describe('List', () => {
   context('tasks의 length가 0인 경우', () => {
     const tasks = [];
@@ -29,11 +28,11 @@ describe('List', () => {
       {
         id: 2,
         title: '운동하기',
-      }
+      },
     ];
 
     it('tasks의 항목들을 모두 표시한다.', () => {
-      const { container, getAllByText, getAllByTestId  } = render((
+      const { container, getAllByText, getAllByTestId } = render((
         <List
           tasks={tasks}
         />
@@ -44,7 +43,5 @@ describe('List', () => {
       expect(container).toHaveTextContent('공부하기');
       expect(container).toHaveTextContent('운동하기');
     });
-
   });
-
 });
