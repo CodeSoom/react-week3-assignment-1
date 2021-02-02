@@ -23,6 +23,10 @@ test('2. input 입력 확인', () => {
   render(<Input onChange={onChange} />);
 
   const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
+
+  expect(onChange).not.toHaveBeenCalled();
+  expect(input.value).toBe('');
+
   fireEvent.change(input, { target: { value: 'test code 작성하기' } });
 
   expect(onChange).toHaveBeenCalledTimes(1);
@@ -32,6 +36,9 @@ test('2. input 입력 확인', () => {
 test('3. 버튼클릭 확인', () => {
   const onClick = jest.fn();
   render(<Input onClick={onClick} />);
+
+  expect(onClick).not.toHaveBeenCalled();
+
   fireEvent.click(screen.getByRole('button'));
 
   expect(onClick).toHaveBeenCalledTimes(1);
