@@ -37,7 +37,10 @@ test('List with 완료 buttons', () => {
 });
 
 test('Buttons with event', () => {
-  const { getAllByText } = renderTemplate([]);
+  const { getAllByText } = renderTemplate([
+    { id: 1, title: '어서와 TDD는 처음이지?' },
+    { id: 2, title: '아직 시작도 안했어 ^^' },
+  ]);
 
   const completeButton = getAllByText('완료');
 
