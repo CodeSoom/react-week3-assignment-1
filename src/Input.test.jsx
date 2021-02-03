@@ -44,6 +44,14 @@ describe('Input Component', () => {
     expect(label).toHaveTextContent('할 일');
   });
 
+  it('has placeholder attribute on input element', () => {
+    const { getByLabelText } = renderInput();
+
+    const { placeholder } = getByLabelText('input-task-title');
+
+    expect(placeholder).toBe('할 일을 입력해 주세요');
+  });
+
   context('with value', () => {
     it('displays the value on input element', () => {
       const { getByLabelText } = renderInput(testValue);
