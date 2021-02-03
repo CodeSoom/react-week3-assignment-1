@@ -16,29 +16,30 @@ const renderInputTemplate = (value = '') => render((
 describe('Input Component', () => {
   beforeEach(() => jest.clearAllMocks());
 
-  context('when render', () => {
-    it('add button appears', () => {
-      const { getByText } = renderInputTemplate();
+  it('renders a button with 추가 text', () => {
+    const { getByText } = renderInputTemplate();
 
-      const addButton = getByText('추가');
+    const addButton = getByText('추가');
 
-      expect(addButton).toHaveTextContent('추가');
-    });
-    it('input element appears', () => {
-      const { getByLabelText } = renderInputTemplate();
-
-      const input = getByLabelText('input-task');
-
-      expect(input).toHaveValue('');
-    });
-    it('label element appears', () => {
-      const { getByText } = renderInputTemplate();
-
-      const label = getByText('할 일');
-
-      expect(label).toHaveTextContent('할 일');
-    });
+    expect(addButton).toHaveTextContent('추가');
   });
+
+  it('renders a input control', () => {
+    const { getByLabelText } = renderInputTemplate();
+
+    const input = getByLabelText('input-task');
+
+    expect(input).toHaveValue('');
+  });
+
+  it('renders a label element', () => {
+    const { getByText } = renderInputTemplate();
+
+    const label = getByText('할 일');
+
+    expect(label).toHaveTextContent('할 일');
+  });
+
   context('with value', () => {
     it('displays value', () => {
       const { getByLabelText } = renderInputTemplate(testValue);
