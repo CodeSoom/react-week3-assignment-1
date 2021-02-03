@@ -34,7 +34,7 @@ describe('List Component', () => {
   });
 
   context('with tasks', () => {
-    it('render title of the tasks', () => {
+    it('renders title of the tasks', () => {
       const { container } = renderList(tasks);
 
       tasks.forEach(({ title }) => {
@@ -42,7 +42,7 @@ describe('List Component', () => {
       });
     });
 
-    it('render 완료 button', () => {
+    it('renders 완료 button', () => {
       const { getAllByText } = renderList(tasks);
 
       const completeButtonLength = getAllByText('완료').length;
@@ -50,7 +50,7 @@ describe('List Component', () => {
       expect(completeButtonLength).toBe(tasks.length);
     });
 
-    it('buttons have event', () => {
+    it('triggers onClickDelete attached to the button with text 완료', () => {
       const { getAllByText } = renderList(tasks);
 
       const completeButton = getAllByText('완료');
