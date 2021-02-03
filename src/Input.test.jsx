@@ -52,27 +52,26 @@ describe('Input Component', () => {
     expect(placeholder).toBe('할 일을 입력해 주세요');
   });
 
-  context('with value', () => {
-    it('displays the value on input element', () => {
-      const { getByLabelText } = renderInput(testValue);
+  it('displays the value on input element', () => {
+    const { getByLabelText } = renderInput(testValue);
 
-      const input = getByLabelText('input-task');
+    const input = getByLabelText('input-task');
 
-      expect(input).toHaveDisplayValue('123');
-    });
-
-    it('tiggers onClick', () => {
-      const { getByText } = renderInput();
-
-      const addButton = getByText('추가');
-
-      expect(onClick).not.toBeCalled();
-
-      fireEvent.click(addButton);
-
-      expect(onClick).toBeCalled();
-    });
+    expect(input).toHaveDisplayValue('123');
   });
+
+  it('tiggers onClick', () => {
+    const { getByText } = renderInput();
+
+    const addButton = getByText('추가');
+
+    expect(onClick).not.toBeCalled();
+
+    fireEvent.click(addButton);
+
+    expect(onClick).toBeCalled();
+  });
+
   context('when a value is added to input element', () => {
     it('triggers onChange', () => {
       const { getByLabelText } = renderInput(testValue);
