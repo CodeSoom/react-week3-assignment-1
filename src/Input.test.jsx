@@ -20,7 +20,7 @@ test('Input', () => {
   expect(onChange).not.toBeCalled();
   expect(onClick).not.toBeCalled();
   fireEvent.change(placeholder, { target: { value: '낮잠 자기' } });
+  expect(onChange).toBeCalled();
   fireEvent.click(getByText('추가'));
   expect(onClick).toBeCalled();
-  expect(placeholder).toHaveValue('');
 });
