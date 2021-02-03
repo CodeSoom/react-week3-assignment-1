@@ -47,7 +47,7 @@ describe('Input Component', () => {
   it('has placeholder attribute on input element', () => {
     const { getByLabelText } = renderInput();
 
-    const { placeholder } = getByLabelText('input-task-title');
+    const { placeholder } = getByLabelText('input-task');
 
     expect(placeholder).toBe('할 일을 입력해 주세요');
   });
