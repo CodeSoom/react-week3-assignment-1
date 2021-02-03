@@ -9,10 +9,12 @@ describe('Input component Test', () => {
   describe('1. input 컴포넌트 render 할 때', () => {
     test('label,input,button 출력되어야 함 ', () => {
       const onChange = jest.fn();
-      const { getByText, getByPlaceholderText, getByRole } = render(<Input
-        value="할일!"
-        onChange={onChange}
-      />);
+      const { getByText, getByPlaceholderText, getByRole } = render(
+        <Input
+          value="할일!"
+          onChange={onChange}
+        />,
+      );
 
       const label = getByText('할 일');
       const input = getByPlaceholderText('할 일을 입력해 주세요');
