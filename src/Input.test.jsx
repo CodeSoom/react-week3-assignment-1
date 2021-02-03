@@ -41,7 +41,7 @@ describe('Input Component', () => {
   });
 
   context('with value', () => {
-    it('displays value', () => {
+    it('displays the value on input element', () => {
       const { getByLabelText } = renderInput(testValue);
 
       const input = getByLabelText('input-task');
@@ -49,7 +49,7 @@ describe('Input Component', () => {
       expect(input).toHaveDisplayValue('123');
     });
 
-    it('add button has event', () => {
+    it('tiggers onClick', () => {
       const { getByText } = renderInput();
 
       const addButton = getByText('추가');
@@ -61,8 +61,8 @@ describe('Input Component', () => {
       expect(onClick).toBeCalled();
     });
   });
-  context('when typing on input', () => {
-    it('onChange event is called', () => {
+  context('when a value is added to input element', () => {
+    it('triggers onChange', () => {
       const { getByLabelText } = renderInput(testValue);
 
       fireEvent.change(getByLabelText('input-task'), { target: { value: 'a' } });
