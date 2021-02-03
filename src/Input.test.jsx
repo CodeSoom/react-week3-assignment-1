@@ -7,7 +7,7 @@ import Input from './Input';
 describe('Input', () => {
   const handleClick = jest.fn();
 
-  const { container, getByText } = render(
+  const { container, getByText, getByPlaceholderText } = render(
     <Input
       onClick={handleClick}
     />,
