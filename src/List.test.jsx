@@ -25,7 +25,7 @@ describe('List Component', () => {
     });
   });
 
-  context('without a task', () => {
+  context('without tasks', () => {
     it('prompts empty message', () => {
       const { container } = renderList();
 
