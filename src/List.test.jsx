@@ -12,14 +12,14 @@ const tasks = [
   { id: 3, title: '재미난 TDD 출바알~' },
 ];
 
-const renderListTemplate = (items = []) => render((
+const renderList = (items = []) => render((
   <List tasks={items} onClickDelete={onClickDelete} />
 ));
 
 describe('List Component', () => {
   context('when null type', () => {
     it('prompts empty message', () => {
-      const { container } = renderListTemplate(null);
+      const { container } = renderList(null);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -27,7 +27,7 @@ describe('List Component', () => {
 
   context('without a task', () => {
     it('prompts empty message', () => {
-      const { container } = renderListTemplate();
+      const { container } = renderList();
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -35,7 +35,7 @@ describe('List Component', () => {
 
   context('with tasks', () => {
     it('render title of the tasks', () => {
-      const { container } = renderListTemplate(tasks);
+      const { container } = renderList(tasks);
 
       tasks.forEach(({ title }) => {
         expect(container).toHaveTextContent(title);
@@ -43,7 +43,7 @@ describe('List Component', () => {
     });
 
     it('render 완료 button', () => {
-      const { getAllByText } = renderListTemplate(tasks);
+      const { getAllByText } = renderList(tasks);
 
       const completeButtonLength = getAllByText('완료').length;
 
@@ -51,7 +51,7 @@ describe('List Component', () => {
     });
 
     it('buttons have event', () => {
-      const { getAllByText } = renderListTemplate(tasks);
+      const { getAllByText } = renderList(tasks);
 
       const completeButton = getAllByText('완료');
 

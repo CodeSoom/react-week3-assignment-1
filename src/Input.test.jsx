@@ -9,7 +9,7 @@ const onClick = jest.fn();
 
 const testValue = '123';
 
-const renderInputTemplate = (value = '') => render((
+const renderInput = (value = '') => render((
   <Input value={value} onChange={onChange} onClick={onClick} />
 ));
 
@@ -17,7 +17,7 @@ describe('Input Component', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('renders a button with 추가 text', () => {
-    const { getByText } = renderInputTemplate();
+    const { getByText } = renderInput();
 
     const addButton = getByText('추가');
 
@@ -25,7 +25,7 @@ describe('Input Component', () => {
   });
 
   it('renders a input control', () => {
-    const { getByLabelText } = renderInputTemplate();
+    const { getByLabelText } = renderInput();
 
     const input = getByLabelText('input-task');
 
@@ -33,7 +33,7 @@ describe('Input Component', () => {
   });
 
   it('renders a label element', () => {
-    const { getByText } = renderInputTemplate();
+    const { getByText } = renderInput();
 
     const label = getByText('할 일');
 
@@ -42,7 +42,7 @@ describe('Input Component', () => {
 
   context('with value', () => {
     it('displays value', () => {
-      const { getByLabelText } = renderInputTemplate(testValue);
+      const { getByLabelText } = renderInput(testValue);
 
       const input = getByLabelText('input-task');
 
@@ -50,7 +50,7 @@ describe('Input Component', () => {
     });
 
     it('add button has event', () => {
-      const { getByText } = renderInputTemplate();
+      const { getByText } = renderInput();
 
       const addButton = getByText('추가');
 
@@ -63,7 +63,7 @@ describe('Input Component', () => {
   });
   context('when typing on input', () => {
     it('onChange event is called', () => {
-      const { getByLabelText } = renderInputTemplate(testValue);
+      const { getByLabelText } = renderInput(testValue);
 
       fireEvent.change(getByLabelText('input-task'), { target: { value: 'a' } });
 
