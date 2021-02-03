@@ -8,13 +8,20 @@ describe('Input에서', () => {
   const onChange = jest.fn();
   const onClick = jest.fn();
 
-  function renderInputWith(value) {
+  function renderInputWith(value = '') {
     return render((<Input
       value={value}
       onChange={onChange}
       onClick={onClick}
     />));
   }
+
+  it('입력란과 추가버튼을 보여준다.', () => {
+    const { getByPlaceholderText, getByText } = renderInputWith();
+
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+    expect(getByText('추가')).toBeInTheDocument();
+  });
 
   it('인풋에 변경이 일어나면 onChange함수가 실행된다.', () => {
     const { getByPlaceholderText } = renderInputWith('밥먹기');
