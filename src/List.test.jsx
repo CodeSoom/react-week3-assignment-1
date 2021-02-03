@@ -14,7 +14,10 @@ describe('List Component', () => {
   ];
 
   const renderList = (items = []) => render((
-    <List tasks={items} onClickDelete={onClickDelete} />
+    <List
+      tasks={items}
+      onClickDelete={onClickDelete}
+    />
   ));
 
   context('when null type', () => {

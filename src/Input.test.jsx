@@ -11,7 +11,11 @@ describe('Input Component', () => {
   const testValue = '123';
 
   const renderInput = (value = '') => render((
-    <Input value={value} onChange={onChange} onClick={onClick} />
+    <Input
+      value={value}
+      onChange={onChange}
+      onClick={onClick}
+    />
   ));
 
   beforeEach(() => jest.clearAllMocks());
