@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
+describe('Input', () => {
   const handleClick = jest.fn();
 
   const { container, getByText, getByPlaceholderText } = render(
@@ -18,4 +18,8 @@ test('Input', () => {
   expect(handleClick).not.toBeCalled();
   fireEvent.click(getByText('추가'));
   expect(handleClick).toBeCalled();
+
+  it('입력이 변경됨을 표시합니다.', () => {
+    expect(container).Simulate.change(value);
+  });
 });
