@@ -14,7 +14,9 @@ import List from './List';
 describe('List', () => { // 테스트 하려는 대상
   const handleClickDelete = jest.fn();
 
-  const renderList = ({ tasks }) => render(<List tasks={tasks} onClickDelete={handleClickDelete} />);
+  const renderList = ({ tasks }) => render(
+    <List tasks={tasks} onClickDelete={handleClickDelete} />,
+  );
 
   context('without tasks', () => { // when, with, without을 사용해 상황(맥락) 서술
     it('renders no task message', () => { // 테스트 내용 서술
