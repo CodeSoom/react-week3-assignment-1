@@ -48,7 +48,7 @@ describe('Input Component', () => {
       expect(input).toHaveDisplayValue('123');
     });
 
-    it('add button has event', async () => {
+    it('add button has event', () => {
       const { getByText } = renderInputTemplate();
 
       const addButton = getByText('추가');
