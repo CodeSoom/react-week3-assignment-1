@@ -16,7 +16,7 @@ describe('List에서', () => {
     ));
   }
 
-  context('tasks의 길이가 0일 때', () => {
+  context('tasks에 할 일이 하나도 없을 때', () => {
     const tasks = [];
 
     it('할 일이 없다는 것을 보여준다.', () => {
@@ -33,11 +33,10 @@ describe('List에서', () => {
     ];
 
     it('그 일들을 모두 보여준다.', () => {
-      const { container } = renderListWith(tasks);
-
-      expect(container).toHaveTextContent('볶음밥 만들기');
-      expect(container).toHaveTextContent('누워있기');
-      expect(container).toHaveTextContent('계속 누워있기');
+      const { getAllByRole } = renderListWith(tasks);
+      getAllByRole('listitem').forEach((item) => {
+        expect(item).toBeInTheDocument();
+      });
     });
 
     it('완료버튼을 누르면 onClickDelete 함수를 실행한다.', () => {

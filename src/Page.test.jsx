@@ -24,6 +24,8 @@ describe('Page에서', () => {
     ));
   }
 
+  beforeEach(() => jest.clearAllMocks());
+
   context('Tasks들에 할 일이 여러개일 때', () => {
     const tasks = [
       { id: 1, title: '볶음밥 만들기' },
@@ -48,6 +50,7 @@ describe('Page에서', () => {
 
     it('추가버튼을 누르면 onClickAddTesk 함수가 실행된다.', () => {
       const { getByText } = renderPageWith(taskTitle, tasks);
+
       expect(onClickAddTask).not.toBeCalled();
       fireEvent.click(getByText('추가'));
       expect(onClickAddTask).toBeCalled();
@@ -55,6 +58,7 @@ describe('Page에서', () => {
 
     it('완료버튼을 누르면 onClickDeleteTask 함수가 실행된다.', () => {
       const { getAllByText } = renderPageWith(taskTitle, tasks);
+
       getAllByText('완료').forEach((button) => {
         fireEvent.click(button);
         expect(onClickDeleteTask).toBeCalled();
@@ -73,6 +77,14 @@ describe('Page에서', () => {
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
       expect(getByText('추가')).toBeInTheDocument();
       expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+
+    it('추가버튼을 누르면 onClickAddTesk 함수가 실행된다.', () => {
+      const { getByText } = renderPageWith(taskTitle, tasks);
+
+      expect(onClickAddTask).not.toBeCalled();
+      fireEvent.click(getByText('추가'));
+      expect(onClickAddTask).toBeCalled();
     });
   });
 });
