@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -19,11 +19,11 @@ test('하위 컴포넌트 출력확인', () => {
     },
   ];
 
-  render(<Page tasks={tasks} />);
+  const { getByText, getByPlaceholderText, getByRole } = render(<Page tasks={tasks} />);
 
-  const header = screen.getByText('To-do');
-  const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
-  const list = screen.getByRole('list');
+  const header = getByText('To-do');
+  const input = getByPlaceholderText('할 일을 입력해 주세요');
+  const list = getByRole('list');
 
   expect(header).toBeInTheDocument();
   expect(input).toBeInTheDocument();
