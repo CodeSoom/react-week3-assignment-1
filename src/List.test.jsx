@@ -4,19 +4,19 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-const onClickDelete = jest.fn();
-
-const tasks = [
-  { id: 1, title: '어서와 TDD는 처음이지?' },
-  { id: 2, title: '아직 시작도 안했어 ^^' },
-  { id: 3, title: '재미난 TDD 출바알~' },
-];
-
-const renderList = (items = []) => render((
-  <List tasks={items} onClickDelete={onClickDelete} />
-));
-
 describe('List Component', () => {
+  const onClickDelete = jest.fn();
+
+  const tasks = [
+    { id: 1, title: '어서와 TDD는 처음이지?' },
+    { id: 2, title: '아직 시작도 안했어 ^^' },
+    { id: 3, title: '재미난 TDD 출바알~' },
+  ];
+
+  const renderList = (items = []) => render((
+    <List tasks={items} onClickDelete={onClickDelete} />
+  ));
+
   context('when null type', () => {
     it('prompts empty message', () => {
       const { container } = renderList(null);

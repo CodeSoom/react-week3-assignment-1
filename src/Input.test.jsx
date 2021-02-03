@@ -4,16 +4,16 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-const onChange = jest.fn();
-const onClick = jest.fn();
-
-const testValue = '123';
-
-const renderInput = (value = '') => render((
-  <Input value={value} onChange={onChange} onClick={onClick} />
-));
-
 describe('Input Component', () => {
+  const onChange = jest.fn();
+  const onClick = jest.fn();
+
+  const testValue = '123';
+
+  const renderInput = (value = '') => render((
+    <Input value={value} onChange={onChange} onClick={onClick} />
+  ));
+
   beforeEach(() => jest.clearAllMocks());
 
   it('renders a button with 추가 text', () => {
