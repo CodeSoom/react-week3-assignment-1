@@ -1,12 +1,13 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
+import ReactTestUtils from 'react-dom/test-utils';
 
 import Input from './Input';
 
 describe('Input', () => {
   const handleClick = jest.fn();
 
-  const { container, getByText, getByPlaceholderText } = render(
+  const { container, getByText } = render(
     <Input
       onClick={handleClick}
     />,
@@ -20,6 +21,6 @@ describe('Input', () => {
   expect(handleClick).toBeCalled();
 
   it('입력이 변경됨을 표시합니다.', () => {
-    expect(container).Simulate.change(value);
+    ReactTestUtils.Simulate.change(React.createRef);
   });
 });
