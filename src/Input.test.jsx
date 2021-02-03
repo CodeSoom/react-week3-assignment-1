@@ -57,7 +57,7 @@ describe('Input Component', () => {
 
       fireEvent.click(addButton);
 
-      expect(onClick).toBeCalledWith(expect.anything());
+      expect(onClick).toBeCalled();
     });
   });
   context('when typing on input', () => {
@@ -66,7 +66,7 @@ describe('Input Component', () => {
 
       fireEvent.change(getByLabelText('input-task'), { target: { value: 'a' } });
 
-      expect(onChange).toBeCalledWith(expect.anything());
+      expect(onChange).toBeCalled();
     });
   });
 });
