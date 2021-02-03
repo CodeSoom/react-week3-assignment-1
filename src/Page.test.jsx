@@ -4,29 +4,26 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
-const onChangeTitle = jest.fn();
-const onClickAddTask = jest.fn();
-const onClickDeleteTask = jest.fn();
-
-function showPageWith(
-  taskTitle,
-  tasks,
-  handleChangeTitle = onChangeTitle,
-  handleClickAddTask = onClickAddTask,
-  handleClickDeleteTask = onClickDeleteTask,
-) {
-  return render((
-    <Page
-      taskTitle={taskTitle}
-      tasks={tasks}
-      onChangeTitle={handleChangeTitle}
-      onClickAddTask={handleClickAddTask}
-      onClickDeleteTask={handleClickDeleteTask}
-    />
-  ));
-}
-
 describe('Page에서', () => {
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
+  const onClickDeleteTask = jest.fn();
+
+  function renderPageWith(
+    taskTitle,
+    tasks,
+  ) {
+    return render((
+      <Page
+        taskTitle={taskTitle}
+        tasks={tasks}
+        onChangeTitle={onChangeTitle}
+        onClickAddTask={onClickAddTask}
+        onClickDeleteTask={onClickDeleteTask}
+      />
+    ));
+  }
+
   context('Tasks들에 할 일이 여러개일 때', () => {
     const tasks = [
       { id: 1, title: '볶음밥 만들기' },
@@ -36,7 +33,7 @@ describe('Page에서', () => {
     const taskTitle = '밥먹기';
 
     it('인풋과 할 일 목록을 모두 보여준다.', () => {
-      const { getByText, getAllByText, getByPlaceholderText } = showPageWith(taskTitle, tasks);
+      const { getByText, getAllByText, getByPlaceholderText } = renderPageWith(taskTitle, tasks);
 
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
@@ -50,14 +47,14 @@ describe('Page에서', () => {
     });
 
     it('추가버튼을 누르면 onClickAddTesk 함수가 실행된다.', () => {
-      const { getByText } = showPageWith(taskTitle, tasks);
+      const { getByText } = renderPageWith(taskTitle, tasks);
       expect(onClickAddTask).not.toBeCalled();
       fireEvent.click(getByText('추가'));
       expect(onClickAddTask).toBeCalled();
     });
 
     it('완료버튼을 누르면 onClickDeleteTask 함수가 실행된다.', () => {
-      const { getAllByText } = showPageWith(taskTitle, tasks);
+      const { getAllByText } = renderPageWith(taskTitle, tasks);
       getAllByText('완료').forEach((button) => {
         fireEvent.click(button);
         expect(onClickDeleteTask).toBeCalled();
@@ -70,7 +67,7 @@ describe('Page에서', () => {
     const taskTitle = '밥먹기';
 
     it('인풋과 할 일이 없다는 것을 보여준다.', () => {
-      const { container, getByPlaceholderText, getByText } = showPageWith(taskTitle, tasks);
+      const { container, getByPlaceholderText, getByText } = renderPageWith(taskTitle, tasks);
 
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);

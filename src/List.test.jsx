@@ -4,23 +4,23 @@ import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
-const onClickDelete = jest.fn();
-
-function showListWith(tasks, handleClick = onClickDelete) {
-  return render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClick}
-    />
-  ));
-}
-
 describe('List에서', () => {
+  const onClickDelete = jest.fn();
+
+  function renderListWith(tasks) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={onClickDelete}
+      />
+    ));
+  }
+
   context('tasks의 길이가 0일 때', () => {
     const tasks = [];
 
     it('할 일이 없다는 것을 보여준다.', () => {
-      const { container } = showListWith(tasks);
+      const { container } = renderListWith(tasks);
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
@@ -33,7 +33,7 @@ describe('List에서', () => {
     ];
 
     it('그 일들을 모두 보여준다.', () => {
-      const { container } = showListWith(tasks);
+      const { container } = renderListWith(tasks);
 
       expect(container).toHaveTextContent('볶음밥 만들기');
       expect(container).toHaveTextContent('누워있기');
@@ -41,7 +41,7 @@ describe('List에서', () => {
     });
 
     it('완료버튼을 누르면 onClickDelete 함수를 실행한다.', () => {
-      const { getAllByText } = showListWith(tasks);
+      const { getAllByText } = renderListWith(tasks);
       getAllByText('완료').forEach((button) => {
         fireEvent.click(button);
         expect(onClickDelete).toBeCalled();
