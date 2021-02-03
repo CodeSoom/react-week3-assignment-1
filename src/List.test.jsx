@@ -17,7 +17,7 @@ describe('List', () => {
   }
 
   context('without task', () => {
-    it('rendrs message', () => {
+    it('renders message that there is no task', () => {
       const tasks = [];
 
       const { container } = renderList(tasks);
@@ -27,18 +27,22 @@ describe('List', () => {
   });
 
   context('with tasks', () => {
-    it('render tasks and listen click event', () => {
-      const tasks = [
-        { id: 1, title: '아무것도 안하기1' },
-        { id: 2, title: '아무것도 안하기2' },
-        { id: 3, title: '아무것도 안하기3' },
-      ];
+    const tasks = [
+      { id: 1, title: '아무것도 안하기1' },
+      { id: 2, title: '아무것도 안하기2' },
+      { id: 3, title: '아무것도 안하기3' },
+    ];
 
-      const { container, getAllByText } = renderList(tasks);
+    it('render tasks', () => {
+      const { container } = renderList(tasks);
 
-      expect(container).toHaveTextContent('아무것도 안하기1');
-      expect(container).toHaveTextContent('아무것도 안하기2');
-      expect(container).toHaveTextContent('아무것도 안하기3');
+      tasks.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
+      });
+    });
+
+    it('listen click event', () => {
+      const { getAllByText } = renderList(tasks);
 
       fireEvent.click(getAllByText('완료')[0]);
 
