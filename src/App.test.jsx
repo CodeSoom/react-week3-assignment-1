@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import App from './Page';
 
@@ -13,7 +13,7 @@ test('Page 컴포넌트 출력확인', () => {
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
 
-  render(<App
+  const { getByText, getByPlaceholderText } = render(<App
     taskTitle={taskTitle}
     tasks={tasks}
     onChangeTitle={handleChangeTitle}
@@ -21,9 +21,9 @@ test('Page 컴포넌트 출력확인', () => {
     onClickDeleteTask={handleClickDeleteTask}
   />);
 
-  const header = screen.getByText('To-do');
-  const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
-  const paragraph = screen.getByText('할 일이 없어요!');
+  const header = getByText('To-do');
+  const input = getByPlaceholderText('할 일을 입력해 주세요');
+  const paragraph = getByText('할 일이 없어요!');
 
   expect(header).toBeInTheDocument();
   expect(input).toBeInTheDocument();
