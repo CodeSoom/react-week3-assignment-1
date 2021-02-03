@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('To do text typing test ', () => {
+test('To-do text typing test', () => {
   const taskTitle = '커피 마시기';
 
   const onChangeTitle = jest.fn();
