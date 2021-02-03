@@ -4,20 +4,20 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  function renderList({ component }) {
-    return render(component);
+  function renderList({ tasks, handleClick }) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClick}
+      />
+    ));
   }
   context('test의 length가 0인 경우', () => {
     const tasks = [];
     const handleClick = jest.fn();
 
     it('"할 일이 없어요!"를 표시한다.', () => {
-      const { container } = renderList(
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />,
-      );
+      const { container } = renderList(tasks, handleClick);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -32,11 +32,7 @@ describe('List', () => {
     ];
 
     it('입력된 할 일을 표시한다.', () => {
-      const { container } = renderList(
-        <List
-          tasks={tasks}
-        />,
-      );
+      const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('뭐라도 하기');
     });
