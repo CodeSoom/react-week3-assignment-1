@@ -10,7 +10,7 @@ export default function Input({ value, onChange, onClick }) {
         id="input-task-title"
         type="text"
         placeholder="할 일을 입력해 주세요"
-        defaultValue={value}
+        value={value}
         onChange={onChange}
       />
       <button type="button" onClick={onClick}>

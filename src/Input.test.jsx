@@ -15,45 +15,37 @@ import Input from './Input';
  *  button을 클릭했을때
  *   onClick 함수가 실행되는지
  */
-const handleChangeInput = jest.fn();
-const handleClickAddTask = jest.fn();
-const value = '';
-
-const renderInput = () => render(
-  <Input
-    value={value}
-    onChange={handleChangeInput}
-    onClick={handleClickAddTask}
-  />,
-);
-
 describe('Input', () => {
-  context('without value', () => {
-    it('placeholder is displayed', () => {
-      const { getByPlaceholderText } = renderInput();
+  const handleChangeInput = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const value = '';
 
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+  const renderInput = () => render(
+    <Input
+      value={value}
+      onChange={handleChangeInput}
+      onClick={handleClickAddTask}
+    />,
+  );
+
+  context('without value', () => {
+    it('has placeholder', () => {
+      const { getByLabelText } = renderInput();
+
+      expect(getByLabelText('할 일')).toBeInTheDocument();
     });
   });
 
-  context('with value change', () => {
-    it('onChange function run', () => {
-      const { getByPlaceholderText } = renderInput();
+  context('with value', () => {
+    it('runs onChange function', () => {
+      const { getByLabelText } = renderInput();
 
-      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '홈트하기' } });
+      fireEvent.change(getByLabelText('할 일'), { target: { value: '홈트하기' } });
 
       expect(handleChangeInput).toBeCalled();
-
-      /**
-       * 질문) 이부분에서 handleChangeInput가 실행되었을때 `input`의 `value`로 `홈트하기`가
-       * 들어오는것은 `state` 관련된 것이므로 `Input`에서 테스트할 필요가 없나요?
-       *
-      */
     });
-  });
 
-  context('When the button is clicked', () => {
-    it('onClick function run', () => {
+    it('clicking add button runs function', () => {
       const { getByText } = renderInput();
 
       fireEvent.click(getByText('추가'));
