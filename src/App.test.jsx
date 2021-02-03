@@ -4,48 +4,60 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
-const setupBeforeAddTask = () => {
-  const utils = render(<App />);
+describe('App', () => {
+  function renderApp() {
+    const {
+      container,
+      getByLabelText,
+      getByText,
+    } = render(<App />);
 
-  const input = utils.getByLabelText('할 일');
-  const addButton = utils.getByText('추가');
-  return {
-    input,
-    addButton,
-    ...utils,
-  };
-};
+    return {
+      container,
+      getByLabelText,
+      getByText,
+    };
+  }
 
-const setupAfterAddTask = () => {
-  const { input, addButton, ...utils } = setupBeforeAddTask();
+  context('When there is no task', () => {
+    it('should update input value when value changes', () => {
+      const { getByLabelText } = renderApp();
 
-  fireEvent.change(input, { target: { value: '아무것도 하지 않기' } });
-  fireEvent.click(addButton);
-  const doneButton = utils.getByText('완료');
+      const input = getByLabelText('할 일');
 
-  return {
-    input,
-    addButton,
-    doneButton,
-    ...utils,
-  };
-};
+      fireEvent.change(input, { target: { value: '아무것도 하지 않기' } });
 
-test('App should update input value when value changes', () => {
-  const { input } = setupBeforeAddTask();
-  fireEvent.change(input, { target: { value: '아무것도 하지 않기' } });
-  expect(input.value).toBe('아무것도 하지 않기');
-});
+      expect(input.value).toBe('아무것도 하지 않기');
+    });
 
-test('App should add task when add button is clicked', () => {
-  const { container, input, addButton } = setupBeforeAddTask();
-  fireEvent.change(input, { target: { value: '아무것도 하지 않기' } });
-  fireEvent.click(addButton);
-  expect(container).toHaveTextContent('아무것도 하지 않기');
-});
+    it('should add a task when add button is clicked', () => {
+      const { container, getByLabelText, getByText } = renderApp();
 
-test('App should delete task when done button is clicked', () => {
-  const { container, doneButton } = setupAfterAddTask();
-  fireEvent.click(doneButton);
-  expect(container).not.toHaveTextContent('아무것도 하지 않기');
+      const input = getByLabelText('할 일');
+      const addButton = getByText('추가');
+
+      fireEvent.change(input, { target: { value: '아무것도 하지 않기' } });
+      fireEvent.click(addButton);
+
+      expect(container).toHaveTextContent('아무것도 하지 않기');
+    });
+  });
+
+  context('When there is a task', () => {
+    it('should not have the task whose button is clicked', () => {
+      const { container, getByLabelText, getByText } = renderApp();
+
+      const input = getByLabelText('할 일');
+      const addButton = getByText('추가');
+
+      fireEvent.change(input, { target: { value: '아무것도 하지 않기' } });
+      fireEvent.click(addButton);
+
+      const doneButton = getByText('완료');
+
+      fireEvent.click(doneButton);
+
+      expect(container).not.toHaveTextContent('아무것도 하지 않기');
+    });
+  });
 });
