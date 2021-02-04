@@ -19,7 +19,33 @@ describe('App', () => {
     const label = getByLabelText('할 일');
 
     fireEvent.change(label, { target: { value: '아무 것도 안하기' } });
-
     expect(label.value).toBe('아무 것도 안하기');
+  });
+
+  it('clicks "추가" button, a task is added', () => {
+    const { getByLabelText, getByText } = renderApp();
+
+    const label = getByLabelText('할 일');
+
+    fireEvent.change(label, { target: { value: '아무 것도 안하기' } });
+    expect(label.value).toBe('아무 것도 안하기');
+
+    fireEvent.click(getByText('추가'));
+    expect(label.value).toBe('');
+  });
+
+  it('clicks "완료" button, that is deleted when pressed', () => {
+    const { getByLabelText, getAllByText, getByText } = renderApp();
+
+    const label = getByLabelText('할 일');
+
+    fireEvent.change(label, { target: { value: '아무 것도 안하기' } });
+    expect(label.value).toBe('아무 것도 안하기');
+
+    fireEvent.click(getByText('추가'));
+    expect(label.value).toBe('');
+
+    fireEvent.click(getAllByText('완료')[0]);
+    expect(getByText('할 일이 없어요!')).toBeInTheDocument();
   });
 });

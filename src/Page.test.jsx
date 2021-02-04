@@ -49,7 +49,7 @@ describe('Page', () => {
     });
   });
 
-  it('listen click event', () => {
+  it('renders "완료" button that is deleted when pressed', () => {
     const { getAllByText } = renderPage(taskTitle, tasks);
 
     fireEvent.click(getAllByText('완료')[0]);
