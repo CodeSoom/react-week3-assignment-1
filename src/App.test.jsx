@@ -20,6 +20,12 @@ describe('App', () => {
   }
 
   context('Without tasks', () => {
+    it('displays "no task message"', () => {
+      const { container } = renderApp();
+
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+
     it('updates input value when value changes', () => {
       const { getByLabelText } = renderApp();
 
