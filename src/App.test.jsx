@@ -12,7 +12,11 @@ describe('App에서', () => {
   it('Input을 입력하면 Input이 변경된다.', () => {
     const { getByPlaceholderText } = renderApp();
 
-    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '누워있기' } });
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+      target: {
+        value: '누워있기',
+      },
+    });
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('누워있기');
   });
 

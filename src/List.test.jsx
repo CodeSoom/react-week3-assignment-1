@@ -16,7 +16,7 @@ describe('List에서', () => {
     ));
   }
 
-  context('tasks에 할 일이 하나도 없을 때', () => {
+  context('tasks가 없을 때', () => {
     const tasks = [];
 
     it('할 일이 없다는 것을 보여준다.', () => {
@@ -25,7 +25,7 @@ describe('List에서', () => {
     });
   });
 
-  context('tasks에 여러가지 할 일들이 있을 때', () => {
+  context('tasks가 있을 때', () => {
     const tasks = [
       { id: 1, title: '볶음밥 만들기' },
       { id: 2, title: '누워있기' },

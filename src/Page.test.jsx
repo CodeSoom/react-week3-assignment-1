@@ -9,6 +9,8 @@ describe('Page에서', () => {
   const onClickAddTask = jest.fn();
   const onClickDeleteTask = jest.fn();
 
+  beforeEach(() => jest.clearAllMocks());
+
   function renderPageWith(
     taskTitle,
     tasks,
@@ -24,9 +26,7 @@ describe('Page에서', () => {
     ));
   }
 
-  beforeEach(() => jest.clearAllMocks());
-
-  context('Tasks들에 할 일이 여러개일 때', () => {
+  context('tasks가 있을 때', () => {
     const tasks = [
       { id: 1, title: '볶음밥 만들기' },
       { id: 2, title: '누워있기' },
@@ -66,7 +66,7 @@ describe('Page에서', () => {
     });
   });
 
-  context('Tasks들에 할 일이 하나도 없을 때', () => {
+  context('tasks가 없을 때', () => {
     const tasks = [];
     const taskTitle = '밥먹기';
 
