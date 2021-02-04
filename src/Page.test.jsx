@@ -28,30 +28,6 @@ describe('<Page />', () => {
 
   beforeEach(() => jest.clearAllMocks());
 
-  it('renders a button with 추가 text', () => {
-    const { getByText } = renderPage({});
-
-    const addButton = getByText('추가');
-
-    expect(addButton).toHaveTextContent('추가');
-  });
-
-  it('renders a label element', () => {
-    const { getByText } = renderPage({});
-
-    const label = getByText('할 일');
-
-    expect(label).toHaveTextContent('할 일');
-  });
-
-  it('has placeholder attribute on input element', () => {
-    const { getByLabelText } = renderPage({});
-
-    const { placeholder } = getByLabelText('할 일');
-
-    expect(placeholder).toBe('할 일을 입력해 주세요');
-  });
-
   it('displays the value on input element', () => {
     const { getByLabelText } = renderPage({ value: taskTitle });
 
@@ -60,7 +36,7 @@ describe('<Page />', () => {
     expect(input).toHaveDisplayValue('TDD 너 참 어렵다..');
   });
 
-  it('tiggers handleClickAddTask', () => {
+  it('clicks 추가 button in order to add tha value to task', () => {
     const { getByText } = renderPage({});
 
     const addButton = getByText('추가');
@@ -73,7 +49,7 @@ describe('<Page />', () => {
   });
 
   context('when a value is added to input element', () => {
-    it('triggers handleChangeTitle', () => {
+    it('calls handleChangeTitle function in order to update the value', () => {
       const { getByLabelText } = renderPage({});
 
       fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
@@ -82,7 +58,7 @@ describe('<Page />', () => {
     });
   });
 
-  context('when type of tasks is null or undefined', () => {
+  context('when tasks is null', () => {
     it('prompts empty message', () => {
       const { container } = renderPage({ lists: undefined });
 
@@ -107,15 +83,7 @@ describe('<Page />', () => {
       });
     });
 
-    it('renders 완료 button', () => {
-      const { getAllByText } = renderPage({ lists: tasks });
-
-      const completeButtonLength = getAllByText('완료').length;
-
-      expect(completeButtonLength).toBe(tasks.length);
-    });
-
-    it('triggers handleClickDeleteTask attached to the button with 완료 text', () => {
+    it('clicks 완료 button in order to delete the task', () => {
       const { getAllByText } = renderPage({ lists: tasks });
 
       const completeButton = getAllByText('완료');
