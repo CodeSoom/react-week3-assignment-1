@@ -11,10 +11,10 @@ describe('App', () => {
     <App />
   ));
 
-  function changeInputValue(inputNode, value) {
+  function changeInputValue(inputNode, targetValue) {
     fireEvent.change(inputNode, {
       target: {
-        value,
+        targetValue,
       },
     });
     return null;
