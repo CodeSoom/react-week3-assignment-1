@@ -16,10 +16,12 @@ describe('Input에서', () => {
     />));
   }
 
-  it('입력란과 추가버튼을 보여준다.', () => {
-    const { getByPlaceholderText, getByText } = renderInputWith();
+  it('입력란, placeholder와 추가버튼을 보여준다.', () => {
+    const { getByLabelText, getByText } = renderInputWith();
+    const { placeholder } = getByLabelText('할 일');
 
-    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+    expect(getByLabelText('할 일')).toBeInTheDocument();
+    expect(placeholder).toBe('할 일을 입력해 주세요');
     expect(getByText('추가')).toBeInTheDocument();
   });
 
