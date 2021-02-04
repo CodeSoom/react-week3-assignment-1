@@ -12,7 +12,8 @@ describe('List', () => {
       />
     ));
   }
-  context('test의 length가 0인 경우', () => {
+
+  context('task가 없을 경우', () => {
     const tasks = [];
     const handleClick = jest.fn();
 
@@ -23,7 +24,7 @@ describe('List', () => {
     });
   });
 
-  context('test의 length가 1이상인 경우', () => {
+  context('task가 있을 경우', () => {
     const tasks = [
       {
         id: 1,
