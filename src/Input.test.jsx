@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('<Input />', () => {
+describe('Input', () => {
   const onChange = jest.fn();
   const onClick = jest.fn();
 

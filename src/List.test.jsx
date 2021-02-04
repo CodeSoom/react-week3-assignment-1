@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-describe('<List />', () => {
+describe('List', () => {
   const onClickDelete = jest.fn();
 
   const tasks = [
