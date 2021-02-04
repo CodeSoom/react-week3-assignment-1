@@ -36,7 +36,7 @@ describe('Input', () => {
     expect(input).toHaveValue('');
   });
 
-  it('has placeholder attribute on input element', () => {
+  it('has placeholder value 할 일을 입력해 주세요 on input element', () => {
     const { getByLabelText } = renderInput();
 
     const { placeholder } = getByLabelText('할 일');
