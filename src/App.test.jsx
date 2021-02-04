@@ -35,18 +35,9 @@ describe('App', () => {
     fireEvent.change(getByLabelText('할 일'), { target: { value: '홈트하기' } });
     expect(getByLabelText('할 일').value).toBe('홈트하기');
     fireEvent.click(getByText('추가'));
-
-    fireEvent.change(getByLabelText('할 일'), { target: { value: '코딩하기' } });
-    fireEvent.click(getByText('추가'));
-
     expect(getByLabelText('할 일').value).toBe('');
 
-    expect(getAllByText('완료')).toHaveLength(2);
-
     fireEvent.click(getAllByText('완료')[0]);
-    expect(getAllByText('완료')).toHaveLength(1);
-
-    fireEvent.click(getByText('완료'));
     expect(getByText('할 일이 없어요!')).toBeInTheDocument();
   });
 });
