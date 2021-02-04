@@ -36,14 +36,6 @@ describe('Input', () => {
     expect(input).toHaveValue('');
   });
 
-  it('renders a label element', () => {
-    const { getByText } = renderInput();
-
-    const label = getByText('할 일');
-
-    expect(label).toHaveTextContent('할 일');
-  });
-
   it('has placeholder attribute on input element', () => {
     const { getByLabelText } = renderInput();
 
