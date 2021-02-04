@@ -20,14 +20,6 @@ describe('Input', () => {
 
   beforeEach(() => jest.clearAllMocks());
 
-  it('renders a button with 추가 text', () => {
-    const { getByText } = renderInput();
-
-    const addButton = getByText('추가');
-
-    expect(addButton).toHaveTextContent('추가');
-  });
-
   it('renders a input control', () => {
     const { getByLabelText } = renderInput();
 
@@ -62,6 +54,7 @@ describe('Input', () => {
     fireEvent.click(addButton);
 
     expect(onClick).toBeCalled();
+    expect(addButton).toHaveTextContent('추가');
   });
 
   context('when a value is added to input element', () => {
