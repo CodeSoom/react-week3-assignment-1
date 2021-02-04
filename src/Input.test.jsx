@@ -18,7 +18,7 @@ describe('Input', () => {
     ));
   }
 
-  it('UI 정상노출 확인', () => {
+  it('label, placeholder, 추가버튼을 모두 표시한다.', () => {
     const {
       getByLabelText,
       getByPlaceholderText,

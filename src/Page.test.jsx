@@ -5,21 +5,19 @@ import { render } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+
   const defaultParameter = {
     taskTitle: '',
     tasks: [],
-    handleChangeTitle: jest.fn(),
-    handleClickAddTask: jest.fn(),
-    handleClickDeleteTask: jest.fn(),
   };
 
   function renderPage(
     {
       taskTitle,
-      handleChangeTitle,
-      handleClickAddTask,
       tasks,
-      handleClickDeleteTask,
     },
   ) {
     return render((
@@ -67,7 +65,7 @@ describe('Page', () => {
       },
     ];
 
-    it('UI 모두 표시한다.', () => {
+    it('input, 할일목록, 완료버튼을 모두 표시한다.', () => {
       const {
         container,
         getAllByTestId,
