@@ -4,28 +4,59 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
-  const value = '물어뜯기 꼬집기 ';
+describe('Input', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
-  const { container, getByLabelText, getByText } = render((
-    <Input
-      value={value}
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
-  const input = getByLabelText('할 일');
 
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
+  context('input이 비었을 시', () => {
+    const value = '';
 
-  expect(handleChange).not.toBeCalled();
-  fireEvent.change(input, { target: { value: `${value}깨물기` } });
-  expect(handleChange).toBeCalled();
+    it('placeholder에 "할 일을 입력해 주세요"가 나온다.', () => {
+      const { getByLabelText } = render((
+        <Input
+          value={value}
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
+      expect(getByLabelText('할 일').placeholder).toEqual('할 일을 입력해 주세요');
+    });
+  });
 
-  expect(handleClick).not.toBeCalled();
-  fireEvent.click(getByText('추가'));
-  expect(handleClick).toBeCalled();
-  expect(input).toHaveTextContent('');
+  context('input의 value 값이 변경될 때', () => {
+    const value = '엄준식은';
+
+    it('handleChange가 동작한다.', () => {
+      const { getByLabelText } = render((
+        <Input
+          value={value}
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
+
+      expect(handleChange).not.toBeCalled();
+      fireEvent.change(getByLabelText('할 일'),
+        { target: { value: `${value} 살아있다` } });
+      expect(handleChange).toBeCalled();
+    });
+  });
+
+  context('input에 값을 넣고 추가 버튼을 눌렀을 때', () => {
+    const value = '엄준식은 살아있다';
+
+    it('input의 value 값은 사라진다.', () => {
+      const { getByText, getByLabelText } = render((
+        <Input
+          value={value}
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
+      expect(handleClick).not.toBeCalled();
+      fireEvent.click(getByText('추가'));
+      expect(handleClick).toBeCalled();
+      expect(getByLabelText('할 일')).toHaveTextContent('');
+    });
+  });
 });
