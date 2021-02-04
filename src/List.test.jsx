@@ -6,11 +6,11 @@ import List from './List';
 describe('List', () => {
   const handleClick = jest.fn();
 
-  function renderList({ tasks, handleClickDelete: onClick }) {
+  function renderList({ tasks, handleClickDelete }) {
     return render((
       <List
         tasks={tasks}
-        onClick={onClick}
+        handleClickDelete={handleClickDelete}
       />
     ));
   }
