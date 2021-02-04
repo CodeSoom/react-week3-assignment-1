@@ -31,7 +31,7 @@ describe('Input', () => {
   it('renders a input control', () => {
     const { getByLabelText } = renderInput();
 
-    const input = getByLabelText('input-task');
+    const input = getByLabelText('할 일');
 
     expect(input).toHaveValue('');
   });
@@ -47,7 +47,7 @@ describe('Input', () => {
   it('has placeholder attribute on input element', () => {
     const { getByLabelText } = renderInput();
 
-    const { placeholder } = getByLabelText('input-task');
+    const { placeholder } = getByLabelText('할 일');
 
     expect(placeholder).toBe('할 일을 입력해 주세요');
   });
@@ -55,7 +55,7 @@ describe('Input', () => {
   it('displays the value on input element', () => {
     const { getByLabelText } = renderInput(testValue);
 
-    const input = getByLabelText('input-task');
+    const input = getByLabelText('할 일');
 
     expect(input).toHaveDisplayValue('123');
   });
@@ -76,7 +76,7 @@ describe('Input', () => {
     it('triggers onChange', () => {
       const { getByLabelText } = renderInput(testValue);
 
-      fireEvent.change(getByLabelText('input-task'), { target: { value: 'a' } });
+      fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
 
       expect(onChange).toBeCalled();
     });

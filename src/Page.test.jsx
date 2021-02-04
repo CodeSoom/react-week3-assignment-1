@@ -47,7 +47,7 @@ describe('<Page />', () => {
   it('has placeholder attribute on input element', () => {
     const { getByLabelText } = renderPage({});
 
-    const { placeholder } = getByLabelText('input-task');
+    const { placeholder } = getByLabelText('할 일');
 
     expect(placeholder).toBe('할 일을 입력해 주세요');
   });
@@ -55,7 +55,7 @@ describe('<Page />', () => {
   it('displays the value on input element', () => {
     const { getByLabelText } = renderPage({ value: taskTitle });
 
-    const input = getByLabelText('input-task');
+    const input = getByLabelText('할 일');
 
     expect(input).toHaveDisplayValue('TDD 너 참 어렵다..');
   });
@@ -76,7 +76,7 @@ describe('<Page />', () => {
     it('triggers handleChangeTitle', () => {
       const { getByLabelText } = renderPage({});
 
-      fireEvent.change(getByLabelText('input-task'), { target: { value: 'a' } });
+      fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
 
       expect(handleChangeTitle).toBeCalled();
     });

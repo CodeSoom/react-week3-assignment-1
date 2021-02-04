@@ -23,7 +23,7 @@ describe('App', () => {
   it(('updates value upon changing of input value'), () => {
     const { getByLabelText } = renderApp();
 
-    const inputNode = getByLabelText('input-task');
+    const inputNode = getByLabelText('할 일');
     changeInputValue(inputNode, value);
 
     expect(inputNode).toHaveValue(value);
@@ -32,7 +32,7 @@ describe('App', () => {
   it('adds a task to tasks upon Clicking 추가 button', () => {
     const { container, getByText, getByLabelText } = renderApp();
 
-    const inputNode = getByLabelText('input-task');
+    const inputNode = getByLabelText('할 일');
     const buttonNode = getByText('추가');
 
     changeInputValue(inputNode, value);
@@ -45,7 +45,7 @@ describe('App', () => {
   it('resets input value to empty string after clicking 추가 button', () => {
     const { getByText, getByLabelText } = renderApp();
 
-    const inputNode = getByLabelText('input-task');
+    const inputNode = getByLabelText('할 일');
     const buttonNode = getByText('추가');
 
     changeInputValue(inputNode, value);
@@ -58,7 +58,7 @@ describe('App', () => {
   it('removes the task from tasks upon clicking 완료 button along the task', () => {
     const { container, getByText, getByLabelText } = renderApp();
 
-    const inputNode = getByLabelText('input-task');
+    const inputNode = getByLabelText('할 일');
     const addButtonNode = getByText('추가');
 
     changeInputValue(inputNode, value);
