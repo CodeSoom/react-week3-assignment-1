@@ -60,7 +60,7 @@ describe('Input', () => {
     expect(input).toHaveDisplayValue('123');
   });
 
-  it('tiggers onClick', () => {
+  it('call onClick function in order to add tha value to task', () => {
     const { getByText } = renderInput();
 
     const addButton = getByText('추가');
@@ -73,7 +73,7 @@ describe('Input', () => {
   });
 
   context('when a value is added to input element', () => {
-    it('triggers onChange', () => {
+    it('call onChange function in order to update the value', () => {
       const { getByLabelText } = renderInput(testValue);
 
       fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
