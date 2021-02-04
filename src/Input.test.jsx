@@ -15,21 +15,27 @@ import Input from './Input';
  *  button을 클릭했을때
  *   onClick 함수가 실행되는지
  */
+let handleChangeInput;
+let handleClickAddTask;
+
+beforeEach(() => {
+  handleChangeInput = jest.fn();
+  handleClickAddTask = jest.fn();
+});
+
 describe('Input', () => {
-  const handleChangeInput = jest.fn();
-  const handleClickAddTask = jest.fn();
   const value = '';
 
-  const renderInput = () => render(
+  const renderInput = () => render((
     <Input
       value={value}
       onChange={handleChangeInput}
       onClick={handleClickAddTask}
-    />,
-  );
+    />
+  ));
 
   context('without value', () => {
-    it('has placeholder', () => {
+    it('renders placeholder', () => {
       const { getByLabelText } = renderInput();
 
       expect(getByLabelText('할 일')).toBeInTheDocument();
@@ -37,15 +43,18 @@ describe('Input', () => {
   });
 
   context('with value', () => {
-    it('runs onChange function', () => {
-      const { getByLabelText } = renderInput();
+    it('listens change event', () => {
+      const { getByLabelText, getByText } = renderInput();
 
       fireEvent.change(getByLabelText('할 일'), { target: { value: '홈트하기' } });
 
       expect(handleChangeInput).toBeCalled();
+
+      fireEvent.click(getByText('추가'));
+      expect(handleClickAddTask).toBeCalled();
     });
 
-    it('clicking add button runs function', () => {
+    it('listens "추가" button click event', () => {
       const { getByText } = renderInput();
 
       fireEvent.click(getByText('추가'));
