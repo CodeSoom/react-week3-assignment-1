@@ -12,8 +12,8 @@ describe('Page에서', () => {
   beforeEach(() => jest.clearAllMocks());
 
   function renderPageWith(
-    taskTitle,
-    tasks,
+    taskTitle = '',
+    tasks = '',
   ) {
     return render((
       <Page
@@ -25,6 +25,12 @@ describe('Page에서', () => {
       />
     ));
   }
+
+  it('To-do를 보여준다.', () => {
+    const { container } = renderPageWith();
+
+    expect(container).toHaveTextContent('To-do');
+  });
 
   context('tasks가 있을 때', () => {
     const tasks = [
