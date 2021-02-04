@@ -13,7 +13,7 @@ describe('Input', () => {
   );
   expect(container).toHaveTextContent('할 일');
   expect(container).toHaveTextContent('추가');
-  expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveTextContent('할 일을 입력해 주세요');
+  expect(getByPlaceholderText('할 일을 입력해 주세요')).toBe('할 일을 입력해 주세요');
 
   expect(handleClick).not.toBeCalled();
   fireEvent.click(getByText('추가'));
