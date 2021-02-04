@@ -41,7 +41,7 @@ describe('List', () => {
       });
     });
 
-    it('listen click event', () => {
+    it('renders "완료" button that is deleted when pressed', () => {
       const { getAllByText } = renderList(tasks);
 
       fireEvent.click(getAllByText('완료')[0]);

@@ -35,16 +35,10 @@ describe('Page', () => {
     expect(container).toHaveTextContent('To-do');
   });
 
-  it('renders change event to show taskTitle', () => {
+  it('renders taskTitle', () => {
     const { queryByLabelText } = renderPage(taskTitle, tasks);
 
-    expect(onChangeTitle).not.toBeCalled();
-
-    fireEvent.change(queryByLabelText('할 일'), {
-      target: { value: '스트레칭 하기' },
-    });
-
-    expect(onChangeTitle).toBeCalled();
+    expect(queryByLabelText('할 일')).toHaveDisplayValue('스트레칭 하기');
   });
 
   it('render tasks', () => {
