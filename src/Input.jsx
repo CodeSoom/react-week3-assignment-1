@@ -9,7 +9,6 @@ export default function Input({ value, onChange, onClick }) {
       <input
         id="input-task-title"
         type="text"
-        aria-label="input-task"
         placeholder="할 일을 입력해 주세요"
         value={value}
         onChange={onChange}
