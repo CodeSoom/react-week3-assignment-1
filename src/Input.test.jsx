@@ -20,6 +20,6 @@ describe('Input', () => {
   expect(handleClick).toBeCalled();
 
   it('입력이 변경됨을 표시합니다.', () => {
-    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), 'TDD 과제하기');
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'TDD 과제하기' } });
   });
 });
