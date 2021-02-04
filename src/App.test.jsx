@@ -57,7 +57,7 @@ describe('App', () => {
     expect(inputNode).toHaveValue('');
   });
 
-  it('removes the task from tasks upon clicking 완료 button', () => {
+  it('removes the task from tasks upon clicking 완료 button along the task', () => {
     const { container, getByText, getByLabelText } = renderApp();
 
     const inputNode = getByLabelText('input-task');
