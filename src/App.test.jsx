@@ -20,8 +20,6 @@ describe('App', () => {
     return null;
   }
 
-  beforeEach(() => jest.clearAllMocks());
-
   it(('updates value upon changing of input value'), () => {
     const { getByLabelText } = renderApp();
 
