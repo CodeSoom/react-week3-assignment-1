@@ -19,8 +19,8 @@ describe('App', () => {
     };
   }
 
-  context('When there is no task', () => {
-    it('should update input value when value changes', () => {
+  context('Without tasks', () => {
+    it('updates input value when value changes', () => {
       const { getByLabelText } = renderApp();
 
       const input = getByLabelText('할 일');
@@ -30,7 +30,7 @@ describe('App', () => {
       expect(input.value).toBe('아무것도 하지 않기');
     });
 
-    it('should add a task when add button is clicked', () => {
+    it('adds a task when add button is clicked', () => {
       const { container, getByLabelText, getByText } = renderApp();
 
       const input = getByLabelText('할 일');
@@ -43,8 +43,8 @@ describe('App', () => {
     });
   });
 
-  context('When there is a task', () => {
-    it('should not have the task whose button is clicked', () => {
+  context('With tasks', () => {
+    it('deletes the task whose button is clicked', () => {
       const { container, getByLabelText, getByText } = renderApp();
 
       const input = getByLabelText('할 일');
