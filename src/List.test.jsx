@@ -20,7 +20,7 @@ describe('List', () => {
     />
   ));
 
-  context('when null type', () => {
+  context('when tasks prop is null ', () => {
     it('prompts empty message', () => {
       const { container } = renderList(null);
 
