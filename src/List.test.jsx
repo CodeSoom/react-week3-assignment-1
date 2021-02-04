@@ -53,7 +53,7 @@ describe('List', () => {
       expect(completeButtonLength).toBe(tasks.length);
     });
 
-    it('call onClickDelete function in order to delete the task', () => {
+    it('clicks 완료 button in order to delete the task', () => {
       const { getAllByText } = renderList(tasks);
 
       const completeButton = getAllByText('완료');
