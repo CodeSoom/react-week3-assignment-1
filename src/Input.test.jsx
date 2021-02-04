@@ -19,7 +19,9 @@ describe('Input', () => {
   fireEvent.click(getByText('추가'));
   expect(handleClick).toBeCalled();
 
-  it('입력이 변경됨을 표시합니다.', () => {
-    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'TDD 과제하기' } });
+  context('Todo를 입력하는 경우', () => {
+    it('입력이 변경됨을 표시합니다.', () => {
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'TDD 과제하기' } });
+    });
   });
 });
