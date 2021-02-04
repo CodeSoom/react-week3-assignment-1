@@ -6,7 +6,7 @@ import List from './List';
 
 describe('List', () => {
   const handleClick = jest.fn();
-  const rendering = (tasks) => (
+  const renderList = (tasks) => (
     render((
       <List tasks={tasks} onClickDelete={handleClick} />
     ))
@@ -15,8 +15,8 @@ describe('List', () => {
   context('when tasks is empty', () => {
     const tasks = [];
 
-    it('print "할 일이 없어요!"', () => {
-      const { container } = rendering(tasks);
+    it('Show "할 일이 없어요!"', () => {
+      const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -31,8 +31,8 @@ describe('List', () => {
       { id: 5, title: ' 살아 있다' },
     ];
 
-    it('print tasks.', () => {
-      const { container } = rendering(tasks);
+    it('Show all tasks', () => {
+      const { container } = renderList(tasks);
 
       tasks.forEach((task) => (
         expect(container).toHaveTextContent(task.title)
