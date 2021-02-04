@@ -53,6 +53,7 @@ describe('Input', () => {
           onClick={handleClick}
         />
       ));
+
       expect(handleClick).not.toBeCalled();
       fireEvent.click(getByText('추가'));
       expect(handleClick).toBeCalled();

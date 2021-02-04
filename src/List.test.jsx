@@ -6,19 +6,23 @@ import List from './List';
 
 describe('List', () => {
   const handleClick = jest.fn();
-  context('tasks의 length가 0 인 경우', () => {
+  const rendering = (tasks) => (
+    render((
+      <List tasks={tasks} onClickDelete={handleClick} />
+    ))
+  );
+
+  context('when tasks is empty', () => {
     const tasks = [];
 
-    it('"할 일이 없어요!"를 출력한다.', () => {
-      const { container } = render((
-        <List tasks={tasks} onClickDelete={handleClick} />
-      ));
+    it('print "할 일이 없어요!"', () => {
+      const { container } = rendering(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  context('tasks의 length가 1 이상인 경우', () => {
+  context('when tasks is not empty', () => {
     const tasks = [
       { id: 1, title: '엄' },
       { id: 2, title: '준' },
@@ -27,12 +31,10 @@ describe('List', () => {
       { id: 5, title: ' 살아 있다' },
     ];
 
-    it('차례대로 "엄 준 식 은 살아 있다"를 출력한다.', () => {
-      const { container } = render((
-        <List tasks={tasks} onClickDelete={handleClick} />
-      ));
+    it('print tasks.', () => {
+      const { container } = rendering(tasks);
 
-      tasks.map((task) => (
+      tasks.forEach((task) => (
         expect(container).toHaveTextContent(task.title)
       ));
     });
