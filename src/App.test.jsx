@@ -40,18 +40,6 @@ describe('App', () => {
     fireEvent.click(buttonNode);
 
     expect(container).toHaveTextContent(value);
-  });
-
-  it('resets input value to empty string after clicking 추가 button', () => {
-    const { getByText, getByLabelText } = renderApp();
-
-    const inputNode = getByLabelText('할 일');
-    const buttonNode = getByText('추가');
-
-    changeInputValue(inputNode, value);
-
-    fireEvent.click(buttonNode);
-
     expect(inputNode).toHaveValue('');
   });
 
