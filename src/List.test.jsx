@@ -5,22 +5,27 @@ import List from './List';
 
 describe('List', () => {
   const handleClick = jest.fn();
-  context('test의 length가 0인 경우', () => {
+
+  function renderList({ tasks, handleClickDelete }) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClickDelete}
+      />
+    ));
+  }
+
+  context('task가 없을 경우', () => {
     const tasks = [];
 
     it('"할 일이 없어요!"를 표시한다.', () => {
-      const { container } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />
-      ));
+      const { container } = renderList(tasks, handleClick);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  context('test의 length가 1이상인 경우', () => {
+  context('task가 있을 경우', () => {
     const tasks = [
       {
         id: 1,
@@ -29,23 +34,13 @@ describe('List', () => {
     ];
 
     it('입력된 할 일을 표시한다.', () => {
-      const { container } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />
-      ));
+      const { container } = renderList(tasks, handleClick);
 
       expect(container).toHaveTextContent('뭐라도 하기');
     });
 
     it('완료버튼을 누를 경우 Todo를 삭제한다.', () => {
-      const { getByText } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />
-      ));
+      const { getByText } = renderList(tasks, handleClick);
 
       expect(handleClick).not.toBeCalled();
       fireEvent.click(getByText('완료'));
