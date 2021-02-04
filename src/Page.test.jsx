@@ -42,12 +42,12 @@ describe('Page', () => {
     expect(container).toHaveTextContent('To-do');
   });
 
-  it('task title is displayed', () => {
+  it('renders task title', () => {
     const { getByDisplayValue } = rederPage();
     expect(getByDisplayValue(taskTitle)).toBeInTheDocument();
   });
 
-  it('tasks is displayed', () => {
+  it('renders tasks', () => {
     const { container } = rederPage();
 
     expect(container).toHaveTextContent(tasks[0].title);
