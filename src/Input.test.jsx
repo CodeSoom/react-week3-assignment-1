@@ -36,14 +36,6 @@ describe('Input', () => {
     expect(placeholder).toBe('할 일을 입력해 주세요');
   });
 
-  it('displays the value on input element', () => {
-    const { getByLabelText } = renderInput(testValue);
-
-    const input = getByLabelText('할 일');
-
-    expect(input).toHaveDisplayValue('123');
-  });
-
   it('clicks 추가 button in order to add tha value to task', () => {
     const { getByText } = renderInput();
 
