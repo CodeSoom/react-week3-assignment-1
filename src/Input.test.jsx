@@ -5,7 +5,10 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  function myRender({ taskTitle, onChangeTitle, onClickAddTask }) {
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
+
+  function renderInput(taskTitle) {
     return render((
       <Input
         value={taskTitle}
@@ -16,25 +19,19 @@ describe('Input', () => {
   }
 
   it('UI 정상노출 확인', () => {
-    const onChangeTitle = jest.fn();
-    const onClickAddTask = jest.fn();
-
     const {
       getByLabelText,
       getByPlaceholderText,
       getByText,
-    } = myRender({ onChangeTitle, onClickAddTask });
+    } = renderInput();
 
     expect(getByLabelText('할 일')).toBeInTheDocument();
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     expect(getByText('추가')).toBeInTheDocument();
   });
 
-  it('input 값 입력', () => {
-    const onChangeTitle = jest.fn();
-    const onClickAddTask = jest.fn();
-
-    const { getByPlaceholderText } = myRender({ onChangeTitle, onClickAddTask });
+  it('input의 값을 변경하면 input의 값이 변경된다', () => {
+    const { getByPlaceholderText } = renderInput();
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -45,5 +42,19 @@ describe('Input', () => {
     });
 
     expect(input.value).toBe('인풋 작성');
+  });
+
+  it('추가 버튼을 누르면 onClickAddTask 함수가 실행되고, input창은 리셋된다.', () => {
+    const { getByText, getByPlaceholderText } = renderInput('입력된 값');
+
+    const addButton = getByText('추가');
+
+    expect(onClickAddTask).not.toBeCalled();
+
+    fireEvent.click(addButton);
+
+    expect(onClickAddTask).toBeCalled();
+
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
   });
 });

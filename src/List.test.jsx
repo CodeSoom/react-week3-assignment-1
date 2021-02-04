@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  function myRender({ tasks = [] }) {
+  function renderList(tasks = []) {
     return render((
       <List
         tasks={tasks}
@@ -15,7 +15,7 @@ describe('List', () => {
 
   context('tasks의 length가 0인 경우', () => {
     it('"할 일이 없어요!"를 표시한다.', () => {
-      const { container } = myRender({});
+      const { container } = renderList();
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -34,7 +34,7 @@ describe('List', () => {
     ];
 
     it('tasks의 항목들을 모두 표시한다.', () => {
-      const { container, getAllByText, getAllByTestId } = myRender({ tasks });
+      const { container, getAllByText, getAllByTestId } = renderList(tasks);
 
       expect(getAllByTestId('todo-item')).toHaveLength(2);
       expect(getAllByText('완료')).toHaveLength(2);

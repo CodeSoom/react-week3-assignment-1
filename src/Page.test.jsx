@@ -13,7 +13,7 @@ describe('Page', () => {
     handleClickDeleteTask: jest.fn(),
   };
 
-  function myRender(
+  function renderPage(
     {
       taskTitle,
       handleChangeTitle,
@@ -42,7 +42,7 @@ describe('Page', () => {
         getByLabelText,
         getByPlaceholderText,
         getByText,
-      } = myRender({
+      } = renderPage({
         ...defaultParameter,
         tasks,
       });
@@ -72,7 +72,7 @@ describe('Page', () => {
         container,
         getAllByTestId,
         getAllByText,
-      } = myRender({
+      } = renderPage({
         ...defaultParameter,
         tasks,
       });
