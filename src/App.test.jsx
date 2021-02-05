@@ -48,7 +48,7 @@ describe('App', () => {
 
     expect(container).toHaveTextContent(value);
 
-    expect(inputNode.value).toBe('');
+    expect(inputNode).toHaveValue('');
   });
 
   it('removes the task from tasks upon clicking 완료 button along the task', () => {
