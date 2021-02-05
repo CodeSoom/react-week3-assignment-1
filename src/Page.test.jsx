@@ -19,9 +19,9 @@ describe('Page', () => {
   const renderPage = ({ value = '', lists = [] }) => render((
     <Page
       taskTitle={value}
+      tasks={lists}
       onChangeTitle={handleChangeTitle}
       onClickAddTask={handleClickAddTask}
-      tasks={lists}
       onClickDeleteTask={handleClickDeleteTask}
     />
   ));
