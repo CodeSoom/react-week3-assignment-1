@@ -44,7 +44,7 @@ describe('List', () => {
       expect(container).toHaveTextContent('아무것도 하지 않기 #2');
     });
 
-    it('"완료" 버튼을 누르면 id 파라미터를 가진 핸들러가 실행된다.', () => {
+    it('"완료" 버튼을 할 일을 삭제한다.', () => {
       const { getAllByText } = renderList(tasks);
 
       const buttons = getAllByText('완료');
