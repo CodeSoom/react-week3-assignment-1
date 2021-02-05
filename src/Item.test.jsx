@@ -19,7 +19,7 @@ describe('Item', () => {
     />
   ));
 
-  it('prints out title', () => {
+  it('renders title of the tasks', () => {
     const { container } = renderItem(dummyTask);
 
     expect(container).toHaveTextContent('TDD 너 참 어렵다');
