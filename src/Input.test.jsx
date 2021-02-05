@@ -23,9 +23,9 @@ describe('Input', () => {
   it('renders a input control', () => {
     const { getByLabelText } = renderInput();
 
-    const inputNode = getByLabelText('할 일');
+    const { tagName } = getByLabelText('할 일');
 
-    expect(inputNode).toBeInTheDocument();
+    expect(tagName).toBe('INPUT');
   });
 
   it('clicks 추가 button in order to add tha value to task', () => {
