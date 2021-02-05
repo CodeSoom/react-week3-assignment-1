@@ -33,7 +33,7 @@ describe('Item', () => {
     expect(button).toHaveTextContent('완료');
   });
 
-  it('presses button and call hanldeClickDelete', () => {
+  it('clicks 완료 button in order to delete the task', () => {
     const { getByText } = renderItem();
 
     fireEvent.click(getByText('완료'));
