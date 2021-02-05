@@ -8,18 +8,24 @@ import Input from './Input';
 describe('Input', () => {
   const onChange = jest.fn();
   const onClick = jest.fn();
-  const inputRender = (value = '') => render(
-    (<Input
-      value={value}
-      onChange={onChange}
-      onClick={onClick}
-    />),
-  );
+  const inputRender = (value = '') => {
+    const queries = render(
+      (<Input
+        value={value}
+        onChange={onChange}
+        onClick={onClick}
+      />),
+    );
+    const label = queries.getByText('할 일');
+    const input = queries.getByPlaceholderText('할 일을 입력해 주세요');
+    const button = queries.getByRole('button');
+
+    return {
+      ...queries, label, input, button,
+    };
+  };
   test('1. label,input,button 출력확인', () => {
-    const { getByText, getByPlaceholderText, getByRole } = inputRender('할일!');
-    const label = getByText('할 일');
-    const input = getByPlaceholderText('할 일을 입력해 주세요');
-    const button = getByRole('button');
+    const { label, input, button } = inputRender('할일!');
 
     expect(label).toHaveTextContent('할 일');
     expect(input.value).toBe('할일!');
@@ -27,8 +33,7 @@ describe('Input', () => {
   });
 
   test('2. input change event 확인', () => {
-    const { getByPlaceholderText } = inputRender();
-    const input = getByPlaceholderText('할 일을 입력해 주세요');
+    const { input } = inputRender();
 
     expect(onChange).not.toHaveBeenCalled();
 
@@ -38,11 +43,11 @@ describe('Input', () => {
   });
 
   test('3. button click event 확인', () => {
-    const { getByRole } = inputRender();
+    const { button } = inputRender();
 
     expect(onClick).not.toHaveBeenCalled();
 
-    fireEvent.click(getByRole('button'));
+    fireEvent.click(button);
 
     expect(onClick).toHaveBeenCalled();
   });
