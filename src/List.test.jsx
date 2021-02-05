@@ -40,8 +40,9 @@ describe('List', () => {
     it('tasks를 보여준다.', () => {
       const { container } = renderList(tasks);
 
-      expect(container).toHaveTextContent('아무것도 하지 않기 #1');
-      expect(container).toHaveTextContent('아무것도 하지 않기 #2');
+      tasks.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
+      });
     });
 
     it('"완료" 버튼을 할 일을 삭제한다.', () => {
