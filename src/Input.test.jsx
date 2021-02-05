@@ -26,12 +26,13 @@ describe('Input', () => {
     });
 
     it('추가버튼을 누르면 입력창에 글자들이 사라진다.', () => {
-      const { getByText } = render((
+      const { getByText, getByPlaceholderText } = render((
         <Input onClick={onClickAddTask} />
       ));
 
       fireEvent.click(getByText('추가'));
       expect(onClickAddTask).toBeCalled();
+      expect(getByPlaceholderText('할 일을 입력해 주세요').value).toBe('');
     });
   });
 });
