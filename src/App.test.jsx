@@ -5,7 +5,7 @@ import { fireEvent, render } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  const value = 'TDD 너무 재밌다';
+  const inputText = 'TDD 너무 재밌다';
 
   const labelText = '할 일';
 
@@ -25,11 +25,11 @@ describe('App', () => {
 
     fireEvent.change(inputNode, {
       target: {
-        value,
+        value: inputText,
       },
     });
 
-    expect(inputNode).toHaveValue(value);
+    expect(inputNode).toHaveValue(inputText);
   });
 
   it('adds a task to tasks upon Clicking 추가 button', () => {
@@ -40,13 +40,13 @@ describe('App', () => {
 
     fireEvent.change(inputNode, {
       target: {
-        value,
+        value: inputText,
       },
     });
 
     fireEvent.click(buttonNode);
 
-    expect(container).toHaveTextContent(value);
+    expect(container).toHaveTextContent(inputText);
 
     expect(inputNode).toHaveValue('');
   });
@@ -59,16 +59,16 @@ describe('App', () => {
 
     fireEvent.change(inputNode, {
       target: {
-        value,
+        value: inputText,
       },
     });
 
     fireEvent.click(addButtonNode);
 
-    expect(container).toHaveTextContent(value);
+    expect(container).toHaveTextContent(inputText);
 
     fireEvent.click(getByText(buttonText.complete));
 
-    expect(container).not.toHaveTextContent(value);
+    expect(container).not.toHaveTextContent(inputText);
   });
 });
