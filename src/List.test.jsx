@@ -12,7 +12,7 @@ describe('List', () => {
     ))
   );
 
-  context('when tasks is empty', () => {
+  context('When tasks is empty', () => {
     const tasks = [];
 
     it('Show "할 일이 없어요!"', () => {
@@ -22,7 +22,7 @@ describe('List', () => {
     });
   });
 
-  context('when tasks is not empty', () => {
+  context('When tasks is not empty', () => {
     const tasks = [
       { id: 1, title: '엄' },
       { id: 2, title: '준' },
