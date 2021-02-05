@@ -41,6 +41,8 @@ describe('Input', () => {
       },
     });
 
+    expect(onChangeTitle).toBeCalled();
+
     expect(input.value).toBe('인풋 작성');
   });
 
