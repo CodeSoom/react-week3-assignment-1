@@ -23,9 +23,9 @@ describe('Input', () => {
   it('renders a input control', () => {
     const { getByLabelText } = renderInput();
 
-    const input = getByLabelText('할 일');
+    const inputNode = getByLabelText('할 일');
 
-    expect(input).toHaveValue('');
+    expect(inputNode).toBeInTheDocument();
   });
 
   it('has placeholder value 할 일을 입력해 주세요 on input element', () => {
