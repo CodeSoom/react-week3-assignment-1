@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-describe('List component test', () => {
-  describe('1. 할일이 없을 때', () => {
-    test('할 일이 없어요! paragraph 출력', () => {
+describe('List', () => {
+  context('1. 할일이 없을 때', () => {
+    it('할 일이 없어요! paragraph 출력', () => {
       const tasks = [];
       const { getByText } = render(<List tasks={tasks} />);
 
@@ -15,8 +15,8 @@ describe('List component test', () => {
     });
   });
 
-  describe('2. 할일이 있을 때', () => {
-    test('할일 list 출력', () => {
+  context('2. 할일이 있을 때', () => {
+    it('할일 list 출력', () => {
       const tasks = [
         {
           id: 1,
