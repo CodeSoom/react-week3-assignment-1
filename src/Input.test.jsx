@@ -46,7 +46,6 @@ describe('Input', () => {
     fireEvent.click(addButton);
 
     expect(onClick).toBeCalled();
-    expect(addButton).toHaveTextContent('추가');
   });
 
   context('when a value is added to input element', () => {
