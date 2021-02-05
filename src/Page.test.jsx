@@ -48,14 +48,12 @@ describe('Page', () => {
     expect(handleClickAddTask).toBeCalled();
   });
 
-  context('when a value is added to input element', () => {
-    it('calls handleChangeTitle function in order to update the value', () => {
-      const { getByLabelText } = renderPage({});
+  it('calls handleChangeTitle function in order to update the value', () => {
+    const { getByLabelText } = renderPage({});
 
-      fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
+    fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
 
-      expect(handleChangeTitle).toBeCalled();
-    });
+    expect(handleChangeTitle).toBeCalled();
   });
 
   context('when tasks is null', () => {
