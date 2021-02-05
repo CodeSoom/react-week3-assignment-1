@@ -25,8 +25,10 @@ describe('Page', () => {
 
     it('shows tasks', () => {
       const { container } = renderPage(tasks);
-      expect(container).toHaveTextContent('아무것도 하지 않기 #1');
-      expect(container).toHaveTextContent('아무것도 하지 않기 #2');
+
+      tasks.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
+      });
     });
   });
 
