@@ -10,7 +10,7 @@ describe('List', () => {
     return render((
       <List
         tasks={tasks}
-        handleClickDelete={handleClickDelete}
+        onClickDelete={handleClickDelete}
       />
     ));
   }
@@ -19,7 +19,7 @@ describe('List', () => {
     const tasks = [];
 
     it('"할 일이 없어요!"를 표시한다.', () => {
-      const { container } = renderList({ tasks, handleClick });
+      const { container } = renderList({ tasks, handleClickDelete: handleClick });
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -34,13 +34,13 @@ describe('List', () => {
     ];
 
     it('입력된 할 일을 표시한다.', () => {
-      const { container } = renderList({ tasks, handleClick });
+      const { container } = renderList({ tasks, handleClickDelete: handleClick });
 
       expect(container).toHaveTextContent('뭐라도 하기');
     });
 
     it('완료버튼을 누를 경우 Todo를 삭제한다.', () => {
-      const { getByText } = renderList({ tasks, handleClick });
+      const { getByText } = renderList({ tasks, handleClickDelete: handleClick });
 
       expect(handleClick).not.toBeCalled();
       fireEvent.click(getByText('완료'));
