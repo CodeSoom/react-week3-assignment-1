@@ -16,16 +16,16 @@ describe('List', () => {
     ));
   }
 
-  context('tasks가 없는 경우', () => {
+  context('Without tasks', () => {
     const tasks = [];
 
-    it('"할 일이 없어요!"를 표시한다.', () => {
+    it('renders "no tasks message"', () => {
       const { container } = renderList(tasks);
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  context('tasks가 있는 경우', () => {
+  context('With tasks', () => {
     const tasks = [
       {
         id: 1,
@@ -37,7 +37,7 @@ describe('List', () => {
       },
     ];
 
-    it('tasks를 보여준다.', () => {
+    it('renders tasks', () => {
       const { container } = renderList(tasks);
 
       tasks.forEach(({ title }) => {
@@ -45,7 +45,7 @@ describe('List', () => {
       });
     });
 
-    it('"완료" 버튼을 할 일을 삭제한다.', () => {
+    it('deletes todo item when the delete button is clicked', () => {
       const { getAllByText } = renderList(tasks);
 
       const buttons = getAllByText('완료');

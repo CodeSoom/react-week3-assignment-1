@@ -6,9 +6,11 @@ import Page from './Page';
 
 describe('Page', () => {
   function renderPage(tasks) {
-    return render(<Page
-      tasks={tasks}
-    />);
+    return render((
+      <Page
+        tasks={tasks}
+      />
+    ));
   }
 
   context('With tasks', () => {
