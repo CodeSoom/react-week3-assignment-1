@@ -20,7 +20,7 @@ describe('App', () => {
     return null;
   }
 
-  it(('updates value upon changing of input value'), () => {
+  it('updates value upon changing of input value', () => {
     const { getByLabelText } = renderApp();
 
     const inputNode = getByLabelText('할 일');
