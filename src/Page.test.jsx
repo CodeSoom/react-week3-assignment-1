@@ -31,9 +31,9 @@ describe('Page', () => {
   it('displays the value on input element', () => {
     const { getByLabelText } = renderPage({ value: taskTitle });
 
-    const input = getByLabelText('할 일');
+    const inputNode = getByLabelText('할 일');
 
-    expect(input).toHaveDisplayValue('TDD 너 참 어렵다..');
+    expect(inputNode).toHaveDisplayValue('TDD 너 참 어렵다..');
   });
 
   it('clicks 추가 button in order to add tha value to task', () => {
