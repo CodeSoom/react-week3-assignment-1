@@ -5,14 +5,14 @@ import { render, fireEvent } from '@testing-library/react';
 import Item from './Item';
 
 describe('Item', () => {
+  const task = {
+    id: 1,
+    title: '뭐라도 하기',
+  };
+
+  const handleClick = jest.fn();
+
   function renderItem() {
-    const task = {
-      id: 1,
-      title: '뭐라도 하기',
-    };
-
-    const handleClick = jest.fn();
-
     const { container, getByText } = render((
       <Item
         task={task}
@@ -23,21 +23,20 @@ describe('Item', () => {
     return {
       container,
       getByText,
-      handleClick,
     };
   }
 
-  it('shows tasks', () => {
-    const { container, handleClick } = renderItem();
+  it('renders tasks', () => {
+    const { container } = renderItem();
 
-    expect(container).toHaveTextContent('뭐라도 하기');
+    expect(container).toHaveTextContent(task.title);
     expect(container).toHaveTextContent('완료');
 
     expect(handleClick).not.toBeCalled();
   });
 
   it('fires handleClick with id whose button is clicked', () => {
-    const { getByText, handleClick } = renderItem();
+    const { getByText } = renderItem();
 
     fireEvent.click(getByText('완료'));
 
