@@ -23,7 +23,7 @@ describe('Page', () => {
       },
     ];
 
-    it('shows tasks', () => {
+    it('renders tasks', () => {
       const { container } = renderPage(tasks);
 
       tasks.forEach(({ title }) => {
@@ -35,7 +35,7 @@ describe('Page', () => {
   context('Without tasks', () => {
     const tasks = [];
 
-    it('shows "no tasks message"', () => {
+    it('renders "no tasks message"', () => {
       const { container } = renderPage(tasks);
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
