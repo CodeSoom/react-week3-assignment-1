@@ -28,14 +28,6 @@ describe('Input', () => {
     expect(inputNode).toBeInTheDocument();
   });
 
-  it('renders placeholder value 할 일을 입력해 주세요 on input element', () => {
-    const { getByLabelText } = renderInput();
-
-    const { placeholder } = getByLabelText('할 일');
-
-    expect(placeholder).toBe('할 일을 입력해 주세요');
-  });
-
   it('clicks 추가 button in order to add tha value to task', () => {
     const { getByText } = renderInput();
 
@@ -54,5 +46,13 @@ describe('Input', () => {
     fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
 
     expect(onChange).toBeCalled();
+  });
+
+  context('without value', () => {
+    const { getByLabelText } = renderInput();
+
+    const { placeholder } = getByLabelText('할 일');
+
+    expect(placeholder).toBe('할 일을 입력해 주세요');
   });
 });
