@@ -25,7 +25,7 @@ describe('Item', () => {
     expect(container).toHaveTextContent('TDD 너 참 어렵다');
   });
 
-  it('has text 완료 in button', () => {
+  it('renders text 완료 inside the button', () => {
     const { getByText } = renderItem();
 
     const button = getByText('완료');
