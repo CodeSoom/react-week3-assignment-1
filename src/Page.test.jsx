@@ -5,16 +5,16 @@ import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
-  const handleChangeTitle = jest.fn();
-  const handleClickAddTask = jest.fn();
-  const handleClickDeleteTask = jest.fn();
-
   const taskTitle = 'TDD 너 참 어렵다..';
   const tasks = [
     { id: 1, title: '어서와 TDD는 처음이지?' },
     { id: 2, title: '아직 시작도 안했어 ^^' },
     { id: 3, title: '재미난 TDD 출바알~' },
   ];
+
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
 
   const renderPage = ({ value = '', lists = [] }) => render((
     <Page

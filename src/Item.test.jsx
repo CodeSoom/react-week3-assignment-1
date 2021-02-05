@@ -5,12 +5,12 @@ import { render, fireEvent } from '@testing-library/react';
 import Item from './Item';
 
 describe('Item', () => {
-  const handleClickDelete = jest.fn();
-
   const dummyTask = {
     id: 1,
     title: 'TDD 너 참 어렵다',
   };
+
+  const handleClickDelete = jest.fn();
 
   const renderItem = (task = {}) => render((
     <Item

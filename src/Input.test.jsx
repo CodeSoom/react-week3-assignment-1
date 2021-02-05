@@ -5,10 +5,10 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
+  const testValue = '123';
+
   const onChange = jest.fn();
   const onClick = jest.fn();
-
-  const testValue = '123';
 
   const renderInput = (value = '') => render((
     <Input
