@@ -48,13 +48,11 @@ describe('Input', () => {
     expect(onClick).toBeCalled();
   });
 
-  context('when a value is added to input element', () => {
-    it('calls onChange function in order to update the value', () => {
-      const { getByLabelText } = renderInput(testValue);
+  it('calls onChange function in order to update the value', () => {
+    const { getByLabelText } = renderInput(testValue);
 
-      fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
+    fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
 
-      expect(onChange).toBeCalled();
-    });
+    expect(onChange).toBeCalled();
   });
 });
