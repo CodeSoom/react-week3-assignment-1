@@ -4,28 +4,30 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('List has more than one item', () => {
-  const tasks = [
-    { id: 1, title: 'testTitle' },
-  ];
+describe('List', () => {
+  context('할일이 있는 경우', () => {
+    const tasks = [
+      { id: 1, title: 'testTitle' },
+    ];
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-    />
-  ));
+    it('할 일 목록을 표시한다.', () => {
+      const { container } = render((
+        <List tasks={tasks} />
+      ));
 
-  expect(container).toHaveTextContent('testTitle');
-});
+      expect(container).toHaveTextContent('testTitle');
+    });
+  });
 
-test('List has no items', () => {
-  const tasks = [];
+  context('할일이 없는 경우', () => {
+    const tasks = [];
 
-  const { container } = render((
-    <List
-      tasks={tasks}
-    />
-  ));
+    it('"할 일이 없어요!"를 표시한다.', () => {
+      const { container } = render((
+        <List tasks={tasks} />
+      ));
 
-  expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 });
