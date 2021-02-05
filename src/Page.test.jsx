@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
-describe('<Page />', () => {
+describe('Page', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
