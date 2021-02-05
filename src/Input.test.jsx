@@ -5,10 +5,10 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  function renderInput() {
-    const handleChange = jest.fn();
-    const handleClick = jest.fn();
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
 
+  function renderInput() {
     const { getByLabelText, getByText } = render((
       <Input
         onChange={handleChange}
@@ -19,13 +19,11 @@ describe('Input', () => {
     return {
       getByLabelText,
       getByText,
-      handleChange,
-      handleClick,
     };
   }
 
   it('updates input value', () => {
-    const { getByLabelText, handleClick } = renderInput();
+    const { getByLabelText } = renderInput();
 
     const input = getByLabelText('할 일');
     fireEvent.change(input, { target: { value: '뭐라도 하기' } });
@@ -35,7 +33,7 @@ describe('Input', () => {
   });
 
   it('fires handleClick when the button is clicked', () => {
-    const { getByText, handleClick } = renderInput();
+    const { getByText } = renderInput();
 
     const button = getByText('추가');
     fireEvent.click(button);
