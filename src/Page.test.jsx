@@ -54,7 +54,6 @@ describe('Page', () => {
     it('입력된 값과 할 일들을 보여준다.', () => {
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBe('할 일을 입력해 주세요');
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toValue(taskTitle);
 
       expect(getByText(tasks.title)).toValue('공부하기');
 
