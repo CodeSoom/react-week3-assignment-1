@@ -37,9 +37,11 @@ describe('Page', () => {
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toValue('');
     });
 
-    expect(onClickAddTask).not.toBeCalled();
-    fireEvent.click(getByText('추가'));
-    expect(onClickAddTask).toBeCalled();
+    it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
+      expect(onClickAddTask).not.toBeCalled();
+      fireEvent.click(getByText('추가'));
+      expect(onClickAddTask).toBeCalled();
+    });
   });
 
   context('task가 있을 경우', () => {
