@@ -6,10 +6,9 @@ import List from './List';
 
 describe('List', () => {
   function getListComponentContainer(tasks) {
-    const { container } = render((
+    return render((
       <List tasks={tasks} />
     ));
-    return container;
   }
 
   context('할일이 있는 경우', () => {
