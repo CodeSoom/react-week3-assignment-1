@@ -21,7 +21,7 @@ describe('Page', () => {
   }
 
   it('To-do와 할 일을 표시한다.', () => {
-    const { container } = renderPage();
+    const { container } = renderPage({ taskTitle: '', tasks: [] });
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일');
   });
