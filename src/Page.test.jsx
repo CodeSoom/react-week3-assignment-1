@@ -57,20 +57,14 @@ describe('Page', () => {
     ];
 
     it('입력된 값과 할 일들을 보여준다.', () => {
-      const {
-        container, getAllByText,
-        getByPlaceholderText,
-      } = renderPage({ taskTitle, tasks });
+      const { container } = renderPage({ taskTitle, tasks });
 
       tasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
       });
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+    });
 
-      tasks.forEach((task) => {
-        expect(container).toHaveTextContent(task.title);
-      });
-
+    it('완료버튼을 누를 경우 onClickDelete 함수 실행한다.', () => {
       expect(container).toHaveTextContent('완료');
       getAllByText('완료').forEach((button) => {
         expect(onClickDeleteTask).not.toBeCalled();
