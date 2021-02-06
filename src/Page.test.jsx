@@ -62,7 +62,9 @@ describe('Page', () => {
         getByPlaceholderText,
       } = renderPage({ taskTitle, tasks });
 
-      expect(container).toHaveTextContent('할 일이 없어요!');
+      tasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+      });
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
 
       tasks.forEach((task) => {
