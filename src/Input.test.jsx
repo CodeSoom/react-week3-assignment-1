@@ -21,12 +21,19 @@ describe('Input', () => {
   expect(handleClick).not.toBeCalled();
   fireEvent.click(getByText('추가'));
   expect(handleClick).toBeCalled();
+});
 
-  context('사용자가 Todo를 입력하는 경우', () => {
-    it('입력이 변경됨을 표시합니다.', () => {
-      expect(onChange).not.toBeCalled();
-      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'TDD 과제하기' } });
-      expect(onChange).toBeCalled();
-    });
+describe('사용자가 Todo를 입력하는 경우', () => {
+  const onChange = jest.fn();
+
+  const { getByPlaceholderText } = render(
+    <Input
+      onClick={handleClick}
+      onChange={onChange}
+    />,
+  it('입력이 변경됨을 표시합니다.', () => {
+    expect(onChange).not.toBeCalled();
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'TDD 과제하기' } });
+    expect(onChange).toBeCalled();
   });
 });
