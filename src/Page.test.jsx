@@ -36,7 +36,7 @@ describe('Page', () => {
       const { container } = renderPage({ taskTitle, tasks });
 
       expect(container).toHaveTextContent('할 일이 없어요!');
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBe('할 일을 입력해 주세요');
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
     });
 
@@ -60,7 +60,7 @@ describe('Page', () => {
 
     it('입력된 값과 할 일들을 보여준다.', () => {
       expect(container).toHaveTextContent('할 일이 없어요!');
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBe('할 일을 입력해 주세요');
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
 
       tasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
