@@ -6,6 +6,7 @@ import Page from './Page';
 describe('Page', () => {
   const onClickAddTask = jest.fn();
   const onClickDeleteTask = jest.fn();
+  const onChangeTitle = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -17,11 +18,13 @@ describe('Page', () => {
       tasks={tasks}
       onClickAddTask={onClickAddTask}
       onClickDeleteTask={onClickDeleteTask}
+      onChangeTitle={onChangeTitle}
     />));
   }
 
   it('To-do와 할 일을 표시한다.', () => {
     const { container } = renderPage({ taskTitle: '', tasks: [] });
+
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일');
   });
@@ -30,10 +33,8 @@ describe('Page', () => {
     const taskTitle = '';
     const tasks = [];
 
-    const { getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
-
     it(' "할 일을 입력해 주세요", "할 일이 없어요!"를 표시한다.', () => {
-      const { container } = renderPage({ taskTitle, tasks });
+      const { container, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
@@ -41,8 +42,9 @@ describe('Page', () => {
     });
 
     it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
+      const { getByText } = renderPage({ taskTitle, tasks });
       expect(onClickAddTask).not.toBeCalled();
-      fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText(/추가/));
       expect(onClickAddTask).toBeCalled();
     });
   });
@@ -53,12 +55,13 @@ describe('Page', () => {
       { id: 1, title: '공부하기' },
       { id: 2, title: '밥먹기' },
     ];
-    const {
-      container, getAllByText,
-      getByPlaceholderText, getByText,
-    } = renderPage({ taskTitle, tasks });
 
     it('입력된 값과 할 일들을 보여준다.', () => {
+      const {
+        container, getAllByText,
+        getByPlaceholderText,
+      } = renderPage({ taskTitle, tasks });
+
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
 
@@ -75,8 +78,9 @@ describe('Page', () => {
     });
 
     it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
+      const { getByText } = renderPage({ taskTitle, tasks });
       expect(onClickAddTask).not.toBeCalled();
-      fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText(/추가/));
       expect(onClickAddTask).toBeCalled();
     });
   });
