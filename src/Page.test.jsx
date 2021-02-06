@@ -13,7 +13,7 @@ describe('Page에서', () => {
 
   function renderPageWith(
     taskTitle = '',
-    tasks = '',
+    tasks = [],
   ) {
     return render((
       <Page
@@ -43,7 +43,6 @@ describe('Page에서', () => {
     it('인풋과 할 일 목록을 모두 보여준다.', () => {
       const { getByText, getAllByText, getByPlaceholderText } = renderPageWith(taskTitle, tasks);
 
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
       expect(getByText('추가')).toBeInTheDocument();
       tasks.forEach((todo) => {
@@ -79,7 +78,6 @@ describe('Page에서', () => {
     it('인풋과 할 일이 없다는 것을 보여준다.', () => {
       const { container, getByPlaceholderText, getByText } = renderPageWith(taskTitle, tasks);
 
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
       expect(getByText('추가')).toBeInTheDocument();
       expect(container).toHaveTextContent('할 일이 없어요!');
