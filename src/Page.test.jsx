@@ -16,12 +16,11 @@ describe('Page', () => {
     />));
   }
 
-  const { mainContainer } = render((
-    <Page />
-  ));
-  expect(mainContainer).toHaveTextContent('To-do');
-  expect(mainContainer).toHaveTextContent('할 일');
-  expect(mainContainer).toHaveTextContent('추가');
+  it('To-do와 할 일을 표시한다.', () => {
+    const { container } = renderPage();
+    expect(container).toHaveTextContent('To-do');
+    expect(container).toHaveTextContent('할 일');
+  });
 
   context('task가 없을 경우', () => {
     const taskTitle = '';
@@ -48,6 +47,7 @@ describe('Page', () => {
     const taskTitle = '산책하기';
     const tasks = [
       { id: 1, title: '공부하기' },
+      { id: 2, title: '밥먹기' },
     ];
     const { container, getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
@@ -55,7 +55,9 @@ describe('Page', () => {
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBe('할 일을 입력해 주세요');
 
-      expect(getByText(tasks.title)).toValue('공부하기');
+      tasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+      });
 
       expect(container).toHaveTextContent('완료');
       expect(onClickDeleteTask).not.toBeCalled();
