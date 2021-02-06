@@ -12,17 +12,17 @@ describe('List', () => {
     ))
   );
 
-  context('When tasks is empty', () => {
+  context('when tasks is empty', () => {
     const tasks = [];
 
-    it('Show "할 일이 없어요!"', () => {
+    it('show "할 일이 없어요!"', () => {
       const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  context('When tasks is not empty', () => {
+  context('when tasks is not empty', () => {
     const tasks = [
       { id: 1, title: '엄' },
       { id: 2, title: '준' },
@@ -31,7 +31,7 @@ describe('List', () => {
       { id: 5, title: ' 살아 있다' },
     ];
 
-    it('Show all tasks', () => {
+    it('show all tasks', () => {
       const { container } = renderList(tasks);
 
       tasks.forEach((task) => (
