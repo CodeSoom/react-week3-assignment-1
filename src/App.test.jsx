@@ -16,9 +16,7 @@ describe('App', () => {
 
   const { inputText, labelText, buttonText: { add, complete } } = testText;
 
-  const renderApp = () => render((
-    <App />
-  ));
+  const renderApp = () => render((<App />));
 
   it('updates value upon changing of input value', () => {
     const { getByLabelText } = renderApp();
