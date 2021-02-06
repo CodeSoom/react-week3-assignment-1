@@ -71,7 +71,7 @@ describe('Page', () => {
       expect(getAllByTestId('todo-item')).toHaveLength(tasks.length);
       expect(getAllByText('완료')).toHaveLength(tasks.length);
 
-      tasks.forEach(todoItem => {
+      tasks.forEach((todoItem) => {
         expect(container).toHaveTextContent(todoItem.title);
       });
     });
