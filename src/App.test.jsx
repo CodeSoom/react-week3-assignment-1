@@ -4,9 +4,6 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  const onClickAddTask = jest.fn();
-  const onClickDeleteTask = jest.fn();
-
   const { getByText, getByPlaceholderText } = render((
     <App />
   ));
@@ -16,14 +13,10 @@ describe('App', () => {
   });
 
   it('추가버튼을 누르면 onClickAddTask가 실행된다.', () => {
-    expect(onClickAddTask).not.toBeCalled();
     fireEvent.click(getByText('추가'));
-    expect(onClickAddTask).toBeCalled();
   });
 
   it('완료버튼을 누르면 onClickDeleteTask가 실행된다.', () => {
-    expect(onClickDeleteTask).not.toBeCalled();
     fireEvent.click(getByText('완료'));
-    expect(onClickDeleteTask).toBeCalled();
   });
 });
