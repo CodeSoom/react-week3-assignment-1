@@ -5,16 +5,14 @@ import { fireEvent, render } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  const testText = {
-    inputText: 'TDD 너무 재밌다',
-    labelText: '할 일',
-    buttonText: {
-      add: '추가',
-      complete: '완료',
-    },
-  };
+  const inputText = 'TDD 너무 재밌다';
 
-  const { inputText, labelText, buttonText: { add, complete } } = testText;
+  const labelText = '할 일';
+
+  const buttonText = {
+    add: '추가',
+    complete: '완료',
+  };
 
   const renderApp = () => render((<App />));
 
@@ -36,7 +34,7 @@ describe('App', () => {
     const { container, getByText, getByLabelText } = renderApp();
 
     const inputNode = getByLabelText(labelText);
-    const buttonNode = getByText(add);
+    const buttonNode = getByText(buttonText.add);
 
     fireEvent.change(inputNode, {
       target: {
@@ -55,7 +53,7 @@ describe('App', () => {
     const { container, getByText, getByLabelText } = renderApp();
 
     const inputNode = getByLabelText(labelText);
-    const addButtonNode = getByText(add);
+    const addButtonNode = getByText(buttonText.add);
 
     fireEvent.change(inputNode, {
       target: {
@@ -67,7 +65,7 @@ describe('App', () => {
 
     expect(container).toHaveTextContent(inputText);
 
-    fireEvent.click(getByText(complete));
+    fireEvent.click(getByText(buttonText.complete));
 
     expect(container).not.toHaveTextContent(inputText);
   });
