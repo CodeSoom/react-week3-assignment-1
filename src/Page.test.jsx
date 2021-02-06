@@ -49,10 +49,9 @@ describe('Page', () => {
     const tasks = [
       { id: 1, title: '공부하기' },
     ];
+    const { container, getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
     it('입력된 값과 할 일들을 보여준다.', () => {
-      const { container, getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
-
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBe('할 일을 입력해 주세요');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toValue(taskTitle);
@@ -63,6 +62,12 @@ describe('Page', () => {
       expect(onClickDeleteTask).not.toBeCalled();
       fireEvent.click(getByText('완료'));
       expect(onClickDeleteTask).toBeCalled();
+    });
+
+    it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
+      expect(onClickAddTask).not.toBeCalled();
+      fireEvent.click(getByText('추가'));
+      expect(onClickAddTask).toBeCalled();
     });
   });
 });
