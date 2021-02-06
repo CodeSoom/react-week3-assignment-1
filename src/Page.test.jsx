@@ -8,15 +8,10 @@ describe('Page', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
-
-  const defaultParameter = {
-    taskTitle: '',
-    tasks: [],
-  };
+  const taskTitle = '';
 
   function renderPage(
     {
-      taskTitle,
       tasks,
     },
   ) {
@@ -41,7 +36,6 @@ describe('Page', () => {
         getByPlaceholderText,
         getByText,
       } = renderPage({
-        ...defaultParameter,
         tasks,
       });
 
@@ -71,14 +65,15 @@ describe('Page', () => {
         getAllByTestId,
         getAllByText,
       } = renderPage({
-        ...defaultParameter,
         tasks,
       });
 
-      expect(getAllByTestId('todo-item')).toHaveLength(2);
-      expect(getAllByText('완료')).toHaveLength(2);
-      expect(container).toHaveTextContent('일과1');
-      expect(container).toHaveTextContent('일과2');
+      expect(getAllByTestId('todo-item')).toHaveLength(tasks.length);
+      expect(getAllByText('완료')).toHaveLength(tasks.length);
+
+      tasks.forEach(todoItem => {
+        expect(container).toHaveTextContent(todoItem.title);
+      });
     });
   });
 });
