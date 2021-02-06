@@ -7,6 +7,7 @@ import Input from './Input';
 describe('Input', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
+
   const renderInput = (value) => (
     render((
       <Input
@@ -16,19 +17,20 @@ describe('Input', () => {
       />
     ))
   );
-  context('With input is empty', () => {
+
+  context('with input is empty', () => {
     const value = '';
 
-    it('Show "할 일을 입력해 주세요" in placeholder', () => {
+    it('show "할 일을 입력해 주세요" in placeholder', () => {
       const { getByLabelText } = renderInput(value);
       expect(getByLabelText('할 일').placeholder).toEqual('할 일을 입력해 주세요');
     });
   });
 
-  context('Without input is empty', () => {
+  context('without input is empty', () => {
     const value = '엄준식은 살아있다';
 
-    it('onChange works', () => {
+    it('onChange work if value changed', () => {
       const { getByLabelText } = renderInput(value);
 
       expect(handleChange).not.toBeCalled();
@@ -37,7 +39,7 @@ describe('Input', () => {
       expect(handleChange).toBeCalled();
     });
 
-    it('onClick works', () => {
+    it('onClick works if "추가" pressed', () => {
       const { getByText, getByLabelText } = renderInput(value);
       expect(handleClick).not.toBeCalled();
       fireEvent.click(getByText('추가'));
