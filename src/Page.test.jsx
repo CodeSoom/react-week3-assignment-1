@@ -7,6 +7,10 @@ describe('Page', () => {
   const onClickAddTask = jest.fn();
   const onClickDeleteTask = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   function renderPage({ taskTitle, tasks }) {
     return render((<Page
       taskTitle={taskTitle}
