@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
-test('AppRendering', () => {
+test('App rendered well', () => {
   const { container, getByPlaceholderText } = render((
     <App />
   ));
@@ -15,7 +15,7 @@ test('AppRendering', () => {
   expect(container).toHaveTextContent('추가');
 });
 
-test('InputChangedView', () => {
+test('When input changed, input\'s value chaned', () => {
   const { getByLabelText } = render((
     <App />
   ));
@@ -26,7 +26,7 @@ test('InputChangedView', () => {
   expect(input.value).toBe('안녕하세요');
 });
 
-test('AddView', () => {
+test('Add to-do', () => {
   const { container, getByLabelText, getByText } = render((
     <App />
   ));
@@ -37,7 +37,7 @@ test('AddView', () => {
   expect(container).toHaveTextContent('안녕하세요');
 });
 
-test('Add and Delete', () => {
+test('Add and delete to-do', () => {
   const { container, getByLabelText, getByText } = render((
     <App />
   ));
