@@ -31,20 +31,28 @@ describe('List', () => {
         id: 1,
         title: '뭐라도 하기',
       },
+      {
+        id: 2,
+        title: '맛있는것 먹기',
+      },
     ];
 
     it('입력된 할 일을 표시한다.', () => {
       const { container } = renderList({ tasks });
 
-      expect(container).toHaveTextContent('뭐라도 하기');
+      tasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+      });
     });
 
     it('완료버튼을 누를 경우 Todo를 삭제한다.', () => {
-      const { getByText } = renderList({ tasks });
+      const { getAllByText } = renderList({ tasks });
 
-      expect(handleClickDelete).not.toBeCalled();
-      fireEvent.click(getByText('완료'));
-      expect(handleClickDelete).toBeCalled();
+      getAllByText('완료').forEach((button) => {
+        expect(handleClickDelete).not.toBeCalled();
+        fireEvent.click(button);
+        expect(handleClickDelete).toBeCalled();
+      });
     });
   });
 });
