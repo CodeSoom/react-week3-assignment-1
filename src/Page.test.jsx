@@ -65,9 +65,10 @@ describe('Page', () => {
     });
 
     it('완료버튼을 누를 경우 onClickDelete 함수 실행한다.', () => {
+      const { container, getAllByText } = renderPage({ taskTitle, tasks });
+
       expect(container).toHaveTextContent('완료');
       getAllByText('완료').forEach((button) => {
-        expect(onClickDeleteTask).not.toBeCalled();
         fireEvent.click(button);
         expect(onClickDeleteTask).toBeCalled();
       });
