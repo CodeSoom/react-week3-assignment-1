@@ -46,8 +46,9 @@ describe('List', () => {
     });
 
     it('완료버튼을 누를 경우 Todo를 삭제한다.', () => {
-      const { getAllByText } = renderList({ tasks });
+      const { container, getAllByText } = renderList({ tasks });
 
+      expect(container).toHaveTextContent('완료');
       getAllByText('완료').forEach((button) => {
         expect(handleClickDelete).not.toBeCalled();
         fireEvent.click(button);
