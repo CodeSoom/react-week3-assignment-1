@@ -4,9 +4,9 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const handleClick = jest.fn();
+  const handleClickDelete = jest.fn();
 
-  function renderList({ tasks, handleClickDelete }) {
+  function renderList({ tasks }) {
     return render((
       <List
         tasks={tasks}
@@ -19,7 +19,7 @@ describe('List', () => {
     const tasks = [];
 
     it('"할 일이 없어요!"를 표시한다.', () => {
-      const { container } = renderList({ tasks, handleClickDelete: handleClick });
+      const { container } = renderList({ tasks });
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -34,17 +34,17 @@ describe('List', () => {
     ];
 
     it('입력된 할 일을 표시한다.', () => {
-      const { container } = renderList({ tasks, handleClickDelete: handleClick });
+      const { container } = renderList({ tasks });
 
       expect(container).toHaveTextContent('뭐라도 하기');
     });
 
     it('완료버튼을 누를 경우 Todo를 삭제한다.', () => {
-      const { getByText } = renderList({ tasks, handleClickDelete: handleClick });
+      const { getByText } = renderList({ tasks });
 
-      expect(handleClick).not.toBeCalled();
+      expect(handleClickDelete).not.toBeCalled();
       fireEvent.click(getByText('완료'));
-      expect(handleClick).toBeCalled();
+      expect(handleClickDelete).toBeCalled();
     });
   });
 });
