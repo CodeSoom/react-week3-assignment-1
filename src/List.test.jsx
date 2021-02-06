@@ -6,19 +6,35 @@ import List from './List';
 
 describe('List', () => {
   function getListComponentContainer(tasks) {
-    return render((
+    const { container } = render((
       <List tasks={tasks} />
     ));
+    return container;
   }
 
-  context('할일이 있는 경우', () => {
+  context('할일이 1개 있는 경우', () => {
     const tasks = [
       { id: 1, title: 'testTitle' },
     ];
 
-    it('할 일 목록을 표시한다.', () => {
+    it('할 일 1개를 표시한다.', () => {
       const container = getListComponentContainer(tasks);
       expect(container).toHaveTextContent('testTitle');
+    });
+  });
+
+  context('할일이 2개 이상 있는 경우', () => {
+    const tasks = [
+      { id: 1, title: 'testTitle' },
+      { id: 2, title: 'testTitle2' },
+      { id: 3, title: 'testTitle3' },
+    ];
+
+    it('할 일 목록을 모두 표시한다.', () => {
+      const container = getListComponentContainer(tasks);
+      expect(container).toHaveTextContent('testTitle');
+      expect(container).toHaveTextContent('testTitle2');
+      expect(container).toHaveTextContent('testTitle3');
     });
   });
 
