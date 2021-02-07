@@ -24,11 +24,11 @@ describe('Page', () => {
   }
 
   it('To-do와 할 일을 표시한다.', () => {
-    const { container, getByText } = renderPage({ taskTitle: '', tasks: [] });
+    const { container } = renderPage({ taskTitle: '', tasks: [] });
 
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일');
-    expect(getByText('추가')).toHaveTextContent();
+    expect(container).toHaveTextContent('추가');
   });
 
   context('task가 없을 경우', () => {
@@ -80,6 +80,7 @@ describe('Page', () => {
 
     it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
       const { getByText } = renderPage({ taskTitle, tasks });
+
       expect(onClickAddTask).not.toBeCalled();
       fireEvent.click(getByText(/추가/));
       expect(onClickAddTask).toBeCalled();
