@@ -35,4 +35,12 @@ describe('App', () => {
     fireEvent.click(getByText('추가'));
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
   });
+
+  it('완료버튼을 누릅니다.', () => {
+    const { getByText, getByPlaceholderText } = renderApp();
+
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'TDD 과제하기' } });
+    fireEvent.click(getByText('추가'));
+    fireEvent.click(getByText('완료'));
+  });
 });
