@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent} from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
@@ -58,7 +58,9 @@ describe('App', () => {
   });
 
   it('할 일 옆에 삭제버튼을 누르면 해당 할 일이 삭제 된다.', () => {
-    const { container, getByText, getByPlaceholderText, getAllByText } = render((
+    const {
+      container, getByText, getByPlaceholderText, getAllByText,
+    } = render((
       <App />
     ));
     const input = getByPlaceholderText('할 일을 입력해 주세요');

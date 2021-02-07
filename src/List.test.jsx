@@ -35,7 +35,6 @@ describe('List', () => {
       const { container } = renderList(tasks);
       expect(container).toHaveTextContent('task-1');
       expect(container).toHaveTextContent('task-2');
-
     });
 
     it('render "완료" button to delete task', () => {
