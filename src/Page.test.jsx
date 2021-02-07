@@ -1,0 +1,96 @@
+import React from 'react';
+
+import { render, fireEvent } from '@testing-library/react';
+
+import Page from './Page';
+
+describe('Page', () => {
+  const taskTitle = 'TDD 너 참 어렵다..';
+  const tasks = [
+    { id: 1, title: '어서와 TDD는 처음이지?' },
+    { id: 2, title: '아직 시작도 안했어 ^^' },
+    { id: 3, title: '재미난 TDD 출바알~' },
+  ];
+
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+
+  const renderPage = ({ value = '', lists = [] }) => render((
+    <Page
+      taskTitle={value}
+      tasks={lists}
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      onClickDeleteTask={handleClickDeleteTask}
+    />
+  ));
+
+  beforeEach(() => jest.clearAllMocks());
+
+  it('displays the value on input element', () => {
+    const { getByLabelText } = renderPage({ value: taskTitle });
+
+    const inputNode = getByLabelText('할 일');
+
+    expect(inputNode).toHaveDisplayValue('TDD 너 참 어렵다..');
+  });
+
+  it('clicks 추가 button in order to add tha value to task', () => {
+    const { getByText } = renderPage({});
+
+    const addButton = getByText('추가');
+
+    expect(handleClickAddTask).not.toBeCalled();
+
+    fireEvent.click(addButton);
+
+    expect(handleClickAddTask).toBeCalled();
+  });
+
+  it('calls handleChangeTitle function in order to update the value', () => {
+    const { getByLabelText } = renderPage({});
+
+    fireEvent.change(getByLabelText('할 일'), { target: { value: 'a' } });
+
+    expect(handleChangeTitle).toBeCalled();
+  });
+
+  context('when tasks is null', () => {
+    it('prompts empty message', () => {
+      const { container } = renderPage({ lists: undefined });
+
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
+
+  context('without tasks', () => {
+    it('prompts empty message', () => {
+      const { container } = renderPage({});
+
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
+
+  context('with tasks', () => {
+    it('renders title of the tasks', () => {
+      const { container } = renderPage({ lists: tasks });
+
+      tasks.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
+      });
+    });
+
+    it('clicks 완료 button in order to delete the task', () => {
+      const { getAllByText } = renderPage({ lists: tasks });
+
+      const completeButton = getAllByText('완료');
+
+      completeButton.forEach((button) => {
+        fireEvent.click(button);
+      });
+
+      expect(handleClickDeleteTask).toBeCalledWith(tasks.length);
+    });
+  });
+});
