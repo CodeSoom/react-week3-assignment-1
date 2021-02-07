@@ -44,7 +44,7 @@ describe('App', () => {
     expect(input.value).toBe('');
   });
 
-  it('할 일을 두 번 등록하면 두 개가 리스트에 뜬다.', () => {
+  it('할 일을 두 번 등록하면 두 개가 리스트에 출력된다:.', () => {
     const { container, getByText, getByPlaceholderText } = render((
       <App />
     ));
