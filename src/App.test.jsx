@@ -33,10 +33,4 @@ describe('App', () => {
     fireEvent.click(getByText('추가'));
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
   });
-
-  it('완료버튼을 누르면 onClickDeleteTask가 실행된다.', () => {
-    const { getByText } = renderApp();
-
-    fireEvent.click(getByText('완료'));
-  });
 });
