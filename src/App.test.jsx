@@ -45,19 +45,16 @@ describe('App', () => {
   });
 
   it('할 일을 두 번 등록하면 두 개가 리스트에 출력된다:.', () => {
-    const { container, getByText, getByPlaceholderText } = render((
+    const { getAllByRole, getByText, getByPlaceholderText } = render((
       <App />
     ));
     const input = getByPlaceholderText('할 일을 입력해 주세요');
     fireEvent.change(input, { target: { value: '할 일 1번' } });
-    expect(input.value).toBe('할 일 1번');
     fireEvent.click(getByText('추가'));
-    expect(container).toHaveTextContent('할 일 1번');
-
     fireEvent.change(input, { target: { value: '할 일 2번' } });
-    expect(input.value).toBe('할 일 2번');
     fireEvent.click(getByText('추가'));
-    expect(container).toHaveTextContent('할 일 2번');
+
+    expect(getAllByRole('listitem').length).toBe(2);
   });
 
   it('할 일 옆에 삭제버튼을 누르면 해당 할 일이 삭제 된다.', () => {
