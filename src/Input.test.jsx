@@ -4,6 +4,10 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();

@@ -4,6 +4,10 @@ import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('List', () => {
   const handleClickDelete = jest.fn();
 
