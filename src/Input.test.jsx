@@ -5,19 +5,24 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 test('Input', () => {
-  const handleClick = jest.fn();
-  const handleChange = jest.fn();
-
-  const { container, getByRole } = render((
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
+  const taskTitle = '할 일 작성중';
+  const { getByDisplayValue, getByLabelText } = render((
     <Input
-      value="할 일을 입력중"
-      onChange={handleChange}
-      onClick={handleClick}
+      value={taskTitle}
+      onChange={onChangeTitle}
+      onClick={onClickAddTask}
     />
   ));
 
-  expect(container).toHaveTextContent('할 일');
-  expect(getByRole('button')).toHaveTextContent('추가');
-  // Todo: test placeholder
-  // Todo: test value
+  expect(getByDisplayValue('할 일 작성중')).not.toBeNull();
+
+  expect(onChangeTitle).not.toBeCalled();
+
+  fireEvent.change(getByLabelText('할 일'), {
+    target: { value: '뭔가 하기' },
+  });
+
+  expect(onChangeTitle).toBeCalled();
 });
