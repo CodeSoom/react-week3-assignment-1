@@ -24,10 +24,11 @@ describe('Page', () => {
   }
 
   it('To-do와 할 일을 표시한다.', () => {
-    const { container } = renderPage({ taskTitle: '', tasks: [] });
+    const { container, getByText } = renderPage({ taskTitle: '', tasks: [] });
 
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일');
+    expect(getByText('추가')).toHaveTextContent();
   });
 
   context('task가 없을 경우', () => {
@@ -39,7 +40,7 @@ describe('Page', () => {
 
       expect(container).toHaveTextContent('할 일이 없어요!');
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
     });
 
     it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
