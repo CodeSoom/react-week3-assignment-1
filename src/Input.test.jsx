@@ -34,14 +34,13 @@ describe('Input', () => {
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
   });
 
-  it('입력이 변경됨을 표시합니다.', () => {
+  it('입력이 변경되면 onClick을 실행한다.', () => {
     const { getByPlaceholderText } = renderInput({ value: '' });
 
     expect(handleChange).not.toBeCalled();
-    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+    fireEvent.change(getByPlaceholderText('할 을 입력해 주세요'), {
       target: { value: 'TDD 과제하기' },
     });
     expect(handleChange).toBeCalled();
-    expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('TDD 과제하기');
   });
 });
