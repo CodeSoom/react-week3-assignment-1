@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -19,11 +19,11 @@ describe('Page', () => {
     ),
   );
 
-  const handleChangeTitle = jest.fn();
-  const handleClickAddTask = jest.fn();
-  const handleClickDeleteTask = jest.fn();
-
   it('할일이 없을때 "할일이 없어요!"라고 보여준다.', () => {
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+
     const { container, getByPlaceholderText } = pageRender(
       '',
       handleChangeTitle,
@@ -38,9 +38,13 @@ describe('Page', () => {
     expect(placeholder).toBeInTheDocument();
   });
 
-  it('input에 입력값을 표시한다.', () => {
+  it('할일을 추가한다.', () => {
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+
     const inputValue = '입력값';
-    const { getByPlaceholderText } = pageRender(
+    const { getByPlaceholderText, getByText } = pageRender(
       inputValue,
       handleChangeTitle,
       handleClickAddTask,
@@ -49,11 +53,22 @@ describe('Page', () => {
     );
 
     const placeholder = getByPlaceholderText('할 일을 입력해 주세요');
+    const button = getByText('추가');
 
-    expect(placeholder).toHaveValue(inputValue);
+    expect(handleChangeTitle).not.toBeCalled();
+    fireEvent.change(placeholder, { target: { value: '잠자기' } });
+    expect(handleChangeTitle).toBeCalled();
+
+    expect(handleClickAddTask).not.toBeCalled();
+    fireEvent.click(button);
+    expect(handleClickAddTask).toBeCalled();
   });
 
   it('할일이 있을 때 모두 표시한다.', () => {
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+
     const tasks = [{ id: 1, title: '할일1' }, { id: 2, title: '할일2' }];
 
     const { container } = pageRender(
