@@ -10,11 +10,7 @@ describe('Page', () => {
   const handleClickDeleteTask = jest.fn();
   const taskTitle = '';
 
-  function renderPage(
-    {
-      tasks,
-    },
-  ) {
+  function renderPage(tasks) {
     return render((
       <Page
         taskTitle={taskTitle}
@@ -35,9 +31,7 @@ describe('Page', () => {
         getByLabelText,
         getByPlaceholderText,
         getByText,
-      } = renderPage({
-        tasks,
-      });
+      } = renderPage(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
 
@@ -64,9 +58,7 @@ describe('Page', () => {
         container,
         getAllByTestId,
         getAllByText,
-      } = renderPage({
-        tasks,
-      });
+      } = renderPage(tasks);
 
       expect(getAllByTestId('todo-item')).toHaveLength(tasks.length);
       expect(getAllByText('완료')).toHaveLength(tasks.length);
