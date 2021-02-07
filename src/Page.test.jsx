@@ -60,8 +60,9 @@ describe('Page', () => {
     ];
 
     it('입력된 값과 할 일들을 보여준다.', () => {
-      const { container } = renderPage({ taskTitle, tasks });
+      const { container, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
       tasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
       });
