@@ -38,7 +38,7 @@ describe('Input', () => {
     const { getByPlaceholderText } = renderInput({ value: '' });
 
     expect(handleChange).not.toBeCalled();
-    fireEvent.change(getByPlaceholderText('할 을 입력해 주세요'), {
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
       target: { value: 'TDD 과제하기' },
     });
     expect(handleChange).toBeCalled();
