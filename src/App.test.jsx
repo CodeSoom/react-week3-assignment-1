@@ -19,7 +19,7 @@ describe('App', () => {
     };
   }
 
-  context('Without tasks', () => {
+  context('without tasks', () => {
     it('displays "no task message"', () => {
       const { container } = renderApp();
 
@@ -49,7 +49,7 @@ describe('App', () => {
     });
   });
 
-  context('With tasks', () => {
+  context('with tasks', () => {
     it('deletes the task whose button is clicked', () => {
       const { container, getByLabelText, getByText } = renderApp();
 
