@@ -6,13 +6,13 @@ import Input from './Input';
 
 describe('Input', () => {
   const handleClick = jest.fn();
-  const onChange = jest.fn();
+  const handleChange = jest.fn();
 
   function renderInput({ value }) {
     return render((<Input
       value={value}
-      handleClick={handleClick}
-      onChange={onChange}
+      onClick={handleClick}
+      onChange={handleChange}
     />));
   }
 
@@ -26,20 +26,22 @@ describe('Input', () => {
   });
 
   it('추가버튼을 누르면 handleClick을 호출합니다.', () => {
-    const { getByText } = renderInput({ value: '' });
+    const { getByText, getByPlaceholderText } = renderInput({ value: '' });
 
     expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('추가'));
     expect(handleClick).toBeCalled();
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
   });
 
   it('입력이 변경됨을 표시합니다.', () => {
-    const { getByPlaceholderText } = renderInput({ value: 'TDD 과제하기' });
+    const { getByPlaceholderText } = renderInput({ value: '' });
 
+    expect(handleChange).not.toBeCalled();
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+      target: { value: 'TDD 과제하기' },
+    });
+    expect(handleChange).toBeCalled();
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('TDD 과제하기');
-
-    expect(onChange).not.toBeCalled();
-    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'TDD 과제하기' } });
-    expect(onChange).toBeCalled();
   });
 });

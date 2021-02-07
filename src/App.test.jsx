@@ -23,7 +23,9 @@ describe('App', () => {
   it('input 입력시 input이 업데이트 된다.', () => {
     const { getByPlaceholderText } = renderApp();
 
-    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'TDD 과제하기' } });
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+      target: { value: 'TDD 과제하기' },
+    });
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('TDD 과제하기');
   });
 
