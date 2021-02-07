@@ -45,6 +45,7 @@ describe('Page', () => {
 
     it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
       const { getByText } = renderPage({ taskTitle, tasks });
+
       expect(onClickAddTask).not.toBeCalled();
       fireEvent.click(getByText(/추가/));
       expect(onClickAddTask).toBeCalled();
@@ -64,12 +65,12 @@ describe('Page', () => {
       tasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
       });
+      expect(container).toHaveTextContent('완료');
     });
 
     it('완료버튼을 누를 경우 onClickDelete 함수 실행한다.', () => {
-      const { container, getAllByText } = renderPage({ taskTitle, tasks });
+      const { getAllByText } = renderPage({ taskTitle, tasks });
 
-      expect(container).toHaveTextContent('완료');
       getAllByText('완료').forEach((button) => {
         fireEvent.click(button);
         expect(onClickDeleteTask).toBeCalled();
