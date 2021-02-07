@@ -11,7 +11,7 @@ describe('App', () => {
     ));
   }
 
-  it('test', () => {
+  it('화면에 나타나는 content들을 표시한다.', () => {
     const { container } = renderApp();
 
     expect(container).toHaveTextContent('To-do');
@@ -29,7 +29,7 @@ describe('App', () => {
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('TDD 과제하기');
   });
 
-  it('추가버튼을 누르면 input내용이 비워집니다.', () => {
+  it('추가버튼을 누르면 input내용이 비워진다.', () => {
     const { getByText, getByPlaceholderText } = renderApp();
 
     fireEvent.click(getByText('추가'));

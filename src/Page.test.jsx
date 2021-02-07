@@ -43,7 +43,7 @@ describe('Page', () => {
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
     });
 
-    it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
+    it('추가버튼을 누를 경우 onClickAddTask을 실행한다.', () => {
       const { getByText } = renderPage({ taskTitle, tasks });
 
       expect(onClickAddTask).not.toBeCalled();
