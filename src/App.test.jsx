@@ -18,4 +18,8 @@ test('App', () => {
   fireEvent.click(getByText('추가'));
 
   expect(getByText(/아무 것도 하지 않기/)).not.toBeNull();
+
+  fireEvent.click(getByText('완료'));
+
+  expect(getByText('할 일이 없어요!')).not.toBeNull();
 });
