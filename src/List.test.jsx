@@ -50,7 +50,6 @@ describe('List', () => {
 
       expect(container).toHaveTextContent('완료');
       getAllByText('완료').forEach((button) => {
-        expect(handleClickDelete).not.toBeCalled();
         fireEvent.click(button);
         expect(handleClickDelete).toBeCalled();
       });
