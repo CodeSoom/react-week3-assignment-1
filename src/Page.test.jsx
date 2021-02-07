@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -33,29 +33,26 @@ describe('Page', () => {
     ));
   });
 
-  context('when task is added', () => {
+  it('added tasks', () => {
     const newTask = { id: 3, title: '찌' };
-    it('added tasks showed', () => {
-      const { container } = renderPage(value, [...tasks, newTask]);
+    const { container } = renderPage(value, [...tasks, newTask]);
 
-      [...tasks, newTask].forEach((task) => (
-        expect(container).toHaveTextContent(task.title)
-      ));
-    });
+    [...tasks, newTask].forEach((task) => (
+      expect(container).toHaveTextContent(task.title)
+    ));
   });
 
-  context('when task is deleted', () => {
-    it('deleted tasks showed', () => {
-      const { container } = renderPage(value, tasks.filter((task) => task.id !== 1));
+  it('deleted tasks', () => {
+    const { getAllByText } = renderPage(value, tasks);
 
-      expect(container).toHaveTextContent('기모');
-    });
+    fireEvent.click(getAllByText('완료')[0]);
+    expect(handleClickDelete).toBeCalledWith(1);
+  });
 
-    it('value do not changed', () => {
-      const newValue = '바뀌지 않아요';
-      const { getByLabelText } = renderPage(newValue, tasks);
+  it('when task is deleted value do not changed', () => {
+    const newValue = '바뀌지 않아요';
+    const { getByLabelText } = renderPage(newValue, tasks);
 
-      expect(getByLabelText('할 일').value).toBe('바뀌지 않아요');
-    });
+    expect(getByLabelText('할 일').value).toBe('바뀌지 않아요');
   });
 });
