@@ -5,10 +5,13 @@ import { render } from '@testing-library/react';
 import App from './App';
 
 test('App', () => {
-  const { getByText } = render((
-    <App />
+  const tasks = [];
+
+  const { container } = render((
+    <App tasks={tasks} />
   ));
 
-  expect(getByText(/To-do/)).not.toBeNull();
-  expect(getByText(/할 일이 없어요!/));
+  expect(container).toHaveTextContent('To-do');
+  expect(container).toHaveTextContent('할 일');
+  expect(container).toHaveTextContent('할 일이 없어요!');
 });

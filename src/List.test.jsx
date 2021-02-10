@@ -25,8 +25,8 @@ describe('List', () => {
     expect(getByText(/Task-1/)).not.toBeNull();
     expect(getByText(/Task-2/)).not.toBeNull();
 
-    fireEvent.click(buttons[0]);
+    fireEvent.click(buttons[1]);
 
-    expect(onClickDelete).toBeCalledWith(0);
+    expect(onClickDelete).toBeCalledWith(2);
   });
 });
