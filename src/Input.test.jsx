@@ -16,7 +16,7 @@ describe('Input', () => {
     />));
   }
 
-  it('화면에 나타나는 content들을 표시합니다.', () => {
+  it('화면에 나타나는 content들을 표시한다.', () => {
     const { container, getByPlaceholderText } = renderInput({ value: '' });
 
     expect(container).toHaveTextContent('할 일');
@@ -25,7 +25,7 @@ describe('Input', () => {
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('');
   });
 
-  it('추가버튼을 누르면 handleClick을 호출합니다.', () => {
+  it('추가버튼을 누르면 handleClick을 호출한다.', () => {
     const { getByText, getByPlaceholderText } = renderInput({ value: '' });
 
     expect(handleClick).not.toBeCalled();
@@ -35,12 +35,13 @@ describe('Input', () => {
   });
 
   it('입력이 변경되면 onClick을 실행한다.', () => {
-    const { getByPlaceholderText } = renderInput({ value: '' });
+    const { getByPlaceholderText } = renderInput({ value: undefined });
 
     expect(handleChange).not.toBeCalled();
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
       target: { value: 'TDD 과제하기' },
     });
     expect(handleChange).toBeCalled();
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('TDD 과제하기');
   });
 });
