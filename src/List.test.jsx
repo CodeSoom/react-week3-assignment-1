@@ -27,6 +27,6 @@ describe('List', () => {
 
     fireEvent.click(buttons[0]);
 
-    expect(onClickDelete).toBeCalled();
+    expect(onClickDelete).toBeCalledWith(0);
   });
 });
