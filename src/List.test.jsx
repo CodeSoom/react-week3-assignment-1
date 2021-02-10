@@ -1,15 +1,32 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
-test('List', () => {
-  const tasks = [];
+describe('List', () => {
+  test('Task exist', () => {
+    const tasks = [
+      { id: 1, title: 'Task-1' },
+      { id: 2, title: 'Task-2' },
+    ];
 
-  const { getByText } = render(<List
-    tasks={tasks}
-  />);
+    const onClickDelete = jest.fn();
 
-  expect(getByText(/할 일이 없어요!/)).not.toBeNull();
+    const { getByText, getAllByText } = render((
+      <List
+        tasks={tasks}
+        onClickDelete={onClickDelete}
+      />
+    ));
+
+    const buttons = getAllByText(/완료/);
+
+    expect(getByText(/Task-1/)).not.toBeNull();
+    expect(getByText(/Task-2/)).not.toBeNull();
+
+    fireEvent.click(buttons[0]);
+
+    expect(onClickDelete).toBeCalled();
+  });
 });
