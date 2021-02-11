@@ -16,7 +16,7 @@ describe('List', () => {
     ));
   }
 
-  describe('With tasks', () => {
+  context('With tasks', () => {
     const tasks = [
       { id: 1, title: 'Task-1' },
       { id: 2, title: 'Task-2' },
@@ -29,7 +29,7 @@ describe('List', () => {
       expect(getByText(/Task-2/)).not.toBeNull();
     });
 
-    it('renders "완료" buttons with tasks', () => {
+    it('renders "완료" buttons to delete tasks', () => {
       const { getAllByText } = renderList(tasks);
 
       const buttons = getAllByText(/완료/);
@@ -40,7 +40,7 @@ describe('List', () => {
     });
   });
 
-  describe('Without tasks', () => {
+  context('Without tasks', () => {
     it('renders no tasks message', () => {
       const tasks = [];
 
