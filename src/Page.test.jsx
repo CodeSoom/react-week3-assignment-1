@@ -30,7 +30,6 @@ describe('Page', () => {
     ));
 
     expect(getByText(/To-do/)).not.toBeNull();
-    expect(getByText(/오늘은 무엇을 해볼까/)).not.toBeNull();
   });
 
   it('render button "추가" to add task', () => {
@@ -51,5 +50,19 @@ describe('Page', () => {
     fireEvent.click(addButton);
 
     expect(handleClickAddTask).toBeCalled();
+  });
+
+  it('render tasks', () => {
+    const { getByText } = render((
+      <Page
+        taskTitle={taskTitle}
+        onChangeTitle={handleChangeTitle}
+        onClickAddTask={handleClickAddTask}
+        tasks={tasks}
+        onClickDeleteTask={handleClickDeleteTask}
+      />
+    ));
+
+    expect(getByText(/오늘은 무엇을 해볼까/)).not.toBeNull();
   });
 });
