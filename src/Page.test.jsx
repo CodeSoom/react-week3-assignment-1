@@ -52,6 +52,26 @@ describe('Page', () => {
     expect(handleClickAddTask).toBeCalled();
   });
 
+  it('render button input to write task', () => {
+    const { getByLabelText } = render((
+      <Page
+        taskTitle={taskTitle}
+        onChangeTitle={handleChangeTitle}
+        onClickAddTask={handleClickAddTask}
+        tasks={tasks}
+        onClickDeleteTask={handleClickDeleteTask}
+      />
+    ));
+
+    const input = getByLabelText('할 일');
+
+    expect(handleChangeTitle).not.toBeCalled();
+
+    fireEvent.change(input, { target: { value: 'dd' } });
+
+    expect(handleChangeTitle).toBeCalled();
+  });
+
   it('render tasks', () => {
     const { getByText } = render((
       <Page
