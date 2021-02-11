@@ -7,35 +7,46 @@ import List from './List';
 describe('List', () => {
   const onClickDelete = jest.fn();
 
-  const tasks = [
-    { id: 1, title: 'Task-1' },
-    { id: 2, title: 'Task-2' },
-  ];
-
-  it('renders task', () => {
-    const { getByText } = render((
+  function renderList(tasks) {
+    return render((
       <List
         tasks={tasks}
         onClickDelete={onClickDelete}
       />
     ));
+  }
 
-    expect(getByText(/Task-1/)).not.toBeNull();
-    expect(getByText(/Task-2/)).not.toBeNull();
+  describe('With tasks', () => {
+    const tasks = [
+      { id: 1, title: 'Task-1' },
+      { id: 2, title: 'Task-2' },
+    ];
+
+    it('renders task', () => {
+      const { getByText } = renderList(tasks);
+
+      expect(getByText(/Task-1/)).not.toBeNull();
+      expect(getByText(/Task-2/)).not.toBeNull();
+    });
+
+    it('renders "완료" buttons with tasks', () => {
+      const { getAllByText } = renderList(tasks);
+
+      const buttons = getAllByText(/완료/);
+
+      fireEvent.click(buttons[1]);
+
+      expect(onClickDelete).toBeCalledWith(2);
+    });
   });
 
-  it('renders "완료" buttons with tasks', () => {
-    const { getAllByText } = render((
-      <List
-        tasks={tasks}
-        onClickDelete={onClickDelete}
-      />
-    ));
+  describe('Without tasks', () => {
+    it('renders no tasks message', () => {
+      const tasks = [];
 
-    const buttons = getAllByText(/완료/);
+      const { getByText } = renderList(tasks);
 
-    fireEvent.click(buttons[1]);
-
-    expect(onClickDelete).toBeCalledWith(2);
+      expect(getByText(/할 일이 없어요/)).not.toBeNull();
+    });
   });
 });
