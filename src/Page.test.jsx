@@ -44,11 +44,23 @@ describe('Page', () => {
     });
 
     it('추가버튼을 누를 경우 onClickAddTask을 실행한다.', () => {
-      const { getByText } = renderPage({ taskTitle, tasks });
+      const { getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
       expect(onClickAddTask).not.toBeCalled();
       fireEvent.click(getByText(/추가/));
       expect(onClickAddTask).toBeCalled();
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
+    });
+
+    it('입력이 변경되면 onClick을 실행한다.', () => {
+      const { getByPlaceholderText } = renderPage({ taskTitle: undefined, tasks });
+
+      expect(onChangeTitle).not.toBeCalled();
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+        target: { value: 'TDD 과제하기' },
+      });
+      expect(onChangeTitle).toBeCalled();
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('TDD 과제하기');
     });
   });
 
@@ -79,11 +91,12 @@ describe('Page', () => {
     });
 
     it('추가버튼을 누를 경우 onClickAddTask을 실행합니다.', () => {
-      const { getByText } = renderPage({ taskTitle, tasks });
+      const { getByText, getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
       expect(onClickAddTask).not.toBeCalled();
       fireEvent.click(getByText(/추가/));
       expect(onClickAddTask).toBeCalled();
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
     });
   });
 });
