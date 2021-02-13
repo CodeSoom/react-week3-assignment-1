@@ -52,7 +52,7 @@ describe('Page', () => {
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
     });
 
-    it('입력이 변경되면 onClick을 실행한다.', () => {
+    it('입력이 변경되면 onChangeTitle을 실행한다.', () => {
       const { getByPlaceholderText } = renderPage({ taskTitle: undefined, tasks });
 
       expect(onChangeTitle).not.toBeCalled();
@@ -99,7 +99,7 @@ describe('Page', () => {
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
     });
 
-    it('입력이 변경되면 onClick을 실행한다.', () => {
+    it('입력이 변경되면 onChangeTitle을 실행한다.', () => {
       const { getByPlaceholderText } = renderPage({ taskTitle, tasks });
 
       expect(onChangeTitle).not.toBeCalled();
