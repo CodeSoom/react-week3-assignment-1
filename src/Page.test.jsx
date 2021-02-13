@@ -98,5 +98,16 @@ describe('Page', () => {
       expect(onClickAddTask).toBeCalled();
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
     });
+
+    it('입력이 변경되면 onClick을 실행한다.', () => {
+      const { getByPlaceholderText } = renderPage({ taskTitle, tasks });
+
+      expect(onChangeTitle).not.toBeCalled();
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+        target: { value: 'TDD 과제하기' },
+      });
+      expect(onChangeTitle).toBeCalled();
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('TDD 과제하기');
+    });
   });
 });
