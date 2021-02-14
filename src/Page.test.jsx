@@ -18,8 +18,8 @@ describe('Page', () => {
     { id: 1, title: '오늘은 무엇을 해볼까?' },
   ];
 
-  it('render Head Title', () => {
-    const { getByText } = render((
+  function renderPage() {
+    return (
       <Page
         taskTitle={taskTitle}
         onChangeTitle={handleChangeTitle}
@@ -27,21 +27,17 @@ describe('Page', () => {
         tasks={tasks}
         onClickDeleteTask={handleClickDeleteTask}
       />
-    ));
+    );
+  }
+
+  it('render Head Title', () => {
+    const { getByText } = renderPage();
 
     expect(getByText(/To-do/)).not.toBeNull();
   });
 
   it('render button "추가" to add task', () => {
-    const { getByText } = render((
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={handleClickDeleteTask}
-      />
-    ));
+    const { getByText } = renderPage();
 
     const addButton = getByText(/추가/);
 
@@ -53,15 +49,7 @@ describe('Page', () => {
   });
 
   it('render button input to write task', () => {
-    const { getByLabelText } = render((
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={handleClickDeleteTask}
-      />
-    ));
+    const { getByLabelText } = renderPage();
 
     const input = getByLabelText('할 일');
 
@@ -73,15 +61,7 @@ describe('Page', () => {
   });
 
   it('render tasks', () => {
-    const { getByText } = render((
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={handleClickDeleteTask}
-      />
-    ));
+    const { getByText } = renderPage();
 
     expect(getByText(/오늘은 무엇을 해볼까/)).not.toBeNull();
   });
