@@ -14,11 +14,7 @@ describe('Page', () => {
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
 
-  const tasks = [
-    { id: 1, title: '오늘은 무엇을 해볼까?' },
-  ];
-
-  function renderPage() {
+  function renderPage(tasks) {
     return render((
       <Page
         taskTitle={taskTitle}
@@ -30,39 +26,67 @@ describe('Page', () => {
     ));
   }
 
-  it('render Head Title', () => {
-    const { getByText } = renderPage();
+  context('With task', () => {
+    const tasks = [
+      { id: 1, title: '오늘은 무엇을 해볼까?' },
+    ];
 
-    expect(getByText(/To-do/)).not.toBeNull();
+    it('render Head Title', () => {
+      const { getByText } = renderPage(tasks);
+
+      expect(getByText(/To-do/)).not.toBeNull();
+    });
+
+    it('render tasks', () => {
+      const { getByText } = renderPage(tasks);
+
+      expect(getByText(/오늘은 무엇을 해볼까/)).not.toBeNull();
+    });
+
+    it('render input to write task', () => {
+      const { getByLabelText } = renderPage(tasks);
+
+      const input = getByLabelText('할 일');
+
+      expect(handleChangeTitle).not.toBeCalled();
+
+      fireEvent.change(input, { target: { value: 'dd' } });
+
+      expect(handleChangeTitle).toBeCalled();
+    });
+
+    it('render button "추가" to add task', () => {
+      const { getByText } = renderPage(tasks);
+
+      const addButton = getByText(/추가/);
+
+      expect(handleClickAddTask).not.toBeCalled();
+
+      fireEvent.click(addButton);
+
+      expect(handleClickAddTask).toBeCalled();
+    });
+
+    it('render button "완료" to delete task', () => {
+      const { getByText } = renderPage(tasks);
+
+      const deleteButton = getByText(/완료/);
+
+      expect(handleClickDeleteTask).not.toBeCalled();
+
+      fireEvent.click(deleteButton);
+
+      expect(handleClickDeleteTask).toBeCalled();
+    });
   });
 
-  it('render button "추가" to add task', () => {
-    const { getByText } = renderPage();
+  context('Without task', () => {
+    const tasks = [];
 
-    const addButton = getByText(/추가/);
+    it('render tasks', () => {
+      const { getByText } = renderPage(tasks);
 
-    expect(handleClickAddTask).not.toBeCalled();
-
-    fireEvent.click(addButton);
-
-    expect(handleClickAddTask).toBeCalled();
-  });
-
-  it('render button input to write task', () => {
-    const { getByLabelText } = renderPage();
-
-    const input = getByLabelText('할 일');
-
-    expect(handleChangeTitle).not.toBeCalled();
-
-    fireEvent.change(input, { target: { value: 'dd' } });
-
-    expect(handleChangeTitle).toBeCalled();
-  });
-
-  it('render tasks', () => {
-    const { getByText } = renderPage();
-
-    expect(getByText(/오늘은 무엇을 해볼까/)).not.toBeNull();
+      expect(getByText(/할 일이 없어요!/)).not.toBeNull();
+    });
   });
 });
