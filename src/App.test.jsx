@@ -31,4 +31,20 @@ describe('App', () => {
 
     expect(input).toHaveValue('비가 오는 날엔 부침개');
   });
+
+  it('render button "추가" to add task', () => {
+    const { getByText, getByLabelText } = render((
+      <App />
+    ));
+
+    const addButton = getByText('추가');
+
+    const input = getByLabelText('할 일');
+
+    fireEvent.change(input, { target: { value: '비가 오는 날엔 부침개' } });
+
+    fireEvent.click(addButton);
+
+    expect(getByText('비가 오는 날엔 부침개')).not.toBeNull();
+  });
 });
