@@ -47,4 +47,30 @@ describe('App', () => {
 
     expect(getByText('비가 오는 날엔 부침개')).not.toBeNull();
   });
+
+  it('render button "완료" to delete task', () => {
+    const {
+      getByText, getByLabelText, getAllByText, queryByText,
+    } = render((
+      <App />
+    ));
+
+    const addButton = getByText('추가');
+    const input = getByLabelText('할 일');
+
+    function addTask(task) {
+      fireEvent.change(input, { target: { value: task } });
+
+      fireEvent.click(addButton);
+    }
+
+    addTask('비가 오는 날엔 부침개');
+    addTask('사이다도 한 잔');
+
+    const deleteButtons = getAllByText('완료');
+
+    fireEvent.click(deleteButtons[1]);
+
+    expect(queryByText('사이다도 한 잔')).toBeNull();
+  });
 });
