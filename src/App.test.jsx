@@ -4,24 +4,22 @@ import { fireEvent, render } from '@testing-library/react';
 
 import App from './App';
 
-// App이 그려지면 각 컴포넌트들이 존재하는 지 확인
-// - Default 상태로 render 된 페이지의 요소들을 확인한다.
-// - input 창을 확인한다.
-
 describe('App', () => {
-  it('render App', () => {
-    const { container } = render((
+  function renderApp() {
+    return render((
       <App />
     ));
+  }
+
+  it('render App', () => {
+    const { container } = renderApp();
 
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
   it('render input to write task', () => {
-    const { getByLabelText } = render((
-      <App />
-    ));
+    const { getByLabelText } = renderApp();
 
     const input = getByLabelText('할 일');
 
@@ -33,9 +31,7 @@ describe('App', () => {
   });
 
   it('render button "추가" to add task', () => {
-    const { getByText, getByLabelText } = render((
-      <App />
-    ));
+    const { getByText, getByLabelText } = renderApp();
 
     const addButton = getByText('추가');
 
@@ -51,9 +47,7 @@ describe('App', () => {
   it('render button "완료" to delete task', () => {
     const {
       getByText, getByLabelText, getAllByText, queryByText,
-    } = render((
-      <App />
-    ));
+    } = renderApp();
 
     const addButton = getByText('추가');
     const input = getByLabelText('할 일');
