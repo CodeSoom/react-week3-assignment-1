@@ -38,4 +38,22 @@ describe('Input', () => {
 
     expect(handleChangeTitle).toBeCalled();
   });
+
+  it('render button "추가" to add task', () => {
+    const { getByText } = render((
+      <Input
+        value={taskTitle}
+        onChange={handleChangeTitle}
+        onClick={handleClickAddTask}
+      />
+    ));
+
+    const addButton = getByText(/추가/);
+
+    expect(handleClickAddTask).not.toBeCalled();
+
+    fireEvent.click(addButton);
+
+    expect(handleClickAddTask).toBeCalled();
+  });
 });
