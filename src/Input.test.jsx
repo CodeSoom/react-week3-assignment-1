@@ -4,15 +4,18 @@ import { render } from '@testing-library/react';
 
 import Input from './Input';
 
-// TODO: Page 컴포넌트 테스트 작성
-// 1. Page render 확인
-// 2. 각 상태 기능 생성
-
 describe('Input', () => {
+  const taskTitle = '';
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+
   it('render input', () => {
     render((
-      <Input />
-
+      <Input
+        value={taskTitle}
+        onChange={handleChangeTitle}
+        onClick={handleClickAddTask}
+      />
     ));
   });
 });
