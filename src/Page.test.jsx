@@ -19,7 +19,7 @@ describe('Page', () => {
   ];
 
   function renderPage() {
-    return (
+    return render((
       <Page
         taskTitle={taskTitle}
         onChangeTitle={handleChangeTitle}
@@ -27,7 +27,7 @@ describe('Page', () => {
         tasks={tasks}
         onClickDeleteTask={handleClickDeleteTask}
       />
-    );
+    ));
   }
 
   it('render Head Title', () => {
