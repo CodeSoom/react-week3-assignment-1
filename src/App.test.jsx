@@ -1,28 +1,15 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import React from 'react'
 
-import Page from './Page';
+import { render } from '@testing-library/react'
+
+import App from './App'
 
 test('App', () => {
-  const tasks = [{
-    id: 1,
-    title: '뭐라도 하기',
-  }];
 
-  const handleChangeTitle = jest.fn();
-  const handleClickAddTask = jest.fn();
-  const handleClickDeleteTask = jest.fn();
-  const taskTitle = '';
-  const { container } = render((
-    <Page
-      taskTitle={taskTitle}
-      onChangeTitle={handleChangeTitle}
-      onClickAddTask={handleClickAddTask}
-      tasks={tasks}
-      onClickDeleteTask={handleClickDeleteTask}
-    />
-  ));
+  const { getByText } = render(
+    <App/>
+  );
 
-  expect(container).toHaveTextContent('To-do');
-  expect(container).toHaveTextContent('완료');
+  expect(getByText(/추가/)).not.toBeNull();
+  expect(getByText(/삭제/)).not.toBeNull();
 });
