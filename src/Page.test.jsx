@@ -1,0 +1,45 @@
+import React from 'react';
+
+import { render } from '@testing-library/react';
+
+import Page from './Page';
+
+describe('Page', () => {
+  function renderPage(tasks) {
+    return render((
+      <Page
+        tasks={tasks}
+      />
+    ));
+  }
+
+  context('With tasks', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: '아무것도 하지 않기 #1',
+      },
+      {
+        id: 2,
+        title: '아무것도 하지 않기 #2',
+      },
+    ];
+
+    it('renders tasks', () => {
+      const { container } = renderPage(tasks);
+
+      tasks.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
+      });
+    });
+  });
+
+  context('Without tasks', () => {
+    const tasks = [];
+
+    it('renders "no tasks message"', () => {
+      const { container } = renderPage(tasks);
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
+});
