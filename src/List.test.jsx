@@ -1,40 +1,61 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-import Item from './Item';
+import List from './List';
 
-test('List is not empty', () => {
-  const tasks = [{
-    id: 1,
-    title: '뭐라도 하기',
-  }];
+describe('List', () => {
+  const handleClickDelete = jest.fn();
 
-  const onClickDelete = jest.fn();
+  function renderList(tasks) {
+    return render((
 
-  if (tasks.length >= 1) {
-    const { container, getByText } = render((
-
-      <ol>
-        {tasks.map((task) => (
-          <Item key={task.id} task={task} onClickDelete={onClickDelete} />
-        ))}
-      </ol>
-
+      <List
+        tasks={tasks}
+        onClickDelete={handleClickDelete}
+      />
     ));
-
-    expect(container).toHaveTextContent('뭐라도 하기');
-    expect(container).toHaveTextContent('완료');
-
-    expect(onClickDelete).not.toBeCalled();
-
-    fireEvent.click(getByText('완료'));
-
-    expect(onClickDelete).toBeCalledWith(1);
-  } else {
-    const { container } = render((
-      <p>할 일이 없어요!</p>
-    ));
-
-    expect(container).toHaveTextContent('할 일이 없어요!');
   }
+
+  describe('with tasks', () => {
+    const tasks = [
+      { id: 1, title: 'Task-1' },
+      { id: 2, title: 'Task-2' },
+    ];
+
+    it('render tasks', () => {
+      const { getByText } = render((
+        <List
+          tasks={tasks}
+          onClickDelete={handleClickDelete}
+        />
+      ));
+      expect(getByText(/Task-1/)).not.toBeNull();
+      expect(getByText(/Task-2/)).not.toBeNull();
+    });
+
+    it('renders "완료" button to delete a task', () => {
+      const { getAllByText } = render((
+        <List
+          tasks={tasks}
+          onClickDelete={handleClickDelete}
+        />
+      ));
+
+      const buttons = getAllByText('완료');
+
+      fireEvent.click(buttons[0]);
+
+      expect(handleClickDelete).toBeCalledWith(1);
+    });
+  });
+
+  describe('without tasks', () => {
+    it('render tasks with no task message', () => {
+      const tasks = [];
+
+      const { getByText } = renderList(tasks);
+
+      expect(getByText(/할 일이 없어요/)).not.toBeNull();
+    });
+  });
 });
