@@ -1,42 +1,35 @@
 import React from 'react';
+
 import { render, fireEvent } from '@testing-library/react';
 
-import Input from './Input';
-import List from './List';
+import Page from './Page';
 
 test('Page', () => {
-  const tasks = [{
-    id: 1,
-    title: '뭐라도 하기',
-  }];
-  const taskTitle = '';
+  const tasks = [
+    { id: 1, title: 'Task-1' },
+    { id: 2, title: 'Task-2' },
+  ];
 
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
-  const onClickDeleteTask = jest.fn();
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
 
-  const { container, getByText } = render((
-    <div>
-      <h1>To-do</h1>
-      <Input
-        value={taskTitle}
-        onChange={onChangeTitle}
-        onClick={onClickAddTask}
-      />
-      <List
-        tasks={tasks}
-        onClickDelete={onClickDeleteTask}
-      />
-    </div>
+  const { getAllByText, getByText } = render((
+    <Page
+      taskTitle=""
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      tasks={tasks}
+      onClickDeleteTask={handleClickDeleteTask}
+    />
   ));
 
-  expect(container).toHaveTextContent('뭐라도 하기');
+  expect(getByText(/Task-1/)).not.toBeNull();
+  expect(getByText(/Task-2/)).not.toBeNull();
 
-  expect(onClickDeleteTask).not.toBeCalled();
-  fireEvent.click(getByText('완료'));
-  expect(onClickDeleteTask).toBeCalledWith(1);
+  const buttons = getAllByText('완료');
 
-  expect(onClickAddTask).not.toBeCalled();
-  fireEvent.click(getByText('추가'));
-  expect(onClickAddTask).toBeCalled();
+  fireEvent.click(buttons[0]);
+
+  expect(handleClickDeleteTask).toBeCalled();
 });
