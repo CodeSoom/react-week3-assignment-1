@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Item from './Item';
 
-test('Item', () => {
+describe('Item component', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
@@ -10,19 +10,25 @@ test('Item', () => {
 
   const handleClick = jest.fn();
 
-  render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+  beforeEach(() => {
+    render((
+      <Item
+        task={task}
+        onClickDelete={handleClick}
+      />
+    ));
+  });
 
-  expect(screen.getByText('뭐라도 하기')).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: '완료' })).toBeInTheDocument();
+  it('text renders', () => {
+    expect(screen.getByText('뭐라도 하기')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '완료' })).toBeInTheDocument();
+  });
 
-  expect(handleClick).not.toBeCalled();
+  it('button clickable', () => {
+    expect(handleClick).not.toBeCalled();
 
-  userEvent.click(screen.getByRole('button', { name: '완료' }));
+    userEvent.click(screen.getByRole('button', { name: '완료' }));
 
-  expect(handleClick).toBeCalledWith(1);
+    expect(handleClick).toBeCalledWith(1);
+  });
 });
