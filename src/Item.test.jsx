@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Item from './Item';
 
-describe('Item component', () => {
+describe('Item.jsx', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
@@ -24,7 +24,7 @@ describe('Item component', () => {
     expect(screen.getByRole('button', { name: '완료' })).toBeInTheDocument();
   });
 
-  it('button clickable', () => {
+  it('button working', () => {
     expect(handleClick).not.toBeCalled();
 
     userEvent.click(screen.getByRole('button', { name: '완료' }));
