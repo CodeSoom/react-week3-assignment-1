@@ -25,7 +25,7 @@ import Item from './Item';
 => let을 사용하지 말고, const로 array를 선언하라 (완료)
 => 테스트를 2개로 분리하라 : Item 컴포넌트 그리기 테스트, onClickDelete 작동테스트 (완료)
 => 코드 중복을 제거하라 : 공통으로 사용하는 값 셋팅을 분리 해야함. (부분 완료)
-=> 한벌의 테스트로 묶어라
+=> 한벌의 테스트로 묶어라 - describe 추가 (완료)
 */
 describe('Item Component Test', () => {
   const task = {
@@ -73,10 +73,10 @@ describe('Item Component Test', () => {
     const { getByText } = render(
       <Item task={task} onClickDelete={handleClickDelete} />,
     );
-    expect(defaultTasks).toEqual(state.tasks);
+    expect(state.tasks).toEqual(defaultTasks);
     fireEvent.click(getByText('완료'));
 
     expect(handleClickDelete).toBeCalledWith(1);
-    expect(expectedTasks).toEqual(state.tasks);
+    expect(state.tasks).toEqual(expectedTasks);
   });
 });
