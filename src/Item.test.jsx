@@ -18,11 +18,11 @@ test('Item', () => {
   ));
 
   expect(screen.getByText('뭐라도 하기')).toBeInTheDocument();
-  expect(screen.getByText('완료')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: '완료' })).toBeInTheDocument();
 
   expect(handleClick).not.toBeCalled();
 
-  userEvent.click(screen.getByText('완료'));
+  userEvent.click(screen.getByRole('button', { name: '완료' }));
 
   expect(handleClick).toBeCalledWith(1);
 });
