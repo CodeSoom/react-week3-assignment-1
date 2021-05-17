@@ -24,11 +24,10 @@ import Item from './Item';
 => onClickDelete 실행시 let tasks (array)에서 해당되는 id값을 가진 값을 제거하라 (완료)
 => let을 사용하지 말고, const로 array를 선언하라 (완료)
 => 테스트를 2개로 분리하라 : Item 컴포넌트 그리기 테스트, onClickDelete 작동테스트 (완료)
-=> 코드 중복을 제거하라 : 공통으로 사용하는 값 셋팅을 분리 해야함. (진행중)
-
+=> 코드 중복을 제거하라 : 공통으로 사용하는 값 셋팅을 분리 해야함. (부분 완료)
+=> 한벌의 테스트로 묶어라
 */
-
-test('rendering Item component', () => {
+describe('Item Component Test', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
@@ -38,51 +37,46 @@ test('rendering Item component', () => {
     { id: 3, title: 'mock 공부 하기' },
   ];
   const defaultTasks = [task].concat(expectedTasks);
-
   const state = { tasks: defaultTasks };
-
   const handleClickDelete = jest.fn((id) => {
     state.tasks = defaultTasks.filter((item) => item.id !== id);
-    console.log(state);
   });
 
-  const { container, getByText } = render(
-    <Item task={task} onClickDelete={handleClickDelete} />,
-  );
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  /** getByText도 두테스트에서 같이 사용하고 싶었으나, 오류가 나서 각각 선언.
+   * 오류 위치 : run onClickDelete 의 getByText 부분
+   * 오류 내용은 PR comment에도 기록하겠습니다!
+   */
 
-  expect(handleClickDelete).not.toBeCalled();
-
-  fireEvent.click(getByText('완료'));
-
-  expect(handleClickDelete).toBeCalledWith(1);
-});
-
-test('run onClickDelete Button in Item Component', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
-  const expectedTasks = [
-    { id: 2, title: 'jest 공부 하기' },
-    { id: 3, title: 'mock 공부 하기' },
-  ];
-  const defaultTasks = [task].concat(expectedTasks);
-
-  const state = { tasks: defaultTasks };
-
-  const handleClickDelete = jest.fn((id) => {
-    state.tasks = defaultTasks.filter((item) => item.id !== id);
-    console.log(state);
+  // const { container, getByText } = render(
+  //   <Item task={task} onClickDelete={handleClickDelete} />,
+  // );
+  beforeEach(() => {
+    state.tasks = defaultTasks;
   });
 
-  const { container, getByText } = render(
-    <Item task={task} onClickDelete={handleClickDelete} />,
-  );
-  expect(defaultTasks).toEqual(state.tasks);
-  fireEvent.click(getByText('완료'));
+  test('rendering Item component', () => {
+    const { container, getByText } = render(
+      <Item task={task} onClickDelete={handleClickDelete} />,
+    );
 
-  expect(handleClickDelete).toBeCalledWith(1);
-  expect(expectedTasks).toEqual(state.tasks);
+    expect(container).toHaveTextContent('뭐라도 하기');
+    expect(container).toHaveTextContent('완료');
+
+    expect(handleClickDelete).not.toBeCalled();
+
+    fireEvent.click(getByText('완료'));
+
+    expect(handleClickDelete).toBeCalledWith(1);
+  });
+
+  test('run onClickDelete Button in Item Component', () => {
+    const { getByText } = render(
+      <Item task={task} onClickDelete={handleClickDelete} />,
+    );
+    expect(defaultTasks).toEqual(state.tasks);
+    fireEvent.click(getByText('완료'));
+
+    expect(handleClickDelete).toBeCalledWith(1);
+    expect(expectedTasks).toEqual(state.tasks);
+  });
 });
