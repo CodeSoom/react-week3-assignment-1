@@ -23,12 +23,12 @@ describe('Test List component', () => {
       />
     );
 
-    it('items renders', () => {
+    it('items render', () => {
       render(element);
       expect(screen.getAllByRole('listitem').length).toBe(3);
     });
 
-    it('buttons renders', () => {
+    it('buttons render', () => {
       render(element);
       expect(screen.getAllByRole('button').length).toBe(3);
     });

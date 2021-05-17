@@ -17,7 +17,7 @@ describe('Test Input component', () => {
     );
   });
 
-  describe('test add button', () => {
+  describe('button', () => {
     it('button renders', () => {
       expect(screen.getByRole('button', { name: '추가' })).toBeInTheDocument();
     });
@@ -31,7 +31,7 @@ describe('Test Input component', () => {
     });
   });
 
-  describe('test inputbox', () => {
+  describe('inputbox', () => {
     it('inputbox renders', () => {
       expect(screen.getByRole('textbox', { name: '할 일' })).toBeInTheDocument();
     });
