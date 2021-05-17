@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import List from './List';
 
-describe('List.jsx', () => {
+describe('Test List component', () => {
   context('when list is empty', () => {
     render(
       <List

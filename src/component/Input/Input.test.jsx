@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Input from './Input';
 
-describe('Input.jsx', () => {
+describe('Test Input component', () => {
   const taskTitle = '';
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();

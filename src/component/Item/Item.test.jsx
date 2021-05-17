@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Item from './Item';
 
-describe('Item.jsx', () => {
+describe('Test Item component', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',

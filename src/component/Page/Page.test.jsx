@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Page from './Page';
 
-describe('Page.jsx', () => {
+describe('Test Page component', () => {
   beforeEach(() => {
     render(
       <Page
