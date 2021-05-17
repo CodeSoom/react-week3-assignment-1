@@ -5,6 +5,8 @@ module.exports = {
     jest: true,
   },
   extends: [
+    'plugin:testing-library/react',
+    'plugin:jest-dom/recommended',
     'plugin:react/recommended',
     'airbnb',
   ],
