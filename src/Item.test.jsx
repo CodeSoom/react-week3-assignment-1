@@ -1,5 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
-
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Item from './Item';
 
 test('Item', () => {
@@ -22,7 +22,7 @@ test('Item', () => {
 
   expect(handleClick).not.toBeCalled();
 
-  fireEvent.click(getByText('완료'));
+  userEvent.click(getByText('완료'));
 
   expect(handleClick).toBeCalledWith(1);
 });
