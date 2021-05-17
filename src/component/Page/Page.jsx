@@ -1,5 +1,5 @@
-import Input from './Input';
-import List from './List';
+import Input from '../Input/Input';
+import List from '../List/List';
 
 export default function Page({
   taskTitle, onChangeTitle, onClickAddTask,
