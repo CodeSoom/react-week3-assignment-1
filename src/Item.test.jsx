@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Item from './Item';
 
@@ -10,19 +10,19 @@ test('Item', () => {
 
   const handleClick = jest.fn();
 
-  const { container, getByText } = render((
+  render((
     <Item
       task={task}
       onClickDelete={handleClick}
     />
   ));
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  expect(screen.getByText('뭐라도 하기')).toBeInTheDocument();
+  expect(screen.getByText('완료')).toBeInTheDocument();
 
   expect(handleClick).not.toBeCalled();
 
-  userEvent.click(getByText('완료'));
+  userEvent.click(screen.getByText('완료'));
 
   expect(handleClick).toBeCalledWith(1);
 });
