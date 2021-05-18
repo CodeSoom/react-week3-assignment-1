@@ -28,7 +28,7 @@ describe('Test Input component', () => {
 
       userEvent.click(screen.getByRole('button', { name: '추가' }));
 
-      expect(onClickAddTask).toBeCalledTimes(1);
+      expect(onClickAddTask).toBeCalled();
     });
   });
 
