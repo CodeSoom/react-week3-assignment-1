@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import Input from '../components/Input';
 
-describe('Test Input component', () => {
+describe('Input component', () => {
   const taskTitle = '';
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
@@ -18,43 +18,39 @@ describe('Test Input component', () => {
     );
   });
 
-  describe('button', () => {
-    it('button renders', () => {
-      expect(screen.getByRole('button', { name: '추가' })).toBeInTheDocument();
+  it('renders button on screen', () => {
+    expect(screen.getByRole('button', { name: '추가' })).toBeInTheDocument();
+  });
+
+  it('renders clickable button that has handler', () => {
+    expect(onClickAddTask).not.toBeCalled();
+
+    userEvent.click(screen.getByRole('button', { name: '추가' }));
+
+    expect(onClickAddTask).toBeCalled();
+  });
+
+  it('renders inputbox on screen', () => {
+    expect(screen.getByRole('textbox', { name: '할 일' })).toBeInTheDocument();
+  });
+
+  context('when nothing is typed', () => {
+    it("doesn't call handler", () => {
+      expect(onChangeTitle).not.toBeCalled();
     });
-
-    it('button works', () => {
-      expect(onClickAddTask).not.toBeCalled();
-
-      userEvent.click(screen.getByRole('button', { name: '추가' }));
-
-      expect(onClickAddTask).toBeCalled();
+    it("doesn't fill inputbox", () => {
+      expect(screen.getByRole('textbox', { name: '할 일' })).toHaveValue('');
     });
   });
 
-  describe('inputbox', () => {
-    it('inputbox renders', () => {
-      expect(screen.getByRole('textbox', { name: '할 일' })).toBeInTheDocument();
+  context('when something is typed', () => {
+    it('does call handler', () => {
+      userEvent.type(screen.getByRole('textbox'), 'abcd');
+      expect(onChangeTitle).toBeCalledTimes(4);
     });
-
-    context('before type', () => {
-      it('onChange call X', () => {
-        expect(onChangeTitle).not.toBeCalled();
-      });
-      it('empty input', () => {
-        expect(screen.getByRole('textbox', { name: '할 일' })).toHaveValue('');
-      });
-    });
-
-    context('after type', () => {
-      it('onChange call O', () => {
-        userEvent.type(screen.getByRole('textbox'), 'abcd');
-        expect(onChangeTitle).toBeCalledTimes(4);
-      });
-    //   it('filled input', () => {
-    //     userEvent.type(screen.getByRole('textbox'), 'abcd');
-    //     expect(screen.getByRole('textbox', { name: '할 일' })).toHaveValue('abcd');
-    //   });
-    });
+  //   it('does fill inputbox', () => {
+  //     userEvent.type(screen.getByRole('textbox'), 'abcd');
+  //     expect(screen.getByRole('textbox', { name: '할 일' })).toHaveValue('abcd');
+  //   });
   });
 });
