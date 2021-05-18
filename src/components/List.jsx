@@ -1,4 +1,4 @@
-import Item from '../Item/Item';
+import Item from './Item';
 
 export default function List({ tasks, onClickDelete }) {
   if (tasks.length === 0) {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import Page from './Page';
+import Page from '../pages/TodoPage';
 
 describe('Test Page component', () => {
   beforeEach(() => {

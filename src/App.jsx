@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Page from './component/Page/Page';
+import Page from './pages/TodoPage';
 
 export default function App() {
   const [state, setState] = useState({
