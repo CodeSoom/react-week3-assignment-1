@@ -13,11 +13,6 @@ test('App', () => {
 
   const todo = getByLabelText('할 일');
 
-  expect(container).toHaveTextContent('To-do');
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
-  expect(container).toHaveTextContent('할 일이 없어요!');
-
   fireEvent.change(todo, { target: { value: '멋대로 살기' } });
   fireEvent.click(getByText('추가'));
 
