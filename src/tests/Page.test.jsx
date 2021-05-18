@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import Page from '../pages/TodoPage';
 
-describe('Test Page component', () => {
+describe('Page component', () => {
   beforeEach(() => {
     render(
       <Page
@@ -15,13 +15,13 @@ describe('Test Page component', () => {
     );
   });
 
-  it('header renders', () => {
+  it('renders header', () => {
     expect(screen.getByText('To-do')).toBeInTheDocument();
   });
-  it('Input component renders', () => {
+  it('renders Input Component', () => {
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
-  it('List component renders', () => {
+  it('renders List component', () => {
     expect(screen.getByRole('list')).toBeInTheDocument();
   });
 });
