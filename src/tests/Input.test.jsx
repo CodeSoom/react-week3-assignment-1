@@ -9,13 +9,13 @@ describe('Input component', () => {
   const onClickAddTask = jest.fn();
 
   beforeEach(() => {
-    render(
+    render((
       <Input
         value={taskTitle}
         onChange={onChangeTitle}
         onClick={onClickAddTask}
-      />,
-    );
+      />
+    ));
   });
 
   it('renders button on screen', () => {

@@ -3,21 +3,21 @@ import { render, screen } from '@testing-library/react';
 import List from '../components/List';
 
 const renderEmptyList = () => {
-  render(
+  render((
     <List
       tasks={[]}
       onClickDelete={jest.fn()}
-    />,
-  );
+    />
+  ));
 };
 
 const renderNonEmptyList = () => {
-  render(
+  render((
     <List
       tasks={[{ id: 1 }, { id: 2 }, { id: 3 }]}
       onClickDelete={jest.fn()}
-    />,
-  );
+    />
+  ));
 };
 
 describe('List component', () => {

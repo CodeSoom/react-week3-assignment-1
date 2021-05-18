@@ -4,15 +4,15 @@ import Page from '../pages/TodoPage';
 
 describe('Page component', () => {
   beforeEach(() => {
-    render(
+    render((
       <Page
         taskTitle=""
         tasks={[{ id: 1 }]}
         onChangeTitle={jest.fn()}
         onClickAddTask={jest.fn()}
         onClickDeleteTask={jest.fn()}
-      />,
-    );
+      />
+    ));
   });
 
   it('renders header', () => {
