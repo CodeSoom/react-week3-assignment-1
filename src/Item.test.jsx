@@ -11,14 +11,23 @@ describe('Item', () => {
   const handleClickDelete = jest.fn(() => {
   });
 
-  it('show task.Title & delete task button by task.id', () => {
-    const { container, getByText } = render(
+  it('show task.Title', () => {
+    const { container } = render(
       <Item task={task} onClickDelete={handleClickDelete} />,
     );
-
     expect(container).toHaveTextContent('뭐라도 하기');
+  });
+  it('show taskDone button text', () => {
+    const { container } = render(
+      <Item task={task} onClickDelete={handleClickDelete} />,
+    );
     expect(container).toHaveTextContent('완료');
+  });
 
+  it('able toClick taskDone button ', () => {
+    const { getByText } = render(
+      <Item task={task} onClickDelete={handleClickDelete} />,
+    );
     expect(handleClickDelete).not.toBeCalled();
 
     fireEvent.click(getByText('완료'));
