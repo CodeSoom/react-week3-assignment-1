@@ -35,14 +35,17 @@ describe('App component', () => {
     it('only removes target task from list', () => {
       addTask('건물1 매입');
       addTask('건물2 매입');
-
       expect(screen.getByText('건물1 매입')).toBeInTheDocument();
       expect(screen.getByText('건물2 매입')).toBeInTheDocument();
 
       deleteTask('건물1 매입');
-
       expect(screen.queryByText('건물1 매입')).not.toBeInTheDocument();
       expect(screen.getByText('건물2 매입')).toBeInTheDocument();
+
+      deleteTask('건물2 매입');
+      expect(screen.queryByText('건물1 매입')).not.toBeInTheDocument();
+      expect(screen.queryByText('건물2 매입')).not.toBeInTheDocument();
+      expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 });
