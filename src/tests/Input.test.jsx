@@ -38,9 +38,6 @@ describe('Input component', () => {
     it("doesn't call handler", () => {
       expect(onChangeTitle).not.toBeCalled();
     });
-    it("doesn't fill inputbox", () => {
-      expect(screen.getByRole('textbox', { name: '할 일' })).toHaveValue('');
-    });
   });
 
   context('when something is typed', () => {
@@ -48,9 +45,5 @@ describe('Input component', () => {
       userEvent.type(screen.getByRole('textbox'), 'abcd');
       expect(onChangeTitle).toBeCalledTimes(4);
     });
-  //   it('does fill inputbox', () => {
-  //     userEvent.type(screen.getByRole('textbox'), 'abcd');
-  //     expect(screen.getByRole('textbox', { name: '할 일' })).toHaveValue('abcd');
-  //   });
   });
 });
