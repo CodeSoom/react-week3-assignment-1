@@ -28,3 +28,18 @@ test('List', () => {
 
   expect(handleClick).toBeCalledWith(1);
 });
+
+test('List', () => {
+  const task = '';
+
+  const handleClick = jest.fn();
+
+  const { container } = render((
+    <List
+      task={task}
+      onClickDelete={handleClick}
+    />
+  ));
+
+  expect(container).toHaveTextContent('할 일이 없어요!');
+});
