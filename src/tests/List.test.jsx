@@ -20,21 +20,21 @@ const renderNonEmptyList = () => {
   );
 };
 
-describe('Test List component', () => {
+describe('List component', () => {
   context('when list is empty', () => {
     renderEmptyList();
-    it('text renders', () => {
+    it('renders string that tells nothing is left', () => {
       expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 
   context('when list is not empty', () => {
-    it('items render', () => {
+    it('renders tasks', () => {
       renderNonEmptyList();
       expect(screen.getAllByRole('listitem').length).toBe(3);
     });
 
-    it('buttons render', () => {
+    it('renders finish button for each task', () => {
       renderNonEmptyList();
       expect(screen.getAllByRole('button').length).toBe(3);
     });
