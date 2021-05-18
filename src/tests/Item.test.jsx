@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import Item from '../components/Item';
 
-describe('Test Item component', () => {
+describe('Item component', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
@@ -20,16 +20,16 @@ describe('Test Item component', () => {
     ));
   });
 
-  it('text renders', () => {
+  it('renders each task on screen', () => {
     expect(screen.getByText('뭐라도 하기')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '완료' })).toBeInTheDocument();
   });
 
-  it('button working', () => {
+  it('renders clickable button that has handler', () => {
     expect(handleClick).not.toBeCalled();
 
     userEvent.click(screen.getByRole('button', { name: '완료' }));
 
-    expect(handleClick).toBeCalledWith(1);
+    expect(handleClick).toBeCalled();
   });
 });
