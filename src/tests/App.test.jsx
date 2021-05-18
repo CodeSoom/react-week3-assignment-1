@@ -21,7 +21,7 @@ describe('App component', () => {
     render(<App />);
   });
 
-  context('when user want to add task', () => {
+  context('when user wants to add task', () => {
     it('adds current input to list', () => {
       expect(screen.queryByText('건물 매입')).not.toBeInTheDocument();
 
@@ -31,7 +31,7 @@ describe('App component', () => {
     });
   });
 
-  context('when user want to delete task', () => {
+  context('when user wants to delete task', () => {
     it('only removes target task from list', () => {
       addTask('건물1 매입');
       addTask('건물2 매입');
