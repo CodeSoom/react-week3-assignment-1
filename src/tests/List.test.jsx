@@ -21,14 +21,14 @@ const renderNonEmptyList = () => {
 };
 
 describe('List component', () => {
-  context('when list is empty', () => {
+  context('without tasks', () => {
     renderEmptyList();
     it('renders string that tells nothing is left', () => {
       expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 
-  context('when list is not empty', () => {
+  context('with tasks', () => {
     it('renders tasks', () => {
       renderNonEmptyList();
       expect(screen.getAllByRole('listitem').length).toBe(3);
