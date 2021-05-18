@@ -6,7 +6,7 @@ const renderEmptyList = () => {
   render(
     <List
       tasks={[]}
-      onClickDelete={() => null}
+      onClickDelete={jest.fn()}
     />,
   );
 };
@@ -15,7 +15,7 @@ const renderNonEmptyList = () => {
   render(
     <List
       tasks={[{ id: 1 }, { id: 2 }, { id: 3 }]}
-      onClickDelete={() => null}
+      onClickDelete={jest.fn()}
     />,
   );
 };

@@ -8,9 +8,9 @@ describe('Page component', () => {
       <Page
         taskTitle=""
         tasks={[{ id: 1 }]}
-        onChangeTitle={() => null}
-        onClickAddTask={() => null}
-        onClickDeleteTask={() => null}
+        onChangeTitle={jest.fn()}
+        onClickAddTask={jest.fn()}
+        onClickDeleteTask={jest.fn()}
       />,
     );
   });
