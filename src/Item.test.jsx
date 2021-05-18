@@ -7,18 +7,8 @@ describe('Item', () => {
     id: 1,
     title: '뭐라도 하기',
   };
-  const expectedTasks = [
-    { id: 2, title: 'jest 공부 하기' },
-    { id: 3, title: 'mock 공부 하기' },
-  ];
-  const defaultTasks = [task].concat(expectedTasks);
-  const state = { tasks: defaultTasks };
-  const handleClickDelete = jest.fn((id) => {
-    state.tasks = defaultTasks.filter((item) => item.id !== id);
-  });
 
-  beforeEach(() => {
-    state.tasks = defaultTasks;
+  const handleClickDelete = jest.fn(() => {
   });
 
   it('show task.Title & delete task button by task.id', () => {
