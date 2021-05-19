@@ -15,14 +15,14 @@ describe('Input 컴포넌트', () => {
 
   it('placeholder 텍스트 확인', () => {
     const { getByLabelText } = given.render;
-    const placeholder = getByLabelText('할 일').placeholder;
+    const { placeholder } = getByLabelText('할 일');
     expect(placeholder).toBe('할 일을 입력해 주세요');
   });
 
   it('input 태그 value 변경하기', () => {
     const { getByLabelText } = given.render;
     const inputElement = getByLabelText('할 일');
-    fireEvent.change(inputElement, { target: { value: '멋대로 살기'}});
+    fireEvent.change(inputElement, { target: { value: '멋대로 살기' } });
     expect(inputElement.value).toBe('멋대로 살기');
   });
 
