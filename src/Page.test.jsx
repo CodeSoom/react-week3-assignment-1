@@ -1,5 +1,6 @@
 import {
-  fireEvent, render, screen,
+  fireEvent,
+  render, screen,
 } from '@testing-library/react';
 
 import Page from './Page';
@@ -42,7 +43,15 @@ describe('<Page />', () => {
     // expect(screen.getByRole('textbox', { name: /할 일/ })).toHaveAttribute('value', '뭐라도 하기');
   });
 
-  it('calls onChangeTitle', () => {});
+  it('calls onChangeTitle', () => {
+    const onChangeTitle = jest.fn();
+
+    render(<Page onChangeTitle={onChangeTitle} tasks={emptyTasks} />);
+
+    fireEvent.change(screen.getByRole('textbox', { name: /할 일/ }), { target: { value: '뭐라도 하기' } });
+
+    expect(onChangeTitle).toBeCalled();
+  });
 
   it('calls onClickAddTask', () => {});
 
