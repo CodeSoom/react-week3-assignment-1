@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import List from './List';
 
 describe('<List />', () => {
@@ -12,8 +12,8 @@ describe('<List />', () => {
       title: '뭐라도 하기 2',
     },
   ];
-
   const emptyTasks = [];
+
   it('renders text when tasks does not exist', () => {
     render(<List tasks={emptyTasks} />);
 
@@ -27,5 +27,12 @@ describe('<List />', () => {
     expect(screen.getByText(tasks[1].title)).toBeInTheDocument();
   });
 
-  it('calls onClickDelete', () => {});
+  it('calls onClickDelete', () => {
+    const onClickDelete = jest.fn();
+
+    render(<List tasks={tasks} onClickDelete={onClickDelete} />);
+
+    fireEvent.click(screen.getAllByRole('button')[0]);
+    expect(onClickDelete).toBeCalledWith(tasks[0].id);
+  });
 });
