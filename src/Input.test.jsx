@@ -6,7 +6,13 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input 컴포넌트', () => {
-  given('render', () => render(<Input onClick={given.clickEvent} />));
+  given('render', () => (
+    render(
+      (
+        <Input onClick={given.clickEvent} />
+      )
+    )
+  ));
 
   it('렌더링 페이지 텍스트 확인', () => {
     const { container } = given.render;
