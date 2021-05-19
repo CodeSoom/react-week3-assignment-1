@@ -32,7 +32,7 @@ describe('Input component', () => {
     expect(onClickAddTask).toBeCalled();
   });
 
-  it('renders inputbox on screen', () => {
+  it('renders textbox on screen', () => {
     const { getByRole } = given.container;
 
     expect(getByRole('textbox', { name: '할 일' })).toBeInTheDocument();
