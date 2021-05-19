@@ -55,5 +55,7 @@ module.exports = {
 
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+
+    'testing-library/prefer-screen-queries': 'off',
   },
 };
