@@ -23,7 +23,7 @@ const renderNonEmptyList = () => {
 describe('List component', () => {
   context('without tasks', () => {
     renderEmptyList();
-    it('renders string that tells nothing is left', () => {
+    it('renders message', () => {
       expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
