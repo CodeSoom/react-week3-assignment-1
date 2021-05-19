@@ -15,7 +15,7 @@ describe('<Input />', () => {
     screen.getByRole('button', { name: /추가/ });
   });
 
-  it('changes input', () => {
+  it('calls onChange when change value', () => {
     render(<Input onChange={onChange} />);
 
     const input = screen.getByRole('textbox', { name: /할 일/ });
