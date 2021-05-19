@@ -8,7 +8,7 @@ describe('<List />', () => {
       title: '뭐라도 하기',
     },
     {
-      id: 1,
+      id: 2,
       title: '뭐라도 하기 2',
     },
   ];
@@ -21,7 +21,10 @@ describe('<List />', () => {
   });
 
   it('renders tasks', () => {
+    render(<List tasks={tasks} />);
 
+    expect(screen.getByText(tasks[0].title)).toBeInTheDocument();
+    expect(screen.getByText(tasks[1].title)).toBeInTheDocument();
   });
 
   it('calls onClickDelete', () => {});
