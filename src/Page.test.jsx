@@ -41,14 +41,6 @@ describe('<Page />', () => {
     screen.getAllByRole('button', { name: '완료' });
   });
 
-  it('renders taskTitle', () => {
-    const taskTitle = '뭐라도 하기';
-
-    render(<Page value={taskTitle} tasks={emptyTasks} />);
-
-    // expect(screen.getByRole('textbox', { name: /할 일/ })).toHaveAttribute('value', '뭐라도 하기');
-  });
-
   it('calls onChangeTitle', () => {
     const onChangeTitle = jest.fn();
 
