@@ -5,11 +5,7 @@ import {
 import Input from './Input';
 
 describe('<Input />', () => {
-  let value = '';
-
-  const onChange = jest.fn((e) => {
-    value = e.target.value;
-  });
+  const onChange = jest.fn();
 
   it('renders label, input, button', () => {
     render(<Input />);
@@ -19,16 +15,13 @@ describe('<Input />', () => {
   });
 
   it('changes input', () => {
-    const { rerender } = render(<Input value={value} onChange={onChange} />);
+    render(<Input onChange={onChange} />);
 
     const input = screen.getByRole('textbox', { name: /할 일/ });
 
     fireEvent.change(input, { target: { value: '뭐라도 하기' } });
 
-    rerender(<Input value={value} onChange={onChange} />);
-
     expect(onChange).toBeCalled();
-    expect(input).toHaveAttribute('value', '뭐라도 하기');
   });
 
   it('calls onClick when click button', () => {
