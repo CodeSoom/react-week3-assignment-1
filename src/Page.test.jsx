@@ -2,9 +2,19 @@ import { render, screen } from '@testing-library/react';
 import Page from './Page';
 
 describe('<Page />', () => {
-  const tasks = [];
+  const emptyTasks = [];
+  const tasks = [
+    {
+      id: 1,
+      title: '뭐라도 하기',
+    },
+    {
+      id: 2,
+      title: '뭐라도 하기 2',
+    },
+  ];
   it('renders title, Input, List', () => {
-    render(<Page tasks={tasks} />);
+    render(<Page tasks={emptyTasks} />);
 
     screen.getByRole('heading', { name: /To-do/i });
 
@@ -14,7 +24,12 @@ describe('<Page />', () => {
     screen.getByText(/할 일이 없어요!/);
   });
 
-  it('renders text when tasks does not exist ', () => {});
+  it('renders tasks', () => {
+    render(<Page tasks={tasks} />);
+
+    screen.getByText(tasks[0].title);
+    screen.getByText(tasks[1].title);
+  });
 
   it('creates new task', () => {});
 
