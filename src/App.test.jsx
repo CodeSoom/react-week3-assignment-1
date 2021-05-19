@@ -5,12 +5,10 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App 컴포넌트', () => {
+  given('render', () => render(<App />));
+
   it('할 일 추가하기', () => {
-    const { getByText, getByLabelText } = render(
-      (
-        <App />
-      ),
-    );
+    const { getByText, getByLabelText } = given.render;
 
     fireEvent.change(getByLabelText('할 일'), { target: { value: '멋대로 살기' } });
     fireEvent.click(getByText('추가'));
@@ -18,11 +16,7 @@ describe('App 컴포넌트', () => {
   });
 
   it('할 일 추가 후 완료하여 할 일 제거하기', () => {
-    const { getByText, getByLabelText } = render(
-      (
-        <App />
-      ),
-    );
+    const { getByText, getByLabelText } = given.render;
 
     fireEvent.change(getByLabelText('할 일'), { target: { value: '멋대로 살기' } });
     fireEvent.click(getByText('추가'));
