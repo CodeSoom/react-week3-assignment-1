@@ -17,7 +17,7 @@ describe('<Page />', () => {
       title: '뭐라도 하기 2',
     },
   ];
-  it('renders title, Input, List', () => {
+  it('renders title, Input, List when doesn\'t exist tasks', () => {
     render(<Page tasks={emptyTasks} />);
 
     screen.getByRole('heading', { name: /To-do/i });
@@ -28,11 +28,17 @@ describe('<Page />', () => {
     screen.getByText(/할 일이 없어요!/);
   });
 
-  it('renders tasks', () => {
+  it('renders title, Input, List when exist tasks', () => {
     render(<Page tasks={tasks} />);
+
+    screen.getByRole('heading', { name: /To-do/i });
+
+    screen.getByRole('textbox', { name: /할 일/ });
+    screen.getByRole('button', { name: /추가/ });
 
     screen.getByText(tasks[0].title);
     screen.getByText(tasks[1].title);
+    screen.getAllByRole('button', { name: /완료/ });
   });
 
   it('renders taskTitle', () => {
