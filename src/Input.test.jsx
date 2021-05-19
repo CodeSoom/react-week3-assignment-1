@@ -6,6 +6,7 @@ import Input from './Input';
 
 describe('<Input />', () => {
   const onChange = jest.fn();
+  const onClick = jest.fn();
 
   it('renders label, input, button', () => {
     render(<Input />);
@@ -25,5 +26,10 @@ describe('<Input />', () => {
   });
 
   it('calls onClick when click button', () => {
+    render(<Input onClick={onClick} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /추가/ }));
+
+    expect(onClick).toBeCalled();
   });
 });
