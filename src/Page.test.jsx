@@ -53,7 +53,15 @@ describe('<Page />', () => {
     expect(onChangeTitle).toBeCalled();
   });
 
-  it('calls onClickAddTask', () => {});
+  it('calls onClickAddTask', () => {
+    const onClickAddTask = jest.fn();
+
+    render(<Page onClickAddTask={onClickAddTask} tasks={emptyTasks} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /추가/ }));
+
+    expect(onClickAddTask).toBeCalled();
+  });
 
   it('calls onClickDeleteTask', () => {});
 });
