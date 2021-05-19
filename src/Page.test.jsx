@@ -1,4 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import {
+  fireEvent, render, screen,
+} from '@testing-library/react';
+
 import Page from './Page';
 
 describe('<Page />', () => {
@@ -31,7 +34,11 @@ describe('<Page />', () => {
     screen.getByText(tasks[1].title);
   });
 
-  it('creates new task', () => {});
+  it('renders taskTitle', () => {});
 
-  it('removes task', () => {});
+  it('calls onChangeTitle', () => {});
+
+  it('calls onClickAddTask', () => {});
+
+  it('calls onClickDeleteTask', () => {});
 });
