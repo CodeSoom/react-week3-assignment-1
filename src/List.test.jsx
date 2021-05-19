@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import List from './List';
 /** 리스트 컴포넌트는 역활은 ?
@@ -13,25 +13,30 @@ import List from './List';
  * 4] tasks또한 tasks.length를 수행하기 위해서는 null이 아니여야한다
  * */
 
-test('rendering <p>할 일이 없어요!</p>', () => {
+it('renders <p>할 일이 없어요!</p> when Task.length === 0', () => {
   const emptyTasks = [];
   const onClickDelete = jest.fn();
   const { container } = render(
     <List tasks={emptyTasks} onClickDelete={onClickDelete} />,
   );
 
-  //   console.log(container);
   expect(container).toHaveTextContent('할 일이 없어요!');
 });
-test('rendering Item', () => {
-//   const tasks = [
-//     { id: 1, title: '뭐라도 하기' },
-//     { id: 2, title: 'jest 공부 하기' },
-//     { id: 3, title: 'mock 공부 하기' },
-//   ];
-//   const onClickDelete = jest.fn();
 
-// 기대 : tasks.length 만큼 <li/> or <Item/> element가 생성됐는지 확인한다
-// 기대 : 생성된 1번째 element에 TextContent값으로 tasks[1][title]과 같은지 확인한다
-// 기대 : 생성된 element 형태가 <ol><Item>...</Item></ol> 와 같은지 확인한다.
+it('render tags as many number of tasks', () => {
+  const tasks = [
+    { id: 1, title: '뭐라도 하기' },
+    { id: 2, title: 'jest 공부 하기' },
+    { id: 3, title: 'mock 공부 하기' },
+  ];
+  const onClickDelete = jest.fn();
+  render(<List tasks={tasks} onClickDelete={onClickDelete} />);
+  const listItems = screen.getAllByRole('listitem');
+  // 기대 : tasks.length 만큼 <li/> or <Item/> element가 생성됐는지 확인한다
+  expect(listItems).toHaveLength(tasks.length);
+
+  // 기대 : 생성된 1번째 element에 TextContent값으로 tasks[1][title]과 같은지 확인한다
+  listItems.forEach((item, index) => {
+    expect(item).toHaveTextContent(tasks[index].title);
+  });
 });
