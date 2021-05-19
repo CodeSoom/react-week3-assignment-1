@@ -4,19 +4,13 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('add Todo', () => {
-  const handleClickAddTodo = jest.fn();
+describe('Input 컴포넌트', () => {
+  it('add Todo', () => {
+    const handleClickAddTodo = jest.fn();
+    const { getByText } = render((<Input onClick={handleClickAddTodo} />));
 
-  const { container, getByText } = render(
-    (
-      <Input onClick={handleClickAddTodo} />
-    ),
-  );
-
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
-
-  expect(handleClickAddTodo).not.toBeCalled();
-  fireEvent.click(getByText('추가'));
-  expect(handleClickAddTodo).toBeCalled();
+    expect(handleClickAddTodo).not.toBeCalled();
+    fireEvent.click(getByText('추가'));
+    expect(handleClickAddTodo).toBeCalled();
+  });
 });
