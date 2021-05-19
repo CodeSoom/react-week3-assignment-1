@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import Page from '../pages/TodoPage';
 
 describe('Page component', () => {
-  beforeEach(() => {
+  given('container', () => (
     render((
       <Page
         taskTitle=""
@@ -12,16 +12,21 @@ describe('Page component', () => {
         onClickAddTask={jest.fn()}
         onClickDeleteTask={jest.fn()}
       />
-    ));
-  });
+    ))
+  ));
 
   it('renders header', () => {
-    expect(screen.getByText('To-do')).toBeInTheDocument();
+    const { getByText } = given.container;
+    expect(getByText('To-do')).toBeInTheDocument();
   });
+
   it('renders Input Component', () => {
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    const { getByRole } = given.container;
+    expect(getByRole('textbox')).toBeInTheDocument();
   });
+
   it('renders List component', () => {
-    expect(screen.getByRole('list')).toBeInTheDocument();
+    const { getByRole } = given.container;
+    expect(getByRole('list')).toBeInTheDocument();
   });
 });
