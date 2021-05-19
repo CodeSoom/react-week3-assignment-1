@@ -25,7 +25,7 @@ describe('Item component', () => {
     expect(screen.getByRole('button', { name: '완료' })).toBeInTheDocument();
   });
 
-  it('renders clickable button that has handler', () => {
+  it('renders 완료 button and listens click event', () => {
     expect(handleClick).not.toBeCalled();
 
     userEvent.click(screen.getByRole('button', { name: '완료' }));

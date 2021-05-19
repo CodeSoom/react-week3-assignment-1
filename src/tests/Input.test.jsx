@@ -22,7 +22,7 @@ describe('Input component', () => {
     expect(screen.getByRole('button', { name: '추가' })).toBeInTheDocument();
   });
 
-  it('renders clickable button that has handler', () => {
+  it('renders 추가 button and listens click event', () => {
     expect(onClickAddTask).not.toBeCalled();
 
     userEvent.click(screen.getByRole('button', { name: '추가' }));
