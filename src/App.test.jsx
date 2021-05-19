@@ -20,5 +20,13 @@ describe('<App />', () => {
     screen.getByText('뭐라도 하기');
   });
 
-  it('deletes a task', () => {});
+  it('deletes a task', () => {
+    render(<App />);
+
+    fireEvent.change(screen.getByRole('textbox', { name: '할 일' }), { target: { value: '뭐라도 하기' } });
+    fireEvent.click(screen.getByRole('button', { name: '추가' }));
+    fireEvent.click(screen.getByRole('button', { name: '완료' }));
+
+    screen.getByText('할 일이 없어요!');
+  });
 });
