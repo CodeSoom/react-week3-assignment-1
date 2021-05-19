@@ -4,13 +4,13 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-describe('TodoList', () => {
-  it('Nothing Todo', () => {
+describe('TodoList 컴포넌트', () => {
+  it('할 일이 없을 때', () => {
     const { container } = render((<List tasks={[]} />));
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  it('Exist Todo', () => {
+  it('할 일이 있을 때', () => {
     const tasks = [
       { id: 1, title: '멋대로 살기' },
       { id: 2, title: '아무렇게나 살기' },
