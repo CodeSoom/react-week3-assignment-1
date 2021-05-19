@@ -1,5 +1,4 @@
 import { render, fireEvent } from '@testing-library/react';
-
 import Item from './Item';
 
 describe('Item', () => {
@@ -11,20 +10,21 @@ describe('Item', () => {
   const handleClickDelete = jest.fn(() => {
   });
 
-  it('show task.Title', () => {
+  it('shows task.Title', () => {
     const { container } = render(
       <Item task={task} onClickDelete={handleClickDelete} />,
     );
     expect(container).toHaveTextContent('뭐라도 하기');
   });
-  it('show taskDone button text', () => {
+
+  it('shows taskDone button text', () => {
     const { container } = render(
       <Item task={task} onClickDelete={handleClickDelete} />,
     );
     expect(container).toHaveTextContent('완료');
   });
 
-  it('able toClick taskDone button ', () => {
+  it('is clicked with handleClickDelete', () => {
     const { getByText } = render(
       <Item task={task} onClickDelete={handleClickDelete} />,
     );
