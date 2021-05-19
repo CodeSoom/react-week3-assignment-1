@@ -17,14 +17,14 @@ describe('<List />', () => {
   it('renders text when tasks does not exist', () => {
     render(<List tasks={emptyTasks} />);
 
-    expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
+    screen.getByText(/할 일이 없어요!/);
   });
 
   it('renders tasks', () => {
     render(<List tasks={tasks} />);
 
-    expect(screen.getByText(tasks[0].title)).toBeInTheDocument();
-    expect(screen.getByText(tasks[1].title)).toBeInTheDocument();
+    screen.getByText(tasks[0].title);
+    screen.getByText(tasks[1].title);
   });
 
   it('calls onClickDelete', () => {
