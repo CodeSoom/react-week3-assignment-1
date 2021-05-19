@@ -63,5 +63,13 @@ describe('<Page />', () => {
     expect(onClickAddTask).toBeCalled();
   });
 
-  it('calls onClickDeleteTask', () => {});
+  it('calls onClickDeleteTask', () => {
+    const onClickDeleteTask = jest.fn();
+
+    render(<Page onClickDeleteTask={onClickDeleteTask} tasks={tasks} />);
+
+    fireEvent.click(screen.getAllByRole('button', { name: /완료/ })[0]);
+
+    expect(onClickDeleteTask).toBeCalled();
+  });
 });
