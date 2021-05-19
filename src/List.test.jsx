@@ -1,3 +1,6 @@
+import { render, screen } from '@testing-library/react';
+import List from './List';
+
 describe('<List />', () => {
   const tasks = [
     {
@@ -12,7 +15,9 @@ describe('<List />', () => {
 
   const emptyTasks = [];
   it('renders text when tasks does not exist', () => {
+    render(<List tasks={emptyTasks} />);
 
+    expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
   });
 
   it('renders tasks', () => {
