@@ -18,7 +18,7 @@ describe('<Input />', () => {
   it('calls onChange when change value', () => {
     render(<Input onChange={onChange} />);
 
-    const input = screen.getByRole('textbox', { name: /할 일/ });
+    const input = screen.getByRole('textbox', { name: '할 일' });
 
     fireEvent.change(input, { target: { value: '뭐라도 하기' } });
 
@@ -28,7 +28,7 @@ describe('<Input />', () => {
   it('calls onClick when click button', () => {
     render(<Input onClick={onClick} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /추가/ }));
+    fireEvent.click(screen.getByRole('button', { name: '추가' }));
 
     expect(onClick).toBeCalled();
   });

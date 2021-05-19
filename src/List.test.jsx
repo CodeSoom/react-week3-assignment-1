@@ -18,7 +18,7 @@ describe('<List />', () => {
   it('renders text when tasks does not exist', () => {
     render(<List tasks={emptyTasks} />);
 
-    screen.getByText(/할 일이 없어요!/);
+    screen.getByText('할 일이 없어요!');
   });
 
   it('renders tasks', () => {

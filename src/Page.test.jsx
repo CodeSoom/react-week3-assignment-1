@@ -22,10 +22,10 @@ describe('<Page />', () => {
 
     screen.getByRole('heading', { name: /To-do/i });
 
-    screen.getByRole('textbox', { name: /할 일/ });
-    screen.getByRole('button', { name: /추가/ });
+    screen.getByRole('textbox', { name: '할 일' });
+    screen.getByRole('button', { name: '추가' });
 
-    screen.getByText(/할 일이 없어요!/);
+    screen.getByText('할 일이 없어요!');
   });
 
   it('renders title, Input, List when exist tasks', () => {
@@ -33,12 +33,12 @@ describe('<Page />', () => {
 
     screen.getByRole('heading', { name: /To-do/i });
 
-    screen.getByRole('textbox', { name: /할 일/ });
-    screen.getByRole('button', { name: /추가/ });
+    screen.getByRole('textbox', { name: '할 일' });
+    screen.getByRole('button', { name: '추가' });
 
     screen.getByText(tasks[0].title);
     screen.getByText(tasks[1].title);
-    screen.getAllByRole('button', { name: /완료/ });
+    screen.getAllByRole('button', { name: '완료' });
   });
 
   it('renders taskTitle', () => {
@@ -54,7 +54,7 @@ describe('<Page />', () => {
 
     render(<Page onChangeTitle={onChangeTitle} tasks={emptyTasks} />);
 
-    fireEvent.change(screen.getByRole('textbox', { name: /할 일/ }), { target: { value: '뭐라도 하기' } });
+    fireEvent.change(screen.getByRole('textbox', { name: '할 일' }), { target: { value: '뭐라도 하기' } });
 
     expect(onChangeTitle).toBeCalled();
   });
@@ -64,7 +64,7 @@ describe('<Page />', () => {
 
     render(<Page onClickAddTask={onClickAddTask} tasks={emptyTasks} />);
 
-    fireEvent.click(screen.getByRole('button', { name: /추가/ }));
+    fireEvent.click(screen.getByRole('button', { name: '추가' }));
 
     expect(onClickAddTask).toBeCalled();
   });
@@ -74,7 +74,7 @@ describe('<Page />', () => {
 
     render(<Page onClickDeleteTask={onClickDeleteTask} tasks={tasks} />);
 
-    fireEvent.click(screen.getAllByRole('button', { name: /완료/ })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: '완료' })[0]);
 
     expect(onClickDeleteTask).toBeCalled();
   });
