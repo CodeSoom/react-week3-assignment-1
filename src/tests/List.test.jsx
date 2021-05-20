@@ -20,18 +20,20 @@ describe('List component', () => {
   });
 
   context('with tasks', () => {
+    const tasks = [{ id: 1 }, { id: 2 }, { id: 3 }];
+
     it('renders tasks', () => {
-      given('tasks', () => [{ id: 1 }, { id: 2 }, { id: 3 }]);
+      given('tasks', () => tasks);
       const { getAllByRole } = given.container;
 
-      expect(getAllByRole('listitem')).toHaveLength(3);
+      expect(getAllByRole('listitem')).toHaveLength(tasks.length);
     });
 
     it('renders finish button for each task', () => {
-      given('tasks', () => [{ id: 1 }, { id: 2 }, { id: 3 }]);
+      given('tasks', () => tasks);
       const { getAllByRole } = given.container;
 
-      expect(getAllByRole('button')).toHaveLength(3);
+      expect(getAllByRole('button')).toHaveLength(tasks.length);
     });
   });
 });
