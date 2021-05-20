@@ -23,33 +23,16 @@ describe('App component', () => {
 
     userEvent.type(
       getByRole('textbox', { name: '할 일' }),
-      '건물1 매입',
+      '건물 매입',
     );
     userEvent.click(getByRole('button', { name: '추가' }));
 
-    userEvent.type(
-      getByRole('textbox', { name: '할 일' }),
-      '건물2 매입',
-    );
-    userEvent.click(getByRole('button', { name: '추가' }));
-
-    expect(getByText('건물1 매입')).toBeInTheDocument();
-    expect(getByText('건물2 매입')).toBeInTheDocument();
+    expect(getByText('건물 매입')).toBeInTheDocument();
 
     userEvent.click(
-      within(getByText('건물1 매입'))
+      within(getByText('건물 매입'))
         .getByRole('button', { name: '완료' }),
     );
-    expect(queryByText('건물1 매입')).not.toBeInTheDocument();
-    expect(getByText('건물2 매입')).toBeInTheDocument();
-    expect(queryByText('할 일이 없어요!')).not.toBeInTheDocument();
-
-    userEvent.click(
-      within(getByText('건물2 매입'))
-        .getByRole('button', { name: '완료' }),
-    );
-    expect(queryByText('건물1 매입')).not.toBeInTheDocument();
-    expect(queryByText('건물2 매입')).not.toBeInTheDocument();
-    expect(getByText('할 일이 없어요!')).toBeInTheDocument();
+    expect(queryByText('건물 매입')).not.toBeInTheDocument();
   });
 });
