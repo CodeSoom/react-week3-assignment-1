@@ -4,12 +4,8 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 
 describe('App component', () => {
-  given('container', () => (
-    render(<App />)
-  ));
-
   it('adds current input to list', () => {
-    const { getByText, queryByText, getByRole } = given.container;
+    const { getByText, queryByText, getByRole } = render(<App />);
 
     expect(queryByText('건물 매입')).not.toBeInTheDocument();
 
@@ -23,7 +19,7 @@ describe('App component', () => {
   });
 
   it('only removes target task from list', () => {
-    const { getByText, queryByText, getByRole } = given.container;
+    const { getByText, queryByText, getByRole } = render(<App />);
 
     userEvent.type(
       getByRole('textbox', { name: '할 일' }),
