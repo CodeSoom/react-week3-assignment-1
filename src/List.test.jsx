@@ -3,8 +3,7 @@ import { render, screen } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  // when Tasks.length === 0 then,
-  it('renders <p>할 일이 없어요!</p>', () => {
+  it('Tasks.length === 0', () => {
     const emptyTasks = [];
     const onClickDelete = jest.fn();
     const { container } = render(
@@ -14,8 +13,7 @@ describe('List', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  // when Tasks.length >0 then,
-  it('render List Items as many number of tasks', () => {
+  it('Tasks.length >0', () => {
     const tasks = [
       { id: 1, title: '뭐라도 하기' },
       { id: 2, title: 'jest 공부 하기' },

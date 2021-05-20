@@ -7,8 +7,8 @@ describe('Input', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
 
-  it('displays default when value are undefined', () => {
-    const taskTitle = undefined;
+  it('value is empty', () => {
+    const taskTitle = '';
     render(
       <Input
         value={taskTitle}
@@ -19,10 +19,12 @@ describe('Input', () => {
 
     // screen.debug();
     expect(screen.getByRole('textbox')).toBeEmptyDOMElement();
-    expect(screen.queryByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+    expect(
+      screen.queryByPlaceholderText('할 일을 입력해 주세요'),
+    ).toBeInTheDocument();
   });
 
-  it('display value ', () => {
+  it('value is not empty ', () => {
     const taskTitle = 'TDD 익숙해지기';
     render(
       <Input
@@ -38,7 +40,7 @@ describe('Input', () => {
     expect(input.value).toEqual(taskTitle);
   });
 
-  it('is clicked with handleChangeTitle ', async () => {
+  it('listens input change event', async () => {
     const taskTitle = '';
     const typing = '!';
     render(
@@ -52,11 +54,9 @@ describe('Input', () => {
     const input = screen.getByRole('textbox');
     await userEvent.type(input, typing);
     expect(handleChangeTitle).toBeCalled();
-    // expect(handleChangeTitle).toBeCalledWith(typing);
-    // onChange시 입력된 typing 값으로 불리어 졌는지 체크 하고 싶은데
   });
 
-  it('is clicked with handleClickAddTask', async () => {
+  it('listening click event', async () => {
     const taskTitle = '할일 추가 하기';
     render(
       <Input
