@@ -24,14 +24,14 @@ describe('List component', () => {
       given('tasks', () => [{ id: 1 }, { id: 2 }, { id: 3 }]);
       const { getAllByRole } = given.container;
 
-      expect(getAllByRole('listitem').length).toBe(3);
+      expect(getAllByRole('listitem')).toHaveLength(3);
     });
 
     it('renders finish button for each task', () => {
       given('tasks', () => [{ id: 1 }, { id: 2 }, { id: 3 }]);
       const { getAllByRole } = given.container;
 
-      expect(getAllByRole('button').length).toBe(3);
+      expect(getAllByRole('button')).toHaveLength(3);
     });
   });
 });
