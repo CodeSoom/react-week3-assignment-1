@@ -20,7 +20,11 @@ describe('List component', () => {
   });
 
   context('with tasks', () => {
-    const tasks = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    let tasks;
+
+    beforeEach(() => {
+      tasks = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    });
 
     it('renders tasks', () => {
       given('tasks', () => tasks);
