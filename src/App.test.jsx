@@ -1,4 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
+import { createElement } from 'react';
 
 import App from './App';
 
@@ -38,7 +39,7 @@ describe('input', () => {
 });
 
 describe('button', () => {
-  it('button을 클릭하면 순서를 가진 list가 생성된다', () => {
+  it('button을 클릭하면 입력값이 추가된다', () => {
     // given
     const { getByText, getByPlaceholderText, container } = render(<App />);
     const button = getByText('추가');
@@ -52,5 +53,24 @@ describe('button', () => {
     fireEvent.click(button);
     // then
     expect(container).toHaveTextContent('뭐라도 하기');
+  });
+});
+
+describe('완료버튼', () => {
+  it('완료버튼을 누르면 할 일이 삭제되어야 한다', () => {
+    // given
+    const { getByText, getByPlaceholderText, container } = render(<App />);
+    const button = getByText('추가');
+    const input = getByPlaceholderText('할 일을 입력해 주세요');
+    fireEvent.change(input, {
+      target: {
+        value: '뭐라도 하기',
+      },
+    });
+    fireEvent.click(button);
+    // when
+    fireEvent.click(getByText('완료'));
+    // then
+    expect(container).toHaveTextContent('할 일이 없어요!');
   });
 });
