@@ -22,7 +22,7 @@ describe('<Page />', () => {
 
     screen.getByRole('heading', { name: /To-do/i });
 
-    screen.getByRole('textbox', { name: '할 일' });
+    screen.getByLabelText('할 일');
     screen.getByRole('button', { name: '추가' });
 
     screen.getByText('할 일이 없어요!');
@@ -33,7 +33,7 @@ describe('<Page />', () => {
 
     screen.getByRole('heading', { name: /To-do/i });
 
-    screen.getByRole('textbox', { name: '할 일' });
+    screen.getByLabelText('할 일');
     screen.getByRole('button', { name: '추가' });
 
     screen.getByText(tasks[0].title);
@@ -46,7 +46,7 @@ describe('<Page />', () => {
 
     render(<Page onChangeTitle={onChangeTitle} tasks={emptyTasks} />);
 
-    fireEvent.change(screen.getByRole('textbox', { name: '할 일' }), { target: { value: '뭐라도 하기' } });
+    fireEvent.change(screen.getByLabelText('할 일'), { target: { value: '뭐라도 하기' } });
 
     expect(onChangeTitle).toBeCalled();
   });
