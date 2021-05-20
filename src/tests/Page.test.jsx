@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import Page from '../pages/TodoPage';
 
 describe('Page component', () => {
-  given('container', () => (
+  const renderPage = () => (
     render((
       <Page
         taskTitle=""
@@ -12,21 +12,20 @@ describe('Page component', () => {
         onClickAddTask={jest.fn()}
         onClickDeleteTask={jest.fn()}
       />
-    ))
-  ));
+    )));
 
   it('renders header', () => {
-    const { getByText } = given.container;
+    const { getByText } = renderPage();
     expect(getByText('To-do')).toBeInTheDocument();
   });
 
   it('renders input control for adding new task', () => {
-    const { getByRole } = given.container;
+    const { getByRole } = renderPage();
     expect(getByRole('textbox')).toBeInTheDocument();
   });
 
   it('renders list of task', () => {
-    const { getByRole } = given.container;
+    const { getByRole } = renderPage();
     expect(getByRole('list')).toBeInTheDocument();
   });
 });
