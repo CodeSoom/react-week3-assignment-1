@@ -42,6 +42,7 @@ describe('App component', () => {
     );
     expect(queryByText('건물1 매입')).not.toBeInTheDocument();
     expect(getByText('건물2 매입')).toBeInTheDocument();
+    expect(queryByText('할 일이 없어요!')).not.toBeInTheDocument();
 
     userEvent.click(
       within(getByText('건물2 매입'))
