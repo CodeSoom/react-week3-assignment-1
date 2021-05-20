@@ -11,24 +11,24 @@ describe('Item component', () => {
 
   const handleClick = jest.fn();
 
-  given('container', () => (
+  const renderItem = () => (
     render((
       <Item
         task={task}
         onClickDelete={handleClick}
       />
     ))
-  ));
+  );
 
   it('renders each task on screen', () => {
-    const { getByText, getByRole } = given.container;
+    const { getByText, getByRole } = renderItem();
 
     expect(getByText('뭐라도 하기')).toBeInTheDocument();
     expect(getByRole('button', { name: '완료' })).toBeInTheDocument();
   });
 
   it('renders 완료 button and listens click event', () => {
-    const { getByRole } = given.container;
+    const { getByRole } = renderItem();
 
     expect(handleClick).not.toBeCalled();
     userEvent.click(getByRole('button', { name: '완료' }));
