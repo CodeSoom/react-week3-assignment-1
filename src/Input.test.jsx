@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 test('addTodo', () => {
-  const handleClick = jest.fn();
+  const { handleClick, handleChange } = jest.fn();
 
   const { container, getByText } = render((
     <Input />
@@ -14,6 +14,7 @@ test('addTodo', () => {
   expect(container).toHaveTextContent('추가');
 
   expect(handleClick).not.toBeCalled();
+  expect(handleChange).toBeCalled();
 
   fireEvent.click(getByText('추가'));
 });

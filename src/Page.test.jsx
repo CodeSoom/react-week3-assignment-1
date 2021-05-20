@@ -2,14 +2,13 @@ import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
 
-import Input from './Input';
-import List from './List';
+import Page from './Page';
 
-test('addTodo', () => {
+test('Page', () => {
   const handleClick = jest.fn();
 
   const { container, getByText } = render((
-    <Input />
+    <Page />
   ));
 
   expect(container).toHaveTextContent('추가');
@@ -19,7 +18,7 @@ test('addTodo', () => {
   fireEvent.click(getByText('추가'));
 });
 
-test('List', () => {
+test('Page', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
@@ -28,7 +27,7 @@ test('List', () => {
   const handleClick = jest.fn();
 
   const { container, getByText } = render((
-    <List
+    <Page
       task={task}
       onClickDelete={handleClick}
     />
@@ -44,13 +43,13 @@ test('List', () => {
   expect(handleClick).toBeCalledWith(1);
 });
 
-test('emptyList', () => {
+test('Page', () => {
   const task = '';
 
   const handleClick = jest.fn();
 
   const { container } = render((
-    <List
+    <Page
       task={task}
       onClickDelete={handleClick}
     />
