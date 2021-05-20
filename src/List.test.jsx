@@ -21,15 +21,14 @@ test('List', () => {
     expect(container).toHaveTextContent('코드숨');
     expect(container).toHaveTextContent('완료');
  
-    // 2.완료 버튼을 눌렀을 떄 task.title =>'코드숨' 이 사라지고,
-    // '할 일이 없어요!' 가 출력된다.
+    // 2.완료 버튼을 눌렀을 떄 
+    // 실제 onClickDelete 동작은 상위 컴포넌트에서 동작하는 것
+    // List 컴포넌트에서는 onClickDelete 가 호출될 뿐이다.
     
     expect(handleClick).not.toBeCalled();
 
     fireEvent.click(getByText('완료'));
   
-    expect(handleClick).toBeCalledWith(1);
-  
-    expect(container).toHaveTextContent('할 일이 없어요!');  
+    expect(handleClick).toBeCalledWith(1); 
         
 });
