@@ -20,7 +20,7 @@ describe('Page component', () => {
     expect(getByText('To-do')).toBeInTheDocument();
   });
 
-  it('renders textbox for adding new task', () => {
+  it('renders input control for adding new task', () => {
     const { getByRole } = given.container;
     expect(getByRole('textbox')).toBeInTheDocument();
   });
