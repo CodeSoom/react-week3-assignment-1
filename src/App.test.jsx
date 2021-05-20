@@ -33,6 +33,4 @@ test('App', () => {
     expect(handleClickDeleteTask).not.toBeCalled();
     fireEvent.click(getByText('완료'));
 
-
-  
 });
