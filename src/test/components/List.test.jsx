@@ -29,7 +29,7 @@ describe('<List />', () => {
   }
 
   context('when tasks doesn\'t exist', () => {
-    it('renders text', () => {
+    it('renders "할 일이 없어요!"', () => {
       setup({ tasks: emptyTasks });
 
       screen.getByText('할 일이 없어요!');

@@ -52,7 +52,7 @@ describe('<Page />', () => {
   }
 
   context('when doesn\'t exist tasks', () => {
-    it('renders title, Input, List', () => {
+    it('renders title, Input, "할 일이 없어요!"', () => {
       const {
         heading,
         input,
