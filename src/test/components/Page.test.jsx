@@ -65,6 +65,18 @@ describe('<Page />', () => {
       });
     });
 
+    it('renders taskTitle', () => {
+      const onChangeTitle = jest.fn();
+
+      const { input } = setup({
+        tasks,
+        taskTitle: '뭐라도 하기',
+        onChangeTitle,
+      });
+
+      expect(input).toHaveAttribute('value', '뭐라도 하기');
+    });
+
     it('calls onClickDeleteTask', () => {
       const onClickDeleteTask = jest.fn();
 
