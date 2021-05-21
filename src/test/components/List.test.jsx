@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import List from './List';
+import List from '../../components/List';
 
 describe('<List />', () => {
   const tasks = [

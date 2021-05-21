@@ -1,6 +1,6 @@
 import { fireEvent, screen, render } from '@testing-library/react';
 
-import App from './App';
+import App from '../App';
 
 describe('<App />', () => {
   function setup() {

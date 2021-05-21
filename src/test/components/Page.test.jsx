@@ -3,7 +3,7 @@ import {
   render, screen,
 } from '@testing-library/react';
 
-import Page from './Page';
+import Page from '../../components/Page';
 
 describe('<Page />', () => {
   const emptyTasks = [];
