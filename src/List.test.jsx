@@ -36,12 +36,12 @@ test('List', () => {
     
       const handleClick = jest.fn();
     
-      let { container, getByText } = render((
+      let { container } = render(
         <List
           tasks={tasks}
           onClickDelete={handleClick}
         />
-      ));
+      );
     
       expect(container).toHaveTextContent('할 일이 없어요!');
     
