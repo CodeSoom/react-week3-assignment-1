@@ -56,10 +56,10 @@ describe('<Page />', () => {
     expect(input).toBeInTheDocument();
     expect(button).toBeInTheDocument();
 
-    expect(screen.getByText(tasks[0].title)).toBeInTheDocument();
-    expect(screen.getByText(tasks[1].title)).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: '완료' })[0]).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: '완료' })[1]).toBeInTheDocument();
+    tasks.forEach((task, index) => {
+      expect(screen.getByText(task.title)).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: '완료' })[index]).toBeInTheDocument();
+    });
   });
 
   it('calls onChangeTitle', () => {
@@ -87,8 +87,10 @@ describe('<Page />', () => {
 
     setup({ onClickDeleteTask, tasks });
 
-    fireEvent.click(screen.getAllByRole('button', { name: '완료' })[0]);
+    tasks.forEach((_, index) => {
+      fireEvent.click(screen.getAllByRole('button', { name: '완료' })[index]);
 
-    expect(onClickDeleteTask).toBeCalled();
+      expect(onClickDeleteTask).toBeCalled();
+    });
   });
 });

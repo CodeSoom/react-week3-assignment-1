@@ -29,8 +29,7 @@ describe('<List />', () => {
   it('renders tasks', () => {
     setup({ tasks });
 
-    screen.getByText(tasks[0].title);
-    screen.getByText(tasks[1].title);
+    tasks.forEach((task) => expect(screen.getByText(task.title)).toBeInTheDocument());
   });
 
   it('calls onClickDelete', () => {
@@ -38,7 +37,10 @@ describe('<List />', () => {
 
     setup({ tasks, onClickDelete });
 
-    fireEvent.click(screen.getAllByRole('button')[0]);
-    expect(onClickDelete).toBeCalledWith(tasks[0].id);
+    tasks.forEach((_, index) => {
+      fireEvent.click(screen.getAllByRole('button')[index]);
+
+      expect(onClickDelete).toBeCalledWith(tasks[index].id);
+    });
   });
 });
