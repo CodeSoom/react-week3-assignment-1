@@ -5,9 +5,24 @@ import {
 import Input from '../../components/Input';
 
 describe('<Input />', () => {
-  function setup(props = {}) {
+  function setup(props = {
+    value: undefined,
+    onChange: undefined,
+    onClick: undefined,
+  }) {
+    const {
+      value, onChange,
+      onClick,
+    } = props;
+
     // eslint-disable-next-line react/jsx-props-no-spreading
-    render(<Input {...props} />);
+    render(
+      <Input
+        value={value}
+        onChange={onChange}
+        onClick={onClick}
+      />,
+    );
   }
 
   it('renders label, input, button', () => {

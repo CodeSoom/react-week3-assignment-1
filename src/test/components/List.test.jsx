@@ -15,9 +15,17 @@ describe('<List />', () => {
   ];
   const emptyTasks = [];
 
-  function setup(props = {}) {
+  function setup(props = {
+    tasks: undefined,
+    onClickDelete: undefined,
+  }) {
+    const { tasks: todos, onClickDelete } = props;
+
     // eslint-disable-next-line react/jsx-props-no-spreading
-    render(<List {...props} />);
+    render(<List
+      tasks={todos}
+      onClickDelete={onClickDelete}
+    />);
   }
 
   context('when tasks doesn\'t exist', () => {

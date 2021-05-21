@@ -18,9 +18,28 @@ describe('<Page />', () => {
     },
   ];
 
-  function setup(props = {}) {
+  function setup(props = {
+    taskTitle: undefined,
+    onChangeTitle: undefined,
+    onClickAddTask: undefined,
+    tasks: undefined,
+    onClickDeleteTask: undefined,
+  }) {
+    const {
+      taskTitle, onChangeTitle, onClickAddTask,
+      tasks: todos, onClickDeleteTask,
+    } = props;
+
     // eslint-disable-next-line react/jsx-props-no-spreading
-    render(<Page {...props} />);
+    render(
+      <Page
+        taskTitle={taskTitle}
+        onChangeTitle={onChangeTitle}
+        onClickAddTask={onClickAddTask}
+        tasks={todos}
+        onClickDeleteTask={onClickDeleteTask}
+      />,
+    );
     const heading = screen.getByRole('heading', { name: /To-do/i });
     const button = screen.getByRole('button', { name: '추가' });
     const input = screen.getByLabelText('할 일');
