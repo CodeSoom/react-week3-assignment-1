@@ -45,30 +45,10 @@ describe('<Page />', () => {
       expect(button).toBeInTheDocument();
       expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
     });
-
-    it('calls onChangeTitle', () => {
-      const onChangeTitle = jest.fn();
-
-      const { input } = setup({ onChangeTitle, tasks: emptyTasks });
-
-      fireEvent.change(input, { target: { value: '뭐라도 하기' } });
-
-      expect(onChangeTitle).toBeCalled();
-    });
-
-    it('calls onClickAddTask', () => {
-      const onClickAddTask = jest.fn();
-
-      const { button } = setup({ onClickAddTask, tasks });
-
-      fireEvent.click(button);
-
-      expect(onClickAddTask).toBeCalled();
-    });
   });
 
   context('when exist tasks', () => {
-    it('renders title, Input, List when exist tasks', () => {
+    it('renders title, Input, List', () => {
       const {
         heading,
         input,
@@ -85,26 +65,6 @@ describe('<Page />', () => {
       });
     });
 
-    it('calls onChangeTitle', () => {
-      const onChangeTitle = jest.fn();
-
-      const { input } = setup({ onChangeTitle, tasks: emptyTasks });
-
-      fireEvent.change(input, { target: { value: '뭐라도 하기' } });
-
-      expect(onChangeTitle).toBeCalled();
-    });
-
-    it('calls onClickAddTask', () => {
-      const onClickAddTask = jest.fn();
-
-      const { button } = setup({ onClickAddTask, tasks: emptyTasks });
-
-      fireEvent.click(button);
-
-      expect(onClickAddTask).toBeCalled();
-    });
-
     it('calls onClickDeleteTask', () => {
       const onClickDeleteTask = jest.fn();
 
@@ -116,5 +76,25 @@ describe('<Page />', () => {
         expect(onClickDeleteTask).toBeCalled();
       });
     });
+  });
+
+  it('calls onChangeTitle', () => {
+    const onChangeTitle = jest.fn();
+
+    const { input } = setup({ onChangeTitle, tasks });
+
+    fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+
+    expect(onChangeTitle).toBeCalled();
+  });
+
+  it('calls onClickAddTask', () => {
+    const onClickAddTask = jest.fn();
+
+    const { button } = setup({ onClickAddTask, tasks });
+
+    fireEvent.click(button);
+
+    expect(onClickAddTask).toBeCalled();
   });
 });
