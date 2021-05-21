@@ -15,14 +15,19 @@ describe('<List />', () => {
   ];
   const emptyTasks = [];
 
+  function setup(props = {}) {
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    render(<List {...props} />);
+  }
+
   it('renders text when tasks does not exist', () => {
-    render(<List tasks={emptyTasks} />);
+    setup({ tasks: emptyTasks });
 
     screen.getByText('할 일이 없어요!');
   });
 
   it('renders tasks', () => {
-    render(<List tasks={tasks} />);
+    setup({ tasks });
 
     screen.getByText(tasks[0].title);
     screen.getByText(tasks[1].title);
@@ -31,7 +36,7 @@ describe('<List />', () => {
   it('calls onClickDelete', () => {
     const onClickDelete = jest.fn();
 
-    render(<List tasks={tasks} onClickDelete={onClickDelete} />);
+    setup({ tasks, onClickDelete });
 
     fireEvent.click(screen.getAllByRole('button')[0]);
     expect(onClickDelete).toBeCalledWith(tasks[0].id);

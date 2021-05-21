@@ -17,36 +17,57 @@ describe('<Page />', () => {
       title: '뭐라도 하기 2',
     },
   ];
+
+  function setup(props = {}) {
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    render(<Page {...props} />);
+    const heading = screen.getByRole('heading', { name: /To-do/i });
+    const button = screen.getByRole('button', { name: '추가' });
+    const input = screen.getByLabelText('할 일');
+
+    return {
+      heading,
+      button,
+      input,
+    };
+  }
+
   it('renders title, Input, List when doesn\'t exist tasks', () => {
-    render(<Page tasks={emptyTasks} />);
+    const {
+      heading,
+      input,
+      button,
+    } = setup({ tasks: emptyTasks });
 
-    screen.getByRole('heading', { name: /To-do/i });
-
-    screen.getByLabelText('할 일');
-    screen.getByRole('button', { name: '추가' });
-
-    screen.getByText('할 일이 없어요!');
+    expect(heading).toBeInTheDocument();
+    expect(input).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
+    expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
   });
 
   it('renders title, Input, List when exist tasks', () => {
-    render(<Page tasks={tasks} />);
+    const {
+      heading,
+      input,
+      button,
+    } = setup({ tasks });
 
-    screen.getByRole('heading', { name: /To-do/i });
+    expect(heading).toBeInTheDocument();
+    expect(input).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
 
-    screen.getByLabelText('할 일');
-    screen.getByRole('button', { name: '추가' });
-
-    screen.getByText(tasks[0].title);
-    screen.getByText(tasks[1].title);
-    screen.getAllByRole('button', { name: '완료' });
+    expect(screen.getByText(tasks[0].title)).toBeInTheDocument();
+    expect(screen.getByText(tasks[1].title)).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: '완료' })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: '완료' })[1]).toBeInTheDocument();
   });
 
   it('calls onChangeTitle', () => {
     const onChangeTitle = jest.fn();
 
-    render(<Page onChangeTitle={onChangeTitle} tasks={emptyTasks} />);
+    const { input } = setup({ onChangeTitle, tasks: emptyTasks });
 
-    fireEvent.change(screen.getByLabelText('할 일'), { target: { value: '뭐라도 하기' } });
+    fireEvent.change(input, { target: { value: '뭐라도 하기' } });
 
     expect(onChangeTitle).toBeCalled();
   });
@@ -54,9 +75,9 @@ describe('<Page />', () => {
   it('calls onClickAddTask', () => {
     const onClickAddTask = jest.fn();
 
-    render(<Page onClickAddTask={onClickAddTask} tasks={emptyTasks} />);
+    const { button } = setup({ onClickAddTask, tasks: emptyTasks });
 
-    fireEvent.click(screen.getByRole('button', { name: '추가' }));
+    fireEvent.click(button);
 
     expect(onClickAddTask).toBeCalled();
   });
@@ -64,7 +85,7 @@ describe('<Page />', () => {
   it('calls onClickDeleteTask', () => {
     const onClickDeleteTask = jest.fn();
 
-    render(<Page onClickDeleteTask={onClickDeleteTask} tasks={tasks} />);
+    setup({ onClickDeleteTask, tasks });
 
     fireEvent.click(screen.getAllByRole('button', { name: '완료' })[0]);
 

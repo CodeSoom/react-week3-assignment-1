@@ -5,18 +5,22 @@ import {
 import Input from './Input';
 
 describe('<Input />', () => {
-  const onChange = jest.fn();
-  const onClick = jest.fn();
+  function setup(props = {}) {
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    render(<Input {...props} />);
+  }
 
   it('renders label, input, button', () => {
-    render(<Input />);
+    setup();
 
     screen.getByLabelText('할 일');
     screen.getByRole('button', { name: '추가' });
   });
 
   it('calls onChange when change value', () => {
-    render(<Input onChange={onChange} />);
+    const onChange = jest.fn();
+
+    setup({ onChange });
 
     const input = screen.getByLabelText('할 일');
 
@@ -26,7 +30,9 @@ describe('<Input />', () => {
   });
 
   it('calls onClick when click button', () => {
-    render(<Input onClick={onClick} />);
+    const onClick = jest.fn();
+
+    setup({ onClick });
 
     fireEvent.click(screen.getByRole('button', { name: '추가' }));
 

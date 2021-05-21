@@ -3,28 +3,40 @@ import { fireEvent, screen, render } from '@testing-library/react';
 import App from './App';
 
 describe('<App />', () => {
-  it('changes taskTitle', () => {
+  function setup() {
     render(<App />);
 
-    fireEvent.change(screen.getByLabelText('할 일'), { target: { value: '뭐라도 하기' } });
+    const input = screen.getByLabelText('할 일');
+    const button = screen.getByRole('button', { name: '추가' });
 
-    expect(screen.getByLabelText('할 일')).toHaveAttribute('value', '뭐라도 하기');
+    return {
+      input,
+      button,
+    };
+  }
+
+  it('changes taskTitle', () => {
+    const { input } = setup();
+
+    fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+
+    expect(input).toHaveAttribute('value', '뭐라도 하기');
   });
 
   it('creates new task', () => {
-    render(<App />);
+    const { input, button } = setup();
 
-    fireEvent.change(screen.getByLabelText('할 일'), { target: { value: '뭐라도 하기' } });
-    fireEvent.click(screen.getByRole('button', { name: '추가' }));
+    fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+    fireEvent.click(button);
 
     screen.getByText('뭐라도 하기');
   });
 
   it('deletes a task', () => {
-    render(<App />);
+    const { input, button } = setup();
 
-    fireEvent.change(screen.getByLabelText('할 일'), { target: { value: '뭐라도 하기' } });
-    fireEvent.click(screen.getByRole('button', { name: '추가' }));
+    fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+    fireEvent.click(button);
     fireEvent.click(screen.getByRole('button', { name: '완료' }));
 
     screen.getByText('할 일이 없어요!');
