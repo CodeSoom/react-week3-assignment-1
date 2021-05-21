@@ -32,65 +32,89 @@ describe('<Page />', () => {
     };
   }
 
-  it('renders title, Input, List when doesn\'t exist tasks', () => {
-    const {
-      heading,
-      input,
-      button,
-    } = setup({ tasks: emptyTasks });
+  context('when doesn\'t exist tasks', () => {
+    it('renders title, Input, List', () => {
+      const {
+        heading,
+        input,
+        button,
+      } = setup({ tasks: emptyTasks });
 
-    expect(heading).toBeInTheDocument();
-    expect(input).toBeInTheDocument();
-    expect(button).toBeInTheDocument();
-    expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
-  });
+      expect(heading).toBeInTheDocument();
+      expect(input).toBeInTheDocument();
+      expect(button).toBeInTheDocument();
+      expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
+    });
 
-  it('renders title, Input, List when exist tasks', () => {
-    const {
-      heading,
-      input,
-      button,
-    } = setup({ tasks });
+    it('calls onChangeTitle', () => {
+      const onChangeTitle = jest.fn();
 
-    expect(heading).toBeInTheDocument();
-    expect(input).toBeInTheDocument();
-    expect(button).toBeInTheDocument();
+      const { input } = setup({ onChangeTitle, tasks: emptyTasks });
 
-    tasks.forEach((task, index) => {
-      expect(screen.getByText(task.title)).toBeInTheDocument();
-      expect(screen.getAllByRole('button', { name: '완료' })[index]).toBeInTheDocument();
+      fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+
+      expect(onChangeTitle).toBeCalled();
+    });
+
+    it('calls onClickAddTask', () => {
+      const onClickAddTask = jest.fn();
+
+      const { button } = setup({ onClickAddTask, tasks });
+
+      fireEvent.click(button);
+
+      expect(onClickAddTask).toBeCalled();
     });
   });
 
-  it('calls onChangeTitle', () => {
-    const onChangeTitle = jest.fn();
+  context('when exist tasks', () => {
+    it('renders title, Input, List when exist tasks', () => {
+      const {
+        heading,
+        input,
+        button,
+      } = setup({ tasks });
 
-    const { input } = setup({ onChangeTitle, tasks: emptyTasks });
+      expect(heading).toBeInTheDocument();
+      expect(input).toBeInTheDocument();
+      expect(button).toBeInTheDocument();
 
-    fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+      tasks.forEach((task, index) => {
+        expect(screen.getByText(task.title)).toBeInTheDocument();
+        expect(screen.getAllByRole('button', { name: '완료' })[index]).toBeInTheDocument();
+      });
+    });
 
-    expect(onChangeTitle).toBeCalled();
-  });
+    it('calls onChangeTitle', () => {
+      const onChangeTitle = jest.fn();
 
-  it('calls onClickAddTask', () => {
-    const onClickAddTask = jest.fn();
+      const { input } = setup({ onChangeTitle, tasks: emptyTasks });
 
-    const { button } = setup({ onClickAddTask, tasks: emptyTasks });
+      fireEvent.change(input, { target: { value: '뭐라도 하기' } });
 
-    fireEvent.click(button);
+      expect(onChangeTitle).toBeCalled();
+    });
 
-    expect(onClickAddTask).toBeCalled();
-  });
+    it('calls onClickAddTask', () => {
+      const onClickAddTask = jest.fn();
 
-  it('calls onClickDeleteTask', () => {
-    const onClickDeleteTask = jest.fn();
+      const { button } = setup({ onClickAddTask, tasks: emptyTasks });
 
-    setup({ onClickDeleteTask, tasks });
+      fireEvent.click(button);
 
-    tasks.forEach((_, index) => {
-      fireEvent.click(screen.getAllByRole('button', { name: '완료' })[index]);
+      expect(onClickAddTask).toBeCalled();
+    });
 
-      expect(onClickDeleteTask).toBeCalled();
+    it('calls onClickDeleteTask', () => {
+      const onClickDeleteTask = jest.fn();
+
+      setup({ onClickDeleteTask, tasks });
+
+      tasks.forEach((_, index) => {
+        fireEvent.click(screen.getAllByRole('button', { name: '완료' })[index]);
+
+        expect(onClickDeleteTask).toBeCalled();
+      });
     });
   });
 });

@@ -20,27 +20,31 @@ describe('<List />', () => {
     render(<List {...props} />);
   }
 
-  it('renders text when tasks does not exist', () => {
-    setup({ tasks: emptyTasks });
+  context('when tasks doesn\'t exist', () => {
+    it('renders text', () => {
+      setup({ tasks: emptyTasks });
 
-    screen.getByText('할 일이 없어요!');
+      screen.getByText('할 일이 없어요!');
+    });
   });
 
-  it('renders tasks', () => {
-    setup({ tasks });
+  context('when tasks exist', () => {
+    it('renders tasks', () => {
+      setup({ tasks });
 
-    tasks.forEach((task) => expect(screen.getByText(task.title)).toBeInTheDocument());
-  });
+      tasks.forEach((task) => expect(screen.getByText(task.title)).toBeInTheDocument());
+    });
 
-  it('calls onClickDelete', () => {
-    const onClickDelete = jest.fn();
+    it('calls onClickDelete', () => {
+      const onClickDelete = jest.fn();
 
-    setup({ tasks, onClickDelete });
+      setup({ tasks, onClickDelete });
 
-    tasks.forEach((_, index) => {
-      fireEvent.click(screen.getAllByRole('button')[index]);
+      tasks.forEach((_, index) => {
+        fireEvent.click(screen.getAllByRole('button')[index]);
 
-      expect(onClickDelete).toBeCalledWith(tasks[index].id);
+        expect(onClickDelete).toBeCalledWith(tasks[index].id);
+      });
     });
   });
 });
