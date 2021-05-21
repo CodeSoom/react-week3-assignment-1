@@ -2,7 +2,7 @@ import {
   screen, render, fireEvent,
 } from '@testing-library/react';
 
-import Input from './Input';
+import Input from '../../components/Input';
 
 describe('<Input />', () => {
   function setup(props = {}) {
