@@ -49,6 +49,8 @@ describe('<Input />', () => {
 
     setup({ onClick });
 
+    expect(screen.getByRole('button', { name: '추가' })).toBeInTheDocument();
+
     fireEvent.click(screen.getByRole('button', { name: '추가' }));
 
     expect(onClick).toBeCalled();
