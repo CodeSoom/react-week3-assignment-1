@@ -40,11 +40,11 @@ describe('Input component', () => {
 
   context('when something is typed', () => {
     it('does call handler', () => {
-      const input = 'abcd';
+      const value = 'abcd';
       const { getByRole } = renderInput();
 
-      userEvent.type(getByRole('textbox'), input);
-      expect(onChangeTitle).toBeCalledTimes(input.length);
+      userEvent.type(getByRole('textbox'), value);
+      expect(onChangeTitle).toBeCalledTimes(value.length);
     });
   });
 });
