@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import App from '../App';
 
-describe('App component', () => {
+describe('App', () => {
   it('adds current input to list', () => {
     const { getByText, queryByText, getByRole } = render(<App />);
 

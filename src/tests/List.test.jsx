@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import List from '../components/List';
 
-describe('List component', () => {
+describe('List', () => {
   given('container', () => render((
     <List
       tasks={given.tasks}

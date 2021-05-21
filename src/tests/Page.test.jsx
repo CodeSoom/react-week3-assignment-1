@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import Page from '../pages/TodoPage';
 
-describe('Page component', () => {
+describe('Page', () => {
   const renderPage = () => (
     render((
       <Page

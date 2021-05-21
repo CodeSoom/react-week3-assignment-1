@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import Input from '../components/Input';
 
-describe('Input component', () => {
+describe('Input', () => {
   const taskTitle = '';
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();

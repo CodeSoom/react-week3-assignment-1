@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 
 import Item from '../components/Item';
 
-describe('Item component', () => {
+describe('Item', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
