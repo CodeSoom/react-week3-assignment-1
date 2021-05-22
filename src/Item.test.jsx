@@ -9,7 +9,7 @@ test('Item', () => {
   };
 
   const handleClick = jest.fn();
-
+  // getByTest const 로 요소를 찾게도와줌
   const { container, getByText } = render((
     <Item
       task={task}

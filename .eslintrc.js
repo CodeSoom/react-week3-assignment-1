@@ -48,8 +48,7 @@ module.exports = {
     'key-spacing': ['error', { mode: 'strict' }],
     'arrow-spacing': ['error', { before: true, after: true }],
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
-    'linebreak-style': 'off',
-
+    'linebreak-style': 0,
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
   },
