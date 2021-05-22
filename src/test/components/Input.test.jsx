@@ -22,8 +22,8 @@ describe('<Input />', () => {
   it('renders label, input, button', () => {
     setup();
 
-    screen.getByLabelText('할 일');
-    screen.getByRole('button', { name: '추가' });
+    expect(screen.getByLabelText('할 일')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '추가' })).toBeInTheDocument();
   });
 
   it('calls onChange when change value', () => {

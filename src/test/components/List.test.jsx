@@ -30,7 +30,7 @@ describe('<List />', () => {
     it('renders "할 일이 없어요!"', () => {
       setup(emptyTasks);
 
-      screen.getByText('할 일이 없어요!');
+      expect(screen.getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 
