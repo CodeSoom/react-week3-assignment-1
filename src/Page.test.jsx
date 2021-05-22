@@ -1,21 +1,35 @@
 import React from 'react';
 
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
 describe('Page 컴포넌트', () => {
-  it('렌더링 된 화면 확인', () => {
+  it('renders', () => {
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+
     const tasks = [
-      { id: 1, title: '멋대로 살기' },
+      { id: 1, title: 'Task-1' },
+      { id: 2, title: 'Task-2' },
     ];
 
-    const { container } = render((<Page tasks={tasks} />));
+    const { getByText } = render((
+      <Page
+        taskTitle=""
+        onChangeTitle={handleChangeTitle}
+        onClickAddTask={handleClickAddTask}
+        tasks={tasks}
+        onClickDeleteTask={handleClickDeleteTask}
+      />
+    ));
 
-    expect(container).toHaveTextContent('To-do');
-    expect(container).toHaveTextContent('할 일');
-    expect(container).toHaveTextContent('추가');
-    expect(container).toHaveTextContent('멋대로 살기');
-    expect(container).toHaveTextContent('완료');
+    expect(getByText(/Task-1/)).not.toBeNull();
+    expect(getByText(/Task-2/)).not.toBeNull();
+
+    fireEvent.click(getByText(/추가/));
+
+    expect(handleClickAddTask).toBeCalled();
   });
 });
