@@ -5,9 +5,12 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 
 describe('App', () => {
+  function renderApp() {
+    return render(<App />);
+  }
   context('when listening input change event ', () => {
     it('renders input value', () => {
-      const { getByRole } = render(<App />);
+      const { getByRole } = renderApp();
 
       const input = getByRole('textbox');
       const changeValue = '할 일 입력 중';
@@ -24,7 +27,7 @@ describe('App', () => {
 
   context('when listening click event add todo', () => {
     it('adds task and renders', () => {
-      const { container, getByRole, getByText } = render(<App />);
+      const { container, getByRole, getByText } = renderApp();
 
       const input = getByRole('textbox');
       const addButton = getByText('추가');
@@ -41,7 +44,7 @@ describe('App', () => {
 
   context('when listening click event delete todo', () => {
     it('remove task and renders', () => {
-      const { container, getByRole, getByText } = render(<App />);
+      const { container, getByRole, getByText } = renderApp();
 
       const input = getByRole('textbox');
       const addButton = getByText('추가');
