@@ -30,7 +30,6 @@ describe('<Page />', () => {
       tasks: todos, onClickDeleteTask,
     } = props;
 
-    // eslint-disable-next-line react/jsx-props-no-spreading
     render(
       <Page
         taskTitle={taskTitle}

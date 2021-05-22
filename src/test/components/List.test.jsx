@@ -21,7 +21,6 @@ describe('<List />', () => {
   }) {
     const { tasks: todos, onClickDelete } = props;
 
-    // eslint-disable-next-line react/jsx-props-no-spreading
     render(<List
       tasks={todos}
       onClickDelete={onClickDelete}

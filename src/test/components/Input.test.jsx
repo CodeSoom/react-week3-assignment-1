@@ -15,7 +15,6 @@ describe('<Input />', () => {
       onClick,
     } = props;
 
-    // eslint-disable-next-line react/jsx-props-no-spreading
     render(
       <Input
         value={value}
