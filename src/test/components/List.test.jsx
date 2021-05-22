@@ -15,21 +15,20 @@ describe('<List />', () => {
   ];
   const emptyTasks = [];
 
-  function setup(props = {
-    tasks: undefined,
-    onClickDelete: undefined,
-  }) {
-    const { tasks: todos, onClickDelete } = props;
+  const onClickDelete = jest.fn();
 
-    render(<List
-      tasks={todos}
-      onClickDelete={onClickDelete}
-    />);
+  function setup(todos) {
+    render(
+      <List
+        tasks={todos}
+        onClickDelete={onClickDelete}
+      />,
+    );
   }
 
   context('when tasks doesn\'t exist', () => {
     it('renders "할 일이 없어요!"', () => {
-      setup({ tasks: emptyTasks });
+      setup(emptyTasks);
 
       screen.getByText('할 일이 없어요!');
     });
@@ -37,15 +36,13 @@ describe('<List />', () => {
 
   context('when tasks exist', () => {
     it('renders tasks', () => {
-      setup({ tasks });
+      setup(tasks);
 
       tasks.forEach((task) => expect(screen.getByText(task.title)).toBeInTheDocument());
     });
 
     it('calls onClickDelete', () => {
-      const onClickDelete = jest.fn();
-
-      setup({ tasks, onClickDelete });
+      setup(tasks);
 
       tasks.forEach((_, index) => {
         fireEvent.click(screen.getAllByRole('button')[index]);

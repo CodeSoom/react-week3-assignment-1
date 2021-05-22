@@ -18,18 +18,16 @@ describe('<Page />', () => {
     },
   ];
 
-  function setup(props = {
-    taskTitle: undefined,
-    onChangeTitle: undefined,
-    onClickAddTask: undefined,
-    tasks: undefined,
-    onClickDeleteTask: undefined,
-  }) {
-    const {
-      taskTitle, onChangeTitle, onClickAddTask,
-      tasks: todos, onClickDeleteTask,
-    } = props;
+  const onChangeTitle = jest.fn();
 
+  const onClickAddTask = jest.fn();
+
+  const onClickDeleteTask = jest.fn();
+
+  function setup({
+    taskTitle,
+    todos,
+  }) {
     render(
       <Page
         taskTitle={taskTitle}
@@ -56,7 +54,7 @@ describe('<Page />', () => {
         heading,
         input,
         button,
-      } = setup({ tasks: emptyTasks });
+      } = setup({ todos: emptyTasks });
 
       expect(heading).toBeInTheDocument();
       expect(input).toBeInTheDocument();
@@ -71,7 +69,7 @@ describe('<Page />', () => {
         heading,
         input,
         button,
-      } = setup({ tasks });
+      } = setup({ todos: tasks });
 
       expect(heading).toBeInTheDocument();
       expect(input).toBeInTheDocument();
@@ -84,21 +82,16 @@ describe('<Page />', () => {
     });
 
     it('renders taskTitle', () => {
-      const onChangeTitle = jest.fn();
-
       const { input } = setup({
-        tasks,
         taskTitle: '뭐라도 하기',
-        onChangeTitle,
+        todos: tasks,
       });
 
       expect(input).toHaveAttribute('value', '뭐라도 하기');
     });
 
     it('calls onClickDeleteTask', () => {
-      const onClickDeleteTask = jest.fn();
-
-      setup({ onClickDeleteTask, tasks });
+      setup({ todos: tasks });
 
       tasks.forEach((_, index) => {
         fireEvent.click(screen.getAllByRole('button', { name: '완료' })[index]);
@@ -109,9 +102,7 @@ describe('<Page />', () => {
   });
 
   it('calls onChangeTitle', () => {
-    const onChangeTitle = jest.fn();
-
-    const { input } = setup({ onChangeTitle, tasks });
+    const { input } = setup({ todos: tasks });
 
     fireEvent.change(input, { target: { value: '뭐라도 하기' } });
 
@@ -119,9 +110,7 @@ describe('<Page />', () => {
   });
 
   it('calls onClickAddTask', () => {
-    const onClickAddTask = jest.fn();
-
-    const { button } = setup({ onClickAddTask, tasks });
+    const { button } = setup({ todos: tasks });
 
     fireEvent.click(button);
 
