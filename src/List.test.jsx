@@ -12,7 +12,6 @@ test('List', () => {
   ];
 
   const handleClick = jest.fn();
-
   const { container, getByText } = render((
     <List
       tasks={tasks}
@@ -21,11 +20,8 @@ test('List', () => {
   ));
 
   expect(container).toHaveTextContent('뭐라도 해보기.완료');
-
   expect(handleClick).not.toBeCalled();
-
   fireEvent.click(getByText('완료'));
-
   expect(handleClick).toBeCalledWith(2);
 });
 
@@ -35,7 +31,6 @@ test('List', () => {
   ];
 
   const handleClick = jest.fn();
-
   const { container } = render(
     <List
       tasks={tasks}
