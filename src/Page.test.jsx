@@ -7,9 +7,7 @@ describe('Page 컴포넌트 관련 테스트', () => {
     const tasks = [];
 
     const { container, queryByPlaceholderText, queryByText } = render((
-      <Page
-        tasks={tasks}
-      />
+      <Page tasks={tasks} />
     ));
 
     const input = queryByPlaceholderText('할 일을 입력해 주세요');
@@ -28,9 +26,7 @@ describe('Page 컴포넌트 관련 테스트', () => {
     }];
 
     const { container, getByText } = render((
-      <Page
-        tasks={tasks}
-      />
+      <Page tasks={tasks} />
     ));
 
     const button = getByText('추가');

@@ -10,9 +10,7 @@ describe('List 컴포넌트 관련 테스트', () => {
     }];
 
     const { container } = render((
-      <List
-        tasks={tasks}
-      />
+      <List tasks={tasks} />
     ));
 
     expect(container).toHaveTextContent('뭐라도 하기');
@@ -22,9 +20,7 @@ describe('List 컴포넌트 관련 테스트', () => {
     const tasks = [];
 
     const { container } = render((
-      <List
-        tasks={tasks}
-      />
+      <List tasks={tasks} />
     ));
 
     expect(container).toHaveTextContent('할 일이 없어요!');
