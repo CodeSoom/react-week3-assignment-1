@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Item 1`] = `
+<div>
+  <li>
+    뭐라도 하기
+    <button
+      type="button"
+    >
+      완료
+    </button>
+  </li>
+</div>
+`;
