@@ -1,4 +1,3 @@
-/* global given */
 import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
@@ -6,47 +5,46 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('TodoList 컴포넌트', () => {
-  given('render', () => (
-    render(
-      (
-        <List
-          tasks={given.tasks}
-          onClickDelete={given.clickDelete}
-        />
-      ),
-    )
-  ));
+  const handleClickDelete = jest.fn();
 
-  context('with todoList', () => {
-    it('할 일 목록 노출', () => {
-      given('tasks', () => [
-        { id: 1, title: '멋대로 살기' },
-        { id: 2, title: '아무렇게나 살기' },
-      ]);
-      const { container } = given.render;
-      expect(container).toHaveTextContent('멋대로 살기완료');
-      expect(container).toHaveTextContent('아무렇게나 살기완료');
+  function renderTodoList(tasks) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClickDelete}
+      />
+    ));
+  }
+
+  context('with tasks', () => {
+    const tasks = [
+      { id: 1, title: '멋대로 살기' },
+      { id: 2, title: '아무렇게나 살기' },
+    ];
+
+    it('할 일 목록 렌더링', () => {
+      const { getByText } = renderTodoList(tasks);
+
+      expect(getByText(/멋대로 살기/)).not.toBeNull();
+      expect(getByText(/아무렇게나 살기/)).not.toBeNull();
     });
 
     it('완료 버튼 누르기', () => {
-      given('tasks', () => [
-        { id: 1, title: '재미있게 살기' },
-      ]);
-      const handleClickDeleteTodo = jest.fn();
-      given('clickDelete', () => handleClickDeleteTodo);
+      const { getAllByText } = renderTodoList(tasks);
 
-      const { getByText } = given.render;
-      expect(handleClickDeleteTodo).not.toBeCalled();
-      fireEvent.click(getByText('완료'));
-      expect(handleClickDeleteTodo).toBeCalled();
+      expect(handleClickDelete).not.toBeCalled();
+
+      const buttons = getAllByText('완료');
+      fireEvent.click(buttons[0]);
+
+      expect(handleClickDelete).toBeCalledWith(1);
     });
   });
 
-  context('without todoList', () => {
-    it('할 일이 없어요! 노출', () => {
-      given('tasks', () => []);
-      const { container } = given.render;
-      expect(container).toHaveTextContent('할 일이 없어요!');
+  context('without tasks', () => {
+    it('할 일이 없어요! 렌더링', () => {
+      const { getByText } = renderTodoList([]);
+      expect(getByText(/할 일이 없어요!/)).not.toBeNull();
     });
   });
 });
