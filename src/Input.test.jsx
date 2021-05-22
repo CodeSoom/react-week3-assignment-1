@@ -10,7 +10,7 @@ describe('Input 컴포넌트', () => {
     render(
       (
         <Input onClick={given.clickEvent} />
-      )
+      ),
     )
   ));
 

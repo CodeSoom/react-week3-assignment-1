@@ -49,8 +49,4 @@ describe('TodoList 컴포넌트', () => {
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
-
-
-
-
 });
