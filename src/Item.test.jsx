@@ -24,7 +24,7 @@ describe('Item', () => {
     expect(container).toHaveTextContent('완료');
   });
 
-  it('is clicked with handleClickDelete', () => {
+  it('listens onClick event', () => {
     const { getByText } = render(
       <Item task={task} onClickDelete={handleClickDelete} />,
     );

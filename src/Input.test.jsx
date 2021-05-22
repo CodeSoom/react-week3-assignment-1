@@ -7,40 +7,44 @@ describe('Input', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
 
-  it('value is empty', () => {
-    const taskTitle = '';
-    render(
-      <Input
-        value={taskTitle}
-        onChange={handleChangeTitle}
-        onClick={handleClickAddTask}
-      />,
-    );
+  context('when value is empty', () => {
+    it('renders hint message', () => {
+      const taskTitle = '';
+      render(
+        <Input
+          value={taskTitle}
+          onChange={handleChangeTitle}
+          onClick={handleClickAddTask}
+        />,
+      );
 
-    // screen.debug();
-    expect(screen.getByRole('textbox')).toBeEmptyDOMElement();
-    expect(
-      screen.queryByPlaceholderText('할 일을 입력해 주세요'),
-    ).toBeInTheDocument();
+      // screen.debug();
+      expect(screen.getByRole('textbox')).toBeEmptyDOMElement();
+      expect(
+        screen.queryByPlaceholderText('할 일을 입력해 주세요'),
+      ).toBeInTheDocument();
+    });
   });
 
-  it('value is not empty ', () => {
-    const taskTitle = 'TDD 익숙해지기';
-    render(
-      <Input
-        value={taskTitle}
-        onChange={handleChangeTitle}
-        onClick={handleClickAddTask}
-      />,
-    );
-    // screen.debug();
-    // screen.getByRole('');
-    const input = screen.getByRole('textbox');
-    expect(input).toBeEmptyDOMElement();
-    expect(input.value).toEqual(taskTitle);
+  context('when value is not empty', () => {
+    it('renders Input text', () => {
+      const taskTitle = 'TDD 익숙해지기';
+      render(
+        <Input
+          value={taskTitle}
+          onChange={handleChangeTitle}
+          onClick={handleClickAddTask}
+        />,
+      );
+      // screen.debug();
+      // screen.getByRole('');
+      const input = screen.getByRole('textbox');
+      expect(input).toBeEmptyDOMElement();
+      expect(input.value).toEqual(taskTitle);
+    });
   });
 
-  it('listens input change event', async () => {
+  it('listens input change event', () => {
     const taskTitle = '';
     const typing = '!';
     render(
@@ -52,11 +56,11 @@ describe('Input', () => {
     );
 
     const input = screen.getByRole('textbox');
-    await userEvent.type(input, typing);
+    userEvent.type(input, typing);
     expect(handleChangeTitle).toBeCalled();
   });
 
-  it('listening click event', async () => {
+  it('listens click event', () => {
     const taskTitle = '할일 추가 하기';
     render(
       <Input
@@ -67,7 +71,7 @@ describe('Input', () => {
     );
 
     expect(handleClickAddTask).not.toBeCalled();
-    await userEvent.click(screen.getByText('추가'));
+    userEvent.click(screen.getByText('추가'));
     expect(handleClickAddTask).toBeCalled();
   });
 });
