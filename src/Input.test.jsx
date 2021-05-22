@@ -1,4 +1,3 @@
-/* global given */
 import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
@@ -40,7 +39,7 @@ describe('Input 컴포넌트', () => {
     expect(getByDisplayValue('New Task')).not.toBeNull();
 
     fireEvent.change(getByLabelText('할 일'), {
-      target: { value: '멋대로 살기' }
+      target: { value: '멋대로 살기' },
     });
 
     expect(handleChange).toBeCalled();
