@@ -10,7 +10,7 @@ describe('Item', () => {
   const handleClickDelete = jest.fn(() => {
   });
 
-  it('shows task.Title', () => {
+  it('shows task Title', () => {
     const { container } = render(
       <Item task={task} onClickDelete={handleClickDelete} />,
     );
