@@ -34,6 +34,16 @@ describe('Page', () => {
       fireEvent.click(getByText('추가'));
       expect(handleClickAddTask).toBeCalled();
     });
+
+    it('input 값 변경', () => {
+      const { getByLabelText } = renderPage(taskTitle, tasks);
+      fireEvent.change(getByLabelText('할 일'), {
+        target: {
+          value: '이벤트 추가',
+        },
+      });
+      expect(handleChangeTitle).toBeCalled();
+    });
   });
 
   context('할 일이 있는 경우', () => {
