@@ -1,11 +1,11 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
 describe('List', () => {
-  const onClickDelete = jest.fn();
+  const handleClickDelete = jest.fn();
   const renderList = (tasks) => render((
-    <List tasks={tasks} onClickDelete={onClickDelete} />
+    <List tasks={tasks} onClickDelete={handleClickDelete} />
   ));
 
   context('할 일이 없는 경우', () => {
@@ -29,6 +29,10 @@ describe('List', () => {
       expect(container).toHaveTextContent('완료');
       expect(getAllByText(/새로운 할일 #\d+$/)).toHaveLength(tasks.length);
       expect(getAllByRole('listitem')).toHaveLength(tasks.length);
+
+      const buttons = getAllByText('완료');
+      fireEvent.click(buttons[0]);
+      expect(handleClickDelete).toBeCalled();
     });
   });
 });
