@@ -3,17 +3,19 @@ import { render } from '@testing-library/react';
 import List from '../components/List';
 
 describe('List', () => {
-  given('container', () => render((
-    <List
-      tasks={given.tasks}
-      onClickDelete={jest.fn()}
-    />
-  )));
+  const renderList = () => (
+    render((
+      <List
+        tasks={given.tasks}
+        onClickDelete={jest.fn()}
+      />
+    ))
+  );
 
   context('without tasks', () => {
     it('renders message', () => {
       given('tasks', () => []);
-      const { getByText } = given.container;
+      const { getByText } = renderList();
 
       expect(getByText('할 일이 없어요!')).toBeInTheDocument();
     });
@@ -23,13 +25,13 @@ describe('List', () => {
     given('tasks', () => [{ id: 1 }, { id: 2 }, { id: 3 }]);
 
     it('renders tasks', () => {
-      const { getAllByRole } = given.container;
+      const { getAllByRole } = renderList();
 
       expect(getAllByRole('listitem')).toHaveLength(given.tasks.length);
     });
 
     it('renders finish button for each task', () => {
-      const { getAllByRole } = given.container;
+      const { getAllByRole } = renderList();
 
       expect(getAllByRole('button')).toHaveLength(given.tasks.length);
     });
