@@ -16,7 +16,7 @@ describe('List', () => {
     ));
   }
 
-  describe('with tasks', () => {
+  context('with tasks', () => {
     const tasks = [
       { id: 1, title: 'Task-1' },
       { id: 2, title: 'Task-2' },
@@ -40,7 +40,7 @@ describe('List', () => {
     });
   });
 
-  describe('without tasks', () => {
+  context('without tasks', () => {
     it('renders no task message', () => {
       const tasks = [];
 
