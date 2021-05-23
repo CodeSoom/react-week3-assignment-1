@@ -3,14 +3,21 @@ import { render } from '@testing-library/react';
 import Page from '../pages/TodoPage';
 
 describe('Page', () => {
+  const taskTitle = '';
+  const tasks = [{ id: 1 }];
+
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleDeleteTask = jest.fn();
+
   const renderPage = () => (
     render((
       <Page
-        taskTitle=""
-        tasks={[{ id: 1 }]}
-        onChangeTitle={jest.fn()}
-        onClickAddTask={jest.fn()}
-        onClickDeleteTask={jest.fn()}
+        taskTitle={taskTitle}
+        tasks={tasks}
+        onChangeTitle={handleChangeTitle}
+        onClickAddTask={handleClickAddTask}
+        onClickDeleteTask={handleDeleteTask}
       />
     )));
 
