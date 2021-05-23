@@ -1,18 +1,24 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('<Input />', () => {
-  const onChange = jest.fn();
-  const onClick = jest.fn();
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
+
   it('renders header', () => {
-    const { container } = render(
+    const { getByText, getByDisplayValue, getByLabelText } = render(
       <Input
-        value="뭐라도하기?"
-        onChange={onChange}
-        onClick={onClick}
+        value="기존 할 일"
+        onChange={handleChange}
+        onClick={handleClick}
       />,
     );
-    expect(container).toHaveTextContent('할 일');
-    expect(container).toHaveTextContent('추가');
+    expect(getByText(/할 일/)).not.toBeNull();
+    expect(getByText(/추가/)).not.toBeNull();
+    expect(getByDisplayValue(/기존 할 일/)).not.toBeNull();
+    fireEvent.change(getByLabelText('할 일'), {
+      target: { value: '무언가 하기' },
+    });
+    expect(handleChange).toBeCalled();
   });
 });

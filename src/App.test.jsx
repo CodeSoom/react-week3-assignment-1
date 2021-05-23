@@ -1,14 +1,17 @@
-// import React from 'react';
-// import { render, unmountComponentAtNode } from 'react-dom';
+import { render } from '@testing-library/react';
 
-// import App from './App';
+import App from './App';
 
-test('App testing..', () => {
-  // 리스트가 제대로 왔는지 확인?
-  // let { container }  = render((
-  //   <App />
-  // ));
-  // expect(container).toHaveTextContent('1');
-  // console.log(container);
+describe('App', () => {
+  context('App App Test', () => {
+    it('render has empty THing', () => {
+      const { getByText } = render((
+        <App />
+      ));
 
+      expect(getByText(/To-do/)).not.toBeNull();
+      expect(getByText(/할 일이 없어요!/)).not.toBeNull();
+      expect(getByText(/추가/)).not.toBeNull();
+    });
+  });
 });

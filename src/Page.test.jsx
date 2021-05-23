@@ -27,12 +27,7 @@ test('Page test!', () => {
       onClickDeleteTask={onClickDeleteTask}
     />
   ));
-  //   expect(container).toContainElement('<h1>To-do</h1>')
   expect(container).toHaveTextContent('To-do');
   expect(container).toHaveTextContent('뭐라도 해보기.');
   expect(container).toHaveTextContent('두번째 할일');
-  expect(onClickDeleteTask).not.toBeCalled();
-  expect(onChangeTitle).not.toBeCalled();
-  expect(onClickAddTask).not.toBeCalled();
-  //   fireEvent.click(getByText('.완료'));
 });
