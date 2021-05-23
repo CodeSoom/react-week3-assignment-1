@@ -5,43 +5,48 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  test('exist List', () => {
-    const task = {
-      id: 1,
-      title: '뭐라도 하기',
-    };
+  const handleClickDelete = jest.fn();
 
-    const handleClick = jest.fn();
-
-    const { container, getByText } = render((
+  function renderList(tasks) {
+    return render((
       <List
-        task={task}
-        onClickDelete={handleClick}
+        tasks={tasks}
+        onClickDelete={handleClickDelete}
       />
     ));
+  }
 
-    expect(container).toHaveTextContent('뭐라도 하기');
-    expect(container).toHaveTextContent('완료');
+  describe('with tasks', () => {
+    const tasks = [
+      { id: 1, title: 'Task-1' },
+      { id: 2, title: 'Task-2' },
+    ];
 
-    expect(handleClick).not.toBeCalled();
+    it('renders tasks', () => {
+      const { getByText } = renderList(tasks);
 
-    fireEvent.click(getByText('완료'));
+      expect(getByText('Task-1')).not.toBeNull();
+      expect(getByText('Task-2')).not.toBeNull();
+    });
 
-    expect(handleClick).toBeCalledWith(1);
+    it('renders "완료" button to delete a task', () => {
+      const { getAllByText } = renderList(tasks);
+
+      const buttons = getAllByText('완료');
+
+      fireEvent.click(buttons[0]);
+
+      expect(handleClickDelete).toBeCalledWith(1);
+    });
   });
 
-  test('empty List', () => {
-    const task = '';
+  describe('without tasks', () => {
+    it('renders no task message', () => {
+      const tasks = [];
 
-    const handleClick = jest.fn();
+      const { getByText } = renderList(tasks);
 
-    const { container } = render((
-      <List
-        task={task}
-        onClickDelete={handleClick}
-      />
-    ));
-
-    expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(getByText('할 일이 없어요')).not.toBeNull();
+    });
   });
 });
