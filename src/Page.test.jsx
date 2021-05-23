@@ -25,8 +25,9 @@ describe('Page 컴포넌트', () => {
       />
     ));
 
-    expect(getByText(/Task-1/)).not.toBeNull();
-    expect(getByText(/Task-2/)).not.toBeNull();
+    tasks.forEach((task) => {
+      expect(getByText(task.title)).not.toBeNull();
+    });
 
     fireEvent.click(getByText(/추가/));
 

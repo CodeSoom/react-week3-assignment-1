@@ -25,8 +25,9 @@ describe('TodoList 컴포넌트', () => {
     it('할 일 목록 렌더링', () => {
       const { getByText } = renderTodoList(tasks);
 
-      expect(getByText(/멋대로 살기/)).not.toBeNull();
-      expect(getByText(/아무렇게나 살기/)).not.toBeNull();
+      tasks.forEach((task) => {
+        expect(getByText(task.title)).not.toBeNull();
+      });
     });
 
     it('완료 버튼 누르기', () => {
