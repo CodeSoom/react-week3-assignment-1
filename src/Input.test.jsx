@@ -7,7 +7,7 @@ test('Input', () => {
   const handleClick = jest.fn();
 
   const {
-    container, getByPlaceholderText, getByRole, getByText,
+    container, getByLabelText, getByPlaceholderText, getByRole, getByText,
   } = render((
     <Input value="새로운 할일" onChange={handleChange} onClick={handleClick} />
   ));
@@ -19,4 +19,14 @@ test('Input', () => {
 
   fireEvent.click(getByText('추가'));
   expect(getByRole('textbox').value).toMatch('');
+
+  fireEvent.change(getByLabelText('할 일'), {
+    target: {
+      value: '이벤트 추가',
+    },
+  });
+  expect(handleChange).toBeCalled();
+
+  fireEvent.click(getByText('추가'));
+  expect(handleClick).toBeCalled();
 });
