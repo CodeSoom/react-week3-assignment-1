@@ -1,22 +1,12 @@
 import { render } from '@testing-library/react';
 
-import Page from './Page';
+import App from './App';
 
-describe('Page', () => {
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
-  const onClickDeleteTask = jest.fn();
+test('App', () => {
+  const { container, getByText } = render((
+    <App />
+  ));
 
-  test('empty page', () => {
-    const { container } = render((
-      <Page
-        taskTitle=""
-        onChangeTitle={onChangeTitle}
-        onClickAddTask={onClickAddTask}
-        tasks={[]}
-        onClickDeleteTask={onClickDeleteTask}
-      />
-    ));
-    expect(container).toHaveTextContent('할 일이 없어요!');
-  });
+  expect(container).toHaveTextContent('할 일이 없어요!');
+  expect(getByText(/추가/)).not.toBeNull();
 });
