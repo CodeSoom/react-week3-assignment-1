@@ -26,3 +26,4 @@ test('Item', () => {
 
   expect(handleClick).toBeCalledWith(1);
 });
+
