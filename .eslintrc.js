@@ -5,6 +5,8 @@ module.exports = {
     jest: true,
   },
   extends: [
+    'plugin:testing-library/react',
+    'plugin:jest-dom/recommended',
     'plugin:react/recommended',
     'airbnb',
   ],
@@ -19,6 +21,7 @@ module.exports = {
     'react',
   ],
   globals: {
+    given: 'readonly',
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
     actor: 'readonly',
@@ -52,5 +55,7 @@ module.exports = {
 
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+
+    'testing-library/prefer-screen-queries': 'off',
   },
 };
