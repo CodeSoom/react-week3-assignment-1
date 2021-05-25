@@ -47,6 +47,7 @@ describe('List', () => {
       // 기대 : 생성된 task Item의 '완료' 버튼 클릭시, 버튼이 정상적으로 눌린다
       itemButtons.forEach((button, index) => {
         fireEvent.click(button);
+
         expect(onClickDelete).toBeCalledWith(tasks[index].id);
       });
     });

@@ -25,7 +25,9 @@ describe('Item', () => {
     const { getByText } = renderItem();
 
     expect(handleClickDelete).not.toBeCalled();
+
     fireEvent.click(getByText(/완료/));
+
     expect(handleClickDelete).toBeCalledWith(1);
   });
 });

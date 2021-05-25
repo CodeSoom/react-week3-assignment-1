@@ -53,6 +53,7 @@ describe('Page', () => {
       expect(getByText(/mock 공부 하기/)).not.toBeNull();
 
       fireEvent.click(getByText(/추가/));
+
       expect(handleClickAddTask).toBeCalled();
     });
   });

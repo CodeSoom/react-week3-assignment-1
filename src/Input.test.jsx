@@ -22,7 +22,6 @@ describe('Input', () => {
       const taskTitle = '';
       const { getByRole, queryByPlaceholderText } = renderInput(taskTitle);
 
-      // screen.debug();
       expect(getByRole(/textbox/)).toBeEmptyDOMElement();
       expect(queryByPlaceholderText(/할 일을 입력해 주세요/)).toBeInTheDocument();
     });
@@ -45,6 +44,7 @@ describe('Input', () => {
 
     const input = getByRole(/textbox/);
     userEvent.type(input, typing);
+
     expect(handleChangeTitle).toBeCalled();
   });
 
@@ -53,7 +53,9 @@ describe('Input', () => {
     const { getByText } = renderInput(taskTitle);
 
     expect(handleClickAddTask).not.toBeCalled();
+
     userEvent.click(getByText(/추가/));
+
     expect(handleClickAddTask).toBeCalled();
   });
 });
