@@ -46,7 +46,7 @@ describe('List', () => {
 
       const { getByText } = renderList(tasks);
 
-      expect(getByText('할 일이 없어요')).not.toBeNull();
+      expect(getByText('할 일이 없어요!')).not.toBeNull();
     });
   });
 });

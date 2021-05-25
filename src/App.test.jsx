@@ -13,7 +13,7 @@ describe('App', () => {
     const { getByText } = renderApp();
 
     expect(getByText('추가')).not.toBeNull();
-    expect(getByText('할 일이 없어요')).not.toBeNull();
+    expect(getByText('할 일이 없어요!')).not.toBeNull();
   });
 
   it('change input value', () => {
@@ -62,6 +62,6 @@ describe('App', () => {
     const deleteButton = getByText('완료');
     fireEvent.click(deleteButton);
 
-    expect(getByText('할 일이 없어요')).not.toBeNull();
+    expect(getByText('할 일이 없어요!')).not.toBeNull();
   });
 });
