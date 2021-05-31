@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -24,10 +24,6 @@ test('Page', () => {
     />
   ));
 
-  expect(getByText(/Task-1/)).not.toBeNull();
-  expect(getByText(/Task-2/)).not.toBeNull();
-
-  fireEvent.click(getByText('추가'));
-
-  expect(handleClickAddTask).toBeCalled();
+  expect(getByText('Task-1')).not.toBeNull();
+  expect(getByText('Task-2')).not.toBeNull();
 });
