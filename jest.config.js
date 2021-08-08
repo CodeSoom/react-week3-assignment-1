@@ -1,6 +1,7 @@
 module.exports = {
   setupFilesAfterEnv: [
     'jest-plugin-context/setup',
+    // 파일들을 잡아주는것
     './jest.setup',
   ],
   coverageThreshold: {
