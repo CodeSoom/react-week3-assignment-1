@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input 컴포넌트 구성요소는 label, input, button으로 이루어져있다. 1`] = `
+<p>
+  <label
+    for="input-task-title"
+  >
+    할 일
+  </label>
+  <input
+    id="input-task-title"
+    placeholder="할 일을 입력해 주세요"
+    type="text"
+    value=""
+  />
+  <button
+    type="button"
+  >
+    추가
+  </button>
+</p>
+`;

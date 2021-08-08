@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List 컴포넌트 구성요소는 ol, Item로 구성되어 있다. 1`] = `
+<ol>
+  <li>
+    뭐라도 하기
+    <button
+      type="button"
+    >
+      완료
+    </button>
+  </li>
+</ol>
+`;
+
+exports[`할일 목록을 확인할 수 있다. 1`] = `
+<ol>
+  <li>
+    뭐라도 하기
+    <button
+      type="button"
+    >
+      완료
+    </button>
+  </li>
+  <li>
+    뭐라도 했니
+    <button
+      type="button"
+    >
+      완료
+    </button>
+  </li>
+  <li>
+    뭐라도 안하니
+    <button
+      type="button"
+    >
+      완료
+    </button>
+  </li>
+</ol>
+`;
