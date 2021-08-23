@@ -9,7 +9,7 @@ export default function Input({ value, onChange, onClick }) {
         type="text"
         placeholder="할 일을 입력해 주세요"
         value={value}
-        onChange={onChange}
+        onChange={(event) => onChange(event.target.value)}
       />
       <button type="button" onClick={onClick}>
         추가
