@@ -17,12 +17,12 @@ describe('Page', () => {
     expect(container).toHaveTextContent('To-do');
   });
 
-  it('has Input component', () => {
+  it('renders Input component', () => {
     expect(container).toHaveTextContent(/할 일/);
     expect(container).toHaveTextContent(/추가/);
   });
 
-  it('has List component', () => {
+  it('renders List component', () => {
     expect(container).toHaveTextContent('test1');
     expect(container).toHaveTextContent('test2');
   });
