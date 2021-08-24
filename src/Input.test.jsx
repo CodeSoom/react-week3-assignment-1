@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, getByPlaceholderText } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -18,7 +18,25 @@ describe("'추가'버튼은", () => {
       ));
 
       fireEvent.click(getByText('추가'));
+
       expect(container).toBeNull;
+    });
+  });
+});
+
+describe("Input은", () => {
+  context("텍스트 필드에 값을 입력하면", () => {
+    it("onChange 메소드를 실행한다.", () => {
+      const { container, getByPlaceholderText } = render((
+        <Input
+          id="input-task-title"
+          onChange={onChange}
+        />
+      ));
+
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '밥 먹기' } });
+
+      expect(onChange).toBeCalled();
     });
   });
 });
