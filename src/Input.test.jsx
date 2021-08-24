@@ -4,13 +4,18 @@ import {
 
 import Input from './Input';
 
-test('Input', () => {
-  const onClick = jest.fn();
+describe('Input', () => {
+  it('handles `onClick` function passed as prop', () => {
+    const onClick = jest.fn();
 
-  const { getByText } = render(<Input
-    onClick={onClick}
-  />);
+    const { getByText } = render(<Input
+      onClick={onClick}
+    />);
 
-  fireEvent.click(getByText('추가'));
-  expect(onClick).toHaveBeenCalled();
+    expect(onClick).not.toHaveBeenCalled();
+
+    fireEvent.click(getByText('추가'));
+
+    expect(onClick).toHaveBeenCalled();
+  });
 });
