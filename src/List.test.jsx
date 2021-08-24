@@ -2,8 +2,8 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('List', () => {
-  context('tasks length가 0일 때는 "할 일이 없어요!"가 보여야한다.', () => {
+describe('List', () => {
+  it('tasks length가 0일 때는 "할 일이 없어요!"가 보여야한다.', () => {
     const tasks = [];
 
     const handleClickDelete = jest.fn();
@@ -21,7 +21,7 @@ test('List', () => {
     expect(countOfItems).toBe(tasks.length);
   });
 
-  context('tasks length가 1 이상일 때는 Item들이 보여야한다.', () => {
+  it('tasks length가 1 이상일 때는 Item들이 보여야한다.', () => {
     const tasks = [{
       id: 1,
       title: '뭐라도 하기1',

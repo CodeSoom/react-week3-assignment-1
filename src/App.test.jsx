@@ -6,5 +6,5 @@ test('App', () => {
     <App />
   ));
 
-  expect(container).toBeDefined();
+  expect(container).toBeInTheDocument();
 });
