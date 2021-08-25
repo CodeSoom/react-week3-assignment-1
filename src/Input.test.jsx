@@ -4,11 +4,11 @@ import { render, fireEvent, getByPlaceholderText } from '@testing-library/react'
 
 import Input from './Input';
 
-const onClick = jest.fn();
-const onChange = jest.fn();
-
 describe("'추가'버튼은", () => {
+  
   context("버튼을 누르면", () => {
+    const onClick = jest.fn();
+
     it("텍스트 필드에 입력한 글자가 사라진다.", () => {
       const { container, getByText } = render((
         <Input
@@ -27,6 +27,8 @@ describe("'추가'버튼은", () => {
 describe("Input은", () => {
   context("텍스트 필드에 값을 입력하면", () => {
     it("onChange 메소드를 실행한다.", () => {
+      const onChange = jest.fn();
+
       const { container, getByPlaceholderText } = render((
         <Input
           id="input-task-title"
