@@ -1,19 +1,48 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input 관련 요소들 잘 존재하는지', () => {
-  const { container, getByPlaceholderText } = render((
-    <Input />
-  ));
-  const input = getByPlaceholderText('할 일을 입력해 주세요');
+describe('Input component', () => {
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
 
-  test('placeholder is "할 일을 입력해 주세요', () => {
-    expect(input).toBeDefined();
-    expect(container).toHaveTextContent('추가');
+  context('when todo input value enter', () => {
+    it('changed', () => {
+      const { getByPlaceholderText } = render((
+        <Input
+          onChange={handleChange}
+        />
+      ));
+
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
+
+      expect(input).toBeDefined();
+      expect(handleChange).not.toBeCalled();
+
+      fireEvent.change(input, {
+        target: {
+          value: 'something',
+        },
+      });
+
+      expect(handleChange).toBeCalled();
+      expect(input.value).toBe('something');
+    });
   });
 
-  // test('Button exists', () => {
-  //   expect(container).toHaveTextContent('추가');
-  // });
+  it('can click add button', () => {
+    const { getByText } = render((
+      <Input
+        onClick={handleClick}
+      />
+    ));
+
+    const addButton = getByText('추가');
+
+    expect(handleClick).not.toBeCalled();
+
+    fireEvent.click(addButton);
+
+    expect(handleClick).toBeCalled();
+  });
 });
