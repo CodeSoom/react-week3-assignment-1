@@ -8,7 +8,7 @@ test('Input', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  const { container, getByText } = render((
+  const { container, getByText, getByPlaceholderText } = render((
     <Input
       value={value}
       onClick={handleClick}
@@ -24,4 +24,8 @@ test('Input', () => {
   fireEvent.click(getByText('추가'));
 
   expect(handleClick).toBeCalled();
+
+  expect(handleChange).not.toBeCalled();
+  fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '타이핑' } });
+  expect(handleChange).toBeCalled();
 });
