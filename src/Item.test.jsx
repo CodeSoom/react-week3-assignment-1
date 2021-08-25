@@ -1,9 +1,13 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 
 import Item from './Item';
 
 describe('Item', () => {
-  context('shows task item correctly', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it('shows task item correctly', () => {
     const task = {
       id: 1,
       title: '뭐라도 하기',
@@ -15,11 +19,11 @@ describe('Item', () => {
       />
     ));
 
-    it(container).toHaveTextContent('뭐라도 하기');
-    it(container).toHaveTextContent('완료');
+    expect(container).toHaveTextContent('뭐라도 하기');
+    expect(container).toHaveTextContent('완료');
   });
 
-  context('handles handleClickDelete when `완료` button clicked', () => {
+  it('handles handleClickDelete when `완료` button clicked', () => {
     const task = {
       id: 1,
       title: '뭐라도 하기',
