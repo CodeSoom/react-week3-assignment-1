@@ -19,7 +19,9 @@ test('Input', () => {
   const input = getByLabelText('할 일');
 
   expect(input.placeholder).toEqual('할 일을 입력해 주세요');
+  expect(handleChange).not.toBeCalled();
   fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+  expect(handleChange).toBeCalled();
 
   const button = getByText('추가');
 
