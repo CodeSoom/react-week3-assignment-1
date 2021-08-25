@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import Page from './Page';
+import Page from "./Page";
 
 export default function App() {
   const [state, setState] = useState({
     newId: 100,
-    taskTitle: '',
+    taskTitle: "",
     tasks: [],
   });
-
+  dfd;
   const { newId, taskTitle, tasks } = state;
 
   function handleChangeTitle(event) {
@@ -22,7 +22,7 @@ export default function App() {
     setState({
       ...state,
       newId: newId + 1,
-      taskTitle: '',
+      taskTitle: "",
       tasks: [...tasks, { id: newId, title: taskTitle }],
     });
   }
