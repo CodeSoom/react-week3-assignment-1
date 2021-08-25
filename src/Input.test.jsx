@@ -4,9 +4,9 @@ import { render, fireEvent, getByPlaceholderText } from '@testing-library/react'
 
 import Input from './Input';
 
-describe("'추가'버튼은", () => {
+describe("'Input 컴포넌트는", () => {
   
-  context("버튼을 누르면", () => {
+  context("'추가' 버튼을 누르면", () => {
     const onClick = jest.fn();
 
     it("텍스트 필드에 입력한 글자가 사라진다.", () => {
@@ -24,7 +24,7 @@ describe("'추가'버튼은", () => {
   });
 });
 
-describe("Input은", () => {
+describe("Input 컴포넌트는", () => {
   context("텍스트 필드에 값을 입력하면", () => {
     it("onChange 메소드를 실행한다.", () => {
       const onChange = jest.fn();
