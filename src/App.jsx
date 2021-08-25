@@ -8,7 +8,7 @@ export default function App() {
     taskTitle: "",
     tasks: [],
   });
-  dfd;
+
   const { newId, taskTitle, tasks } = state;
 
   function handleChangeTitle(event) {
