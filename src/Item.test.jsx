@@ -3,30 +3,41 @@ import { render, fireEvent } from '@testing-library/react';
 import Item from './Item';
 
 describe('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
-
-  const handleClick = jest.fn();
-
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
-
   context('shows task item correctly', () => {
+    const task = {
+      id: 1,
+      title: '뭐라도 하기',
+    };
+
+    const { container } = render((
+      <Item
+        task={task}
+      />
+    ));
+
     it(container).toHaveTextContent('뭐라도 하기');
     it(container).toHaveTextContent('완료');
   });
 
-  context('handles handleClick when `완료` button clicked', () => {
-    expect(handleClick).not.toBeCalled();
+  context('handles handleClickDelete when `완료` button clicked', () => {
+    const task = {
+      id: 1,
+      title: '뭐라도 하기',
+    };
+
+    const handleClickDelete = jest.fn();
+
+    const { getByText } = render((
+      <Item
+        task={task}
+        onClickDelete={handleClickDelete}
+      />
+    ));
+
+    expect(handleClickDelete).not.toBeCalled();
 
     fireEvent.click(getByText('완료'));
 
-    expect(handleClick).toBeCalledWith(1);
+    expect(handleClickDelete).toBeCalledWith(1);
   });
 });
