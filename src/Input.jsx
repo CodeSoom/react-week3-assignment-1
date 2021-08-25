@@ -1,4 +1,8 @@
 export default function Input({ value, onChange, onClick }) {
+  const handleChange = (event) => {
+    onChange(event.target.value);
+  };
+
   return (
     <p>
       <label htmlFor="input-task-title">
@@ -9,7 +13,7 @@ export default function Input({ value, onChange, onClick }) {
         type="text"
         placeholder="할 일을 입력해 주세요"
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={handleChange}
       />
       <button type="button" onClick={onClick}>
         추가
