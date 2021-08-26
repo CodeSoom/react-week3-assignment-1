@@ -12,6 +12,7 @@ describe('List', () => {
 
   context('without task', () => {
     const tasks = [];
+
     it('renders 할 일이 없어요!', () => {
       const { container } = renderList({ tasks });
 
@@ -20,9 +21,9 @@ describe('List', () => {
   });
 
   context('with tasks', () => {
-    it('renders tasks', () => {
-      const tasks = [{ id: 0, title: '뭐라도 하기' }, { id: 1, title: '잠자기' }];
+    const tasks = [{ id: 0, title: '뭐라도 하기' }, { id: 1, title: '잠자기' }];
 
+    it('renders tasks', () => {
       const { container } = renderList({ tasks });
 
       expect(container).toHaveTextContent('뭐라도 하기');
@@ -31,7 +32,6 @@ describe('List', () => {
     });
 
     it('listens button click event', () => {
-      const tasks = [{ id: 0, title: '뭐라도 하기' }, { id: 1, title: '잠자기' }];
       const onClickDelete = jest.fn();
 
       const { getAllByText } = renderList({ tasks, onClickDelete });
