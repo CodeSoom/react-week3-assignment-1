@@ -4,20 +4,25 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-describe('List 컴포넌트는', () => {
+describe('List는', () => {
   const handleClickDeleteTask = jest.fn();
   const onClickDelete = jest.fn();
+  
+  function renderList(tasks) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={onClickDelete}
+        onClickDelete={handleClickDeleteTask}
+      />
+    ));
+  }
   
   context('task에 값이 없으면', () => {
     const tasks = [];
 
     it(' "할 일이 없어요!" 문구가 표시된다.', () => {
-      const { container } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={onClickDelete}
-        />
-      ));
+      const { container } = renderList(tasks);
     
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -40,11 +45,7 @@ describe('List 컴포넌트는', () => {
     ];
     
     it('할 일 목록과, 완료 버튼을 보여준다.', () => {
-      const { container } = render((
-        <List
-          tasks={tasks}
-        />
-      ));
+      const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('스트릿 우먼 파이터 시청하기');
       expect(container).toHaveTextContent('유퀴즈 클립 보기');
@@ -53,12 +54,7 @@ describe('List 컴포넌트는', () => {
     })
 
     it('완료 버튼이 잘 호출된다.', () => {
-      const { getAllByText } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={handleClickDeleteTask}
-        />
-      ));
+      const { getAllByText } = renderList(tasks);
 
       expect(handleClickDeleteTask).not.toBeCalled();
 
