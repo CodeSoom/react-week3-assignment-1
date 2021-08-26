@@ -1,31 +1,52 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import Page from './Page';
 
-describe('Page component', () => {
+describe('Page', () => {
   const tasks = [
     {
       id: 100,
       title: 'something',
     },
   ];
+  const taskTitle = 'something';
 
-  it('returns title', () => {
-    const { container } = render(<Page tasks={tasks} />);
+  const handleChange = jest.fn();
+  const handleClickAdd = jest.fn();
+  const handleClickDelete = jest.fn();
 
-    expect(container).toHaveTextContent('To-do');
+  const renderPage = () => render((
+    <Page
+      taskTitle={taskTitle}
+      onChangeTitle={handleChange}
+      onClickAddTask={handleClickAdd}
+      tasks={tasks}
+      onClickDeleteTask={handleClickDelete}
+    />));
+
+  it('renders title', () => {
+    renderPage();
+
+    const title = screen.getByText(/to-do/i);
+
+    expect(title).toBeInTheDocument();
   });
 
-  it('returns Input', () => {
-    const { container } = render(<Page tasks={tasks} />);
+  it('renders Input', () => {
+    renderPage();
 
-    expect(container).toHaveTextContent('할 일');
-    expect(container).toHaveTextContent('추가');
+    const input = screen.getByPlaceholderText(/할 일을 입력/);
+    const addButton = screen.getByText(/추가/);
+
+    expect(input).toBeInTheDocument();
+    expect(addButton).toBeInTheDocument();
   });
 
-  it('returns List', () => {
-    const { container } = render(<Page tasks={tasks} />);
+  it('renders List', () => {
+    renderPage();
 
-    expect(container).toHaveTextContent('something');
+    const todo = screen.getByText(/something/);
+
+    expect(todo).toBeInTheDocument();
   });
 });
