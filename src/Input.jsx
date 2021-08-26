@@ -12,6 +12,7 @@ export default function Input({ value, onChange, onClick }) {
         id="input-task-title"
         type="text"
         placeholder="할 일을 입력해 주세요"
+        aria-label="TodoContent"
         value={value}
         onChange={handleChange}
       />
