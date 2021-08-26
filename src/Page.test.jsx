@@ -2,12 +2,24 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-test('Page', () => {
+describe('Page', () => {
   const tasks = [];
+  const taskTitle = '';
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
 
-  const { container } = render((
-    <Page tasks={tasks} />
-  ));
+  test('\'To-do\'라는 타이틀이 표시된다.', () => {
+    const { container } = render((
+      <Page
+        taskTitle={taskTitle}
+        onChangeTitle={handleChangeTitle}
+        onClickAddTask={handleClickAddTask}
+        tasks={tasks}
+        onClickDeleteTask={handleClickDeleteTask}
+      />
+    ));
 
-  expect(container).toHaveTextContent('To-do');
+    expect(container).toHaveTextContent('To-do');
+  });
 });
