@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input 추가 button 클릭', () => {
+describe('Input', () => {
   const task = {
     newId: 1,
     taskTitle: '할 일 1',
@@ -21,17 +21,29 @@ test('Input 추가 button 클릭', () => {
     />
   ));
 
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
+  context('when component is rendered', () => {
+    it('has 할 일 and 추가 text content', () => {
+      expect(container).toHaveTextContent('할 일');
+      expect(container).toHaveTextContent('추가');
+    });
+  });
 
-  expect(handleClick).not.toBeCalled();
-  fireEvent.click(getByText('추가'));
-  expect(handleClick).toBeCalled();
+  context('when user type', () => {
+    it('calls handleChange function', () => {
+      const inputField = getByPlaceholderText('할 일을 입력해 주세요');
+      const letter = 'a';
 
-  const inputField = getByPlaceholderText('할 일을 입력해 주세요');
-  const letter = 'a';
+      expect(handleChange).not.toBeCalled();
+      fireEvent.change(inputField, { target: { value: letter } });
+      expect(handleChange).toBeCalledTimes(1);
+    });
+  });
 
-  expect(handleChange).not.toBeCalled();
-  fireEvent.change(inputField, { target: { value: letter } });
-  expect(handleChange).toBeCalledTimes(1);
+  context('when usuer click 추가 button', () => {
+    it('calls handleClick function', () => {
+      expect(handleClick).not.toBeCalled();
+      fireEvent.click(getByText('추가'));
+      expect(handleClick).toBeCalled();
+    });
+  });
 });
