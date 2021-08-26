@@ -6,12 +6,16 @@ import Input from './Input';
 
 describe("'Input 컴포넌트는", () => {
   const onClick = jest.fn();
+  const onChange = jest.fn();
+  const value = '';
 
     it("클릭 버튼 이벤트 함수를 호출한다.", () => {
       const { container, getByText } = render((
         <Input
           id="input-task-title"
           onClick={onClick}
+          onChange={onChange}
+          value={value}
         />
       ));
       fireEvent.click(getByText('추가'));
