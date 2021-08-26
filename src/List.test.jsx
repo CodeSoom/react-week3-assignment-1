@@ -7,12 +7,11 @@ import List from './List';
 describe('List 컴포넌트는', () => {
   const handleClickDeleteTask = jest.fn();
   const onClickDelete = jest.fn();
-
+  
   context('task에 값이 없으면', () => {
     const tasks = [];
 
-    it('default text가 표시된다.', () => {
-      const defaultText = '할 일이 없어요!'
+    it(' "할 일이 없어요!" 문구가 표시된다.', () => {
       const { container } = render((
         <List
           tasks={tasks}
@@ -20,7 +19,7 @@ describe('List 컴포넌트는', () => {
         />
       ));
     
-      expect(container).toHaveTextContent(defaultText);
+      expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
