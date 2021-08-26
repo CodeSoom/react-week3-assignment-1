@@ -1,17 +1,20 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import List from './List';
 
 describe('List', () => {
+  const handleClick = jest.fn();
+
   context('without todo items', () => {
     it('renders "할 일이 없어요!"', () => {
       const tasks = [];
 
-      const { container } = render((
-        <List tasks={tasks} />
-      ));
+      render(<List
+        tasks={tasks}
+        onClickDelete={handleClick}
+      />);
 
-      expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(screen.getByText(/할 일이 없어요/)).toBeInTheDocument();
     });
   });
 
@@ -22,11 +25,12 @@ describe('List', () => {
         title: 'something',
       }];
 
-      const { container } = render((
-        <List tasks={tasks} />
-      ));
+      render(<List
+        tasks={tasks}
+        onClickDelete={handleClick}
+      />);
 
-      expect(container).toHaveTextContent('something');
+      expect(screen.getByText(/something/)).toBeInTheDocument();
     });
   });
 });
