@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -22,9 +22,9 @@ describe('Input', () => {
   });
 
   it('listens value change event', () => {
-    renderInput();
+    const { getByLabelText } = renderInput();
 
-    const inputNode = screen.getByPlaceholderText('할 일을 입력해 주세요');
+    const inputNode = getByLabelText('TodoContent');
 
     fireEvent.change(inputNode, { target: { value: '코드숨 과제하기' } });
 
