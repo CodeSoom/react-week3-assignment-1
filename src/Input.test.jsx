@@ -1,48 +1,36 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import Input from './Input';
 
-describe('Input component', () => {
+describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  context('when todo input value enter', () => {
-    it('changed', () => {
-      const { getByPlaceholderText } = render((
-        <Input
-          onChange={handleChange}
-        />
-      ));
+  const renderInput = () => render((
+    <Input
+      onChange={handleChange}
+      onClick={handleClick}
+    />
+  ));
 
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+  it('listens change event', () => {
+    renderInput();
 
-      expect(input).toBeDefined();
-      expect(handleChange).not.toBeCalled();
+    const input = screen.getByPlaceholderText(/할 일을 입력/);
 
-      fireEvent.change(input, {
-        target: {
-          value: 'something',
-        },
-      });
+    userEvent.type(input, 'something');
 
-      expect(handleChange).toBeCalled();
-      expect(input.value).toBe('something');
-    });
+    expect(handleChange).toBeCalled();
   });
 
-  it('can click add button', () => {
-    const { getByText } = render((
-      <Input
-        onClick={handleClick}
-      />
-    ));
+  it('listens click event', () => {
+    renderInput();
 
-    const addButton = getByText('추가');
+    const addButton = screen.getByText('추가');
 
-    expect(handleClick).not.toBeCalled();
+    userEvent.click(addButton);
 
-    fireEvent.click(addButton);
-
-    expect(handleClick).toBeCalled();
+    expect(handleClick).toBeCalledTimes(1);
   });
 });
