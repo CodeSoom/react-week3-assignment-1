@@ -1,40 +1,36 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import App from './App';
 
-describe('App component', () => {
-  const { getByPlaceholderText, getByText } = render((<App />));
+describe('App', () => {
+  const renderApp = () => render((
+    <App />
+  ));
 
-  const input = getByPlaceholderText('할 일을 입력해 주세요');
-  const addButton = getByText('추가');
+  it('renders new todo item', () => {
+    renderApp();
 
-  context('when click add button', () => {
-    it('return new todo item', () => {
-      fireEvent.change(input, {
-        target: {
-          id: 100,
-          value: 'something',
-        },
-      });
+    const input = screen.getByPlaceholderText(/할 일을 입력/);
+    const addButton = screen.getByText('추가');
 
-      fireEvent.click(addButton);
+    userEvent.type(input, 'something');
+    userEvent.click(addButton);
 
-      expect(getByText('something')).toBeTruthy();
-    });
+    expect(screen.getByText('something')).toBeInTheDocument();
   });
 
-  context('when click delete button', () => {
-    it('delete selected todo item', () => {
-      fireEvent.click(addButton);
+  it('deletes selected todo item', () => {
+    renderApp();
 
-      // TODO: error debugging
-      // 어째서인지 '완료' 라는 텍스트를 가진 엘리먼트가 없다고 오류가 나네요.
+    const addButton = screen.getByText(/추가/);
 
-      // const deleteButton = getByText('완료');
+    userEvent.click(addButton);
 
-      // fireEvent.click(deleteButton);
+    const deleteButton = screen.getByText(/완료/);
 
-      // expect(getByText('something')).toBeNull();
-    });
+    userEvent.click(deleteButton);
+
+    expect(screen.getByText(/할 일이 없어요/)).toBeInTheDocument();
   });
 });
