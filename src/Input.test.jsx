@@ -4,12 +4,12 @@ import { render, fireEvent, getByPlaceholderText } from '@testing-library/react'
 
 import Input from './Input';
 
-describe("'Input 컴포넌트는", () => {
+describe('Input 컴포넌트는', () => {
   const onClick = jest.fn();
   const onChange = jest.fn();
   const value = '';
 
-    it("클릭 버튼 이벤트 함수를 호출한다.", () => {
+    it('클릭 버튼 이벤트 함수를 호출한다.', () => {
       const { container, getByText } = render((
         <Input
           id="input-task-title"
@@ -24,9 +24,9 @@ describe("'Input 컴포넌트는", () => {
   });
 });
 
-describe("Input 컴포넌트는", () => {
-  context("텍스트 필드에 값을 입력하면", () => {
-    it("onChange 메소드를 실행한다.", () => {
+describe('Input 컴포넌트는', () => {
+  context('텍스트 필드에 값을 입력하면', () => {
+    it('onChange 메소드를 실행한다.', () => {
       const onChange = jest.fn();
 
       const { container, getByPlaceholderText } = render((
