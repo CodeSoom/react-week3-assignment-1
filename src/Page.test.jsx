@@ -10,36 +10,36 @@ describe('Page 컴포넌트는', () => {
   const onClickDeleteTask = jest.fn();
   const taskTitle = '할 일 제목';
   const tasks = [
-      { id: 1, title: '사골국물 마시기' },
-      { id: 2, title: '푹 자기' },
-    ];
+    { id: 1, title: '사골국물 마시기' },
+    { id: 2, title: '푹 자기' },
+  ];
   function renderPage(taskTitle, tasks) {
     return render((
       <Page
-            value={taskTitle}
-            onChange={onChangeTitle}
-            onClick={onClickAddTask}
-            tasks={tasks}
-            onClickDeleteTask={onClickDeleteTask}
-          />
-      ));
-    }
+        value={taskTitle}
+        onChange={onChangeTitle}
+        onClick={onClickAddTask}
+        tasks={tasks}
+        onClickDeleteTask={onClickDeleteTask}
+      />
+    ));
+  }
 
-    it('Input 컴포넌트와 List컴포넌트를 보여준다.', () => {
-      const { container, getByText } = renderPage(taskTitle, tasks);
-    
-      expect(container).toHaveTextContent('할 일');
-      expect(container).toHaveTextContent('추가');
-      expect(container).toHaveTextContent('사골국물 마시기');
-      expect(container).toHaveTextContent('푹 자기');
-      expect(container).toHaveTextContent('완료');
-    });
+  it('Input 컴포넌트와 List컴포넌트를 보여준다.', () => {
+    const { container, getByText } = renderPage(taskTitle, tasks);
 
-    it('"완료" 버튼을 누르면, 할 일을 삭제한다.', () => {
-      const { getAllByText } = renderPage(taskTitle, tasks);
-      
-      fireEvent.click(getAllByText('완료')[0]);
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
+    expect(container).toHaveTextContent('사골국물 마시기');
+    expect(container).toHaveTextContent('푹 자기');
+    expect(container).toHaveTextContent('완료');
+  });
 
-      expect(onClickDeleteTask).toBeCalled();
-    });
+  it('"완료" 버튼을 누르면, 할 일을 삭제한다.', () => {
+    const { getAllByText } = renderPage(taskTitle, tasks);
+
+    fireEvent.click(getAllByText('완료')[0]);
+
+    expect(onClickDeleteTask).toBeCalled();
+  });
 });

@@ -32,10 +32,10 @@ describe('Input은', () => {
   it('change 이벤트 함수를 호출한다.', () => {
     const { container, getByPlaceholderText } = renderInput();
 
-    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { 
-      target: { value: '밥 먹기' } });
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+      target: { value: '밥 먹기' }
+    });
 
     expect(onChange).toBeCalled();
   });
 });
-

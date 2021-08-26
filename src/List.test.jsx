@@ -7,7 +7,7 @@ import List from './List';
 describe('List는', () => {
   const handleClickDeleteTask = jest.fn();
   const onClickDelete = jest.fn();
-  
+
   function renderList(tasks) {
     return render((
       <List
@@ -17,13 +17,13 @@ describe('List는', () => {
       />
     ));
   }
-  
+
   context('task에 값이 없으면', () => {
     const tasks = [];
 
     it(' "할 일이 없어요!" 문구가 표시된다.', () => {
       const { container } = renderList(tasks);
-    
+
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
@@ -43,7 +43,7 @@ describe('List는', () => {
         title: '회 시켜 먹기'
       },
     ];
-    
+
     it('할 일 목록과, 완료 버튼을 보여준다.', () => {
       const { container } = renderList(tasks);
 
