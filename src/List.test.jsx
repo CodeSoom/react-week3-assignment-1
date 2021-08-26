@@ -6,7 +6,7 @@ import List from './List';
 
 describe('List 컴포넌트는', () => {
   const handleClickDeleteTask = jest.fn();
-
+  const onClickDelete = jest.fn();
   context('task에 값이 없으면', () => {
     const tasks = [];
 
@@ -15,6 +15,7 @@ describe('List 컴포넌트는', () => {
       const { container } = render((
         <List
           tasks={tasks}
+          onClickDelete={onClickDelete}
         />
       ));
     
