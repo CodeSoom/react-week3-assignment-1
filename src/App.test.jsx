@@ -1,5 +1,4 @@
 import { render, fireEvent } from '@testing-library/react';
-import { not } from 'expect';
 
 import App from './App';
 
