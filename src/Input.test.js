@@ -50,7 +50,7 @@ describe('Input', () => {
     expect(defaultTask).toHaveValue(newTask);
   });
 
-  it('click', () => {
+  it('it works click button', () => {
     const newTask = '새로운 할 일';
 
     const { getByText } = renderInput(newTask);
