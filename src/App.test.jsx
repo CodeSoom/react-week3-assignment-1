@@ -18,7 +18,7 @@ describe('App', () => {
   });
 
   context('tasks are not empty', () => {
-    it('it shows click add', () => {
+    it('it shows click button', () => {
       const { getByRole, getByText } = render(<App />);
 
       // 계속해서 getByTestId로 구현할려고 했는데
@@ -29,7 +29,7 @@ describe('App', () => {
       expect(getByText(tasks[0])).toBeInTheDocument();
     });
 
-    it('it deletes tasks', () => {
+    it('it shows delete button', () => {
       const { getByRole, getByText } = render(<App />);
 
       fireEvent.change(getByRole('textbox'), { target: { value: tasks[0] } });
