@@ -36,9 +36,6 @@ describe('Input', () => {
 
     // expect(input).toHaveAttribute('value', '뭐라도 하기');
     // change 이벤트의 인자로 넣어준 value로 인풋 value가 변했다는 걸 이 테스트에 검증하고 싶은데, 계속 빈 문자열인 상태로 남아있네요 ㅠㅠ
-
-    // expect(input.placeholder).toEqual('할 일을 입력해 주세요');
-    // 해당 테스트의 목적에 부합하지 않고, 필요한 지에 대해서도 확신이 없어 우선 주석처리 해놓았습니다...
   });
 
   test('추가를 클릭하면 Click 이벤트가 발생한다.', () => {

@@ -3,17 +3,18 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  test('아무런 task가 등록되어 있지 않다면, \'할 일이 없어요!\'라는 메세지를 볼 수 있다.', () => {
+  context('아무런 task가 등록되어 있지 않다면,', () => {
     const tasks = [];
+    it('아무런 task가 등록되어 있지 않다면, \'할 일이 없어요!\'라는 메세지를 볼 수 있다.', () => {
+      const { container } = render((
+        <List tasks={tasks} />
+      ));
 
-    const { container } = render((
-      <List tasks={tasks} />
-    ));
-
-    expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
   });
 
-  test('등록되어 있는 task가 있다면, 리스트와 완료 버튼을 볼 수 있다.', () => {
+  context('등록되어 있는 task가 있다면,', () => {
     const tasks = [{
       id: 1,
       title: 'something',
@@ -22,19 +23,20 @@ describe('List', () => {
       id: 2,
       title: 'nothing',
     }];
+    it('리스트와 완료 버튼을 볼 수 있다.', () => {
+      const handleClickDelete = jest.fn();
 
-    const handleClickDelete = jest.fn();
+      const { container } = render((
+        <List
+          tasks={tasks}
+          onClickDelete={handleClickDelete}
+        />
+      ));
 
-    const { container } = render((
-      <List
-        tasks={tasks}
-        onClickDelete={handleClickDelete}
-      />
-    ));
-
-    expect(container).toHaveTextContent('something');
-    expect(container).toHaveTextContent('nothing');
-    expect(container).toHaveTextContent('완료');
+      expect(container).toHaveTextContent('something');
+      expect(container).toHaveTextContent('nothing');
+      expect(container).toHaveTextContent('완료');
+    });
   });
 
   test('완료 버튼을 누르면, 해당 task의 id값을 넘겨받은 Click 이벤트가 실행된다.', () => {
