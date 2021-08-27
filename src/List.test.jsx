@@ -21,14 +21,12 @@ describe('List', () => {
   const handleClick = jest.fn();
 
   it('renders items', () => {
-    const { container } = render(
-      (
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />
-      ),
-    );
+    const { getAllByText } = render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClick}
+      />
+    ));
 
     const renderedItems = getAllByText('완료');
     expect(renderedItems.length).toBe(tasks.length);
