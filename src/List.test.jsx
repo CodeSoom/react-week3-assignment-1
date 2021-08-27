@@ -3,12 +3,18 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const renderList = ({ tasks, onClickDelete }) => render((
+  const onClickDelete = jest.fn();
+
+  const renderList = ({ tasks }) => render((
     <List
       tasks={tasks}
       onClickDelete={onClickDelete}
     />
   ));
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   context('without task', () => {
     const tasks = [];
@@ -32,9 +38,7 @@ describe('List', () => {
     });
 
     it('listens button click event', () => {
-      const onClickDelete = jest.fn();
-
-      const { getAllByText } = renderList({ tasks, onClickDelete });
+      const { getAllByText } = renderList({ tasks });
 
       expect(onClickDelete).not.toBeCalled();
 
