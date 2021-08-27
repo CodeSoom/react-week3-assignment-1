@@ -2,6 +2,21 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
+test('List with Empty tasks', () => {
+  const handleClick = jest.fn();
+
+  const { container } = render((
+    <List
+      tasks={[]}
+      onClickDelete={handleClick}
+    />
+  ));
+
+  expect(container).toHaveTextContent('할 일이 없어요!');
+
+  expect(handleClick).not.toBeCalled();
+});
+
 test('List with tasks', () => {
   const tasks = [
     { id: 1, title: '이것' },
@@ -17,6 +32,8 @@ test('List with tasks', () => {
       onClickDelete={handleClick}
     />
   ));
+
+  expect(container).not.toHaveTextContent('할 일이 없어요!');
 
   expect(container).toHaveTextContent('이것');
   expect(container).toHaveTextContent('저것');
