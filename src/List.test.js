@@ -15,36 +15,40 @@ describe('List', () => {
   ));
 
   // tasks의 길이가 0일 때 즉 할 일이 하나도 없을 때
-  it('Empty', () => {
-    const tasks = [];
+  context('tasks are empty', () => {
+    it('it shows empty', () => {
+      const tasks = [];
 
-    const { getByText } = ListRender(tasks);
+      const { getByText } = ListRender(tasks);
 
-    // 빈 tasks 를 ListRender에 넘겨줬을 때
-    // 기대되는 행동은 할 일이 없어요를 보여줘야 한다.
-    expect(getByText('할 일이 없어요!')).toBeInTheDocument();
+      // 빈 tasks 를 ListRender에 넘겨줬을 때
+      // 기대되는 행동은 할 일이 없어요를 보여줘야 한다.
+      expect(getByText('할 일이 없어요!')).toBeInTheDocument();
+    });
   });
 
   // tasks가 입력되어 비어있지 않을 때
-  it('NotEmpty', () => {
-    const tasks = [
-      {
-        id: 100,
-        title: '할 일 1',
-      },
-      {
-        id: 101,
-        title: '할 일 2',
-      },
-    ];
+  context('tasks are not empty', () => {
+    it('NotEmpty', () => {
+      const tasks = [
+        {
+          id: 100,
+          title: '할 일 1',
+        },
+        {
+          id: 101,
+          title: '할 일 2',
+        },
+      ];
 
-    const { getByText } = ListRender(tasks);
+      const { getByText } = ListRender(tasks);
 
-    // 비어있지 않은 tasks를 ListRender에 넘겨줬을 때
-    // 기대되는 행동은 할 일들을 보여줘한다.
-    // 흠 왜 map은 안되는 걸까?
-    tasks.forEach((task) => {
-      expect(getByText(task.title)).toBeInTheDocument();
+      // 비어있지 않은 tasks를 ListRender에 넘겨줬을 때
+      // 기대되는 행동은 할 일들을 보여줘한다.
+      // 흠 왜 map은 안되는 걸까?
+      tasks.forEach((task) => {
+        expect(getByText(task.title)).toBeInTheDocument();
+      });
     });
   });
 });

@@ -12,7 +12,7 @@ describe('Input', () => {
 
   // render
   // input.jsx paramter is value
-  const Inputrender = (value) => render((
+  const renderInput = (value) => render((
     <Input
       value={value}
       onChange={handleChange}
@@ -21,23 +21,23 @@ describe('Input', () => {
   ));
 
   // jest function인 getByLabel, getByText, getPlaceholderText을 이용해 rendering
-  it('default', () => {
-    const { getByLabelText, getByText, getByPlaceholderText } = Inputrender('');
+  it('it shows start', () => {
+    const { getByLabelText, getByText, getByPlaceholderText } = renderInput('');
 
     // toBeInDocument는 DOM에 있는지 확인하는 함수
     // 아무것도 쓰지 않은 초기화면에서
-    // InputRender를 통해 <List ~/> 를 불러와
+    // renderInput를 통해 <List ~/> 를 불러와
     // 설정한 초기 값이 제대로 있는지 확인한다.
     expect(getByLabelText('할 일')).toBeInTheDocument();
     expect(getByText('추가')).toBeInTheDocument();
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
   });
 
-  it('change', () => {
+  it('it listens changes', () => {
     const newTask = '새로 할 일';
 
     // default로 placeholder가 있는 부분을 새로 할 일로 바꿔준다.
-    const { getByPlaceholderText } = Inputrender(newTask);
+    const { getByPlaceholderText } = renderInput(newTask);
 
     // 띄어쓰기가 달라도 인식을 못하는 구나.
     const defaultTask = getByPlaceholderText('할 일을 입력해 주세요');
@@ -53,7 +53,7 @@ describe('Input', () => {
   it('click', () => {
     const newTask = '새로운 할 일';
 
-    const { getByText } = Inputrender(newTask);
+    const { getByText } = renderInput(newTask);
 
     expect(handleClick).not.toBeCalled();
 
