@@ -19,9 +19,5 @@ test('Page', () => {
       onClickDeleteTask={onClickDeleteTask}
     />,
   );
-  if (tasks.length === 0) {
-    expect(container).toHaveTextContent('할 일이 없어요!');
-  }
-
   expect(container).toHaveTextContent('To-do');
 });
