@@ -5,6 +5,7 @@ import List from './List';
 describe('List', () => {
   context('아무런 task가 등록되어 있지 않다면,', () => {
     const tasks = [];
+
     it('아무런 task가 등록되어 있지 않다면, \'할 일이 없어요!\'라는 메세지를 볼 수 있다.', () => {
       const { container } = render((
         <List tasks={tasks} />
@@ -23,6 +24,7 @@ describe('List', () => {
       id: 2,
       title: 'nothing',
     }];
+
     it('리스트와 완료 버튼을 볼 수 있다.', () => {
       const handleClickDelete = jest.fn();
 
