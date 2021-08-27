@@ -30,7 +30,7 @@ describe('List', () => {
       ),
     );
 
-    // tasks 배열의 원소 수와 render되는 아이템 수가 같은지 테스트 해야한다.
-    // ...
+    const renderedItems = getAllByText('완료');
+    expect(renderedItems.length).toBe(tasks.length);
   });
 });
