@@ -13,23 +13,27 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const { container, getByText, getByPlaceholderText } = render((
-    <Input
-      value={taskTitle}
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
-
-  context('when component is rendered', () => {
-    it('has 할 일 and 추가 text content', () => {
-      expect(container).toHaveTextContent('할 일');
-      expect(container).toHaveTextContent('추가');
-    });
+  it('renders 할 일 and 추가 text content', () => {
+    const { container } = render((
+      <Input
+        value={taskTitle}
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+    ));
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
   });
 
-  context('when user type', () => {
+  context('when a letter is typed', () => {
     it('calls handleChange function', () => {
+      const { getByPlaceholderText } = render((
+        <Input
+          value={taskTitle}
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
       const inputField = getByPlaceholderText('할 일을 입력해 주세요');
       const letter = 'a';
 
@@ -39,8 +43,15 @@ describe('Input', () => {
     });
   });
 
-  context('when usuer click 추가 button', () => {
+  context('when 추가 button is clicked', () => {
     it('calls handleClick function', () => {
+      const { getByText } = render((
+        <Input
+          value={taskTitle}
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
       expect(handleClick).not.toBeCalled();
       fireEvent.click(getByText('추가'));
       expect(handleClick).toBeCalled();
