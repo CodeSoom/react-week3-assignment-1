@@ -8,6 +8,7 @@ describe('Input', () => {
 
   const renderInput = () => render((
     <Input
+      value=""
       onChange={handleChange}
       onClick={handleClick}
     />
