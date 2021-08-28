@@ -7,27 +7,25 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  it('input의 앞에 \'할 일\', button에는 \'추가\'라는 텍스트를 볼 수 있다.', () => {
-    const { container } = render((
+  function renderInput() {
+    return render((
       <Input
         value={taskTitle}
         onChange={handleChange}
         onClick={handleClick}
       />
     ));
+  }
+
+  it('input의 앞에 \'할 일\', button에는 \'추가\'라는 텍스트를 볼 수 있다.', () => {
+    const { container } = renderInput();
 
     expect(container).toHaveTextContent('할 일');
     expect(container).toHaveTextContent('추가');
   });
 
   it('input에 입력하면 Change 이벤트가 발생한다.', () => {
-    const { getByPlaceholderText } = render((
-      <Input
-        value={taskTitle}
-        onChange={handleChange}
-        onClick={handleClick}
-      />
-    ));
+    const { getByPlaceholderText } = renderInput();
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
     expect(handleChange).not.toBeCalled();
@@ -39,13 +37,7 @@ describe('Input', () => {
   });
 
   it('추가를 클릭하면 Click 이벤트가 발생한다.', () => {
-    const { getByText } = render((
-      <Input
-        value={taskTitle}
-        onChange={handleChange}
-        onClick={handleClick}
-      />
-    ));
+    const { getByText } = renderInput();
     const button = getByText('추가');
 
     expect(handleClick).not.toBeCalled();

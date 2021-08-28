@@ -9,8 +9,8 @@ describe('Page', () => {
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
 
-  it('\'To-do\'라는 타이틀을 볼 수 있다.', () => {
-    const { container } = render((
+  function renderPage() {
+    return render((
       <Page
         taskTitle={taskTitle}
         onChangeTitle={handleChangeTitle}
@@ -19,35 +19,23 @@ describe('Page', () => {
         onClickDeleteTask={handleClickDeleteTask}
       />
     ));
+  }
+
+  it('\'To-do\'라는 타이틀을 볼 수 있다.', () => {
+    const { container } = renderPage();
 
     expect(container).toHaveTextContent('To-do');
   });
 
   it('Input 컴포넌트를 포함한다.', () => {
-    const { container } = render((
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={handleClickDeleteTask}
-      />
-    ));
+    const { container } = renderPage();
 
     expect(container).toHaveTextContent('할 일');
     expect(container).toHaveTextContent('추가');
   });
 
   it('List 컴포넌트를 포함한다.', () => {
-    const { container } = render((
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={handleChangeTitle}
-        onClickAddTask={handleClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={handleClickDeleteTask}
-      />
-    ));
+    const { container } = renderPage();
 
     expect(container).toHaveTextContent('할 일이 없어요!');
   });

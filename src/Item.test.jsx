@@ -9,25 +9,24 @@ describe('Item', () => {
   };
   const handleClick = jest.fn();
 
-  it('task의 title을 포함한 리스트를 완료 버튼과 함께 생성한다.', () => {
-    const { container } = render((
+  function renderItem() {
+    return render((
       <Item
         task={task}
         onClickDelete={handleClick}
       />
     ));
+  }
+
+  it('task의 title을 포함한 리스트를 완료 버튼과 함께 생성한다.', () => {
+    const { container } = renderItem();
 
     expect(container).toHaveTextContent('Do anything you want');
     expect(container).toHaveTextContent('완료');
   });
 
   it('완료 버튼을 누르면 Click 이벤트가 실행된다.', () => {
-    const { getByText } = render((
-      <Item
-        task={task}
-        onClickDelete={handleClick}
-      />
-    ));
+    const { getByText } = renderItem();
 
     expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('완료'));
