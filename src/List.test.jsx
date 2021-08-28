@@ -15,13 +15,16 @@ describe('List', () => {
   context('task 가 없을 때', () => {
     it('"할 일이 없어요" 메시지를 보여준다', () => {
       const tasks = [];
-
       const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
+    });
 
-      const countOfItems = container.getElementsByTagName('li').length;
-      expect(countOfItems).toBe(tasks.length);
+    it('task 아이템이 하나도 없어야 한다.', () => {
+      const tasks = [];
+      const { getAllByTestId } = renderList(tasks);
+
+      expect(() => getAllByTestId('task-item').length).toThrowError();
     });
   });
 
@@ -36,11 +39,11 @@ describe('List', () => {
         title: '뭐라도 하기2',
       }];
 
-      const { container } = renderList(tasks);
+      const { container, getAllByTestId } = renderList(tasks);
 
       expect(container).not.toHaveTextContent('할 일이 없어요!');
 
-      const countOfItems = container.getElementsByTagName('li').length;
+      const countOfItems = getAllByTestId('task-item').length;
       expect(countOfItems).toBe(tasks.length);
     });
   });

@@ -8,7 +8,7 @@ export default function List({ tasks, onClickDelete }) {
   }
 
   return (
-    <ol>
+    <ol data-testid="task-list">
       {tasks.map((task) => (
         <Item key={task.id} task={task} onClickDelete={onClickDelete} />
       ))}

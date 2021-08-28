@@ -33,9 +33,11 @@ describe('Input', () => {
   context('input 타이핑을 하면', () => {
     it('타이핑한 내용이 input에 표시되어야 한다.', () => {
       const value = '과제하기';
-      const { container } = renderInput(value);
+      const { getByTestId } = renderInput(value);
+      const taskInput = getByTestId('task-input');
+
       expect(handleChange).not.toBeCalled();
-      fireEvent.change(container.querySelector('input'), { target: { value } });
+      fireEvent.change(taskInput, { target: { value } });
       expect(handleClick).toBeCalled();
     });
   });
