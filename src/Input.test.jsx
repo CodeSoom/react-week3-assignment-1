@@ -25,22 +25,20 @@ describe('Input', () => {
     expect(container).toHaveTextContent('추가');
   });
 
-  context('when a letter is typed', () => {
-    it('calls handleChange function', () => {
-      const { getByPlaceholderText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
-      const inputField = getByPlaceholderText('할 일을 입력해 주세요');
-      const letter = 'a';
+  it('calls handleChange function', () => {
+    const { getByPlaceholderText } = render((
+      <Input
+        value={taskTitle}
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+    ));
+    const inputField = getByPlaceholderText('할 일을 입력해 주세요');
+    const letter = 'a';
 
-      expect(handleChange).not.toBeCalled();
-      fireEvent.change(inputField, { target: { value: letter } });
-      expect(handleChange).toBeCalledTimes(1);
-    });
+    expect(handleChange).not.toBeCalled();
+    fireEvent.change(inputField, { target: { value: letter } });
+    expect(handleChange).toBeCalledTimes(1);
   });
 
   context('when 추가 button is clicked', () => {
