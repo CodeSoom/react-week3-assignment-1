@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  test('입력됨에 따라 인풋의 텍스트가 변경된다.', () => {
+  it('입력됨에 따라 인풋의 텍스트가 변경된다.', () => {
     const { getByPlaceholderText } = render((
       <App />
     ));
@@ -17,7 +17,7 @@ describe('App', () => {
     expect(input).toHaveAttribute('value', 'Do anything');
   });
 
-  test('추가 버튼을 누르면 완료 버튼을 포함한 리스트가 작성된다.', () => {
+  it('추가 버튼을 누르면 완료 버튼을 포함한 리스트가 작성된다.', () => {
     const { container, getByText } = render((
       <App />
     ));
@@ -31,7 +31,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('완료');
   });
 
-  test('완료 버튼을 누르면 리스트가 삭제된다.', () => {
+  it('완료 버튼을 누르면 리스트가 삭제된다.', () => {
     const { container, getByText, getByPlaceholderText } = render((
       <App />
     ));

@@ -3,12 +3,16 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
+  const handleClickDelete = jest.fn();
   context('아무런 task가 등록되어 있지 않다면,', () => {
     const tasks = [];
 
     it('아무런 task가 등록되어 있지 않다면, \'할 일이 없어요!\'라는 메세지를 볼 수 있다.', () => {
       const { container } = render((
-        <List tasks={tasks} />
+        <List
+          tasks={tasks}
+          onClickDelete={handleClickDelete}
+        />
       ));
 
       expect(container).toHaveTextContent('할 일이 없어요!');
@@ -26,8 +30,6 @@ describe('List', () => {
     }];
 
     it('리스트와 완료 버튼을 볼 수 있다.', () => {
-      const handleClickDelete = jest.fn();
-
       const { container } = render((
         <List
           tasks={tasks}
@@ -41,7 +43,7 @@ describe('List', () => {
     });
   });
 
-  test('완료 버튼을 누르면, 해당 task의 id값을 넘겨받은 Click 이벤트가 실행된다.', () => {
+  it('완료 버튼을 누르면, 해당 task의 id값을 넘겨받은 Click 이벤트가 실행된다.', () => {
     const tasks = [{
       id: 1,
       title: 'something',
@@ -50,8 +52,6 @@ describe('List', () => {
       id: 2,
       title: 'nothing',
     }];
-
-    const handleClickDelete = jest.fn();
 
     const { getAllByText } = render((
       <List
