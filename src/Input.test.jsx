@@ -1,52 +1,30 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input', () => {
+test('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const renderInput = (value) => render((
+  const { getByDisplayValue, getByLabelText, getByText } = render((
     <Input
-      value={value}
+      value='기존 할 일'
       onChange={handleChange}
       onClick={handleClick}
     />
   ));
 
-  it('it shows start page', () => {
-    const { getByLabelText, getByText, getByPlaceholderText } = renderInput('');
+  expect(getByDisplayValue('기존 할 일')).not.toBeNull();
 
-    expect(getByLabelText('할 일')).toBeInTheDocument();
-    expect(getByText('추가')).toBeInTheDocument();
-    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+  fireEvent.change(getByLabelText('할 일'), {
+    target: { value: '무언가 하기' },
   });
 
-  it('it listens changes', () => {
-    const newTask = '새로 할 일';
+  expect(handleChange).toBeCalled();
 
-    const { getByPlaceholderText } = renderInput(newTask);
+  fireEvent.click(getByText('추가'));
 
-    const defaultTask = getByPlaceholderText('할 일을 입력해 주세요');
-
-    expect(handleChange).not.toBeCalled();
-
-    fireEvent.change(defaultTask, { target: { value: newTask } });
-
-    expect(defaultTask).toHaveValue(newTask);
-  });
-
-  it('it works click button', () => {
-    const newTask = '새로운 할 일';
-
-    const { getByText } = renderInput(newTask);
-
-    expect(handleClick).not.toBeCalled();
-
-    fireEvent.click(getByText('추가'));
-
-    expect(handleClick).toBeCalled();
-  });
+  expect(handleClick).toBeCalled();
 });
