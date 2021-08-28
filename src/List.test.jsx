@@ -3,18 +3,20 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
+  const handleClickDelete = jest.fn();
+
+  const renderList = (tasks) => (
+    render(<List
+      tasks={tasks}
+      onClickDelete={handleClickDelete}
+    />)
+  );
+
   context('task 가 없을 때', () => {
     it('"할 일이 없어요" 메시지를 보여준다', () => {
       const tasks = [];
 
-      const handleClickDelete = jest.fn();
-
-      const { container } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={handleClickDelete}
-        />
-      ));
+      const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
 
@@ -34,14 +36,7 @@ describe('List', () => {
         title: '뭐라도 하기2',
       }];
 
-      const handleClickDelete = jest.fn();
-
-      const { container } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={handleClickDelete}
-        />
-      ));
+      const { container } = renderList(tasks);
 
       expect(container).not.toHaveTextContent('할 일이 없어요!');
 
