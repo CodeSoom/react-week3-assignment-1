@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import Page from './Page';
 
-test('Page', () => {
+describe('Page', () => {
   const taskTitle = '안녕하세여';
   const tasks = [];
   const handleChangeTitle = jest.fn();
@@ -18,5 +18,7 @@ test('Page', () => {
     />
   ));
 
-  expect(container).toHaveTextContent('To-do');
+  test('header에 "To-Do"가 표시되어야 한다.', () => {
+    expect(container).toHaveTextContent('To-do');
+  });
 });
