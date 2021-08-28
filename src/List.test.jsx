@@ -4,18 +4,9 @@ import List from './List';
 
 describe('List', () => {
   const tasks = [
-    {
-      newId: 1,
-      taskTitle: '할 일 1',
-    },
-    {
-      newId: 1,
-      taskTitle: '할 일 1',
-    },
-    {
-      newId: 1,
-      taskTitle: '할 일 1',
-    },
+    { id: 1, title: '과제1' },
+    { id: 2, title: '과제2' },
+    { id: 3, title: '과제3' },
   ];
 
   const handleClick = jest.fn();
