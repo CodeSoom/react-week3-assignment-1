@@ -34,25 +34,22 @@ describe('Input', () => {
       />
     ));
     const inputField = getByPlaceholderText('할 일을 입력해 주세요');
-    const letter = 'a';
 
     expect(handleChange).not.toBeCalled();
-    fireEvent.change(inputField, { target: { value: letter } });
+    fireEvent.change(inputField, { target: { value: 'a' } });
     expect(handleChange).toBeCalledTimes(1);
   });
 
-  context('when 추가 button is clicked', () => {
-    it('calls handleClick function', () => {
-      const { getByText } = render((
-        <Input
-          value={taskTitle}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
-      expect(handleClick).not.toBeCalled();
-      fireEvent.click(getByText('추가'));
-      expect(handleClick).toBeCalled();
-    });
+  it('calls handleClick function', () => {
+    const { getByText } = render((
+      <Input
+        value={taskTitle}
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+    ));
+    expect(handleClick).not.toBeCalled();
+    fireEvent.click(getByText('추가'));
+    expect(handleClick).toBeCalled();
   });
 });
