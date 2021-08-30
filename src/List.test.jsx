@@ -1,0 +1,59 @@
+import { render, fireEvent } from '@testing-library/react';
+
+import List from './List';
+
+context('task가 없는 List', () => {
+  it('빈 리스트 문구 출력', () => {
+    const handleClick = jest.fn();
+
+    const { container } = render((
+      <List
+        tasks={[]}
+        onClickDelete={handleClick}
+      />
+    ));
+
+    expect(container).toHaveTextContent('할 일이 없어요!');
+    expect(handleClick).not.toBeCalled();
+  });
+});
+
+context('task가 있는 List', () => {
+  it('전달된 task 출력, handler 호출', () => {
+    const tasks = [
+      { id: 1, title: '이것' },
+      { id: 2, title: '저것' },
+      { id: 3, title: '아무거나' },
+    ];
+
+    const handleClick = jest.fn();
+
+    const { container, getByText } = render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClick}
+      />
+    ));
+
+    expect(container).not.toHaveTextContent('할 일이 없어요!');
+
+    expect(container).toHaveTextContent('이것');
+    expect(container).toHaveTextContent('저것');
+    expect(container).toHaveTextContent('아무거나');
+    expect(container).toHaveTextContent('완료');
+
+    expect(handleClick).not.toBeCalled();
+
+    fireEvent.click(getByText('이것').parentNode.querySelector('button'));
+
+    expect(handleClick).toBeCalledTimes(1);
+
+    fireEvent.click(getByText('저것').parentNode.querySelector('button'));
+
+    expect(handleClick).toBeCalledTimes(2);
+
+    fireEvent.click(getByText('아무거나').parentNode.querySelector('button'));
+
+    expect(handleClick).toBeCalledTimes(3);
+  });
+});
