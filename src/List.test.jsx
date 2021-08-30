@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
@@ -29,22 +29,31 @@ describe('List', () => {
   });
 
   context('task 가 있을 떄', () => {
-    it('task 수 만큼 아이템이 보여야 한다.', () => {
-      const tasks = [{
-        id: 1,
-        title: '뭐라도 하기1',
-      },
-      {
-        id: 2,
-        title: '뭐라도 하기2',
-      }];
+    it('task 들이 보여야 한다.', () => {
+      const tasks = [
+        { id: 1, title: 'Task-1' },
+        { id: 2, title: 'Task-2' },
+      ];
 
-      const { container, getAllByTestId } = renderList(tasks);
+      const { getByText } = renderList(tasks);
 
-      expect(container).not.toHaveTextContent('할 일이 없어요!');
+      expect(getByText(/Task-1/)).not.toBeNull();
+      expect(getByText(/Task-2/)).not.toBeNull();
+    });
 
-      const countOfItems = getAllByTestId('task-item').length;
-      expect(countOfItems).toBe(tasks.length);
+    it('"완료" 버튼을 누르면 task가 삭제된다.', () => {
+      const tasks = [
+        { id: 1, title: 'Task-1' },
+        { id: 2, title: 'Task-2' },
+      ];
+
+      const { getAllByText } = renderList(tasks);
+
+      const buttons = getAllByText('완료');
+
+      fireEvent.click(buttons[0]);
+
+      expect(handleClickDelete).toBeCalledWith(1);
     });
   });
 });

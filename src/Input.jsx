@@ -5,7 +5,6 @@ export default function Input({ value, onChange, onClick }) {
         할 일
       </label>
       <input
-        data-testid="task-input"
         id="input-task-title"
         type="text"
         placeholder="할 일을 입력해 주세요"
