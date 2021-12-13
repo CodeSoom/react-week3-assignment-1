@@ -3,7 +3,7 @@ export default function Item({ task: { id, title }, onClickDelete }) {
     <li>
       {title}
       <button type="button" onClick={() => onClickDelete(id)}>
-        완료
+        <span>완료</span>
       </button>
     </li>
   );
