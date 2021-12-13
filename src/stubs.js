@@ -15,3 +15,5 @@ export const TASKS = [
 ];
 
 export const EMPTY_TASK = [];
+
+export const TASK_TITLE = '안녕하세요';

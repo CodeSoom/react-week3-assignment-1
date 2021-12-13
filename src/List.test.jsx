@@ -11,8 +11,8 @@ describe('List', () => {
       <List tasks={TASKS} onClickDelete={onClickDelete} />,
     );
 
-    expect(container).toHaveTextContent('3주차 기다렸어요');
-    expect(container).toHaveTextContent('우와아아아아아');
+    expect(container).toHaveTextContent(TASKS[0].title);
+    expect(container).toHaveTextContent(TASKS[1].title);
 
     expect(getAllByText('완료')).toHaveLength(2);
   });
