@@ -17,7 +17,6 @@ test('Page 테스트', () => {
       onClickDeleteTask={handleClickDeleteTask}
     />,
   );
-
   expect(container).toHaveTextContent('기상');
 
   fireEvent.click(getByText('추가'));
@@ -27,7 +26,7 @@ test('Page 테스트', () => {
     target: { value: '일기쓰기' },
   });
   expect(handleChange).toBeCalled();
-  fireEvent.click(getByText('완료'));
 
+  fireEvent.click(getByText('완료'));
   expect(handleClickDeleteTask).toBeCalledWith(1);
 });
