@@ -19,6 +19,7 @@ describe('App', () => {
         tasks={[{ id: 1, title: '일어나기' }]}
       />
     );
+
     expect(handleChange).not.toBeCalled();
     fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
     expect(handleChange).toBeCalled();

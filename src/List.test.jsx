@@ -11,6 +11,7 @@ describe('List', () => {
     });
     it('renders empty message', () => {
       const { container } = render(<List tasks={tasks} />);
+
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
@@ -21,6 +22,7 @@ describe('List', () => {
     });
     it('renders task title', () => {
       const { container } = render(<List tasks={tasks} />);
+
       expect(container).toHaveTextContent('일어나기');
     });
 
@@ -32,6 +34,7 @@ describe('List', () => {
           onClickDelete={handleClickDelete}
         />
       );
+
       expect(handleClickDelete).not.toBeCalled();
       fireEvent.click(getByText('완료'));
       expect(handleClickDelete).toBeCalledWith(1);
