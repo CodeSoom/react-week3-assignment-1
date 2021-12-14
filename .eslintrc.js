@@ -49,7 +49,7 @@ module.exports = {
     'arrow-spacing': ['error', { before: true, after: true }],
     'jsx-a11y/label-has-associated-control': ['error', { assert: 'either' }],
     'linebreak-style': 'off',
-
+    'react/jsx-no-bind': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
   },
