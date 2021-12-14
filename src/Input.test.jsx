@@ -16,9 +16,9 @@ test('Input', () => {
 
   expect(handleChange).not.toBeCalled();
   fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
-  expect(handleChange).toBeCalledTimes(1);
+  expect(handleChange).toBeCalled();
 
   expect(handleClick).not.toBeCalled();
   fireEvent.click(getByText('추가'));
-  expect(handleClick).toBeCalledTimes(1);
+  expect(handleClick).toBeCalled();
 });
