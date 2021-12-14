@@ -1,3 +1,11 @@
+import { render } from '@testing-library/react';
+
+import List from './List';
+
 test('List', () => {
-  expect(1).toBe(1);
+  const { container } = render((
+    <List tasks={[]} />
+  ));
+
+  expect(container).toHaveTextContent('할 일이 없어요!');
 });
