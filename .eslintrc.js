@@ -52,5 +52,6 @@ module.exports = {
     'react/jsx-no-bind': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    'import/prefer-default-export': 'off',
   },
 };

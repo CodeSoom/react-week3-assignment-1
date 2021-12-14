@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
-import List, { EMPTY_MESSAGE } from './index';
+import List from './index';
+import { EMPTY_MESSAGE } from '../../constants';
 
 describe('List', () => {
   it(`tasks의 length가 0이면 "${EMPTY_MESSAGE}"를 보여줍니다.`, () => {
