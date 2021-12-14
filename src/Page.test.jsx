@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
-test('Page 테스트', () => {
+test('Page props로 전달한 이벤트 리스너가 정상작동하는지 확인하고, 전달된 테스크 목록이 보여지는지 확인한다.', () => {
   const taskTitle = '';
   const handleChange = jest.fn();
   const handleClickAddTask = jest.fn();

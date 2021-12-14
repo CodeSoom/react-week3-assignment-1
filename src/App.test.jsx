@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
-test('App', () => {
+test('App - Todo App 통합테스트로써 각 이벤트 리스너와 행동에 따른 출력결과를 확인한다.', () => {
   const { container, getByPlaceholderText, getByText } = render(<App />);
 
   fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {

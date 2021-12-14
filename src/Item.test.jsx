@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
+test('Item 완료버튼 클릭시 삭제이벤트 핸들러가 전달받은 id과 함께 실행되어야한다.', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',

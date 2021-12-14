@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input 이벤트 리스너 테스트', () => {
+test('Input 컴포넌트에 props로 전달된 이벤트 핸들러가 정상적으로 호출된다.', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
