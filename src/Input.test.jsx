@@ -25,6 +25,6 @@ test('Input', () => {
   expect(getByRole('textbox').value).toBe('test');
   expect(handleChange).not.toBeCalled();
   fireEvent.change(getByRole('textbox'), { target: { value: 'test2' } });
-  expect(handleChange).toBeCalledTimes(1);
+  expect(handleChange).toBeCalled();
   // expect(getByRole('textbox').value).toBe('test2');
 });
