@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
-it('input', () => {
+test('input', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
   const { container, getByText, getByRole } = render(
@@ -14,13 +14,14 @@ it('input', () => {
     />,
   );
 
-  // 할 일 버튼 작동
+  // 추가 버튼 작인 확인
   expect(container).toHaveTextContent('추가');
 
   expect(handleClick).not.toBeCalled();
   fireEvent.click(getByText('추가'));
   expect(handleClick).toBeCalled();
 
+  //textbox 입력 작동 확인
   expect(getByRole('textbox').value).toBe('test');
   expect(handleChange).not.toBeCalled();
   fireEvent.change(getByRole('textbox'), { target: { value: 'test2' } });
