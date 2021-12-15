@@ -1,22 +1,33 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
 test('Input', () => {
-  const value = '할 일을 입력했다!';
-  const onChange = jest.fn();
-  const onClick = jest.fn();
+  const value = '';
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
 
-  const { container, getByLabelText, getByText } = render((
+  const { container, getByPlaceholderText, getByText } = render((
     <Input
       value={value}
-      onChange={onChange}
-      onClick={onClick}
+      onChange={handleChange}
+      onClick={handleClick}
     />
   ));
   
-  const label = getByLabelText('할 일');
+  expect(container).toHaveTextContent('할 일');
+  expect(container).toHaveTextContent('추가');
+
+  // input의 값이 바뀌면 handleChange가 호출되어야 한다.
+  const input = getByPlaceholderText('할 일을 입력해 주세요');
+  expect(input).toHaveValue('');
+  expect(handleChange).not.toBeCalled();
+  // 값을 정확히 지시해야??
+  fireEvent.change(input);
+  expect(handleChange).toBeCalled(1);
+
   const button = getByText('추가');
 
-  expect(label).toHaveTextContent("할 일을 입력해 주세요");
+
+
 });
