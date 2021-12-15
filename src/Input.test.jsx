@@ -29,28 +29,27 @@ describe('Input Component', () => {
 
   it('when typing, input changed value', () => {
     const { getByPlaceholderText } = renderComponent();
-
     const input = getByPlaceholderText('할 일을 입력해 주세요');
-    expect(onChange).not.toBeCalled();
+
     fireEvent.change(input, {
       target: {
         value,
       },
     });
-    expect(onChange).toHaveBeenCalled();
+
+    expect(onChange).toBeCalled();
   });
 
   it('after typing, click button to init value', () => {
     const { getByPlaceholderText, getByRole } = renderComponent();
-
     const input = getByPlaceholderText('할 일을 입력해 주세요');
+
     fireEvent.change(input, {
       target: {
         value,
       },
     });
 
-    expect(onClick).not.toHaveBeenCalled();
     fireEvent.click(getByRole('button'));
     expect(onClick).toHaveBeenCalled();
   });
