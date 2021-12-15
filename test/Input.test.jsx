@@ -20,6 +20,6 @@ test('Input', () => {
   // 추가 클릭 시 입력창이 비어 진다
   fireEvent.click(getByRole('button', { name: /추가/i }));
   expect(handleClick).toBeCalled();
-  // TODO 입력창이 비어지지 않음
+  // TODO 입력창이 비어지는지 테스트
   // expect(input.value).toBe('');
 });
