@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
-import { TASK } from './stubs';
+import { TASK } from './fixture';
 
 test('Item', () => {
   const handleClick = jest.fn();
