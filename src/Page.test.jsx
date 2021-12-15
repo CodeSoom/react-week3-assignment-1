@@ -2,18 +2,9 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-describe('Page Component', () => {
-  const tasks = [
-    {
-      id: 1,
-      title: '아무 것도 하지 않기',
-    },
-    {
-      id: 2,
-      title: '코드숨 과제하기',
-    },
-  ];
+import { tasks } from '../fixtures/tasks';
 
+describe('Page Component', () => {
   const onChangeTitle = jest.fn();
 
   it('render', () => {
