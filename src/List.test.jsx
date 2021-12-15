@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
-import { EMPTY_TASK, TASKS } from './stubs';
+import { EMPTY_TASK, TASKS } from './fixture';
 
 describe('List', () => {
   it('tasks 배열의 title이 "완료" 버튼과 함께 List 컴포넌트에 그려집니다', () => {

@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-import { TASKS, TASK_TITLE } from './stubs';
+import { TASKS, TASK_TITLE } from './fixture';
 
 describe('Page', () => {
   const onChangeTitle = jest.fn();

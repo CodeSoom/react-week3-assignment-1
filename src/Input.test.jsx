@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-import { TASK_TITLE } from './stubs';
+import { TASK_TITLE } from './fixture';
 
 describe('Input', () => {
   const onChangeTitle = jest.fn();
