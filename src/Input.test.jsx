@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -11,6 +11,13 @@ describe('Input', () => {
   const renderInputComponent = () => render(
     <Input value={TASK_TITLE} onChange={onChangeTitle} onClick={onClickAddTask} />,
   );
+
+  it('input에 value값이 입력되어있다', () => {
+    renderInputComponent();
+    const input = screen.getByDisplayValue(TASK_TITLE);
+    expect(input.value).toBe(TASK_TITLE);
+  });
+
   it('투두 인풋의 버튼을 클릭하면 onClickAddTask 이벤트가 호출된다', () => {
     const { getByText } = renderInputComponent();
 
