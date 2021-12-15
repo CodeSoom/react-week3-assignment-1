@@ -11,20 +11,24 @@ describe('Input Component', () => {
     jest.clearAllMocks();
   });
 
+  const renderComponent = () => render((
+    <Input
+      value=""
+      onChange={onChange}
+      onClick={onClick}
+    />
+  ));
+
   it('render', () => {
-    const { container, getByPlaceholderText } = render((
-      <Input />
-    ));
+    const { container, getByPlaceholderText } = renderComponent();
 
     expect(container).toHaveTextContent('할 일');
-    getByPlaceholderText('할 일을 입력해 주세요');
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     expect(container).toHaveTextContent('추가');
   });
 
   it('when typing, input changed value', () => {
-    const { getByPlaceholderText } = render((
-      <Input value="" onChange={onChange} onClick={onClick} />
-    ));
+    const { getByPlaceholderText } = renderComponent();
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
     expect(onChange).not.toBeCalled();
@@ -37,18 +41,12 @@ describe('Input Component', () => {
   });
 
   it('after typing, click button to init value', () => {
-    const { getByPlaceholderText, getByRole } = render((
-      <Input
-        value={value}
-        onChange={onChange}
-        onClick={onClick}
-      />
-    ));
+    const { getByPlaceholderText, getByRole } = renderComponent();
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
     fireEvent.change(input, {
       target: {
-        value: '코드숨 과제하기',
+        value,
       },
     });
 
