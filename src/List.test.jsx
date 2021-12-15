@@ -14,8 +14,8 @@ describe('List', () => {
     )
   );
 
-  context('without tassk', () => {
-    it('without tasks', () => {
+  context('without tasks', () => {
+    it('render no task', () => {
       const tasks = [];
       const { container } = renderList(tasks);
 
