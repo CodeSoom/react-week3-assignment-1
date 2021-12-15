@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
-test('input', () => {
+test('Input', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
   const { container, getByText, getByRole } = render(
