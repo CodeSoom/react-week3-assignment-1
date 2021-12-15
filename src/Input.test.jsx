@@ -14,14 +14,14 @@ test('input', () => {
     />,
   );
 
-  // 추가 버튼 작인 확인
+  // 추가 버튼 작동 확인
   expect(container).toHaveTextContent('추가');
 
   expect(handleClick).not.toBeCalled();
   fireEvent.click(getByText('추가'));
   expect(handleClick).toBeCalled();
 
-  //textbox 입력 작동 확인
+  // textbox 입력 작동 확인
   expect(getByRole('textbox').value).toBe('test');
   expect(handleChange).not.toBeCalled();
   fireEvent.change(getByRole('textbox'), { target: { value: 'test2' } });
