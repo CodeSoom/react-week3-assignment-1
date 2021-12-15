@@ -7,12 +7,17 @@ import { tasks } from '../fixtures/tasks';
 describe('List Component', () => {
   const onClickDelete = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const renderComponent = (_tasks) => render((
+    <List tasks={_tasks} onClickDelete={onClickDelete} />
+  ));
+
   context('task 가 없을 경우', () => {
     it("task가 없을 경우, '할 일이 없어요!' 출력", () => {
-      const { container } = render((
-        <List tasks={[]} onClickDelete={onClickDelete} />
-      ));
-
+      const { container } = renderComponent([]);
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
@@ -23,12 +28,10 @@ describe('List Component', () => {
     });
 
     it('task의 타이틀 및 완료 버튼이 render 된다.', () => {
-      const { container, getAllByRole } = render((
-        <List tasks={tasks} onClickDelete={onClickDelete} />
-      ));
+      const { container, getAllByRole } = renderComponent(tasks);
 
-      expect(container).toHaveTextContent('아무 것도 하지 않기');
-      expect(container).toHaveTextContent('코드숨 과제하기');
+      expect(container).toHaveTextContent(tasks[0].title);
+      expect(container).toHaveTextContent(tasks[1].title);
 
       const buttons = getAllByRole('button');
       expect(buttons).toHaveLength(2);
@@ -36,9 +39,7 @@ describe('List Component', () => {
     });
 
     it('완료 버튼을 클릭할 경우 해당 아이템의 id 값을 호출한다.', () => {
-      const { getAllByRole } = render((
-        <List tasks={tasks} onClickDelete={onClickDelete} />
-      ));
+      const { getAllByRole } = renderComponent(tasks);
 
       const buttons = getAllByRole('button');
       expect(buttons[1]).toHaveTextContent('완료');
