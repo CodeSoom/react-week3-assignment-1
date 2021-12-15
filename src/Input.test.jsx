@@ -7,16 +7,16 @@ test('Input', () => {
   const onChange = jest.fn();
   const onClick = jest.fn();
 
-  const { container } = render((
+  const { container, getByLabelText, getByText } = render((
     <Input
       value={value}
       onChange={onChange}
       onClick={onClick}
     />
   ));
+  
+  const label = getByLabelText('할 일');
+  const button = getByText('추가');
 
-  expect(
-    container.querySelector('[id="input-task-title"]'),
-  ).toHaveValue({ value });
-  // querySelector를 이용해도 내부에 접근할 수 없다..!
+  expect(label).toHaveTextContent("할 일을 입력해 주세요");
 });
