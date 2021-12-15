@@ -31,4 +31,11 @@ describe('Input', () => {
     fireEvent.click(getByText('추가'));
     expect(handleClick).toBeCalled();
   });
+
+  it('check input attribute', () => {
+    const { container } = renderInput();
+    const input = container.querySelector('#input-task-title');
+
+    expect(input).toHaveAttribute('value', '아무거나 하기');
+  });
 });

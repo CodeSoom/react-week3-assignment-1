@@ -28,7 +28,6 @@ describe('Page', () => {
       const { container } = renderPage(title, tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
-      expect(container).toBe();
     });
   });
 
