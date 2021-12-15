@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
@@ -24,21 +24,31 @@ describe('List', () => {
   });
 
   context('with tasks', () => {
+    const tasks = [
+      {
+        id: 1,
+        title: '아무거나 하기',
+      },
+      {
+        id: 2,
+        title: '코드숨 강의 시청',
+      },
+    ];
     it('render tasks', () => {
-      const tasks = [
-        {
-          id: 1,
-          title: '아무거나 하기',
-        },
-        {
-          id: 2,
-          title: '코드숨 강의 시청',
-        },
-      ];
       const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('아무거나 하기');
       expect(container).toHaveTextContent('코드숨 강의 시청');
+    });
+
+    it('"완료" buttons to delete a task', () => {
+      const { getAllByText } = renderList(tasks);
+
+      const buttons = getAllByText('완료');
+
+      expect(handleClickDelete).not.toBeCalled();
+      fireEvent.click(buttons[0]);
+      expect(handleClickDelete).toBeCalledWith(1);
     });
   });
 });
