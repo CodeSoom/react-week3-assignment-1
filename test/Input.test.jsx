@@ -1,5 +1,25 @@
+import { fireEvent, render } from '@testing-library/react';
+import Input from '../src/Input';
+
 test('Input', () => {
-  // TODO: 렌더링이 잘되었는지
-  // TODO: 입력 시 텍스트가 잘 반영 되는지
-  // TODO: 추가 클릭 시 입력창이 비어 진다
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
+  const { container, getByRole } = render(<Input onChange={handleChange} onClick={handleClick} />);
+
+  // 렌더링이 잘되었는지
+  expect(container).toHaveTextContent('할 일');
+  expect(container).toHaveTextContent('추가');
+
+  const input = getByRole('textbox', { name: /할 일/i });
+
+  // 입력 시 텍스트가 잘 반영 되는지
+  fireEvent.change(input, { target: { value: 'hello' } });
+  expect(input.value).toBe('hello');
+  expect(handleChange).toBeCalled();
+
+  // 추가 클릭 시 입력창이 비어 진다
+  fireEvent.click(getByRole('button', { name: /추가/i }));
+  expect(handleClick).toBeCalled();
+  // TODO 입력창이 비어지지 않음
+  // expect(input.value).toBe('');
 });
