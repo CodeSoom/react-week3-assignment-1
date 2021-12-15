@@ -2,17 +2,18 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('List', () => {
-  const tasks = [
-    {
-      title: '아무것도 안하기',
-      id: 100,
-    },
-  ];
-  const { container } = render((
-    <List tasks={tasks} />
-  ));
+describe('List', () => {
+  const handleClickDelete = jest.fn();
 
-  expect(container).toHaveTextContent('아무것도 안하기');
-  expect(container).toHaveTextContent('완료');
+  it('List empty tasks', () => {
+    const tasks = [];
+    const { container } = render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClickDelete}
+      />
+    ));
+
+    expect(container).toHaveTextContent('할 일이 없어요!');
+  });
 });
