@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -32,9 +32,9 @@ describe('Page', () => {
   });
 
   it('투두 인풋을 그려낸다', () => {
-    const { getByPlaceholderText } = renderPageComponent();
+    renderPageComponent();
 
-    const toDoInput = getByPlaceholderText('할 일을 입력해 주세요');
+    const toDoInput = screen.getByRole('textbox');
     expect(toDoInput).toBeInTheDocument();
     expect(toDoInput).toHaveValue(TASK_TITLE);
   });
