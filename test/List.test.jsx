@@ -2,14 +2,14 @@ import { fireEvent, render } from '@testing-library/react';
 import List from '../src/List';
 
 describe('List', () => {
-  it('할 일이 없는 경우에는 "할 일이 없어요" 가 노출된다.', () => {
+  test('할 일이 없는 경우에는 "할 일이 없어요" 가 노출된다.', () => {
     const tasks = [];
     const { container } = render(<List tasks={tasks} />);
     expect(container).not.toBe(null);
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  it('할 일이 5개라면 Item 요소가 5개 렌더링 된다.', () => {
+  test('할 일이 5개라면 Item 요소가 5개 렌더링 된다.', () => {
     const tasks = [
       { id: 1, title: 'hello' },
       { id: 2, title: 'hello' },
@@ -17,10 +17,10 @@ describe('List', () => {
     ];
     const { container, getAllByRole } = render(<List tasks={tasks} />);
     expect(container).not.toBe(null);
-    expect(getAllByRole('listitem').length).toBe(3);
+    expect(getAllByRole('listitem')).toHaveLength(3);
   });
 
-  it('onClickDelete 클릭 시 할 일이 삭제된다.', () => {
+  test('onClickDelete 클릭 시 할 일이 삭제된다.', () => {
     const tasks = [
       { id: 1, title: 'hello' },
     ];

@@ -1,25 +1,33 @@
 import { fireEvent, render } from '@testing-library/react';
 import Input from '../src/Input';
 
-test('Input', () => {
-  const handleChange = jest.fn();
-  const handleClick = jest.fn();
-  const { container, getByRole } = render(<Input onChange={handleChange} onClick={handleClick} />);
+describe('Input', () => {
+  test('초기 렌더링 시 "할 일" 과 "추가", value props 가 노출된다.', () => {
+    const handleChange = jest.fn();
+    const { container, getByRole } = render(<Input value="hello" onChange={handleChange} />);
+    const input = getByRole('textbox', { name: /할 일/i });
 
-  // 렌더링이 잘되었는지
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
+    expect(input).toHaveValue('hello');
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
+  });
 
-  const input = getByRole('textbox', { name: /할 일/i });
+  test('입력창에 텍스트를 입력할 수 있다.', () => {
+    const handleChange = jest.fn();
+    const { getByRole } = render(<Input onChange={handleChange} />);
+    const input = getByRole('textbox', { name: /할 일/i });
 
-  // 입력 시 텍스트가 잘 반영 되는지
-  fireEvent.change(input, { target: { value: 'hello' } });
-  expect(input.value).toBe('hello');
-  expect(handleChange).toBeCalled();
+    fireEvent.change(input, { target: { value: 'hello' } });
 
-  // 추가 클릭 시 입력창이 비어 진다
-  fireEvent.click(getByRole('button', { name: /추가/i }));
-  expect(handleClick).toBeCalled();
-  // TODO 입력창이 비어지는지 테스트
-  // expect(input.value).toBe('');
+    expect(input).toHaveValue('hello');
+    expect(handleChange).toBeCalled();
+  });
+
+  test('추가 버튼을 클릭 할 수 있다.', () => {
+    const handleClick = jest.fn();
+    const { getByRole } = render(<Input onClick={handleClick} />);
+    fireEvent.click(getByRole('button', { name: /추가/i }));
+
+    expect(handleClick).toBeCalled();
+  });
 });
