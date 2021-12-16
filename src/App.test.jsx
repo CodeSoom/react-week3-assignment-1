@@ -1,5 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 
+import { tasks } from '../fixtures/tasks';
+
 import App from './App';
 
 describe('App Component', () => {
@@ -35,5 +37,42 @@ describe('App Component', () => {
 
       expect(input).toHaveAttribute('value', '');
     });
+  });
+
+  it('task 를 추가할 수 있다.', () => {
+    const { container, getByPlaceholderText, getByRole } = renderComponent();
+    tasks.forEach((task) => {
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+        target: {
+          value: task,
+        },
+      });
+      fireEvent.click(getByRole('button', { name: '추가' }));
+    });
+
+    expect(container).not.toHaveTextContent('할 일이 없어요');
+    tasks.forEach((task) => {
+      expect(container).toHaveTextContent(task);
+    });
+  });
+
+  it('task 를 삭제할 수 있다.', () => {
+    const {
+      container, getByPlaceholderText, getByRole, getAllByRole,
+    } = renderComponent();
+    tasks.forEach((task) => {
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+        target: {
+          value: task,
+        },
+      });
+      fireEvent.click(getByRole('button', { name: '추가' }));
+    });
+    const buttons = getAllByRole('button', { name: '완료' });
+
+    expect(buttons).toHaveLength(2);
+    fireEvent.click(buttons[1]);
+
+    expect(container).not.toHaveTextContent(tasks[1].title);
   });
 });
