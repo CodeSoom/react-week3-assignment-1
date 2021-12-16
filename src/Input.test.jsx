@@ -3,11 +3,15 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  const handleChange = jest.fn();
-  const handleClick = jest.fn();
-  function renderComponent({ value = '', onClick, onChange = handleChange } = { value: '', onChange: handleChange }) {
-    return render(<Input value={value} onClick={onClick} onChange={onChange} />);
-  }
+  let handleChange;
+  let handleClick;
+  let renderComponent;
+
+  beforeEach(() => {
+    handleChange = jest.fn();
+    handleClick = jest.fn();
+    renderComponent = ({ value = '', onClick, onChange = handleChange } = { value: '', onChange: handleChange }) => render(<Input value={value} onClick={onClick} onChange={onChange} />);
+  });
 
   it('render label', () => {
     const { container } = renderComponent();

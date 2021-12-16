@@ -3,14 +3,18 @@ import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 describe('App', () => {
-  const handleChange = jest.fn();
-  const handleClickAddTask = jest.fn();
-  const handleClickDeleteTask = jest.fn();
+  let handleChange;
+  let handleClickAddTask;
+  let handleClickDeleteTask;
+  let renderComponent;
 
-  function renderComponent({
-    taskTitle = '', tasks = [], onChangeTitle = handleChange, onClickAddTask, onClickDeleteTask,
-  } = { taskTitle: '', onChangeTitle: handleChange }) {
-    return render(
+  beforeEach(() => {
+    handleChange = jest.fn();
+    handleClickAddTask = jest.fn();
+    handleClickDeleteTask = jest.fn();
+    renderComponent = ({
+      taskTitle = '', tasks = [], onChangeTitle = handleChange, onClickAddTask, onClickDeleteTask,
+    } = { taskTitle: '', onChangeTitle: handleChange }) => render(
       <Page
         taskTitle={taskTitle}
         tasks={tasks}
@@ -19,7 +23,7 @@ describe('App', () => {
         onClickDeleteTask={onClickDeleteTask}
       />,
     );
-  }
+  });
 
   it('renders title', () => {
     const { container } = renderComponent();
