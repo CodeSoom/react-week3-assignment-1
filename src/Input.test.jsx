@@ -3,8 +3,6 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  const defaultPlaceholderText = '할 일을 입력해 주세요';
-
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
@@ -17,29 +15,29 @@ describe('Input', () => {
   ));
 
   it('input의 placeholder는 "할 일을 입력해 주세요" 이다.', () => {
-    const { getByPlaceholderText } = renderInput();
+    const { queryByPlaceholderText } = renderInput();
 
-    const inputElement = getByPlaceholderText(defaultPlaceholderText);
-    expect(inputElement).toHaveValue('');
+    const inputElement = queryByPlaceholderText('할 일을 입력해 주세요');
+    expect(inputElement).not.toBe(null);
   });
 
   it('"추가" 버튼이 존재해야 한다.', () => {
-    const { getByText } = renderInput();
-    const buttonElement = getByText('추가');
+    const { queryByText } = renderInput();
+    const buttonElement = queryByText('추가');
 
-    expect(buttonElement).toHaveTextContent('추가');
+    expect(buttonElement).not.toBe(null);
   });
 
   it('input에 특정 값이 전달된다.', () => {
-    const { getByPlaceholderText } = renderInput('테스트');
-    const inputElement = getByPlaceholderText(defaultPlaceholderText);
+    const { queryByDisplayValue } = renderInput('테스트');
+    const inputElement = queryByDisplayValue('테스트');
 
-    expect(inputElement).toHaveValue('테스트');
+    expect(inputElement).not.toBe(null);
   });
 
   it('input의 onChange 이벤트가 작동해야 한다.', () => {
-    const { getByPlaceholderText } = renderInput();
-    const inputElement = getByPlaceholderText(defaultPlaceholderText);
+    const { queryByDisplayValue } = renderInput();
+    const inputElement = queryByDisplayValue('');
     const newValue = '하이';
 
     fireEvent.change(inputElement, { target: { value: newValue } });
