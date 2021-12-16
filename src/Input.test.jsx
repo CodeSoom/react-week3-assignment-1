@@ -12,9 +12,9 @@ describe('Input', () => {
     <Input value={TASK_TITLE} onChange={onChangeTitle} onClick={onClickAddTask} />,
   );
 
-  it('input에 value값이 입력되어있다', () => {
+  it('input에 prop으로 넘겨준 value값이 입력되어있다', () => {
     renderInputComponent();
-    const input = screen.getByDisplayValue(TASK_TITLE);
+    const input = screen.getByRole('textbox');
     expect(input.value).toBe(TASK_TITLE);
   });
 
@@ -28,9 +28,9 @@ describe('Input', () => {
   });
 
   it('투두 인풋에 타이핑을 하면 onChangeTitle 이벤트가 호출된다', () => {
-    const { getByPlaceholderText } = renderInputComponent();
+    renderInputComponent();
 
-    const toDoInput = getByPlaceholderText('할 일을 입력해 주세요');
+    const toDoInput = screen.getByRole('textbox');
     fireEvent.change(toDoInput, { target: { value: '타이핑을 해주세요' } });
 
     expect(onChangeTitle).toBeCalled();
