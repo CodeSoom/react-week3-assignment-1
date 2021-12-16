@@ -8,23 +8,22 @@ describe('Input', () => {
   const handleChange = jest.fn();
 
   const renderInput = () => (
-    render(
+    render((
       <Input
         value="아무거나 하기"
         onClick={handleClick}
         onChange={handleChange}
-      />,
-    )
+      />))
   );
 
-  it('render input', () => {
+  it('renders input and button', () => {
     const { container } = renderInput();
 
     expect(container).toHaveTextContent('할 일');
     expect(container).toHaveTextContent('추가');
   });
 
-  it('"추가" button', () => {
+  it('listens "추가" button click event', () => {
     const { getByText } = renderInput();
 
     expect(handleClick).not.toBeCalled();
@@ -32,7 +31,7 @@ describe('Input', () => {
     expect(handleClick).toBeCalled();
   });
 
-  it('check input attribute', () => {
+  it('renders input value', () => {
     const { container } = renderInput();
     const input = container.querySelector('#input-task-title');
 

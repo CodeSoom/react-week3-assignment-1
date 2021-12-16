@@ -22,7 +22,7 @@ describe('Page', () => {
   );
 
   context('without tasks', () => {
-    it('render no task', () => {
+    it('renders "할 일이 없어요!"', () => {
       const title = '';
       const tasks = [];
       const { container } = renderPage(title, tasks);
@@ -43,7 +43,7 @@ describe('Page', () => {
         title: '코드숨 강의 시청',
       },
     ];
-    it('render tasks', () => {
+    it('renders tasks', () => {
       const { container } = renderPage(title, tasks);
 
       expect(container).toHaveTextContent('아무거나 하기');

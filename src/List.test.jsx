@@ -15,7 +15,7 @@ describe('List', () => {
   );
 
   context('without tasks', () => {
-    it('render no task', () => {
+    it('renders "할 일이 없어요!"', () => {
       const tasks = [];
       const { container } = renderList(tasks);
 
@@ -34,14 +34,14 @@ describe('List', () => {
         title: '코드숨 강의 시청',
       },
     ];
-    it('render tasks', () => {
+    it('renders tasks', () => {
       const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('아무거나 하기');
       expect(container).toHaveTextContent('코드숨 강의 시청');
     });
 
-    it('"완료" buttons to delete a task', () => {
+    it('litens "완료" buttons click event', () => {
       const { getAllByText } = renderList(tasks);
 
       const buttons = getAllByText('완료');
