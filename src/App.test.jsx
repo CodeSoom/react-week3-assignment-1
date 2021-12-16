@@ -4,7 +4,7 @@ import App from './App';
 import Page from './Page';
 
 test('App', () => {
-  const { appContainer } = render((
+  const { container } = render((
     <App />
   ));
 
@@ -16,7 +16,7 @@ test('App', () => {
   const testTitle = '';
   const testTasks = [];
 
-  const { pageContainer } = render((
+  const { container: pageContainer } = render((
     <Page
       taskTitle={testTitle}
       onChangeTitle={handleChangeTitle}
@@ -26,5 +26,5 @@ test('App', () => {
     />
   ));
 
-  expect(appContainer).toBe(pageContainer);
+  expect(container).toEqual(pageContainer);
 });
