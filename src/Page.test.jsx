@@ -4,7 +4,10 @@ import Page from './Page';
 // Input 컴포넌트 작동 확인 -할일
 
 describe('Page', () => {
-  test('Input 컴포넌트 작동 확인', () => {
+  context('Input 컴포넌트가 그려진다. ', () => {
+
+  });
+  it('Input 컴포넌트 작동 확인', () => {
     const { container, getByRole } = render(<Page tasks={[]} />);
 
     // Input 컴포넌트 작동 확인
@@ -16,7 +19,7 @@ describe('Page', () => {
     // List 컴포넌트 작동 확인
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
-  test('task가 비었을 때 List 컴포넌트 작동 확인 ', () => {
+  it('task가 비었을 때 List 컴포넌트 작동 확인 ', () => {
     const emptyTasks = [];
     const { container } = render(<Page tasks={emptyTasks} />);
 
@@ -24,7 +27,7 @@ describe('Page', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  test('task가 있을 때', () => {
+  it('task가 있을 때', () => {
     // List 컴포넌트 작동 확인
     const tasks = [
       { id: 100, title: '숨 쉬기' },

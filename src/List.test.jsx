@@ -1,6 +1,13 @@
-import { fireEvent, render } from '@iting-library/react';
+import { fireEvent, render } from '@testing-library/react';
+
 import List from './List';
 
+const handleClick = jest.fn();
+const emptyTasks = [];
+const tasks = [
+  { id: 100, title: '숨 쉬기' },
+  { id: 101, title: '물 마시기' },
+];
 const ListComponentWithoutTasks = () => render(
   <List
     tasks={emptyTasks}
@@ -14,11 +21,6 @@ const ListComponentWithTasks = () => render(
     onClickDelete={handleClick}
   />,
 );
-const emptyTasks = [];
-const tasks = [
-  { id: 100, title: '숨 쉬기' },
-  { id: 101, title: '물 마시기' },
-];
 
 describe('List', () => {
   context('task length가 0이다.', () => {
@@ -37,10 +39,9 @@ describe('List', () => {
 
       expect(getAllByText('완료')[0]).toContainHTML('button');
       expect(getAllByText('완료')[1]).toContainHTML('button');
-    })
+    });
 
     it('버튼과 연결된 onClickDelete가 작동한다.', () => {
-      const handleClick = jest.fn();
       const { getAllByText } = ListComponentWithTasks();
 
       fireEvent.click(getAllByText('완료')[0]);
@@ -49,5 +50,5 @@ describe('List', () => {
       fireEvent.click(getAllByText('완료')[1]);
       expect(handleClick).toHaveBeenCalledTimes(2);
     });
-  })
-})
+  });
+});
