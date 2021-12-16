@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-describe('<List />', () => {
+describe('List', () => {
   const tasks = [];
   const defaultText = '할 일이 없어요!';
   const handleClickDelete = jest.fn();

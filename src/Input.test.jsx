@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('<Input />', () => {
+describe('Input', () => {
   const defaultPlaceholderText = '할 일을 입력해 주세요';
 
   const handleChange = jest.fn();
