@@ -1,49 +1,53 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from '@iting-library/react';
 import List from './List';
 
+const ListComponentWithoutTasks = () => render(
+  <List
+    tasks={emptyTasks}
+    onClickDelete={handleClick}
+  />,
+);
+
+const ListComponentWithTasks = () => render(
+  <List
+    tasks={tasks}
+    onClickDelete={handleClick}
+  />,
+);
 const emptyTasks = [];
 const tasks = [
   { id: 100, title: '숨 쉬기' },
   { id: 101, title: '물 마시기' },
 ];
 
-test('task의 length가 0일 때 \'할 일이 없어요!\' 출력', () => {
-  const { container } = render(<List tasks={emptyTasks} />);
+describe('List', () => {
+  context('task length가 0이다.', () => {
+    it('\'할 일이 없어요!\' 출력', () => {
+      const { container } = ListComponentWithoutTasks();
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 
-  expect(container).toHaveTextContent('할 일이 없어요!');
-});
+  context('task length가 2다.', () => {
+    it('Item컴포넌트가 가진 title과 완료버튼을 그린다.', () => {
+      const { container, getAllByText } = ListComponentWithTasks();
 
-test('task의 length가 1이상 일 때 해당 Item 컴포넌트 출력력인', () => {
-  const handleDelete = jest.fn();
-  const { container, getAllByText } = render(
-    <List
-      tasks={tasks}
-      onClickDelete={handleDelete}
-    />,
-  );
+      expect(container).toHaveTextContent(tasks[0].title);
+      expect(container).toHaveTextContent(tasks[1].title);
 
-  // Item 안에있는 title 확인
-  expect(container).toHaveTextContent(tasks[0].title);
-  expect(container).toHaveTextContent(tasks[1].title);
+      expect(getAllByText('완료')[0]).toContainHTML('button');
+      expect(getAllByText('완료')[1]).toContainHTML('button');
+    })
 
-  // Itme 안에있는 완료버튼 존재 확인
-  expect(getAllByText('완료')[0]).toContainHTML('button');
-  expect(getAllByText('완료')[1]).toContainHTML('button');
-});
+    it('버튼과 연결된 onClickDelete가 작동한다.', () => {
+      const handleClick = jest.fn();
+      const { getAllByText } = ListComponentWithTasks();
 
-test('onClickDelete 함수가 작동 확인', () => {
-  const handleClick = jest.fn();
+      fireEvent.click(getAllByText('완료')[0]);
+      expect(handleClick).toHaveBeenCalledTimes(1);
 
-  const { getAllByText } = render(
-    <List
-      tasks={tasks}
-      onClickDelete={handleClick}
-    />,
-  );
-
-  fireEvent.click(getAllByText('완료')[0]);
-  expect(handleClick).toHaveBeenCalledTimes(1);
-
-  fireEvent.click(getAllByText('완료')[1]);
-  expect(handleClick).toHaveBeenCalledTimes(2);
-});
+      fireEvent.click(getAllByText('완료')[1]);
+      expect(handleClick).toHaveBeenCalledTimes(2);
+    });
+  })
+})
