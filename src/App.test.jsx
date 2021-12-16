@@ -37,5 +37,18 @@ describe('App', () => {
     expect(setState).toBeCalled();
   });
 
-  it('calls setState when click delete task', async () => {});
+  it('calls setState when click delete task', async () => {
+    const initialState = {
+      newId: 1,
+      taskTitle: '',
+      tasks: [{ id: 1, title: '일어나기' }],
+    };
+    useStateMock.mockImplementation(() => [initialState, setState]);
+
+    const { getByText } = render(<App />);
+
+    fireEvent.click(getByText('완료'));
+
+    expect(setState).toBeCalled();
+  });
 });

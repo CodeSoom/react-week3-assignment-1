@@ -22,7 +22,7 @@ describe('Item', () => {
       title: '뭐라도 하기',
     };
     const { getByText } = render(
-      <Item task={task} onClickDelete={handleClick} />
+      <Item task={task} onClickDelete={handleClick} />,
     );
 
     fireEvent.click(getByText('완료'));
