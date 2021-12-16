@@ -7,7 +7,11 @@ test('Input 컴포넌트에 props로 전달된 이벤트 핸들러가 정상적�
   const handleChange = jest.fn();
 
   const { getByText, getByPlaceholderText } = render(
-    <Input onChange={handleChange} onClick={handleClick} value="" />,
+    <Input
+      onChange={handleChange}
+      onClick={handleClick}
+      value=""
+    />,
   );
   expect(handleClick).not.toBeCalled();
 
