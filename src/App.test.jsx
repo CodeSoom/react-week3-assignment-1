@@ -1,3 +1,2 @@
-test('App for ClickAdd', () => {
-
+test('App', () => {
 });
