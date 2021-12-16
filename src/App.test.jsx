@@ -17,13 +17,13 @@ test('App', () => {
   const testTasks = [];
 
   const { pageContainer } = render((
-  <Page
-    taskTitle={testTitle}
-    onChangeTitle={handleChangeTitle}
-    onClickDeleteTask={handleClickDeleteTask}
-    onClickAddTask={handleClickAddTask}
-    tasks={testTasks}
-  />
+    <Page
+      taskTitle={testTitle}
+      onChangeTitle={handleChangeTitle}
+      onClickDeleteTask={handleClickDeleteTask}
+      onClickAddTask={handleClickAddTask}
+      tasks={testTasks}
+    />
   ));
 
   expect(appContainer).toBe(pageContainer);

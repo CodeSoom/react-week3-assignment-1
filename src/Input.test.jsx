@@ -14,7 +14,7 @@ test('Input', () => {
       onClick={handleClick}
     />
   ));
-  
+
   expect(container).toHaveTextContent('할 일');
   expect(container).toHaveTextContent('추가');
 
@@ -23,11 +23,13 @@ test('Input', () => {
   expect(input).toHaveValue('');
   expect(handleChange).not.toBeCalled();
   // 값을 정확히 지시해야??
-  fireEvent.change(input);
-  expect(handleChange).toBeCalled(1);
+  // => value 값이 있는 위치를 정확히!
+  fireEvent.change(input, { target: { value: '할 일을 입력했다' } });
+  expect(handleChange).toBeCalled();
 
+  // 버튼을 누르면 handleClick이 호출되어야 한다.
   const button = getByText('추가');
-
-
-
+  expect(handleClick).not.toBeCalled();
+  fireEvent.click(button);
+  expect(handleClick).toBeCalled();
 });
