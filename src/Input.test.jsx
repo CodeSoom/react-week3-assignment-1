@@ -9,6 +9,7 @@ test('Input', () => {
   const {
     container,
     getByLabelText,
+    getByText,
   } = render((
     <Input
       onChange={handleChange}
@@ -17,8 +18,6 @@ test('Input', () => {
   ));
 
   expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
-
   const textInput = getByLabelText('할 일');
 
   expect(handleChange).not.toBeCalled();
@@ -26,4 +25,14 @@ test('Input', () => {
   fireEvent.change(textInput, { target: { value: '코드숨 과제하기' } });
 
   expect(textInput.value).toBe('코드숨 과제하기');
+
+
+  expect(container).toHaveTextContent('추가');
+  const button = getByText('추가');
+
+  expect(handleClick).not.toBeCalled();
+
+  fireEvent.click(button);
+
+  expect(handleClick).toBeCalled()
 });
