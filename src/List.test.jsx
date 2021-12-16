@@ -33,7 +33,7 @@ describe('List Component', () => {
 
     it('task의 타이틀 및 완료 버튼이 render 된다.', () => {
       const { container, getAllByRole } = renderComponent(tasks);
-      const buttons = getAllByRole('button');
+      const buttons = getAllByRole('button', { name: '완료' });
 
       expect(buttons).toHaveLength(2);
       tasks.forEach(({ title }, index) => {
@@ -44,7 +44,7 @@ describe('List Component', () => {
 
     it('완료 버튼을 클릭할 경우 해당 아이템의 id 값을 호출한다.', () => {
       const { getAllByRole } = renderComponent(tasks);
-      const buttons = getAllByRole('button');
+      const buttons = getAllByRole('button', { name: '완료' });
 
       fireEvent.click(buttons[1]);
 
