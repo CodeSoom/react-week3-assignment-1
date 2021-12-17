@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  it('with empty tasks', () => {
+  it('render empty message with empty tasks', () => {
     const emptyTasks = [];
 
     const { container } = render((
@@ -15,7 +15,7 @@ describe('List', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  test('with full tasks', () => {
+  it('render task list with valid task list', () => {
     const tasks = [
       {
         id: 101,
