@@ -16,17 +16,12 @@ test('Page', () => {
 
   const taskTitle = '이번주 할 일';
 
-  const handleClick = jest.fn();
-
   const {
     container,
   } = render((
     <Page
       tasks={tasks}
       taskTitle={taskTitle}
-      onChangeTitle={handleClick}
-      onClickAddTask={handleClick}
-      onClickDeleteTask={handleClick}
     />
   ));
 
