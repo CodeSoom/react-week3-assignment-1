@@ -1,24 +1,33 @@
 import { render } from '@testing-library/react';
-
 import List from './List';
 
-it('when tasks are given -> show title of tasks', () => {
-  const tasks = [
-    { id: 100, title: '운동가기' },
-  ];
+describe('List', () => {
+  // 테스트가 실행되기 전에 실행
+  beforeEach(() => {
+    // mocking 함수들을 초기화
+    jest.clearAllMocks();
+  });
 
-  const { container } = render(<List tasks={tasks} />);
+  describe('when task is empty', () => {
+    it('show specific text', () => {
+      // Given
+      const tasks = [];
+      const { container } = render(<List tasks={tasks} />);
 
-  expect(container).toHaveTextContent('운동가기');
-  expect(container).toHaveTextContent('완료');
-});
+      // Then
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 
-it('when tasks are empty -> show specific content', () => {
-  const tasks = [];
+  describe('when task is given', () => {
+    it('show title of task', () => {
+      // Given
+      const tasks = [{ id: 100, title: '운동하기' }];
+      const { container, getByText } = render(<List tasks={tasks} />);
 
-  const { container } = render(<List
-    tasks={tasks}
-  />);
-
-  expect(container).toHaveTextContent('할 일이 없어요!');
+      // Then
+      expect(container).toHaveTextContent('운동하기');
+      expect(getByText('완료')).toBeInTheDocument();
+    });
+  });
 });

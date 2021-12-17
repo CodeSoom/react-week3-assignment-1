@@ -1,28 +1,46 @@
 import { render, fireEvent } from '@testing-library/react';
-
 import Item from './Item';
 
-test('Item', () => {
+describe('Item', () => {
   const task = {
-    id: 1,
-    title: '뭐라도 하기',
+    id: 100,
+    title: '운동하기',
   };
-
   const handleClick = jest.fn();
 
-  const { container, getByText } = render((
+  const renderItem = () => render(
     <Item
       task={task}
       onClickDelete={handleClick}
-    />
-  ));
+    />,
+  );
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  // 테스트가 실행되기 전에 실행
+  beforeEach(() => {
+    // mocking 함수들을 초기화
+    jest.clearAllMocks();
+  });
 
-  expect(handleClick).not.toBeCalled();
+  it('initial', () => {
+    // Given
+    const { container } = renderItem();
 
-  fireEvent.click(getByText('완료'));
+    // Then
+    expect(container).toHaveTextContent('운동하기');
+    expect(container).toHaveTextContent('완료');
+  });
 
-  expect(handleClick).toBeCalledWith(1);
+  describe('when click finish button', () => {
+    it('get id', () => {
+      // Given
+      const { getByText } = renderItem();
+      expect(handleClick).not.toBeCalled();
+
+      // When
+      fireEvent.click(getByText('완료'));
+
+      // Then
+      expect(handleClick).toBeCalledWith(100);
+    });
+  });
 });

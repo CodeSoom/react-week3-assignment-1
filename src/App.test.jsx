@@ -4,12 +4,22 @@ import App from './App';
 describe('App', () => {
   const renderApp = () => render(<App />);
 
+  // 테스트가 실행되기 전에 실행
+  beforeEach(() => {
+    // mocking 함수들을 초기화
+    jest.clearAllMocks();
+  });
+
   it('initial', () => {
+    // Given
     const { container, getByText, getByLabelText } = renderApp();
+
+    // Then
     expect(container).toHaveTextContent('To-do');
-    expect(container).toHaveTextContent('할 일이 없어요!');
-    expect(getByText(/추가/)).toBeInTheDocument();
+    expect(container).toHaveTextContent('할 일');
     expect(getByLabelText(/할 일/)).toBeInTheDocument();
+    expect(getByText(/추가/)).toBeInTheDocument();
+    expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
   describe('when put text into input and click add button', () => {

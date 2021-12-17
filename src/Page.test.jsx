@@ -1,25 +1,37 @@
 import { render } from '@testing-library/react';
-
 import Page from './Page';
 
-test('Page', () => {
+describe('Page', () => {
   const tasks = [];
-  const handleClick = jest.fn();
   const taskTitle = '';
+  const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  const { container } = render(
+  const renderPage = () => render(
     <Page
       tasks={tasks}
-      onClickDeleteTask={handleClick}
       taskTitle={taskTitle}
+      onClickDeleteTask={handleClick}
       onClickAddTask={handleClick}
       onChangeTitle={handleChange}
     />,
   );
 
-  expect(container).toHaveTextContent('To-do');
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
-  expect(container).toHaveTextContent('할 일이 없어요!');
+  // 테스트가 실행되기 전에 실행
+  beforeEach(() => {
+    // mocking 함수들을 초기화
+    jest.clearAllMocks();
+  });
+
+  it('renders page', () => {
+    // Given
+    const { container, getByText, getByLabelText } = renderPage();
+
+    // Then
+    expect(container).toHaveTextContent('To-do');
+    expect(container).toHaveTextContent('할 일');
+    expect(getByLabelText(/할 일/)).toBeInTheDocument();
+    expect(getByText(/추가/)).toBeInTheDocument();
+    expect(container).toHaveTextContent('할 일이 없어요!');
+  });
 });
