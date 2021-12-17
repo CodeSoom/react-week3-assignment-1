@@ -35,7 +35,11 @@ describe('Input', () => {
   it('textbox에 값이 입력될때 handleChange 작동된다.', () => {
     const { getByLabelText } = InputComponent();
     expect(handleChange).not.toBeCalled();
-    fireEvent.change(getByLabelText('할 일'), { target: { value: 'test2' } });
+    fireEvent.change(getByLabelText('할 일'), {
+      target: {
+        value: 'test2',
+      },
+    });
     expect(handleChange).toBeCalled();
   });
 });
