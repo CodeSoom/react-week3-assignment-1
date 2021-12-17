@@ -1,9 +1,9 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import List from './List';
 
-describe('<List />', () => {
-  it('task가 0일 경우 "할 일이 없어요!" 문구를 보인다.', () => {
+describe('List', () => {
+  it('할일 목록 개수가 0개일 경우 "할 일이 없어요!" 문구를 보인다.', () => {
     const tasks = [];
 
     const handleClickDelete = jest.fn();
@@ -15,27 +15,5 @@ describe('<List />', () => {
     ));
 
     expect(container).toHaveTextContent('할 일이 없어요!');
-  });
-
-  it('완료 버튼을 클릭할 경우 리스트에서 보여지지 않는다.', () => {
-    const tasks = [{
-      id: 1,
-      title: 'task1',
-    }];
-
-    const handleClickDelete = jest.fn();
-    const { getByText } = render((
-      <List
-        tasks={tasks}
-        onClickDelete={handleClickDelete}
-      />
-    ));
-
-    const todoText = getByText('task1');
-    const doneButton = todoText.nextSibling;
-
-    fireEvent.click(doneButton);
-
-    expect(todoText).not.toBeInTheDocument();
   });
 });
