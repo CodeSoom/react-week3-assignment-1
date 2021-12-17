@@ -6,37 +6,36 @@ import App from './App';
 
 describe('App Component', () => {
   const taskTitle = '코드숨 과제하기';
+
   const renderComponent = () => render((
     <App />
   ));
 
-  context('Todo Appender', () => {
-    it('할 일을 입력할 수 있다.', () => {
-      const { getByPlaceholderText } = renderComponent();
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+  it('할 일을 입력할 수 있다.', () => {
+    const { getByPlaceholderText } = renderComponent();
+    const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-      fireEvent.change(input, {
-        target: {
-          value: taskTitle,
-        },
-      });
-
-      expect(input).toHaveAttribute('value', taskTitle);
+    fireEvent.change(input, {
+      target: {
+        value: taskTitle,
+      },
     });
 
-    it('할 일을 입력 후 추가 버튼을 클릭하면, 입련 란이 빈 값이 된다.', () => {
-      const { getByPlaceholderText, getByRole } = renderComponent();
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+    expect(input).toHaveAttribute('value', taskTitle);
+  });
 
-      fireEvent.change(input, {
-        target: {
-          value: taskTitle,
-        },
-      });
-      fireEvent.click(getByRole('button', { name: '추가' }));
+  it('할 일을 입력 후 추가 버튼을 클릭하면, 입련 란이 빈 값이 된다.', () => {
+    const { getByPlaceholderText, getByRole } = renderComponent();
+    const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-      expect(input).toHaveAttribute('value', '');
+    fireEvent.change(input, {
+      target: {
+        value: taskTitle,
+      },
     });
+    fireEvent.click(getByRole('button', { name: '추가' }));
+
+    expect(input).toHaveAttribute('value', '');
   });
 
   it('task 를 추가할 수 있다.', () => {
@@ -70,7 +69,7 @@ describe('App Component', () => {
     });
     const buttons = getAllByRole('button', { name: '완료' });
 
-    expect(buttons).toHaveLength(2);
+    expect(buttons).toHaveLength(tasks.length);
     fireEvent.click(buttons[1]);
 
     expect(container).not.toHaveTextContent(tasks[1].title);
