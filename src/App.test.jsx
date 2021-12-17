@@ -6,13 +6,17 @@ import Item from './Item';
 import List from './List';
 import Page from './Page';
 
-const handleChangeTitle = jest.fn();
-const handleClickAddTask = jest.fn();
-const handleClickDeleteTask = jest.fn();
-const taskTitle = '';
-const tasks = ['test'];
+;
 
 describe('App', () => {
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+  const taskTitle = '';
+  const tasks = [
+    { id: 100, title: '숨 쉬기' },
+    { id: 101, title: '물 마시기' },
+  ];
   context('무조건', () => {
     it('App이 그려진다.', () => {
       const { container } = render(<App />);
