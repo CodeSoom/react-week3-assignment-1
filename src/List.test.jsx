@@ -24,7 +24,7 @@ describe('List', () => {
       expect(getAllByRole('listitem')).toHaveLength(tasks.length);
     });
   });
-  
+
   context('when tasks is empty', () => {
     test('renders empty message', () => {
       const tasks = [];

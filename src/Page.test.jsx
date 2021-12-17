@@ -24,7 +24,7 @@ describe('Page', () => {
           tasks={tasks}
         />
       ));
-      
+
       isDOMComponent(container);
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
