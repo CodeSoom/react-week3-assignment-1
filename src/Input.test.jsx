@@ -14,12 +14,8 @@ describe('Input', () => {
   ));
 
   it('change text with input', () => {
-    const {
-      container,
-      getByLabelText,
-    } = renderInput();
+    const { getByLabelText } = renderInput();
 
-    expect(container).toHaveTextContent('할 일');
     const textInput = getByLabelText('할 일');
 
     expect(handleChange).not.toBeCalled();
@@ -30,12 +26,8 @@ describe('Input', () => {
   })
 
   it('click 추가 button', () => {
-    const {
-      container,
-      getByText,
-    } = renderInput();
+    const { getByText } = renderInput();
 
-    expect(container).toHaveTextContent('추가');
     const button = getByText('추가');
 
     expect(handleClick).not.toBeCalled();
