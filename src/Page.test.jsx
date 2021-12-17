@@ -1,34 +1,70 @@
-import { render } from '@testing-library/react';
-import { isDOMComponent } from 'react-dom/test-utils';
+import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
+import tasksDefault from './tasks';
+
+// jest.fn(); 계속 써야하는가?
+// 중복된 테스트같은데 어떻게 해야하나?
+// 통합테스트
+// 테스트 == 예제
 
 describe('Page', () => {
+  const tasks = tasksDefault;
+  const taskTitle = '나는 타이틀';
+
   const handleChange = jest.fn();
   const handleClickAdd = jest.fn();
   const handleClickDelete = jest.fn();
-  const taskTitle = '나는 타이틀';
-  const tasks = [
-    { id: 1, task: '코드숨 과제하기!' },
-    { id: 2, task: '테스트 주도 개발 공부하기!' },
-  ];
 
-  context('when page render', () => {
-    test('then Input and List render', () => {
-      const { container } = render((
-        <Page
-          taskTitle={taskTitle}
-          onChangeTitle={handleChange}
-          onClickAddTask={handleClickAdd}
-          onClickDeleteTask={handleClickDelete}
-          tasks={tasks}
-        />
-      ));
+  const renderPage = () => render((
+    <Page
+      tasks={tasks}
+      taskTitle={taskTitle}
+      onChangeTitle={handleChange}
+      onClickAddTask={handleClickAdd}
+      onClickDeleteTask={handleClickDelete}
+    />
+  ));
 
-      isDOMComponent(container);
-      expect(container).toHaveTextContent('To-do');
-      expect(container).toHaveTextContent('할 일');
-      expect(container).toHaveTextContent('완료');
+  it('renders tasks and input', () => {
+    const { container, getByPlaceholderText } = renderPage();
+
+    tasks.forEach(({ title }) => {
+      expect(container).toHaveTextContent(title);
+    });
+
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
+  });
+
+  describe('Changing task title', () => {
+    it('calls onChangeTitle handler', () => {
+      const { getByPlaceholderText } = renderPage();
+
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+        target: { value: '책 읽기' },
+      });
+
+      expect(handleChange).toBeCalled();
+    });
+  });
+
+  describe('Clicking add button', () => {
+    it('calls onClickAddTasks handler', () => {
+      const { getByText } = renderPage();
+
+      fireEvent.click(getByText('추가'));
+
+      expect(handleClickAdd).toBeCalled();
+    });
+  });
+
+  describe('Clicking delete button', () => {
+    it('calls onClickDeleteTask handler', () => {
+      const { getAllByText } = renderPage();
+
+      fireEvent.click(getAllByText('완료')[0]);
+
+      expect(handleClickDelete).toBeCalled();
     });
   });
 });
