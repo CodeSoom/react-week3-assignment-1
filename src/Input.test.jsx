@@ -2,37 +2,46 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
+describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const {
-    container,
-    getByLabelText,
-    getByText,
-  } = render((
+  const renderInput = () => render((
     <Input
       onChange={handleChange}
       onClick={handleClick}
     />
   ));
 
-  expect(container).toHaveTextContent('할 일');
-  const textInput = getByLabelText('할 일');
+  it('change text with input', () => {
+    const {
+      container,
+      getByLabelText,
+    } = renderInput();
 
-  expect(handleChange).not.toBeCalled();
+    expect(container).toHaveTextContent('할 일');
+    const textInput = getByLabelText('할 일');
 
-  fireEvent.change(textInput, { target: { value: '코드숨 과제하기' } });
+    expect(handleChange).not.toBeCalled();
 
-  expect(textInput.value).toBe('코드숨 과제하기');
+    fireEvent.change(textInput, { target: { value: '코드숨 과제하기' } });
 
+    expect(textInput.value).toBe('코드숨 과제하기');
+  })
 
-  expect(container).toHaveTextContent('추가');
-  const button = getByText('추가');
+  it('click 추가 button', () => {
+    const {
+      container,
+      getByText,
+    } = renderInput();
 
-  expect(handleClick).not.toBeCalled();
+    expect(container).toHaveTextContent('추가');
+    const button = getByText('추가');
 
-  fireEvent.click(button);
+    expect(handleClick).not.toBeCalled();
 
-  expect(handleClick).toBeCalled()
+    fireEvent.click(button);
+
+    expect(handleClick).toBeCalled()
+  })
 });
