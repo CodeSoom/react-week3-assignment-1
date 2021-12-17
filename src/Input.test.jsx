@@ -31,7 +31,7 @@ describe('Input', () => {
     expect(handleClick).toBeCalled();
   });
 
-  it('renders input value', () => {
+  it('renders todo title', () => {
     const { container } = renderInput();
     const input = container.querySelector('#input-task-title');
 
