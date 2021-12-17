@@ -12,6 +12,7 @@ describe('App', () => {
   const setState = jest.fn();
 
   beforeEach(() => {
+    setState.mockClear();
     useStateMock.mockImplementation((init) => [init, setState]);
   });
 

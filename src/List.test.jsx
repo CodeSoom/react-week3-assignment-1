@@ -3,9 +3,14 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  let tasks;
+  const handleClickDelete = jest.fn();
+  const renderComponent = ({ tasks }) => render(<List
+    tasks={tasks}
+    onClickDelete={handleClickDelete}
+  />);
 
   context('with no tasks', () => {
+    let tasks;
     beforeAll(() => {
       tasks = [];
     });
@@ -17,6 +22,7 @@ describe('List', () => {
   });
 
   context('with tasks', () => {
+    let tasks;
     beforeAll(() => {
       tasks = [{ id: 1, title: '일어나기' }];
     });
@@ -27,13 +33,7 @@ describe('List', () => {
     });
 
     it('calls handleClickDelete', () => {
-      const handleClickDelete = jest.fn();
-      const { getByText } = render(
-        <List
-          tasks={[{ id: 1, title: '일어나기' }]}
-          onClickDelete={handleClickDelete}
-        />
-      );
+      const { getByText } = renderComponent({ tasks: [{ id: 1, title: '일어나기' }] });
 
       expect(handleClickDelete).not.toBeCalled();
       fireEvent.click(getByText('완료'));

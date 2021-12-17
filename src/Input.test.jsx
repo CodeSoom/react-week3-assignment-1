@@ -3,18 +3,19 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  let handleChange;
-  let handleClick;
-  let renderComponent;
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
+  const renderComponent = ({ value = '' }) => render(
+    <Input value={value} onClick={handleClick} onChange={handleChange} />,
+  );
 
   beforeEach(() => {
-    handleChange = jest.fn();
-    handleClick = jest.fn();
-    renderComponent = ({ value = '', onClick, onChange = handleChange } = { value: '', onChange: handleChange }) => render(<Input value={value} onClick={onClick} onChange={onChange} />);
+    handleChange.mockClear();
+    handleClick.mockClear();
   });
 
   it('render label', () => {
-    const { container } = renderComponent();
+    const { container } = renderComponent({ value: '' });
 
     expect(container).toHaveTextContent('할 일');
   });
@@ -26,7 +27,7 @@ describe('Input', () => {
   });
 
   it('call handleChange', () => {
-    const { getByRole } = renderComponent({ value: '', onChange: handleChange });
+    const { getByRole } = renderComponent({ value: '' });
 
     expect(handleChange).not.toBeCalled();
     fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
@@ -34,7 +35,7 @@ describe('Input', () => {
   });
 
   it('call handleClick', () => {
-    const { getByText } = renderComponent({ onClick: handleClick });
+    const { getByText } = renderComponent({ value: '' });
 
     expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('추가'));

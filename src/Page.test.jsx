@@ -3,37 +3,34 @@ import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 describe('App', () => {
-  let handleChange;
-  let handleClickAddTask;
-  let handleClickDeleteTask;
-  let renderComponent;
+  const handleChange = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+  const renderComponent = ({ taskTitle, tasks }) => render(
+    <Page
+      taskTitle={taskTitle}
+      tasks={tasks}
+      onChangeTitle={handleChange}
+      onClickAddTask={handleClickAddTask}
+      onClickDeleteTask={handleClickDeleteTask}
+    />,
+  );
 
   beforeEach(() => {
-    handleChange = jest.fn();
-    handleClickAddTask = jest.fn();
-    handleClickDeleteTask = jest.fn();
-    renderComponent = ({
-      taskTitle = '', tasks = [], onChangeTitle = handleChange, onClickAddTask, onClickDeleteTask,
-    } = { taskTitle: '', onChangeTitle: handleChange }) => render(
-      <Page
-        taskTitle={taskTitle}
-        tasks={tasks}
-        onChangeTitle={onChangeTitle}
-        onClickAddTask={onClickAddTask}
-        onClickDeleteTask={onClickDeleteTask}
-      />,
-    );
+    handleChange.mockClear();
+    handleClickAddTask.mockClear();
+    handleClickDeleteTask.mockClear();
   });
 
   it('renders title', () => {
-    const { container } = renderComponent();
+    const { container } = renderComponent({ taskTitle: '', tasks: [] });
 
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일');
   });
 
   it('calls handleChange', () => {
-    const { getByRole } = renderComponent({ onChangeTitle: handleChange });
+    const { getByRole } = renderComponent({ taskTitle: '', tasks: [] });
 
     fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
 
@@ -42,7 +39,7 @@ describe('App', () => {
 
   it('calls handleClickAddTask', () => {
     const { getByText } = renderComponent({
-      onClickAddTask: handleClickAddTask,
+      taskTitle: '', tasks: [],
     });
 
     expect(handleClickAddTask).not.toBeCalled();
@@ -51,15 +48,15 @@ describe('App', () => {
   });
 
   it('calls handleClickDeleteTask ', () => {
-    const todoToDeleteId = 1;
+    const taskId = 1;
     const { getByText } = renderComponent({
-      tasks: [{ id: todoToDeleteId, text: '세수하기' }],
-      onClickDeleteTask: handleClickDeleteTask,
+      taskTitle: '',
+      tasks: [{ id: taskId, text: '세수하기' }],
     });
 
     expect(handleClickDeleteTask).not.toBeCalled();
 
     fireEvent.click(getByText('완료'));
-    expect(handleClickDeleteTask).toBeCalledWith(todoToDeleteId);
+    expect(handleClickDeleteTask).toBeCalledWith(taskId);
   });
 });
