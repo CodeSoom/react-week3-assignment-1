@@ -23,14 +23,14 @@ const ListComponentWithTasks = () => render(
 );
 
 describe('List', () => {
-  context('task length가 0이다.', () => {
+  context('task length가 0일 때', () => {
     it('\'할 일이 없어요!\' 출력', () => {
       const { container } = ListComponentWithoutTasks();
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  context('task length가 2다.', () => {
+  context('task length가 2일 때', () => {
     it('Item컴포넌트가 가진 title과 완료버튼을 그린다.', () => {
       const { container, getAllByText } = ListComponentWithTasks();
 

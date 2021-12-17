@@ -14,7 +14,7 @@ describe('Page', () => {
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
-  context('List에게 task가 없다.', () => {
+  context('List에게 task가 없을 떄', () => {
     beforeEach(() => {
       tasks = [];
     });
@@ -24,7 +24,7 @@ describe('Page', () => {
     });
   });
 
-  context('List에게 task가 2개 있다.', () => {
+  context('List에게 task가 2개 있을 때', () => {
     beforeEach(() => {
       tasks = [
         { id: 100, title: '숨 쉬기' },
@@ -32,7 +32,7 @@ describe('Page', () => {
       ];
     });
 
-    it('2개의 task의 각 title과 버튼을 그린다..', () => {
+    it('2개의 task의 각 title과 버튼을 그린다.', () => {
       const { container, getAllByText } = render(<Page tasks={tasks} />);
 
       expect(container).toHaveTextContent(tasks[0].title);
