@@ -2,8 +2,6 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-// Input 컴포넌트 작동 확인 -할일
-
 describe('Page', () => {
   let tasks;
 
