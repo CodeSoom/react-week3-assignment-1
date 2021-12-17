@@ -27,6 +27,7 @@ describe('Page', () => {
 
   it('투두 리스트를 그려낸다', () => {
     const { container } = renderPageComponent();
+
     expect(container).toHaveTextContent(TASKS[0].title);
     expect(container).toHaveTextContent(TASKS[1].title);
   });

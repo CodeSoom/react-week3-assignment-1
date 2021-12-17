@@ -5,11 +5,11 @@ import Input from './Input';
 import { TASK_TITLE } from './fixture';
 
 describe('Input', () => {
-  const onChangeTitle = jest.fn();
-  const onClickAddTask = jest.fn();
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
 
   const renderInputComponent = () => render(
-    <Input value={TASK_TITLE} onChange={onChangeTitle} onClick={onClickAddTask} />,
+    <Input value={TASK_TITLE} onChange={handleChangeTitle} onClick={handleClickAddTask} />,
   );
 
   it('input에 prop으로 넘겨준 value값이 입력되어있다', () => {
@@ -18,21 +18,21 @@ describe('Input', () => {
     expect(input.value).toBe(TASK_TITLE);
   });
 
-  it('투두 인풋의 버튼을 클릭하면 onClickAddTask 이벤트가 호출된다', () => {
+  it('투두 인풋의 버튼을 클릭하면 handleClickAddTask 함수가 호출된다', () => {
     const { getByText } = renderInputComponent();
 
     const addTodoButton = getByText('추가');
-    addTodoButton.click();
+    fireEvent.click(addTodoButton);
 
-    expect(onClickAddTask).toBeCalled();
+    expect(handleClickAddTask).toBeCalled();
   });
 
-  it('투두 인풋에 타이핑을 하면 onChangeTitle 이벤트가 호출된다', () => {
+  it('투두 인풋에 타이핑을 하면 handleChangeTitle 함수가 호출된다', () => {
     renderInputComponent();
 
     const toDoInput = screen.getByRole('textbox');
     fireEvent.change(toDoInput, { target: { value: '타이핑을 해주세요' } });
 
-    expect(onChangeTitle).toBeCalled();
+    expect(handleChangeTitle).toBeCalled();
   });
 });
