@@ -10,8 +10,7 @@ describe('Input', () => {
   );
 
   beforeEach(() => {
-    handleChange.mockClear();
-    handleClick.mockClear();
+    jest.clearAllMocks();
   });
 
   it('render label', () => {
@@ -26,18 +25,16 @@ describe('Input', () => {
     expect(getByRole('textbox').value).toBe('일어나기');
   });
 
-  it('call handleChange', () => {
+  it('call handleChange when change text', () => {
     const { getByRole } = renderComponent({ value: '' });
 
-    expect(handleChange).not.toBeCalled();
     fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
     expect(handleChange).toBeCalled();
   });
 
-  it('call handleClick', () => {
+  it('call handleClick when click add button', () => {
     const { getByText } = renderComponent({ value: '' });
 
-    expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('추가'));
     expect(handleClick).toBeCalled();
   });
