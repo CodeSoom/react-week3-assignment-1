@@ -32,9 +32,8 @@ describe('Input', () => {
   });
 
   it('renders todo title', () => {
-    const { container } = renderInput();
-    const input = container.querySelector('#input-task-title');
+    const { getByDisplayValue } = renderInput();
 
-    expect(input).toHaveAttribute('value', '아무거나 하기');
+    expect(getByDisplayValue('아무거나 하기')).not.toBeNull();
   });
 });
