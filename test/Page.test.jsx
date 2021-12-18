@@ -1,8 +1,9 @@
 import { render } from '@testing-library/react';
 import Page from '../src/Page';
 
-test('Page', () => {
-  const { container } = render(<Page tasks={[]} />);
-
-  expect(container).not.toBe(null);
+describe('Page', () => {
+  it('Page 컴포넌트가 렌더링 된다.', () => {
+    const { container } = render(<Page tasks={[]} />);
+    expect(container).not.toBe(null);
+  });
 });
