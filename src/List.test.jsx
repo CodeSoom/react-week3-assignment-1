@@ -20,7 +20,7 @@ import List from './List';
 
 describe('List', () => {
   // describe(테스트 대상) - context(with, when, without) - it(기대하는 결과)
-
+  
   context('when tasks is exists', () => {
     it('renders tasks', () => {
       const tasks = [
