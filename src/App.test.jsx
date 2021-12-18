@@ -16,40 +16,46 @@ describe('App', () => {
     useStateMock.mockImplementation((init) => [init, setState]);
   });
 
-  it('renders Page component', () => {
+  it('renders app title', () => {
     const { container } = render(<App />);
 
     expect(container).toHaveTextContent('To-do');
   });
 
-  it('calls setState when input chaged', () => {
-    const { getByRole } = render(<App />);
+  context('when input changed', () => {
+    it('calls setState', () => {
+      const { getByRole } = render(<App />);
 
-    fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
+      fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
 
-    expect(setState).toBeCalled();
+      expect(setState).toBeCalled();
+    });
   });
 
-  it('calls setState when click add task', () => {
-    const { getByText } = render(<App />);
+  context('when click add task', () => {
+    it('calls setState', () => {
+      const { getByText } = render(<App />);
 
-    fireEvent.click(getByText('추가'));
+      fireEvent.click(getByText('추가'));
 
-    expect(setState).toBeCalled();
+      expect(setState).toBeCalled();
+    });
   });
 
-  it('calls setState when click delete task', async () => {
-    const initialState = {
-      newId: 1,
-      taskTitle: '',
-      tasks: [{ id: 1, title: '일어나기' }],
-    };
-    useStateMock.mockImplementation(() => [initialState, setState]);
+  context('when click delete task', () => {
+    it('calls setState', async () => {
+      const initialState = {
+        newId: 1,
+        taskTitle: '',
+        tasks: [{ id: 1, title: '일어나기' }],
+      };
+      useStateMock.mockImplementation(() => [initialState, setState]);
 
-    const { getByText } = render(<App />);
+      const { getByText } = render(<App />);
 
-    fireEvent.click(getByText('완료'));
+      fireEvent.click(getByText('완료'));
 
-    expect(setState).toBeCalled();
+      expect(setState).toBeCalled();
+    });
   });
 });

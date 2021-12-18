@@ -18,7 +18,7 @@ describe('Item', () => {
     expect(container).toHaveTextContent('완료');
   });
 
-  it('calls handleClick', () => {
+  it('calls onClickDelete', () => {
     const task = {
       id: 1,
       title: '뭐라도 하기',

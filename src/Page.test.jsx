@@ -21,38 +21,44 @@ describe('Page', () => {
     jest.clearAllMocks();
   });
 
-  it('renders title', () => {
+  it('renders page title and input label', () => {
     const { container } = renderComponent({ taskTitle: '', tasks: [] });
 
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일');
   });
 
-  it('calls handleChange when change text', () => {
-    const { getByRole } = renderComponent({ taskTitle: '', tasks: [] });
+  context('when change text', () => {
+    it('calls onChangeTitle', () => {
+      const { getByRole } = renderComponent({ taskTitle: '', tasks: [] });
 
-    fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
+      fireEvent.change(getByRole('textbox'), { target: { value: '세수하기' } });
 
-    expect(handleChange).toBeCalled();
+      expect(handleChange).toBeCalled();
+    });
   });
 
-  it('calls handleClickAddTask when click add button', () => {
-    const { getByText } = renderComponent({
-      taskTitle: '', tasks: [],
-    });
+  context('when click add button', () => {
+    it('calls onClickAddTask', () => {
+      const { getByText } = renderComponent({
+        taskTitle: '', tasks: [],
+      });
 
-    fireEvent.click(getByText('추가'));
-    expect(handleClickAddTask).toBeCalled();
+      fireEvent.click(getByText('추가'));
+      expect(handleClickAddTask).toBeCalled();
+    });
   });
 
-  it('calls handleClickDeleteTask when click complete button', () => {
-    const taskId = 1;
-    const { getByText } = renderComponent({
-      taskTitle: '',
-      tasks: [{ id: taskId, text: '세수하기' }],
-    });
+  context('when click complete button', () => {
+    it('calls onClickDeleteTask', () => {
+      const taskId = 1;
+      const { getByText } = renderComponent({
+        taskTitle: '',
+        tasks: [{ id: taskId, text: '세수하기' }],
+      });
 
-    fireEvent.click(getByText('완료'));
-    expect(handleClickDeleteTask).toBeCalledWith(taskId);
+      fireEvent.click(getByText('완료'));
+      expect(handleClickDeleteTask).toBeCalledWith(taskId);
+    });
   });
 });

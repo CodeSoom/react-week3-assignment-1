@@ -37,11 +37,13 @@ describe('List', () => {
       expect(container).toHaveTextContent('일어나기');
     });
 
-    it('calls handleClickDelete when click complete button', () => {
-      const { getByText } = renderComponent({ tasks: [{ id: 1, title: '일어나기' }] });
+    context('when click complete button', () => {
+      it('calls onClickDelete', () => {
+        const { getByText } = renderComponent({ tasks: [{ id: 1, title: '일어나기' }] });
 
-      fireEvent.click(getByText('완료'));
-      expect(handleClickDelete).toBeCalledWith(1);
+        fireEvent.click(getByText('완료'));
+        expect(handleClickDelete).toBeCalledWith(1);
+      });
     });
   });
 });
