@@ -36,20 +36,15 @@ describe('List', () => {
       const { container, getAllByText } = ListComponentWithTasks();
 
       expect(container).toHaveTextContent(tasks[0].title);
-      expect(container).toHaveTextContent(tasks[1].title);
-
       expect(getAllByText('완료')[0]).toContainHTML('button');
-      expect(getAllByText('완료')[1]).toContainHTML('button');
     });
 
     it('버튼이 작동한다.', () => {
       const { getAllByText } = ListComponentWithTasks();
 
+      expect(handleClick).not.toBeCalled();
       fireEvent.click(getAllByText('완료')[0]);
-      expect(handleClick).toHaveBeenCalledTimes(1);
-
-      fireEvent.click(getAllByText('완료')[1]);
-      expect(handleClick).toHaveBeenCalledTimes(2);
+      expect(handleClick).toBeCalledTimes(1);
     });
   });
 });
