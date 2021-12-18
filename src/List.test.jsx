@@ -4,7 +4,7 @@ import List from './List';
 
 describe('List', () => {
   const onClickDelete = jest.fn();
-  context('tasks가 0개일 때', () => {
+  context('tasks 있을 때', () => {
     it('할 일이 없어요!" 문구가 노출되어야한다.', () => {
       const tasks = [];
 
@@ -16,7 +16,7 @@ describe('List', () => {
     });
   });
 
-  context('tasks가 1개이상일 떄', () => {
+  context('task가 없을 때', () => {
     it('해당 목록이 보여야한다.', () => {
       const tasks = [
         { id: 1, title: '기상' },

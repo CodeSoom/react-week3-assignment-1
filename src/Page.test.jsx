@@ -10,7 +10,7 @@ describe('Page', () => {
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
 
-  it('task props전달시 목록에 노출되는지 확인한다.', () => {
+  it('task를 보여준다.', () => {
     const { container } = render(
       <Page
         taskTitle={taskTitle}
@@ -23,7 +23,7 @@ describe('Page', () => {
     expect(container).toHaveTextContent('기상');
   });
 
-  it('추가버튼 클릭시 이벤트 리스너가 작동하는지 확인한다.', () => {
+  it('추가버튼 클릭시 onClickAddTask가 호출됨', () => {
     const { getByText } = render(
       <Page
         taskTitle={taskTitle}
@@ -38,7 +38,7 @@ describe('Page', () => {
     expect(handleClickAddTask).toBeCalled();
   });
 
-  it('완료버튼 클릭시 이벤트 리스너가 작동하는지 확인한다.', () => {
+  it('완료버튼 클릭시 onClickAddTask가 호출됨', () => {
     const { getByText, getByPlaceholderText } = render(
       <Page
         taskTitle={taskTitle}

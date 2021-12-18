@@ -3,8 +3,8 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  context('할일 추가 버튼 클릭', () => {
-    it('입력한 내용이 리스트에 추가되는지 확인한다.', () => {
+  context('할 일을 입력하고, 추가 버튼 클릭하면', () => {
+    it('입력한 내용을 리스트에 보여준다.', () => {
       const { container, getByPlaceholderText, getByText } = render(<App />);
       fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
         target: { value: '일기쓰기' },
@@ -14,8 +14,8 @@ describe('App', () => {
     });
   });
 
-  context('완료 버튼 클릭시', () => {
-    it('할 일이 삭제되는지 확인한다', () => {
+  context('할 일이 추가된 상태에서, 완료 버튼 클릭하면', () => {
+    it('할 일이 삭제되는지 확인한다.', () => {
       const { container, getByPlaceholderText, getByText } = render(<App />);
       fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
         target: { value: '일기쓰기' },
