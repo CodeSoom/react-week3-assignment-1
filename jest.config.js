@@ -1,4 +1,7 @@
 module.exports = {
+  collectCoverageFrom: [
+    'src/**/*.jsx',
+  ],
   setupFilesAfterEnv: [
     'jest-plugin-context/setup',
     './jest.setup',

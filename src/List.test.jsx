@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import List from './List';
 import createTestTasks from '../test/utils/createTestTask';
 
