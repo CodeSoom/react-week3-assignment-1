@@ -5,7 +5,7 @@ import List from './List';
 import { tasks } from '../fixtures/tasks';
 
 describe('List Component', () => {
-  const onClickDelete = jest.fn();
+  const handleClickDelete = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -14,7 +14,7 @@ describe('List Component', () => {
   const renderComponent = (value) => render((
     <List
       tasks={value}
-      onClickDelete={onClickDelete}
+      onClickDelete={handleClickDelete}
     />
   ));
 
@@ -42,14 +42,14 @@ describe('List Component', () => {
       });
     });
 
-    it('완료 버튼을 클릭할 경우 해당 onClickDelete 를 해당 task의 id 와 함께 호출한다.', () => {
+    it('완료 버튼을 클릭할 경우 해당 handleClickDelete 를 해당 task의 id 와 함께 호출한다.', () => {
       const { getAllByRole } = renderComponent(tasks);
       const buttons = getAllByRole('button', { name: '완료' });
 
       fireEvent.click(buttons[1]);
 
       expect(buttons[1]).toHaveTextContent('완료');
-      expect(onClickDelete).toHaveBeenCalledWith(tasks[1].id);
+      expect(handleClickDelete).toHaveBeenCalledWith(tasks[1].id);
     });
   });
 });

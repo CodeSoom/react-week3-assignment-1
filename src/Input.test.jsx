@@ -4,8 +4,8 @@ import Input from './Input';
 
 describe('Input Component', () => {
   const value = '아무것도 하지 않기';
-  const onChange = jest.fn();
-  const onClick = jest.fn();
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -14,16 +14,18 @@ describe('Input Component', () => {
   const renderComponent = () => render((
     <Input
       value=""
-      onChange={onChange}
-      onClick={onClick}
+      onChange={handleChange}
+      onClick={handleClick}
     />
   ));
 
   it('render', () => {
     const { container, getByPlaceholderText } = renderComponent();
+    const input = getByPlaceholderText('할 일을 입력해 주세요');
 
     expect(container).toHaveTextContent('할 일');
-    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+    expect(input).toBeInTheDocument();
+    expect(input).toHaveAttribute('value', '');
     expect(container).toHaveTextContent('추가');
   });
 
@@ -37,7 +39,7 @@ describe('Input Component', () => {
       },
     });
 
-    expect(onChange).toBeCalled();
+    expect(handleChange).toBeCalled();
   });
 
   it('click "추가" button, call onClick', () => {
@@ -45,6 +47,6 @@ describe('Input Component', () => {
 
     fireEvent.click(getByText(/추가/));
 
-    expect(onClick).toBeCalled();
+    expect(handleClick).toBeCalled();
   });
 });
