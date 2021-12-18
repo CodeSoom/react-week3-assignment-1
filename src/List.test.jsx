@@ -14,17 +14,21 @@ describe('List', () => {
     />
   ));
 
-  it('task가 없으면 Default 텍스트가 존재한다.', () => {
-    const { container } = renderList(tasks);
+  context('task가 없을 때', () => {
+    it('task가 없으면 Default 텍스트가 존재한다.', () => {
+      const { container } = renderList(tasks);
 
-    expect(container).toHaveTextContent(defaultText);
+      expect(container).toHaveTextContent(defaultText);
+    });
   });
 
-  it('task가 있으면 Default 텍스트가 존재하지 않는다.', () => {
-    tasks.push({ id: 1, title: '코드숨 공부하기' });
+  context('task가 있을 때', () => {
+    it('task가 있으면 Default 텍스트가 존재하지 않는다.', () => {
+      tasks.push({ id: 1, title: '코드숨 공부하기' });
 
-    const { container } = renderList(tasks);
+      const { container } = renderList(tasks);
 
-    expect(container).not.toHaveTextContent(defaultText);
+      expect(container).not.toHaveTextContent(defaultText);
+    });
   });
 });
