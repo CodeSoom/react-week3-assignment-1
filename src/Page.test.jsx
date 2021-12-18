@@ -10,15 +10,14 @@ describe('Page', () => {
   const handleChangeTitle = jest.fn();
 
   const renderPage = (title, tasks) => (
-    render(
+    render((
       <Page
         taskTitle={title}
         tasks={tasks}
         onChangeTitle={handleChangeTitle}
         onClickAddTask={handleClickAddTask}
         onClickDeleteTask={handleClickDeleteTask}
-      />,
-    )
+      />))
   );
 
   context('without tasks', () => {

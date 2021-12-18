@@ -6,12 +6,11 @@ describe('List', () => {
   const handleClickDelete = jest.fn();
 
   const renderList = (tasks) => (
-    render(
+    render((
       <List
         tasks={tasks}
         onClickDelete={handleClickDelete}
-      />,
-    )
+      />))
   );
 
   context('without tasks', () => {
