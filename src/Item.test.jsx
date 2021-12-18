@@ -2,27 +2,40 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
+describe('Item', () => {
+  const mockClick = jest.fn();
 
-  const handleClick = jest.fn();
+  function createTestComponent(task = { id: '', title: '' }) {
+    return render((
+      <Item
+        task={task}
+        onClickDelete={mockClick}
+      />
+    ));
+  }
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+  it('task의 title이 출력된다', () => {
+    // given
+    const expectTitle = '뭐라도 하기';
+    const task = {
+      title: expectTitle,
+    };
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+    // when
+    const { container } = createTestComponent(task);
 
-  expect(handleClick).not.toBeCalled();
+    // then
+    expect(container).toHaveTextContent(expectTitle);
+  });
 
-  fireEvent.click(getByText('완료'));
+  it('버튼을 클릭하면 해당 함수가 1회 호출된다', () => {
+    // given
+    const { getByRole } = createTestComponent();
+    const sut = getByRole('button');
 
-  expect(handleClick).toBeCalledWith(1);
+    // when
+    fireEvent.click(sut);
+
+    expect(mockClick).toBeCalledTimes(1);
+  });
 });

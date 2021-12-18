@@ -31,9 +31,9 @@ describe('List', () => {
     const { getAllByRole } = createTestComponent(tasks);
 
     // when
-    const sut = getAllByRole('listitem');
+    const result = getAllByRole('listitem');
 
     // then
-    expect(sut).toHaveLength(expectValue);
+    expect(result).toHaveLength(expectValue);
   });
 });
