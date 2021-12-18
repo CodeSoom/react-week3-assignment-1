@@ -9,16 +9,9 @@ const tasks = [
   { id: 101, title: '물 마시기' },
 ];
 
-const ListComponentWithoutTasks = () => render(
+const ListComponent = (task) => render(
   <List
-    tasks={emptyTasks}
-    onClickDelete={handleClick}
-  />,
-);
-
-const ListComponentWithTasks = () => render(
-  <List
-    tasks={tasks}
+    tasks={task}
     onClickDelete={handleClick}
   />,
 );
@@ -26,21 +19,22 @@ const ListComponentWithTasks = () => render(
 describe('List', () => {
   context('task가 없을 때', () => {
     it('\'할 일이 없어요!\' 출력', () => {
-      const { container } = ListComponentWithoutTasks();
+      const { container } = ListComponent(emptyTasks);
+
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
   context('task가 두개 일때', () => {
     it('Item컴포넌트가 가진 title과 완료버튼을 그린다.', () => {
-      const { container, getAllByText } = ListComponentWithTasks();
+      const { container, getAllByText } = ListComponent(tasks);
 
       expect(container).toHaveTextContent(tasks[0].title);
       expect(getAllByText('완료')[0]).toContainHTML('button');
     });
 
     it('버튼이 작동한다.', () => {
-      const { getAllByText } = ListComponentWithTasks();
+      const { getAllByText } = ListComponent(tasks);
 
       expect(handleClick).not.toBeCalled();
       fireEvent.click(getAllByText('완료')[0]);
