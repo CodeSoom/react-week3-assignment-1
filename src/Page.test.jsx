@@ -8,6 +8,7 @@ describe('Page', () => {
   context('언제든지', () => {
     it('Input 컴포넌트가 그려진다.', () => {
       const { container, getByRole } = render(<Page tasks={[]} />);
+
       expect(container).toHaveTextContent('할 일');
       expect(container).toContainHTML('input');
       expect(getByRole('button')).toHaveTextContent('추가');
@@ -18,8 +19,10 @@ describe('Page', () => {
     beforeEach(() => {
       tasks = [];
     });
+
     it('"할 일이 없어요"를 그린다.', () => {
       const { container } = render(<Page tasks={tasks} />);
+
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });

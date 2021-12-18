@@ -6,7 +6,9 @@ import Input from './Input';
 describe('Input', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
+
   const value = 'test';
+
   const InputComponent = () => render(
     <Input
       value={value}

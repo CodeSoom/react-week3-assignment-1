@@ -8,6 +8,7 @@ const tasks = [
   { id: 100, title: '숨 쉬기' },
   { id: 101, title: '물 마시기' },
 ];
+
 const ListComponentWithoutTasks = () => render(
   <List
     tasks={emptyTasks}
