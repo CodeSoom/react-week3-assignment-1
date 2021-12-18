@@ -1,7 +1,12 @@
 import { fireEvent, render } from '@testing-library/react';
+
 import List from '../src/List';
 
 describe('List', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   let mockTasks = null;
   const handleClick = jest.fn();
 

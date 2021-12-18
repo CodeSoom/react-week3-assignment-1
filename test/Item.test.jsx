@@ -1,7 +1,12 @@
 import { fireEvent, render } from '@testing-library/react';
+
 import Item from '../src/Item';
 
 describe('Item', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const handleClick = jest.fn();
 
   const renderComponent = () => {
@@ -18,10 +23,6 @@ describe('Item', () => {
 
     return { container, getByRole };
   };
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
 
   it('Input 컴포넌트가 렌더링 된다.', () => {
     const { container } = renderComponent();
