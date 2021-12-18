@@ -14,9 +14,12 @@ describe('Input', () => {
       const task = '과제 하기'
 
       const handleChange = jest.fn();
-      const { container } = render(<Input value={task} onChange={handleChange} />);
+      const { container, getByPlaceholderText } = render(<Input value="" onChange={handleChange} />);
 
-      fireEvent.change(container, {value : '과제 하기'});
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
+      fireEvent.change(input, {target : {value : task}});
+      expect(handleChange).toBeCalled();
+      // expect(input).toHaveAttribute('value', task);
     })
   })
 
