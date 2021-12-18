@@ -19,13 +19,13 @@ describe('Input', () => {
       fireEvent.change(container, {value : '과제 하기'});
     })
   })
- 
+
   describe('Clicking 추가 button', () => {
     it('calls onClickAdd handler', () => {
       const task = '과제 하기'
       const handleClick = jest.fn();
       const { getByText, container, getByPlaceholderText } = render(<Input defaultValue={task} onClick={handleClick}/>);
-      
+
       const AddButton = getByText('추가');
       fireEvent.click(AddButton);
       expect(handleClick).toBeCalled();
@@ -33,6 +33,3 @@ describe('Input', () => {
     });
   });
 })
-
-
-
