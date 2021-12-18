@@ -35,14 +35,14 @@ describe('List Component', () => {
       const { container, getAllByRole } = renderComponent(tasks);
       const buttons = getAllByRole('button', { name: '완료' });
 
-      expect(buttons).toHaveLength(2);
+      expect(buttons).toHaveLength(tasks.length);
       tasks.forEach(({ title }, index) => {
         expect(container).toHaveTextContent(title);
         expect(buttons[index]).toHaveTextContent('완료');
       });
     });
 
-    it('완료 버튼을 클릭할 경우 해당 아이템의 id 값을 호출한다.', () => {
+    it('완료 버튼을 클릭할 경우 해당 onClickDelete 를 해당 task의 id 와 함께 호출한다.', () => {
       const { getAllByRole } = renderComponent(tasks);
       const buttons = getAllByRole('button', { name: '완료' });
 

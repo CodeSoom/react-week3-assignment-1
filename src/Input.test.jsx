@@ -27,7 +27,7 @@ describe('Input Component', () => {
     expect(container).toHaveTextContent('추가');
   });
 
-  it('when typing, input changed value', () => {
+  it('when typing, call onChange', () => {
     const { getByPlaceholderText } = renderComponent();
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -40,17 +40,11 @@ describe('Input Component', () => {
     expect(onChange).toBeCalled();
   });
 
-  it('after typing, click button to init value', () => {
-    const { getByPlaceholderText, getByRole } = renderComponent();
-    const input = getByPlaceholderText('할 일을 입력해 주세요');
+  it('click "추가" button, call onClick', () => {
+    const { getByText } = renderComponent();
 
-    fireEvent.change(input, {
-      target: {
-        value,
-      },
-    });
+    fireEvent.click(getByText(/추가/));
 
-    fireEvent.click(getByRole('button'));
-    expect(onClick).toHaveBeenCalled();
+    expect(onClick).toBeCalled();
   });
 });
