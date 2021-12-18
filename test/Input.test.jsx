@@ -25,7 +25,7 @@ describe('Input', () => {
     jest.clearAllMocks();
   });
 
-  it('초기 렌더링될 때, "할 일" 과 "추가", value props 가 노출된다.', () => {
+  it('Input 컴포넌트가 렌더링 된다.', () => {
     const { container, input } = renderComponent('hello');
 
     expect(container).not.toBe(null);
