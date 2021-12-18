@@ -3,16 +3,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import List from './List';
+import { tasksFixture } from './Fixture';
 
 describe('List Component', () => {
   const handleClick = jest.fn();
-
-  const data = [
-    {
-      id: 1,
-      title: '뭐라도 하기',
-    },
-  ];
 
   const renderList = (tasks) => render((
     <List
@@ -23,7 +17,7 @@ describe('List Component', () => {
 
   context('등록된 todo가 있을 경우', () => {
     it('등록된 todo가 있을 경우 목록을 보여준다', () => {
-      const { container } = renderList(data);
+      const { container } = renderList(tasksFixture);
 
       expect(container).toHaveTextContent('뭐라도 하기');
     });

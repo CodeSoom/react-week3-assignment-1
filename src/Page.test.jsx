@@ -3,16 +3,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import Page from './Page';
+import { tasksFixture } from './Fixture';
 
 describe('Page Component', () => {
   const handleClick = jest.fn();
-
-  const data = [
-    {
-      id: 1,
-      title: '뭐라도 하기',
-    },
-  ];
 
   const renderPage = (tasks) => render((
     <Page
@@ -25,7 +19,7 @@ describe('Page Component', () => {
   ));
 
   it('Page컴포넌트를 불러온다', () => {
-    const { container } = renderPage(data);
+    const { container } = renderPage(tasksFixture);
 
     expect(container).toHaveTextContent('뭐라도 하기');
   });
