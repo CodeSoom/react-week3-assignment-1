@@ -1,13 +1,16 @@
 import { render } from '@testing-library/react';
-
+import given from 'given2';
 import Page from './Page';
 
 describe('Page', () => {
-  let tasks;
+  given('noTask', () => []);
+  given('tasks', () => [
+    { id: 100, title: '숨 쉬기' },
+  ]);
 
   context('언제든지', () => {
     it('Input 컴포넌트가 그려진다.', () => {
-      const { container, getByRole } = render(<Page tasks={[]} />);
+      const { container, getByRole } = render(<Page tasks={given.noTask} />);
 
       expect(container).toHaveTextContent('할 일');
       expect(container).toContainHTML('input');
@@ -16,33 +19,19 @@ describe('Page', () => {
     });
   });
   context('List에게 task가 없을 떄', () => {
-    beforeEach(() => {
-      tasks = [];
-    });
-
     it('"할 일이 없어요"를 그린다.', () => {
-      const { container } = render(<Page tasks={tasks} />);
+      const { container } = render(<Page tasks={given.noTask} />);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  context('List에게 task가 2개 있을 때', () => {
-    beforeEach(() => {
-      tasks = [
-        { id: 100, title: '숨 쉬기' },
-        { id: 101, title: '물 마시기' },
-      ];
-    });
+  context('List에게 task가 있을 때', () => {
+    it('task를 그린다.', () => {
+      const { container, getAllByText } = render(<Page tasks={given.tasks} />);
 
-    it('task 2개를 그린다.', () => {
-      const { container, getAllByText } = render(<Page tasks={tasks} />);
-
-      expect(container).toHaveTextContent(tasks[0].title);
-      expect(container).toHaveTextContent(tasks[1].title);
-
+      expect(container).toHaveTextContent(given.tasks[0].title);
       expect(getAllByText('완료')[0]).toContainHTML('button');
-      expect(getAllByText('완료')[1]).toContainHTML('button');
     });
   });
 });
