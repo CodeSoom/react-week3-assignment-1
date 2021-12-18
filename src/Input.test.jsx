@@ -21,16 +21,20 @@ describe('Input Component', () => {
   });
 
   it('추가 버튼을 클릭하면 onClick을 호출한다', () => {
-    fireEvent.click(renderInput().getByText('추가'));
+    const { getByText } = renderInput();
 
-    expect(handleClick).toHaveBeenCalled();
+    fireEvent.click(getByText('추가'));
+
+    expect(handleClick).toBeCalled();
   });
 
   it('onChange를 호출한다', () => {
-    const inputNode = renderInput().getByPlaceholderText('할 일을 입력해 주세요');
+    const { getByPlaceholderText } = renderInput();
+
+    const inputNode = getByPlaceholderText('할 일을 입력해 주세요');
 
     fireEvent.change(inputNode, { target: { value: '과제 열심히 하기' } });
 
-    expect(handleChange).toHaveBeenCalled();
+    expect(handleChange).toBeCalled();
   });
 });
