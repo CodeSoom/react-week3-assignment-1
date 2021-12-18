@@ -14,28 +14,19 @@ describe('Page Component', () => {
     },
   ];
 
-  const renderList = (tasks) => render((
+  const renderPage = (tasks) => render((
     <Page
-      taskTitle, onChangeTitle, onClickAddTask,
-  tasks, onClickDeleteTask
+      taskTitle={tasks.title}
       tasks={tasks}
-      onClickDelete={handleClick}
+      onChangeTitle={handleClick}
+      onClickAddTask={handleClick}
+      onClickDeleteTask={handleClick}
     />
   ));
 
-  context('등록된 todo가 있을 경우', () => {
-    it('등록된 todo가 있을 경우 목록을 보여준다', () => {
-      const { container } = renderList(data);
+  it('Page컴포넌트를 불러온다', () => {
+    const { container } = renderPage(data);
 
-      expect(container).toHaveTextContent('뭐라도 하기');
-    });
-  });
-
-  context('등록된 todo가 없을 경우', () => {
-    it('등록된 To-do가 없으면 "할 일이 없어요!" 메시지를 보여준다', () => {
-      const { container } = renderList([]);
-
-      expect(container).toHaveTextContent('할 일이 없어요!');
-    });
+    expect(container).toHaveTextContent('뭐라도 하기');
   });
 });
