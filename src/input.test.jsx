@@ -6,6 +6,8 @@
 import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
+import {screen} from '@testing-library/dom'
+
 describe('Input', () => {
   // describe(테스트 대상) - context(with, when, without) - it(기대하는 결과)
 
@@ -14,12 +16,11 @@ describe('Input', () => {
       const task = '과제 하기'
 
       const handleChange = jest.fn();
-      const { container, getByPlaceholderText } = render(<Input value="" onChange={handleChange} />);
+      const { getByPlaceholderText, container } = render(<Input value="" onChange={handleChange} />);
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
       fireEvent.change(input, {target : {value : task}});
-      expect(handleChange).toBeCalled();
-      // expect(input).toHaveAttribute('value', task);
+      expect(handleChange).toBeCalled();           
     })
   })
 
