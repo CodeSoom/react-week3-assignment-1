@@ -19,7 +19,7 @@ context('잘 작동할 때', () => {
     { id: 101, title: '물 마시기' },
   ];
 
-  it('할 일 1개 입력할 수 있다.', () => {
+  it('할 일을 입력할 수 있다.', () => {
     const { container, getByRole, getByLabelText } = AppComponent();
 
     fireEvent.change(getByLabelText('할 일'), {
@@ -35,7 +35,7 @@ context('잘 작동할 때', () => {
     expect(container).toHaveTextContent(taskTitle);
   });
 
-  it('할 일을 1개 입력 후 추가 버튼을 클릭하면, 입련 란이 빈 값이 된다.', () => {
+  it('할 일을 추가하면, 입련 란이 빈 값이 된다.', () => {
     const { getByLabelText, getByRole } = AppComponent();
 
     fireEvent.change(getByLabelText('할 일'), {
@@ -48,7 +48,7 @@ context('잘 작동할 때', () => {
     expect(getByLabelText('할 일').value).toBe('');
   });
 
-  it('할 일을 2개 입력하고 2개 삭제하면 "할 일이 없어요!"가 뜬다. ', () => {
+  it('할 일을 2개 추가하고 모두 삭제하면 "할 일이 없어요!"가 뜬다. ', () => {
     const {
       container, getByRole, getAllByRole, getByLabelText,
     } = AppComponent();

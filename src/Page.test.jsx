@@ -35,7 +35,7 @@ describe('Page', () => {
       ];
     });
 
-    it('2개의 task의 각 title과 버튼을 그린다.', () => {
+    it('task 2개를 그린다.', () => {
       const { container, getAllByText } = render(<Page tasks={tasks} />);
 
       expect(container).toHaveTextContent(tasks[0].title);

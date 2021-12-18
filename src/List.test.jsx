@@ -24,14 +24,14 @@ const ListComponentWithTasks = () => render(
 );
 
 describe('List', () => {
-  context('task length가 0일 때', () => {
+  context('task가 없을 때', () => {
     it('\'할 일이 없어요!\' 출력', () => {
       const { container } = ListComponentWithoutTasks();
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  context('task length가 2일 때', () => {
+  context('task가 두개 일때', () => {
     it('Item컴포넌트가 가진 title과 완료버튼을 그린다.', () => {
       const { container, getAllByText } = ListComponentWithTasks();
 
@@ -42,7 +42,7 @@ describe('List', () => {
       expect(getAllByText('완료')[1]).toContainHTML('button');
     });
 
-    it('버튼과 연결된 onClickDelete가 작동한다.', () => {
+    it('버튼이 작동한다.', () => {
       const { getAllByText } = ListComponentWithTasks();
 
       fireEvent.click(getAllByText('완료')[0]);
