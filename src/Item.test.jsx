@@ -1,9 +1,15 @@
 import { render, fireEvent } from '@testing-library/react';
+
 import Item from './Item';
+
+// Item
+//  -renders Item
+// 1. when click "완료" button
+//  -gets id
 
 describe('Item', () => {
   const task = {
-    id: 100,
+    id: 1,
     title: '운동하기',
   };
   const handleClick = jest.fn();
@@ -15,32 +21,25 @@ describe('Item', () => {
     />,
   );
 
-  // 테스트가 실행되기 전에 실행
   beforeEach(() => {
-    // mocking 함수들을 초기화
     jest.clearAllMocks();
   });
 
-  it('initial', () => {
-    // Given
+  it('renders Item', () => {
     const { container } = renderItem();
 
-    // Then
     expect(container).toHaveTextContent('운동하기');
     expect(container).toHaveTextContent('완료');
   });
 
-  describe('when click finish button', () => {
-    it('get id', () => {
-      // Given
+  context('when click "완료" button', () => {
+    it('gets id', () => {
       const { getByText } = renderItem();
       expect(handleClick).not.toBeCalled();
 
-      // When
       fireEvent.click(getByText('완료'));
 
-      // Then
-      expect(handleClick).toBeCalledWith(100);
+      expect(handleClick).toBeCalledWith(1);
     });
   });
 });

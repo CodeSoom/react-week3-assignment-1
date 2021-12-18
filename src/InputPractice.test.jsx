@@ -28,7 +28,7 @@ describe('Input', () => {
     expect(container).toHaveTextContent('추가');
   });
 
-  describe('when change input', () => {
+  context('when change input', () => {
     it('calls onChange handler', () => {
       // Given
       const { getByLabelText } = renderInput();
@@ -43,7 +43,7 @@ describe('Input', () => {
     });
   });
 
-  describe('with same text', () => {
+  context('with same text', () => {
     it('not call onChange handler', () => {
       // Given
       const { getByLabelText } = renderInput();
@@ -58,7 +58,7 @@ describe('Input', () => {
     });
   });
 
-  describe('when click button', () => {
+  context('when click button', () => {
     it('calls onClick handler', () => {
       // Given
       const { getByText } = renderInput();

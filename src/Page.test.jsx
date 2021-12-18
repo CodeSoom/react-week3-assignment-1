@@ -1,8 +1,19 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+
 import Page from './Page';
 
+// Page
+// 1. renders Page
+//  -renders input
+//  -renders "추가" button to add text
+//  -renders text
+//  -renders "완료" button to remove text
+
 describe('Page', () => {
-  const tasks = [];
+  const tasks = [
+    { id: 1, title: '운동하기' },
+    { id: 2, title: '집에있기' },
+  ];
   const taskTitle = '';
   const handleClick = jest.fn();
   const handleChange = jest.fn();
@@ -17,21 +28,43 @@ describe('Page', () => {
     />,
   );
 
-  // 테스트가 실행되기 전에 실행
   beforeEach(() => {
-    // mocking 함수들을 초기화
     jest.clearAllMocks();
   });
 
-  it('renders page', () => {
-    // Given
-    const { container, getByText, getByLabelText } = renderPage();
+  context('renders Page', () => {
+    it('renders input', () => {
+      const { getByLabelText } = renderPage();
 
-    // Then
-    expect(container).toHaveTextContent('To-do');
-    expect(container).toHaveTextContent('할 일');
-    expect(getByLabelText(/할 일/)).toBeInTheDocument();
-    expect(getByText(/추가/)).toBeInTheDocument();
-    expect(container).toHaveTextContent('할 일이 없어요!');
+      fireEvent.change(getByLabelText('할 일'), {
+        target: { value: '운동하기' },
+      });
+
+      expect(handleChange).toBeCalled();
+    });
+
+    it('renders "추가" button to add text', () => {
+      const { getByText } = renderPage();
+
+      fireEvent.click(getByText('추가'));
+
+      expect(handleClick).toBeCalled();
+    });
+
+    it('renders text', () => {
+      const { container } = renderPage();
+
+      expect(container).toHaveTextContent('운동하기');
+      expect(container).toHaveTextContent('집에있기');
+    });
+  });
+
+  it('renders "완료" button to remove text', () => {
+    const { getAllByText } = renderPage();
+
+    const button = getAllByText('완료');
+    fireEvent.click(button[0]);
+
+    expect(handleClick).toBeCalled();
   });
 });

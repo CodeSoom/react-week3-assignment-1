@@ -1,33 +1,65 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+
 import List from './List';
 
+// List test
+// 1. without tasks
+//  -renders "할 일이 없어요!" mssg
+// 2. with tasks
+//  -renders text
+//  -renders "완료" button to remove text
+
 describe('List', () => {
-  // 테스트가 실행되기 전에 실행
-  beforeEach(() => {
-    // mocking 함수들을 초기화
-    jest.clearAllMocks();
-  });
+  const handleClick = jest.fn();
 
-  describe('when task is empty', () => {
-    it('show specific text', () => {
-      // Given
+  context('without tasks', () => {
+    it('renders "할 일이 없어요!" mssg', () => {
       const tasks = [];
-      const { container } = render(<List tasks={tasks} />);
+      const { container } = render(
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />,
+      );
 
-      // Then
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  describe('when task is given', () => {
-    it('show title of task', () => {
-      // Given
-      const tasks = [{ id: 100, title: '운동하기' }];
-      const { container, getByText } = render(<List tasks={tasks} />);
+  context('with tasks', () => {
+    it('renders text', () => {
+      const tasks = [
+        { id: 1, title: '운동하기' },
+        { id: 2, title: '집에있기' },
+      ];
+      const { container } = render(
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />,
+      );
 
-      // Then
       expect(container).toHaveTextContent('운동하기');
-      expect(getByText('완료')).toBeInTheDocument();
+      expect(container).toHaveTextContent('집에있기');
+      // expect(getByText('완료')).toBeInTheDocument();
+    });
+
+    it('renders "완료" button to remove text', () => {
+      const tasks = [
+        { id: 1, title: '운동하기' },
+        { id: 2, title: '집에있기' },
+      ];
+      const { getAllByText } = render(
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />,
+      );
+
+      const button = getAllByText('완료');
+      fireEvent.click(button[0]);
+
+      expect(handleClick).toBeCalled();
     });
   });
 });
