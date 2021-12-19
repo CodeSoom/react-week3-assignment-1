@@ -19,7 +19,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  describe('when input and click "추가" button', () => {
+  context('when input and click "추가" button', () => {
     it('renders text', () => {
       const { container, getByLabelText, getByText } = renderApp();
 
@@ -30,24 +30,24 @@ describe('App', () => {
 
       expect(container).toHaveTextContent('운동하기');
     });
+  });
 
-    describe('when click "완료" button', () => {
-      it('remove text', () => {
-        const {
-          container, getByLabelText, getByText, getAllByText,
-        } = renderApp();
+  context('when click "완료" button', () => {
+    it('remove text', () => {
+      const {
+        container, getByLabelText, getByText, getAllByText,
+      } = renderApp();
 
-        fireEvent.change(getByLabelText(/할 일/), {
-          target: { value: '운동하기' },
-        });
-        fireEvent.click(getByText(/추가/));
-
-        expect(container).toHaveTextContent('운동하기');
-
-        fireEvent.click(getAllByText(/완료/)[0]);
-
-        expect(container).not.toHaveTextContent('운동하기');
+      fireEvent.change(getByLabelText(/할 일/), {
+        target: { value: '운동하기' },
       });
+      fireEvent.click(getByText(/추가/));
+
+      expect(container).toHaveTextContent('운동하기');
+
+      fireEvent.click(getAllByText(/완료/)[0]);
+
+      expect(container).not.toHaveTextContent('운동하기');
     });
   });
 });

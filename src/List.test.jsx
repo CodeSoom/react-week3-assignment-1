@@ -12,6 +12,10 @@ import List from './List';
 describe('List', () => {
   const handleClick = jest.fn();
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   context('without tasks', () => {
     it('renders "할 일이 없어요!" mssg', () => {
       const tasks = [];
