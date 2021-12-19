@@ -2,21 +2,23 @@ import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
-const handleClick = jest.fn();
-const emptyTasks = [];
-const tasks = [
-  { id: 100, title: '숨 쉬기' },
-  { id: 101, title: '물 마시기' },
-];
-
-const renderComponent = (task) => render((
-  <List
-    tasks={task}
-    onClickDelete={handleClick}
-  />
-));
 
 describe('List', () => {
+  const handleClick = jest.fn();
+
+  const emptyTasks = [];
+  const tasks = [
+    { id: 100, title: '숨 쉬기' },
+    { id: 101, title: '물 마시기' },
+  ];
+
+  const renderComponent = (task) => render((
+    <List
+      tasks={task}
+      onClickDelete={handleClick}
+    />
+  ));
+
   context('task가 없을 때', () => {
     it('\'할 일이 없어요!\' 출력', () => {
       const { container } = renderComponent(emptyTasks);
