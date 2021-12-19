@@ -8,16 +8,15 @@ describe('Page', () => {
     { id: 100, title: '숨 쉬기' },
   ]);
 
-  context('언제든지', () => {
-    it('Input 컴포넌트가 그려진다.', () => {
-      const { container, getByRole } = render(<Page tasks={given.noTask} />);
+  it('Input 컴포넌트가 그려진다.', () => {
+    const { container, getByRole } = render(<Page tasks={given.noTask} />);
 
-      expect(container).toHaveTextContent('할 일');
-      expect(container).toContainHTML('input');
-      expect(getByRole('button')).toHaveTextContent('추가');
-      expect(container).toHaveTextContent('할 일이 없어요!');
-    });
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toContainHTML('input');
+    expect(getByRole('button')).toHaveTextContent('추가');
+    expect(container).toHaveTextContent('할 일이 없어요!');
   });
+
   context('List에게 task가 없을 떄', () => {
     it('"할 일이 없어요"를 그린다.', () => {
       const { container } = render(<Page tasks={given.noTask} />);
