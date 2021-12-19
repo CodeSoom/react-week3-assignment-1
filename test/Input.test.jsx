@@ -35,14 +35,14 @@ describe('Input', () => {
     expect(container).toHaveTextContent('추가');
   });
 
-  it('input 에 입력할 때, onChange 함수가 실행된다.', () => {
+  it('입력 시, onChange 함수가 호출된다.', () => {
     const { input } = renderComponent();
 
     fireEvent.change(input, { target: { value: 'hello' } });
     expect(handleChange).toBeCalled();
   });
 
-  it('추가 버튼을 클릭할 때, onClick 함수가 실행된다..', () => {
+  it('추가 버튼 클릭 시, onClick 함수가 실행된다.', () => {
     const { addButton } = renderComponent();
 
     fireEvent.click(addButton);

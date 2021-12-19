@@ -17,14 +17,14 @@ describe('App', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  it('input 에 입력 시 입력값이 input 에 노출된다.', () => {
+  it('input 에 입력 시, 입력값이 input 에 노출된다.', () => {
     const { input } = renderApp();
 
     fireEvent.change(input, { target: { value: 'Study' } });
     expect(input).toHaveValue('Study');
   });
 
-  it('할 일을 추가할때, 입력 값이 화면에 렌더링 된다.', () => {
+  it('할 일을 추가 시, 입력 값이 화면에 렌더링 된다.', () => {
     const { container, getByRole, input } = renderApp();
 
     fireEvent.change(input, { target: { value: 'Study' } });
@@ -33,7 +33,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('Study');
   });
 
-  it('리스트 아이템의 완료를 클릭할 때, 해당 리스트 아이템이 삭제된다.', () => {
+  it('리스트 아이템의 완료를 클릭 시, 해당 리스트 아이템이 삭제된다.', () => {
     const { container, getByRole, input } = renderApp();
     fireEvent.change(input, { target: { value: 'Study' } });
     fireEvent.click(getByRole('button', { name: /추가/i }));
