@@ -7,6 +7,7 @@ export default function List({ tasks = [], onClickDelete }) {
     );
   }
 
+
   return (
     <ol>
       {tasks.map((task) => (
