@@ -40,7 +40,6 @@ describe('App', () => {
 
     const inputTodo = getByPlaceholderText('할 일을 입력해 주세요');
     const AddButton = getByText('추가');
-
     fireEvent.change(inputTodo, {
       target: {
         value: task,
