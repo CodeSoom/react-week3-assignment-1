@@ -14,12 +14,12 @@ describe('Item', () => {
       id: 1,
       title: 'List1',
     };
-    const { container, getByRole } = render(
+    const { container, getByRole } = render((
       <Item
         task={task}
         onClickDelete={handleClick}
-      />,
-    );
+      />
+    ));
 
     return { container, getByRole };
   };

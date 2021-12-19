@@ -11,13 +11,13 @@ describe('Input', () => {
   const handleClick = jest.fn();
 
   const renderComponent = (value = '') => {
-    const { container, getByRole } = render(
+    const { container, getByRole } = render((
       <Input
         value={value}
         onChange={handleChange}
         onClick={handleClick}
-      />,
-    );
+      />
+    ));
     const input = getByRole('textbox', { name: /할 일/i });
     const addButton = getByRole('button', { name: /추가/i });
 

@@ -11,12 +11,12 @@ describe('List', () => {
   const handleClick = jest.fn();
 
   const renderComponent = (tasks = []) => {
-    const { container, getAllByRole, getByRole } = render(
+    const { container, getAllByRole, getByRole } = render((
       <List
         tasks={tasks}
         onClickDelete={handleClick}
-      />,
-    );
+      />
+    ));
 
     return { container, getAllByRole, getByRole };
   };
