@@ -1,7 +1,8 @@
 import { render, fireEvent } from '@testing-library/react';
+
 import Page from './Page';
 
-test('Input과 List 기본 상태 확인', () => {
+test('할 일이 없을 때는 빈 메시지를 출력한다', () => {
   const tasks = [];
 
   const { container, getByPlaceholderText, getByText } = render((
@@ -16,7 +17,7 @@ test('Input과 List 기본 상태 확인', () => {
   expect(list).toHaveTextContent('할 일이 없어요!');
 });
 
-test('추가 버튼 클릭 시 입력값 추가 확인', () => {
+test('추가 버튼 클릭 시 추가된 입력값이 보임', () => {
   const tasks = [{
     id: 1,
     title: '뭐라도 하기',
@@ -27,7 +28,6 @@ test('추가 버튼 클릭 시 입력값 추가 확인', () => {
   ));
 
   const addButton = getByText('추가');
-
   fireEvent.click(addButton);
 
   expect(container).toHaveTextContent('뭐라도 하기');

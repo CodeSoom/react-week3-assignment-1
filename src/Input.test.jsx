@@ -1,4 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
+
 import Input from './Input';
 
 test('할 일 입력값 작성시 변경', () => {
@@ -17,7 +18,6 @@ test('할 일 입력값 작성시 변경', () => {
   expect(handleChange).not.toBeCalled();
 
   fireEvent.change(inputTodo, { value: '뭐라도 하기' });
-
   expect(inputTodo).toHaveAttribute('value', '뭐라도 하기');
 });
 

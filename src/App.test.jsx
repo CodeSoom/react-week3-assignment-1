@@ -1,4 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
+
 import App from './App';
 
 test('아무 것도 추가하지 않았을 때 초기 상태 확인', () => {
@@ -34,7 +35,6 @@ test('<추가> 누르면 List에 추가 확인', () => {
     <App />,
   );
 
-  const addButton = getByText('추가');
   const inputTodo = getByPlaceholderText('할 일을 입력해 주세요');
 
   fireEvent.change(inputTodo, {
@@ -43,12 +43,13 @@ test('<추가> 누르면 List에 추가 확인', () => {
     },
   });
 
+  const addButton = getByText('추가');
   fireEvent.click(addButton);
 
   expect(container).toHaveTextContent('아무 것도 하지 않기');
 });
 
-test('<완료> 누르면 List에서 삭제 확인', () => {
+test('<완료> 누르면 List에서 삭제되고, 리스트가 비어있으면 "할 일이 없어요!" 보임', () => {
   const { container, getByText, getByPlaceholderText } = render(
     <App />,
   );
@@ -67,7 +68,6 @@ test('<완료> 누르면 List에서 삭제 확인', () => {
   expect(container).toHaveTextContent('재밌는 영화 보기');
 
   const doneButton = getByText('완료');
-
   fireEvent.click(doneButton);
 
   expect(container).toHaveTextContent('할 일이 없어요!');
