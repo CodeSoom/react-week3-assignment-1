@@ -17,7 +17,7 @@ describe('App', () => {
       getByLabelText,
       getByText,
       container,
-      getAllByText, 
+      getAllByText,
     } = renderApp();
 
     // test change task title
