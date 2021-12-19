@@ -37,8 +37,6 @@ describe('App', () => {
 
     fireEvent.click(deleteButtons[0]);
 
-    expect(container).not.toHaveTextContent(
-      '코드숨 과제하기',
-    );
+    expect(container).not.toHaveTextContent('코드숨 과제하기');
   });
 });
