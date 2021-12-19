@@ -2,7 +2,6 @@ import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
-
 describe('List', () => {
   const handleClick = jest.fn();
 
