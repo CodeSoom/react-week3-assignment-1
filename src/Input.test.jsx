@@ -9,13 +9,13 @@ describe('Input', () => {
 
   const value = 'test';
 
-  const renderComponent = () => render(
+  const renderComponent = () => render((
     <Input
       value={value}
       onClick={handleClick}
       onChange={handleChange}
-    />,
-  );
+    />
+  ));
 
   it('할 일을 그린다.', () => {
     const { getByLabelText } = renderComponent();

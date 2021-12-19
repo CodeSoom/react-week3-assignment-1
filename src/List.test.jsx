@@ -9,12 +9,12 @@ const tasks = [
   { id: 101, title: '물 마시기' },
 ];
 
-const renderComponent = (task) => render(
+const renderComponent = (task) => render((
   <List
     tasks={task}
     onClickDelete={handleClick}
-  />,
-);
+  />
+));
 
 describe('List', () => {
   context('task가 없을 때', () => {
