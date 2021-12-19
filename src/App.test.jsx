@@ -1,13 +1,44 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
-test('App', () => {
-  const { getByText } = render(<App/>);
+describe('App', () => {
+  function renderApp() {
+    return render(<App />);
+  }
 
-  expect(getByText(/추가/)).not.toBeNull();
-  expect(getByText(/아무 것도 하지 않기 #1/)).not.toBeNull();
+  it('render App component', () => {
+    const { getByText } = renderApp();
+    expect(getByText(/추가/)).not.toBeNull();
+  });
 
-  // TODO: 통합 테스트 코드 작성
-  // Codecept JS => 실제 부라우저에서 사용자 테스트 실행 가능
+  it('test App state', () => {
+    const { getByLabelText, getByText, container, getAllByText } =
+      renderApp();
+
+    // test change task title
+    const textInput = getByLabelText('할 일');
+
+    fireEvent.change(textInput, {
+      target: { value: '코드숨 과제하기' },
+    });
+
+    expect(textInput.value).toBe('코드숨 과제하기');
+
+    // test add task
+    const button = getByText('추가');
+
+    fireEvent.click(button);
+
+    expect(container).toHaveTextContent('코드숨 과제하기');
+
+    // test delte task
+    const deleteButtons = getAllByText('완료');
+
+    fireEvent.click(deleteButtons[0]);
+
+    expect(container).not.toHaveTextContent(
+      '코드숨 과제하기',
+    );
+  });
 });
