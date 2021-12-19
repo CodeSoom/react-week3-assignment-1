@@ -19,11 +19,13 @@ describe('Input', () => {
 
   it('할 일을 그린다.', () => {
     const { getByLabelText } = InputComponent();
+
     expect(getByLabelText('할 일')).toHaveAttribute('value', value);
   });
 
   it('추가 버튼이 작동한다.', () => {
     const { getByText } = InputComponent();
+
     expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('추가'));
     expect(handleClick).toBeCalled();
@@ -31,6 +33,7 @@ describe('Input', () => {
 
   it('textbox에 값이 입력된다.', () => {
     const { getByLabelText } = InputComponent();
+
     expect(handleChange).not.toBeCalled();
     fireEvent.change(getByLabelText('할 일'), {
       target: {
