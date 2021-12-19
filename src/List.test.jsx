@@ -40,7 +40,7 @@ describe('List', () => {
       expect(container).toHaveTextContent('코드숨 강의 시청');
     });
 
-    it('litens "완료" buttons click event', () => {
+    it('listens "완료" buttons click event', () => {
       const { getAllByText } = renderList(tasks);
 
       const buttons = getAllByText('완료');

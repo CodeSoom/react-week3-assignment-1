@@ -16,7 +16,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  it('litens input change event', () => {
+  it('listens input change event', () => {
     const { getByPlaceholderText } = renderApp();
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
@@ -25,7 +25,7 @@ describe('App', () => {
     expect(input).toHaveAttribute('value', '코드숨');
   });
 
-  it('litens "추가" and "완료" button click event', () => {
+  it('listens "추가" and "완료" button click event', () => {
     const { container, getByText, getByPlaceholderText } = renderApp();
 
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '코드숨' } });
