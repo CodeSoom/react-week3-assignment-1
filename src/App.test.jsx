@@ -39,7 +39,7 @@ describe('App', () => {
     expect(getByLabelText('할 일').value).toBe('');
   });
 
-  it('할 일을 추가하고 모두 삭제하면 "할 일이 없어요!"가 뜬다. ', () => {
+  it('할 일이 비어있으면 "할 일이 없어요!"가 뜬다. ', () => {
     const tasks = [
       { id: 100, title: '숨 쉬기' },
     ];
@@ -47,6 +47,8 @@ describe('App', () => {
     const {
       container, getByRole, getAllByRole, getByLabelText,
     } = render((<App />));
+
+    expect(container).toHaveTextContent('할 일이 없어요!');
 
     tasks.forEach((task) => {
       fireEvent.change(getByLabelText('할 일'), {
@@ -56,6 +58,9 @@ describe('App', () => {
       });
       fireEvent.click(getByRole('button', { name: '추가' }));
     });
+
+    expect(container).not.toHaveTextContent('할 일이 없어요!');
+
     const buttons = getAllByRole('button', { name: '완료' });
 
     expect(buttons).toHaveLength(1);
