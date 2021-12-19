@@ -3,79 +3,63 @@ import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
-  const state = {
-    taskTitle: '',
-    onChangeTitle: jest.fn(),
-    onClickAddTask: jest.fn(),
-    tasks: [],
-    onClickDelete: jest.fn(),
-  };
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDelete = jest.fn();
 
-  const renderPage = (newState) => {
-    const {
-      taskTitle, onChangeTitle, onClickAddTask,
-      tasks, onClickDelete,
-    } = newState;
+  const renderPage = (taskTitle, tasks) => render(
+    <Page
+      taskTitle={taskTitle}
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      tasks={tasks}
+      onClickDeleteTask={handleClickDelete}
+    />,
+  );
 
-    return render(
-      <Page
-        taskTitle={taskTitle}
-        onChangeTitle={onChangeTitle}
-        onClickAddTask={onClickAddTask}
-        tasks={tasks}
-        onClickDeleteTask={onClickDelete}
-      />,
-    );
-  };
+  it('taskTitle 값은 input 엘리먼트 값으로 설정된다.', () => {
+    const taskTitle = 'task-#1';
+    const { queryByDisplayValue } = renderPage(taskTitle, []);
 
-  beforeEach(() => {
-    delete state.taskTitle;
-    state.tasks = [];
+    expect(queryByDisplayValue(taskTitle)).not.toBe(null);
   });
 
-  it('taskTitle 값이 제대로 전달되어야 한다.', () => {
-    const value = '전달값';
-    state.taskTitle = value;
-    const { queryByDisplayValue } = renderPage(state);
+  it('tasks의 title 값은 화면에 나타난다.', () => {
+    const tasks = [{ id: 1, title: '할 일 #1' }];
+    const { queryByText } = renderPage('', tasks);
 
-    expect(queryByDisplayValue(value)).not.toBe(null);
+    expect(queryByText(tasks[0].title)).not.toBe(null);
   });
 
-  it('tasks 데이터가 제대로 전달되어야 한다.', () => {
-    const task = { id: 1, title: '타이틀' };
-    state.tasks = [task];
-    const { queryByText } = renderPage(state);
-
-    expect(queryByText(task.title)).not.toBe(null);
-  });
-
-  it('onChangeTitle 이벤트 핸들러 함수가 정상적으로 작동해야 한다.', () => {
-    const { queryByDisplayValue } = renderPage(state);
+  it('텍스트를 입력하면, onChangeTitle 핸들러 함수가 실행된다.', () => {
+    const { queryByDisplayValue } = renderPage('', []);
     const inputElement = queryByDisplayValue('');
 
-    fireEvent.change(inputElement, { target: { value: 'test' } });
+    const text = 'onChangeTitle 테스트';
+    fireEvent.change(inputElement, { target: { value: text } });
 
-    expect(state.onChangeTitle).toBeCalled();
+    expect(handleChangeTitle).toBeCalled();
   });
 
-  it('onClickAddTask 이벤트 핸들러 함수가 정상적으로 작동해야 한다.', () => {
-    const { queryByText } = renderPage(state);
+  it('"추가" 버튼을 클릭하면, onClickAddTask 핸들러 함수가 실행된다.', () => {
+    const tasks = [{ id: 1, title: '할 일 #1' }];
+
+    const { queryByText } = renderPage('', tasks);
     const buttonElement = queryByText('추가');
 
     fireEvent.click(buttonElement);
 
-    expect(state.onClickAddTask).toBeCalled();
+    expect(handleClickAddTask).toBeCalled();
   });
 
-  it('onClickDelete 이벤트 핸들러 함수가 정상적으로 작동해야 한다.', () => {
-    const task = { id: 1, title: '타이틀' };
-    state.tasks = [task];
+  it('"완료" 버튼을 클릭하면, onClickDelete 핸들러 함수가 실행된다.', () => {
+    const tasks = [{ id: 1, title: '할 일 #1' }];
 
-    const { queryByText } = renderPage(state);
+    const { queryByText } = renderPage('', tasks);
     const buttonElement = queryByText('완료');
 
     fireEvent.click(buttonElement);
 
-    expect(state.onClickDelete).toBeCalled();
+    expect(handleClickDelete).toBeCalled();
   });
 });
