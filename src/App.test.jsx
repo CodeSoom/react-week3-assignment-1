@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 
 describe('App', () => {
-  it('추가 버튼을 클릭하면 상태가 업데이트 되고 화면이 새롭게 렌더링되어 할 일이 그려진다', () => {
+  it('할 일을 등록하면, 할 일 목록에 추가된다', () => {
     const { getByText, getByRole } = render(
       <App />,
     );

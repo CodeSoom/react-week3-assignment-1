@@ -8,18 +8,18 @@ describe('Input', () => {
   const handleChangeTitle = jest.fn();
   const handleClickAddTask = jest.fn();
 
-  const renderInputComponent = () => render(
+  const renderInput = () => render(
     <Input value={TASK_TITLE} onChange={handleChangeTitle} onClick={handleClickAddTask} />,
   );
 
-  it('input에 prop으로 넘겨준 value값이 입력되어있다', () => {
-    renderInputComponent();
+  it('input에 할 일의 이름이 적혀있다', () => {
+    renderInput();
     const input = screen.getByRole('textbox');
     expect(input.value).toBe(TASK_TITLE);
   });
 
-  it('투두 인풋의 버튼을 클릭하면 handleClickAddTask 함수가 호출된다', () => {
-    const { getByText } = renderInputComponent();
+  it('추가 버튼을 클릭하면 onClickAddTask 핸들러 함수가 호출된다', () => {
+    const { getByText } = renderInput();
 
     const addTodoButton = getByText('추가');
     fireEvent.click(addTodoButton);
@@ -28,7 +28,7 @@ describe('Input', () => {
   });
 
   it('투두 인풋에 타이핑을 하면 handleChangeTitle 함수가 호출된다', () => {
-    renderInputComponent();
+    renderInput();
 
     const toDoInput = screen.getByRole('textbox');
     fireEvent.change(toDoInput, { target: { value: '타이핑을 해주세요' } });
