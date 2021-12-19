@@ -39,18 +39,18 @@ describe('App', () => {
     const { getByText, getByPlaceholderText, container } = render(<App />);
 
     const inputTodo = getByPlaceholderText('할 일을 입력해 주세요');
-    const AddButton = getByText('추가');
+    const addButton = getByText('추가');
     fireEvent.change(inputTodo, {
       target: {
         value: task,
       },
     });  
-    fireEvent.click(AddButton);
+    fireEvent.click(addButton);
     
     expect(container).toHaveTextContent(task);
 
-    const DeleteButton = getByText('완료');
-    fireEvent.click(DeleteButton);
+    const deleteButton = getByText('완료');
+    fireEvent.click(deleteButton);
 
     expect(container).toHaveTextContent('할 일이 없어요!')
   });
