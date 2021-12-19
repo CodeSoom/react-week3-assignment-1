@@ -3,9 +3,8 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
-import { taskFixture } from './Fixture';
 
-describe('App Component', () => {
+describe('App', () => {
   const renderApp = () => render((
     <App />
   ));

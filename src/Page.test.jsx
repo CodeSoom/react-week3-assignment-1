@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import Page from './Page';
 import { tasksFixture } from './Fixture';
 
-describe('Page Component', () => {
+describe('Page', () => {
   const handleClick = jest.fn();
 
   const renderPage = (tasks) => render((

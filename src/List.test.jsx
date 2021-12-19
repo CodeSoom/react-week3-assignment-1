@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import List from './List';
 import { tasksFixture } from './Fixture';
 
-describe('List Component', () => {
+describe('List', () => {
   const handleClick = jest.fn();
 
   const renderList = (tasks) => render((
