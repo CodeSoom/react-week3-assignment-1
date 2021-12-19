@@ -13,8 +13,12 @@ describe('App', () => {
   });
 
   it('test App state', () => {
-    const { getByLabelText, getByText, container, getAllByText } =
-      renderApp();
+    const {
+      getByLabelText,
+      getByText,
+      container,
+      getAllByText, 
+    } = renderApp();
 
     // test change task title
     const textInput = getByLabelText('할 일');
