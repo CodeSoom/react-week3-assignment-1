@@ -1,19 +1,50 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
 describe('List', () => {
-  it('할일 목록 개수가 0개일 경우 "할 일이 없어요!" 문구를 보인다.', () => {
-    const tasks = [];
+  const onClickDelete = jest.fn();
 
-    const handleClickDelete = jest.fn();
-    const { container } = render((
-      <List
-        tasks={tasks}
-        onClickDelete={handleClickDelete}
-      />
-    ));
+  function renderList(tasks) {
+    return render(<List
+      tasks={tasks}
+      onClickDelete={onClickDelete}
+    />);
+  }
 
-    expect(container).toHaveTextContent('할 일이 없어요!');
+  context('with tasks', () => {
+    const tasks = [{
+      id: 1,
+      title: 'Task-1',
+    },
+    {
+      id: 2,
+      title: 'Task-2',
+    },
+    ];
+
+    it('renders tasks', () => {
+      const { getByText } = renderList(tasks);
+
+      expect(getByText('Task-1')).not.toBeNull();
+      expect(getByText('Task-2')).not.toBeNull();
+    });
+
+    it('renders "완료" button to delete task', () => {
+      const { getAllByText } = renderList(tasks);
+      const buttons = getAllByText('완료');
+
+      fireEvent.click(buttons[0]);
+
+      expect(onClickDelete).toBeCalledWith(1);
+    });
+  });
+
+  context('without tasks', () => {
+    it('renders no tasks message', () => {
+      const { getByText } = renderList([]);
+
+      expect(getByText(/할 일이 없어요/)).not.toBeNull();
+    });
   });
 });

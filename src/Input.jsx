@@ -11,7 +11,7 @@ export default function Input({ value, onChange, onClick }) {
         value={value}
         onChange={onChange}
       />
-      <button type="button" onClick={onClick} data-testid="addButton">
+      <button type="button" onClick={onClick}>
         추가
       </button>
     </p>
