@@ -3,8 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-
-  it('calls handleChange.', () => {
+  it('Change Input', () => {
     const task = '3주차 과제하기'
     const { getByPlaceholderText } = render(<App />);
     const input = getByPlaceholderText('할 일을 입력해 주세요');
@@ -19,7 +18,7 @@ describe('App', () => {
     expect(input.value).toEqual(task);
   });
 
-  it('calls handleAdd', () => {
+  it('Add todo', () => {
     const task = '과제 하기'
     const { getByText, getByPlaceholderText, container } = render(<App />);
     const input = getByPlaceholderText('할 일을 입력해 주세요');
@@ -35,7 +34,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('과제 하기');
   });
 
-  it('calls handleDelete', () => {
+  it('Delete todo', () => {
     const task = '과제 하기'
     const { getByText, getByPlaceholderText, container } = render(<App />);
 
