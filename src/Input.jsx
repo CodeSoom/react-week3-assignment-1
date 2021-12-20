@@ -12,7 +12,7 @@ export default function Input({ value, onChange, onClick }) {
         onChange={onChange}
       />
       <button type="button" onClick={onClick}>
-        추가
+        <span>추가</span>
       </button>
     </p>
   );
