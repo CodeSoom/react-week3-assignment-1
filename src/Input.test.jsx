@@ -31,7 +31,7 @@ describe('Input', () => {
     expect(handleClick).toBeCalled();
   });
 
-  it('textbox에 값이 입력된다.', () => {
+  it('handleChange 함수가 작동된다.', () => {
     const { getByLabelText } = renderComponent();
 
     expect(handleChange).not.toBeCalled();
