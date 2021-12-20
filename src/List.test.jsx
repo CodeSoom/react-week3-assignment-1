@@ -3,6 +3,15 @@ import { fireEvent, render } from '@testing-library/react';
 import List from './List';
 import tasksDefault from './tasks';
 
+// test('테스트 #1')
+// describe - it => describe('List') => it('renders tasks')
+// with tasks
+// - renders tasks
+// - renders "delete" button to delete a task
+// without tasks
+// - renders no task message
+// --verbose 옵션으로 테스트 결과를 간단한 문서로써 볼 수 있다.
+
 describe('List', () => {
   const handleClick = jest.fn();
 

@@ -1,30 +1,18 @@
 import { render } from '@testing-library/react';
 
 import App from './App';
-import Page from './Page';
 
 describe('App', () => {
-  const handleChangeTitle = jest.fn();
-  const handleClickAddTask = jest.fn();
-  const handleClickDeleteTask = jest.fn();
-  const testTitle = '';
-  const testTasks = [];
-
   it('renders Page', () => {
-    const { container } = render((
+    const { getByText } = render((
       <App />
     ));
 
-    const { container: pageContainer } = render((
-      <Page
-        taskTitle={testTitle}
-        onChangeTitle={handleChangeTitle}
-        onClickDeleteTask={handleClickDeleteTask}
-        onClickAddTask={handleClickAddTask}
-        tasks={testTasks}
-      />
-    ));
+    // 화면에서 볼 수 있는 모습을 예측
+    expect(getByText(/추가/)).not.toBeNull();
+    expect(getByText(/코드숨 과제하기!/)).not.toBeNull();
 
-    expect(container).toEqual(pageContainer);
+    // TODO: 통합 테스트 코드 작성
+    // CodeceptJS => 실제 브라우저에서 사용자 테스트 실행 가능.
   });
 });

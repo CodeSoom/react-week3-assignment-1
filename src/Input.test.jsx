@@ -25,8 +25,8 @@ describe('Input', () => {
 
   describe('when changing input value', () => {
     it('call handleChange', () => {
-      const { getByPlaceholderText } = renderInput();
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+      const { getByLabelText } = renderInput();
+      const input = getByLabelText('할 일');
 
       expect(input).toHaveValue('');
       expect(handleChange).not.toBeCalled();

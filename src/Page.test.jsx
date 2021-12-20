@@ -8,6 +8,7 @@ import tasksDefault from './tasks';
 // 통합테스트
 // 테스트 == 예제
 
+// 테스트를 메뉴얼로!
 describe('Page', () => {
   const tasks = tasksDefault;
   const taskTitle = '나는 타이틀';
