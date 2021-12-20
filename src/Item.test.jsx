@@ -2,12 +2,9 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
+import { task } from '../fixtures/tasks';
 
+test('Item', () => {
   const handleClick = jest.fn();
 
   const { container, getByText } = render((
@@ -21,8 +18,6 @@ test('Item', () => {
   expect(container).toHaveTextContent('완료');
 
   expect(handleClick).not.toBeCalled();
-
   fireEvent.click(getByText('완료'));
-
   expect(handleClick).toBeCalledWith(1);
 });
