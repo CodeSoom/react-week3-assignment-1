@@ -1,12 +1,16 @@
 import { useState } from 'react';
 
 import Page from './Page';
+import tasksDefault from './tasks';
+
+// 협력 구현 - 종류중의 하나 짝 프로그래밍
+// 3분씩 번갈아가면서 프로그래밍
 
 export default function App() {
   const [state, setState] = useState({
     newId: 100,
     taskTitle: '',
-    tasks: [],
+    tasks: tasksDefault,
   });
 
   const { newId, taskTitle, tasks } = state;
