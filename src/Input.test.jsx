@@ -9,7 +9,7 @@ describe('Input', () => {
 
   const value = 'test';
 
-  const renderComponent = () => render((
+  const renderInput = () => render((
     <Input
       value={value}
       onClick={handleClick}
@@ -18,13 +18,13 @@ describe('Input', () => {
   ));
 
   it('할 일을 그린다.', () => {
-    const { getByLabelText } = renderComponent();
+    const { getByLabelText } = renderInput();
 
     expect(getByLabelText('할 일')).toHaveAttribute('value', value);
   });
 
   it('추가 버튼이 작동한다.', () => {
-    const { getByText } = renderComponent();
+    const { getByText } = renderInput();
 
     expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('추가'));
@@ -32,7 +32,7 @@ describe('Input', () => {
   });
 
   it('handleChange 함수가 작동된다.', () => {
-    const { getByLabelText } = renderComponent();
+    const { getByLabelText } = renderInput();
 
     expect(handleChange).not.toBeCalled();
     fireEvent.change(getByLabelText('할 일'), {
