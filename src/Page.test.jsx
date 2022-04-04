@@ -39,6 +39,7 @@ describe('Page', () => {
       expect(handleChangTitle).toBeCalled();
 
       fireEvent.click(getByText('추가'));
+
       expect(handleClickAddTask).toBeCalled();
 
       tasks.forEach((task) => {
