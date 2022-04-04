@@ -1,4 +1,6 @@
-import { fireEvent, getByText, render } from '@testing-library/react';
+import {
+  fireEvent, getByRole, getByText, render,
+} from '@testing-library/react';
 
 import List from './List';
 
@@ -10,6 +12,10 @@ const tasks = [
 ];
 
 const onClickDelete = jest.fn();
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 test('dose render empty value', () => {
   const { container } = render(<List tasks={[]} onClickDelete={onClickDelete} />);
@@ -37,5 +43,17 @@ describe('onClickDelete', () => {
 
     fireEvent.click(getByText(container, '완료'));
     expect(onClickDelete).toBeCalledWith(task.id);
+  });
+
+  test('dose trigger onCLickDelete when tasks = 3', () => {
+    const { container } = render(<List tasks={tasks} onClickDelete={onClickDelete} />);
+    expect(onClickDelete).not.toBeCalled();
+
+    tasks.forEach(({ id, title }) => {
+      const item = getByText(container, title);
+      const button = getByRole(item, 'button');
+      fireEvent.click(button);
+      expect(onClickDelete).toBeCalledWith(id);
+    });
   });
 });
