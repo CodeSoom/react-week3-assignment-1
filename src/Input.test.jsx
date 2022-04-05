@@ -1,10 +1,9 @@
 import React from 'react';
-import { screen, fireEvent, render, getByRole } from '@testing-library/react';
+import { fireEvent, render, getByRole } from '@testing-library/react';
 
 import Input from './Input';
 
 describe('<Input />', () => {
-  const value = '할 일';
   const onClick = jest.fn();
   const onChange = jest.fn();
 
@@ -26,7 +25,7 @@ describe('<Input />', () => {
     expect(input).toHaveValue('TDD 배우기');
   });
 
-  it('Calls onClicks and clears input value', () => {
+  it('Calls onClick and clears input value', () => {
     const { container } = render(
       <Input onChange={onChange} onClick={onClick} />
     );
