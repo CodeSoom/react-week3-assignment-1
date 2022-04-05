@@ -1,5 +1,4 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -13,5 +12,12 @@ describe('Input', () => {
   it('renders input, button', () => {
     expect(input).toBeInTheDocument();
     expect(button).toBeInTheDocument();
+  });
+
+  it('changes input value', () => {
+    const inputValue = '운동 하기';
+
+    fireEvent.change(input, { target: { value: inputValue } });
+    expect(input.value).toBe(inputValue);
   });
 });
