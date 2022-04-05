@@ -11,10 +11,10 @@ export default function App() {
 
   const { newId, taskTitle, tasks } = state;
 
-  function handleChangeTitle(event) {
+  function handleChangeTitle(title) {
     setState({
       ...state,
-      taskTitle: event.target.value,
+      taskTitle: title,
     });
   }
 
