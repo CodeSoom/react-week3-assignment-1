@@ -26,8 +26,8 @@ describe('Input', () => {
 
     expect(input.value).toBe('');
     expect(onChange).not.toBeCalled();
-    fireEvent.change(input, { target: { value: inputValue } });
 
+    fireEvent.change(input, { target: { value: inputValue } });
     // 왜 onChange가 Call이 안되었다고 나올까?...
     expect(onChange).toBeCalled();
   });
