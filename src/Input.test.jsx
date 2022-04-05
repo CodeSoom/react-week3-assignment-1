@@ -27,7 +27,7 @@ describe('Input', () => {
 
   it('Calls onClick and clears input value', () => {
     const { container } = render(
-      <Input onChange={onChange} onClick={onClick} />
+      <Input onChange={onChange} onClick={onClick} />,
     );
     const button = getByRole(container, 'button');
     expect(onClick).not.toHaveBeenCalled();
