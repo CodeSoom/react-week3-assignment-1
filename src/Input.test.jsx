@@ -20,4 +20,15 @@ describe('Input', () => {
     fireEvent.change(input, { target: { value: inputValue } });
     expect(input.value).toBe(inputValue);
   });
+
+  it('calls onchange when change input value', () => {
+    const inputValue = '운동 하기';
+
+    expect(input.value).toBe('');
+    expect(onChange).not.toBeCalled();
+    fireEvent.change(input, { target: { value: inputValue } });
+
+    // 왜 onChange가 Call이 안되었다고 나올까?...
+    expect(onChange).toBeCalled();
+  });
 });
