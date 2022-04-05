@@ -3,29 +3,28 @@ import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
+  const tasks = [{
+    id: 1,
+    title: '뭐라도 하기',
+  }, {
+    id: 2,
+    title: '맛있는 음식 먹기',
+  }];
+
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   context('with tasks', () => {
-    it('renders without crashing', () => {
-      const tasks = [{
-        id: 1,
-        title: '뭐라도 하기',
-      }, {
-        id: 2,
-        title: '맛있는 음식 먹기',
-      }];
-
-      const handleChangTitle = jest.fn();
-      const handleClickAddTask = jest.fn();
-      const handleClickDeleteTask = jest.fn();
-
-      const {
-        container,
-        getByText,
-        getAllByText,
-        getByRole,
-      } = render((
+    it('renders header and tasks', () => {
+      const { container } = render((
         <Page
           taskTitle="공부하"
-          onChangeTitle={handleChangTitle}
+          onChangeTitle={handleChangeTitle}
           onClickAddTask={handleClickAddTask}
           tasks={tasks}
           onClickDeleteTask={handleClickDeleteTask}
@@ -34,39 +33,72 @@ describe('Page', () => {
 
       expect(container).toHaveTextContent('To-do');
 
-      fireEvent.change(getByRole('textbox'), { target: { value: '공부하기' } });
-
-      expect(handleChangTitle).toBeCalled();
-
-      fireEvent.click(getByText('추가'));
-
-      expect(handleClickAddTask).toBeCalled();
-
       tasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
       });
-      expect(container).toHaveTextContent('완료');
+    });
 
-      fireEvent.click(getAllByText('완료')[0]);
+    context('when the input is changed', () => {
+      it('calls handleChangeTitle', () => {
+        const { getByRole } = render((
+          <Page
+            taskTitle="공부하"
+            onChangeTitle={handleChangeTitle}
+            onClickAddTask={handleClickAddTask}
+            tasks={tasks}
+            onClickDeleteTask={handleClickDeleteTask}
+          />
+        ));
 
-      expect(handleClickDeleteTask).toBeCalledWith(1);
+        fireEvent.change(getByRole('textbox'), { target: { value: '공부하기' } });
+
+        expect(handleChangeTitle).toBeCalled();
+      });
+    });
+
+    context('when a task is added', () => {
+      it('calls handleClickAddTask', () => {
+        const { getByText } = render((
+          <Page
+            taskTitle="공부하기"
+            onChangeTitle={handleChangeTitle}
+            onClickAddTask={handleClickAddTask}
+            tasks={tasks}
+            onClickDeleteTask={handleClickDeleteTask}
+          />
+        ));
+
+        fireEvent.click(getByText('추가'));
+
+        expect(handleClickAddTask).toBeCalled();
+      });
+    });
+
+    context('when the done button is clicked', () => {
+      it('calls handleClickDeleteTask', () => {
+        const { getAllByText } = render((
+          <Page
+            taskTitle="공부하"
+            onChangeTitle={handleChangeTitle}
+            onClickAddTask={handleClickAddTask}
+            tasks={tasks}
+            onClickDeleteTask={handleClickDeleteTask}
+          />
+        ));
+
+        fireEvent.click(getAllByText('완료')[0]);
+
+        expect(handleClickDeleteTask).toBeCalledWith(1);
+      });
     });
   });
 
   context('with no task', () => {
-    it('renders without crashing', () => {
-      const handleChangTitle = jest.fn();
-      const handleClickAddTask = jest.fn();
-      const handleClickDeleteTask = jest.fn();
-
-      const {
-        container,
-        getByText,
-        getByRole,
-      } = render((
+    it('renders header and message `할 일이 없어요!`', () => {
+      const { container } = render((
         <Page
           taskTitle="공부하"
-          onChangeTitle={handleChangTitle}
+          onChangeTitle={handleChangeTitle}
           onClickAddTask={handleClickAddTask}
           tasks={[]}
           onClickDeleteTask={handleClickDeleteTask}
@@ -75,13 +107,42 @@ describe('Page', () => {
 
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일이 없어요!');
+    });
 
-      fireEvent.change(getByRole('textbox'), { target: { value: '공부하기' } });
+    context('when the input is changed', () => {
+      it('calls handleChangeTitle', () => {
+        const { getByRole } = render((
+          <Page
+            taskTitle="공부하"
+            onChangeTitle={handleChangeTitle}
+            onClickAddTask={handleClickAddTask}
+            tasks={[]}
+            onClickDeleteTask={handleClickDeleteTask}
+          />
+        ));
 
-      expect(handleChangTitle).toBeCalled();
+        fireEvent.change(getByRole('textbox'), { target: { value: '공부하기' } });
 
-      fireEvent.click(getByText('추가'));
-      expect(handleClickAddTask).toBeCalled();
+        expect(handleChangeTitle).toBeCalled();
+      });
+    });
+
+    context('when a task is added', () => {
+      it('calls handleClickAddTask', () => {
+        const { getByText } = render((
+          <Page
+            taskTitle="공부하기"
+            onChangeTitle={handleChangeTitle}
+            onClickAddTask={handleClickAddTask}
+            tasks={[]}
+            onClickDeleteTask={handleClickDeleteTask}
+          />
+        ));
+
+        fireEvent.click(getByText('추가'));
+
+        expect(handleClickAddTask).toBeCalled();
+      });
     });
   });
 });

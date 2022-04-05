@@ -3,12 +3,6 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const handleClickDelete = jest.fn();
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   const tasks = [
     {
       id: 1,
@@ -19,6 +13,12 @@ describe('List', () => {
       title: '맛있는 음식 먹기',
     },
   ];
+
+  const handleClickDelete = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   context('with tasks', () => {
     it('renders task title', () => {
