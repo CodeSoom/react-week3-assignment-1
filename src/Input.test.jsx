@@ -5,6 +5,7 @@ import Input from './Input';
 const label = '할 일';
 const placeholder = '할 일을 입력해 주세요';
 const value = '할일!!';
+const buttonText = '추가';
 
 const onChange = jest.fn();
 const onClick = jest.fn();
@@ -21,6 +22,7 @@ it('Input', () => {
   );
 
   expect(container).toHaveTextContent(label);
+  expect(container).toHaveTextContent(buttonText);
 
   const input = getByPlaceholderText(placeholder);
 
@@ -28,7 +30,7 @@ it('Input', () => {
 
   expect(onClick).not.toBeCalled();
 
-  fireEvent.click(getByText('추가'));
+  fireEvent.click(getByText(buttonText));
 
   expect(onClick).toBeCalled();
 
