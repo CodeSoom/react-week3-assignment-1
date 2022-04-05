@@ -56,7 +56,7 @@ describe('Page', () => {
       });
     });
 
-    context('when a task is added', () => {
+    context('when the add button is clicked', () => {
       it('calls handleClickAddTask', () => {
         const { getByText } = render((
           <Page
@@ -127,7 +127,7 @@ describe('Page', () => {
       });
     });
 
-    context('when a task is added', () => {
+    context('when the add button is clicked', () => {
       it('calls handleClickAddTask', () => {
         const { getByText } = render((
           <Page

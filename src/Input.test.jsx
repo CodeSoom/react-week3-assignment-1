@@ -2,27 +2,56 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
+describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const { container, getByText, getByRole } = render((
-    <Input
-      value=""
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
+  it('renders label and add button', () => {
+    const { container } = render((
+      <Input
+        value=""
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+    ));
 
-  fireEvent.change(getByRole('textbox'), { target: { value: '신나게 놀기' } });
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
+  });
 
-  expect(handleChange).toBeCalled();
+  context('when the input is changed', () => {
+    it('calls handleChange', () => {
+      const { getByRole } = render((
+        <Input
+          value=""
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
 
-  fireEvent.click(getByText('추가'));
+      fireEvent.change(getByRole('textbox'), { target: { value: '신나게 놀기' } });
 
-  expect(handleClick).toBeCalled();
-  expect(handleChange).toBeCalled();
+      expect(handleChange).toBeCalled();
+    });
+  });
+
+  context('when the add button is clicked', () => {
+    it('calls handleClick', () => {
+      const { getByText } = render((
+        <Input
+          value=""
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
+
+      fireEvent.click(getByText('추가'));
+
+      expect(handleClick).toBeCalled();
+    });
+  });
 });
