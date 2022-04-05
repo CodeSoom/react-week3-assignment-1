@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
 
+import { container } from 'codeceptjs';
 import List from './List';
 
 test('if there is no task', () => {
@@ -27,4 +28,5 @@ test('if there is task', () => {
     />
   ));
   expect(container).not.toHaveTextContent('할 일이 없어요!');
+  expect(container).toHaveTextContent('완료');
 });
