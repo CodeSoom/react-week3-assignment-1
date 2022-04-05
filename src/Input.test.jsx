@@ -39,4 +39,13 @@ describe('Input', () => {
     fireEvent.change(input, { target: { value: inputValue } });
     expect(onChange).toBeCalled();
   });
+
+  it('calls onclick when click button', () => {
+    const { input, button, onClick } = getElement();
+    const inputValue = '운동 하기';
+
+    fireEvent.change(input, { target: { value: inputValue } });
+    fireEvent.click(button);
+    expect(onClick).toBeCalled();
+  });
 });
