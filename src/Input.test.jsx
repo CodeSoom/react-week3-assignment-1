@@ -3,18 +3,18 @@ import { fireEvent, render, getByRole } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('<Input />', () => {
+describe('Input', () => {
   const onClick = jest.fn();
   const onChange = jest.fn();
 
-  it('Has label, input, button', () => {
+  it('Renders label, input, button', () => {
     const { getByText, getByPlaceholderText } = render(<Input />);
     getByText('할 일');
     getByPlaceholderText('할 일을 입력해 주세요');
     getByText('추가');
   });
 
-  it('Change input value', () => {
+  it('Changes input value', () => {
     const { container } = render(<Input onChange={onChange} />);
     const input = getByRole(container, 'textbox');
     expect(onChange).not.toHaveBeenCalled();
@@ -32,6 +32,7 @@ describe('<Input />', () => {
     const button = getByRole(container, 'button');
     expect(onClick).not.toHaveBeenCalled();
     fireEvent.click(button);
+
     expect(onClick).toHaveBeenCalled();
     const input = getByRole(container, 'textbox');
     expect(input).toHaveValue('');
