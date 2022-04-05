@@ -1,5 +1,5 @@
 import {
-  render, screen, fireEvent, getByText,
+  render, screen, fireEvent,
 } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
@@ -26,24 +26,24 @@ describe('AddInput', () => {
       <Input
         value=""
         onChange={handleChangeTitle}
-        onClick={handleClickAddTask}
       />,
     );
     const inputElement = screen.getByPlaceholderText(/할 일을 입력해 주세요/i);
     fireEvent.change(inputElement, { target: { value: '코딩을 즐기기' } });
     expect(inputElement.value).toBe('코딩을 즐기기');
   });
-  it('추가 버튼을 클릭하면 input이 초기화된다.', async () => {
-    render(
-      <Input
-        value=""
-        onChange={handleChangeTitle}
-        onClick={handleClickAddTask}
-      />,
-    );
-    fireEvent.click(getByText('추가'));
-    expect(Input.value).toHaveTextContent('');
-  });
+});
+
+test('추가 버튼을 클릭하면 input이 비어진다.', () => {
+  const { getByText } = render(
+    <Input
+      value=""
+      onChange={handleChangeTitle}
+      onClick={handleClickAddTask}
+    />,
+  );
+  fireEvent.click(getByText('추가'));
+  expect(Input.value).toHaveTextContent('');
 });
 
 test('input', () => {

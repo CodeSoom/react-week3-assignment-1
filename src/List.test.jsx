@@ -2,7 +2,6 @@ import { render } from '@testing-library/react';
 
 import '@testing-library/jest-dom';
 
-import { container } from 'codeceptjs';
 import List from './List';
 
 test('if there is no task', () => {
