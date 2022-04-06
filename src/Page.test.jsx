@@ -61,4 +61,17 @@ describe('Page', () => {
     fireEvent.click(button);
     expect(handleClickAddTask).toBeCalled();
   });
+
+  it('calls handleClickDeleteTask when click complete button', () => {
+    const { container, getAllByText } = getRenderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+
+    expect(container).toHaveTextContent('운동하기');
+    expect(container).toHaveTextContent('공부하기');
+    expect(handleClickDeleteTask).not.toBeCalled();
+
+    sampleTasks.forEach((task, index) => {
+      fireEvent.click(getAllByText('완료')[index]);
+      expect(handleClickDeleteTask).toBeCalledWith(task.id);
+    });
+  });
 });
