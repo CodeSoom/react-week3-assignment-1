@@ -3,17 +3,22 @@ import { fireEvent, render } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
+  const onClick = jest.fn();
+  const onChange = jest.fn();
+
   function getInputElement() {
-    const onClick = jest.fn();
-    const onChange = jest.fn();
     const container = render(<Input onChange={onChange} onClick={onClick} />);
     const input = container.getByLabelText('할 일');
     const button = container.getByText('추가');
 
     return {
-      ...container, input, button, onChange, onClick,
+      ...container, input, button,
     };
   }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('renders input, button', () => {
     const { input, button } = getInputElement();
@@ -30,7 +35,7 @@ describe('Input', () => {
   });
 
   it('calls onchange when change input value', () => {
-    const { input, onChange } = getInputElement();
+    const { input } = getInputElement();
     const inputValue = '운동 하기';
 
     expect(input.value).toBe('');
@@ -41,7 +46,7 @@ describe('Input', () => {
   });
 
   it('calls onclick when click button', () => {
-    const { input, button, onClick } = getInputElement();
+    const { input, button } = getInputElement();
     const inputValue = '운동 하기';
 
     fireEvent.change(input, { target: { value: inputValue } });
