@@ -2,19 +2,19 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Page from './Page';
 
-const tasks = [
-  { id: 100, title: '운동 하기' },
-  { id: 101, title: '공부 하기' },
+const sampleTasks = [
+  { id: 100, title: '운동하기' },
+  { id: 101, title: '공부하기' },
 ];
 
 const handleChangeTaskTitle = jest.fn();
 const handleClickAddTask = jest.fn();
 const handleClickDeleteTask = jest.fn();
 
-const getRenderPage = () => render((
+const getRenderPage = ({ taskTitle, tasks }) => render((
   <Page
+    taskTitle={taskTitle}
     tasks={tasks}
-    taskTitle="tasks"
     onChangeTitle={handleChangeTaskTitle}
     onClickAddTask={handleClickAddTask}
     onClickDeleteTask={handleClickDeleteTask}
@@ -27,23 +27,31 @@ beforeEach(() => {
 
 describe('Page', () => {
   it('renders title', () => {
-    const { container } = getRenderPage();
+    const { container } = getRenderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
     expect(container).toHaveTextContent('To-do');
   });
 
   it('renders tasks', () => {
-    const { container } = getRenderPage();
+    const { container } = getRenderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
-    tasks.forEach((task) => {
+    sampleTasks.forEach((task) => {
       expect(container).toHaveTextContent(task.title);
     });
   });
 
   it('calls handleChangeTaskTitle when change input value', () => {
-    const { getByRole } = getRenderPage();
+    const { getByRole } = getRenderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
     fireEvent.change(getByRole('textbox'), { target: { value: '운동 하기' } });
     expect(handleChangeTaskTitle).toBeCalled();
+  });
+
+  it('calls handleClickAddTask when click button', () => {
+    const { getByText } = getRenderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+    const button = getByText('추가');
+
+    fireEvent.click(button);
+    expect(handleClickAddTask).toBeCalled();
   });
 });
