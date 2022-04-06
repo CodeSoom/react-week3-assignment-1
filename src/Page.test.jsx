@@ -40,6 +40,13 @@ describe('Page', () => {
     });
   });
 
+  it('render without tasks', () => {
+    const { container } = getRenderPage({ taskTitle: 'TDD공부하기', tasks: [] });
+
+    expect(container).toHaveTextContent('To-do');
+    expect(container).toHaveTextContent('할 일이 없어요!');
+  });
+
   it('calls handleChangeTaskTitle when change input value', () => {
     const { getByRole } = getRenderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
