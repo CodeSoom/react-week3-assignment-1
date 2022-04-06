@@ -1,39 +1,42 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 import List from './List';
 
 describe('List Test', () => {
-  test('할 일이 존재할 때 화면에 할 일 목록을 렌더한다.', () => {
-    const tasks = [{
-      id: 1,
-      title: '뭐라도 하기',
-    }];
+  const handleClick = jest.fn();
 
-    const { container } = render(<List tasks={tasks} />);
+  const existTasks = [{
+    id: 1,
+    title: '뭐라도 하기',
+  }];
 
-    expect(container).toHaveTextContent('뭐라도 하기');
+  const emptyTasks = [];
+
+  context('List 컴포넌트 렌더 테스트', () => {
+    it('화면에 할 일 목록을 렌더한다.', () => {
+      render(<List tasks={existTasks} onClickDelete={handleClick} />);
+
+      const text = screen.getByText('뭐라도 하기');
+
+      expect(text).toBeVisible();
+    });
   });
 
-  test('할 일이 존재하지 않을 때 "할 일이 없어요!"라는 텍스트를 렌더한다.', () => {
-    const tasks = [];
+  context('List 컴포넌트 기능 테스트', () => {
+    it('할 일이 존재하지 않을 때 "할 일이 없어요!"라는 텍스트를 렌더한다.', () => {
+      render(<List tasks={emptyTasks} onClickDelete={handleClick} />);
 
-    const { container } = render(<List tasks={tasks} />);
+      const text = screen.getByText('할 일이 없어요!');
 
-    expect(container).toHaveTextContent('할 일이 없어요!');
-  });
+      expect(text).toBeVisible();
+    });
 
-  test('완료 버튼을 눌렀을 떄 handleClick 함수가 실행되어야 한다.', () => {
-    const tasks = [{
-      id: 1,
-      title: '뭐라도 하기',
-    }];
+    it('완료 버튼을 눌렀을 떄 handleClick 함수가 실행되어야 한다.', () => {
+      render(<List tasks={existTasks} onClickDelete={handleClick} />);
 
-    const handleClick = jest.fn();
-
-    const { getByText } = render(<List tasks={tasks} onClickDelete={handleClick} />);
-
-    expect(handleClick).not.toBeCalled();
-    fireEvent.click(getByText('완료'));
-    expect(handleClick).toBeCalledWith(1);
+      expect(handleClick).not.toBeCalled();
+      fireEvent.click(screen.getByText('완료'));
+      expect(handleClick).toBeCalledWith(1);
+    });
   });
 });
