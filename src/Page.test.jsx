@@ -31,4 +31,12 @@ describe('Page', () => {
 
     expect(container).toHaveTextContent('To-do');
   });
+
+  it('renders tasks', () => {
+    const { container } = getRenderPage();
+
+    tasks.forEach((task) => {
+      expect(container).toHaveTextContent(task.title);
+    });
+  });
 });
