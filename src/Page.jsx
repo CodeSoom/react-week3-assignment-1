@@ -2,8 +2,11 @@ import Input from './Input';
 import List from './List';
 
 export default function Page({
-  taskTitle, onChangeTitle, onClickAddTask,
-  tasks, onClickDeleteTask,
+  taskTitle,
+  onChangeTitle,
+  onClickAddTask,
+  tasks,
+  onClickDeleteTask,
 }) {
   return (
     <div>
