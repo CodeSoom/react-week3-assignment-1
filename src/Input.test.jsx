@@ -17,7 +17,7 @@ it('Input', () => {
   expect(container).toHaveTextContent('할 일');
   expect(container).toHaveTextContent('추가');
 
-  expect(getByPlaceholderText('할 일을 입력해 주새요')).toHaveValue('테스트 코드 짜기');
+  expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('테스트 코드 짜기');
 
   expect(onClick).not.toBeCalled();
 
@@ -28,7 +28,7 @@ it('Input', () => {
   expect(onChange).not.toBeCalled();
 
   fireEvent.change(
-    getByPlaceholderText('할 일을 입력해 주새요'),
+    getByPlaceholderText('할 일을 입력해 주세요'),
     { target: { value: '테스트 코드 작성' } },
   );
 
