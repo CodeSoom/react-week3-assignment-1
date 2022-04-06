@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -38,5 +38,12 @@ describe('Page', () => {
     tasks.forEach((task) => {
       expect(container).toHaveTextContent(task.title);
     });
+  });
+
+  it('calls handleChangeTaskTitle when change input value', () => {
+    const { getByRole } = getRenderPage();
+
+    fireEvent.change(getByRole('textbox'), { target: { value: '운동 하기' } });
+    expect(handleChangeTaskTitle).toBeCalled();
   });
 });
