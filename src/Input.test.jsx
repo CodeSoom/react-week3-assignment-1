@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  function getElement() {
+  function getInputElement() {
     const onClick = jest.fn();
     const onChange = jest.fn();
     const container = render(<Input onChange={onChange} onClick={onClick} />);
@@ -16,13 +16,13 @@ describe('Input', () => {
   }
 
   it('renders input, button', () => {
-    const { input, button } = getElement();
+    const { input, button } = getInputElement();
     expect(input).toBeInTheDocument();
     expect(button).toBeInTheDocument();
   });
 
   it('changes input value', () => {
-    const { input } = getElement();
+    const { input } = getInputElement();
     const inputValue = '운동 하기';
 
     fireEvent.change(input, { target: { value: inputValue } });
@@ -30,7 +30,7 @@ describe('Input', () => {
   });
 
   it('calls onchange when change input value', () => {
-    const { input, onChange } = getElement();
+    const { input, onChange } = getInputElement();
     const inputValue = '운동 하기';
 
     expect(input.value).toBe('');
@@ -41,7 +41,7 @@ describe('Input', () => {
   });
 
   it('calls onclick when click button', () => {
-    const { input, button, onClick } = getElement();
+    const { input, button, onClick } = getInputElement();
     const inputValue = '운동 하기';
 
     fireEvent.change(input, { target: { value: inputValue } });
