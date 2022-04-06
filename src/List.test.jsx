@@ -1,5 +1,5 @@
 import {
-  fireEvent, render,
+  fireEvent, render, getByText,
 } from '@testing-library/react';
 
 import List from './List';
@@ -25,7 +25,7 @@ describe('List', () => {
       { id: 102, title: 'PR 날리기' },
     ];
 
-    const { container, getByText } = render((
+    const { container } = render((
       <List
         tasks={tasks}
         onClickDelete={onClickDelete}
@@ -35,7 +35,7 @@ describe('List', () => {
     tasks.forEach(({ id, title }) => {
       expect(container).toHaveTextContent(title);
 
-      const item = getByText(title);
+      const item = getByText(container, title);
 
       const button = getByText(item, '완료');
 
