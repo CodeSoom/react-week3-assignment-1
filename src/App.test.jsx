@@ -13,33 +13,29 @@ describe('App', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  context('when the task is added', () => {
-    it('renders the task', () => {
-      const { container, getByText, getByRole } = render((
-        <App />
-      ));
+  it('adds tasks', () => {
+    const { container, getByText, getByRole } = render((
+      <App />
+    ));
 
-      fireEvent.change(getByRole('textbox'), { target: { value: '신나게 놀기' } });
-      fireEvent.click(getByText('추가'));
+    fireEvent.change(getByRole('textbox'), { target: { value: '신나게 놀기' } });
+    fireEvent.click(getByText('추가'));
 
-      expect(container).toHaveTextContent('신나게 놀기');
-    });
+    expect(container).toHaveTextContent('신나게 놀기');
+  });
 
-    context('when the done button is clicked', () => {
-      it('removes the task', () => {
-        const { container, getByText, getByRole } = render((
-          <App />
-        ));
+  it('removes tasks', () => {
+    const { container, getByText, getByRole } = render((
+      <App />
+    ));
 
-        fireEvent.change(getByRole('textbox'), { target: { value: '신나게 놀기' } });
-        fireEvent.click(getByText('추가'));
+    fireEvent.change(getByRole('textbox'), { target: { value: '신나게 놀기' } });
+    fireEvent.click(getByText('추가'));
 
-        expect(container).toHaveTextContent('신나게 놀기');
+    expect(container).toHaveTextContent('신나게 놀기');
 
-        fireEvent.click(getByText('완료'));
+    fireEvent.click(getByText('완료'));
 
-        expect(container).not.toHaveTextContent('신나게 놀기');
-      });
-    });
+    expect(container).not.toHaveTextContent('신나게 놀기');
   });
 });

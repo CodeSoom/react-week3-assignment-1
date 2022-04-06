@@ -10,34 +10,31 @@ describe('Item', () => {
 
   const handleClick = jest.fn();
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('renders tasks and done button', () => {
-    const { container } = render((
+  function renderItem() {
+    return render((
       <Item
         task={task}
         onClickDelete={handleClick}
       />
     ));
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders tasks and done button', () => {
+    const { container } = renderItem();
 
     expect(container).toHaveTextContent('뭐라도 하기');
     expect(container).toHaveTextContent('완료');
   });
 
-  context('when the done button is clicked', () => {
-    it('calls handleClick', () => {
-      const { getByText } = render((
-        <Item
-          task={task}
-          onClickDelete={handleClick}
-        />
-      ));
+  it('calls handleClick', () => {
+    const { getByText } = renderItem();
 
-      fireEvent.click(getByText('완료'));
+    fireEvent.click(getByText('완료'));
 
-      expect(handleClick).toBeCalledWith(1);
-    });
+    expect(handleClick).toBeCalledWith(1);
   });
 });
