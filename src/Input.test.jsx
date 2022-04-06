@@ -2,41 +2,35 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-const label = '할 일';
-const placeholder = '할 일을 입력해 주세요';
-const value = '할일!!';
-const buttonText = '추가';
-
 const onChange = jest.fn();
 const onClick = jest.fn();
 
-const changedValue = '테스트 코드 작성';
-
 it('Input', () => {
-  const { container, getByText, getByPlaceholderText } = render(
+  const { container, getByText, getByPlaceholderText } = render((
     <Input
-      value={value}
+      value="테스트 코드 짜기"
       onChange={onChange}
       onClick={onClick}
-    />,
-  );
+    />
+  ));
 
-  expect(container).toHaveTextContent(label);
-  expect(container).toHaveTextContent(buttonText);
+  expect(container).toHaveTextContent('할 일');
+  expect(container).toHaveTextContent('추가');
 
-  const input = getByPlaceholderText(placeholder);
-
-  expect(input).toHaveValue(value);
+  expect(getByPlaceholderText('할 일을 입력해 주새요')).toHaveValue('테스트 코드 짜기');
 
   expect(onClick).not.toBeCalled();
 
-  fireEvent.click(getByText(buttonText));
+  fireEvent.click(getByText('추가'));
 
   expect(onClick).toBeCalled();
 
   expect(onChange).not.toBeCalled();
 
-  fireEvent.change(input, { target: { value: changedValue } });
+  fireEvent.change(
+    getByPlaceholderText('할 일을 입력해 주새요'),
+    { target: { value: '테스트 코드 작성' } },
+  );
 
-  expect(onChange).toBeCalledWith(changedValue);
+  expect(onChange).toBeCalledWith('테스트 코드 작성');
 });
