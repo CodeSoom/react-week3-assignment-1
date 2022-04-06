@@ -2,27 +2,44 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
-  const value = '테스트 입력';
-
+describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
+  const value = '테스트 입력';
 
-  const { container, getByText, getByRole } = render((
-    <Input
-      value={value}
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
+  beforeEach(() => {
+    handleChange.mockClear();
+    handleClick.mockClear();
+  });
 
-  fireEvent.change(getByRole('textbox'), { target: { value } });
+  it('Input Change', () => {
+    const { getByRole } = render((
+      <Input
+        value={value}
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+    ));
 
-  expect(container).toHaveTextContent('추가');
+    fireEvent.change(getByRole('textbox'), { target: { value: '가나다' } });
+    expect(handleChange).toBeCalledTimes(1);
+  });
 
-  expect(handleClick).not.toBeCalled();
+  it('Input Click', () => {
+    const { container, getByText } = render((
+      <Input
+        value={value}
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+    ));
 
-  fireEvent.click(getByText('추가'));
+    expect(container).toHaveTextContent('추가');
 
-  expect(handleClick).toBeCalledTimes(1);
+    expect(handleClick).not.toBeCalled();
+
+    fireEvent.click(getByText('추가'));
+
+    expect(handleClick).toBeCalledTimes(1);
+  });
 });
