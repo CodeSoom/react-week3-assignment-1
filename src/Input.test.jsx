@@ -6,51 +6,39 @@ describe('Input', () => {
   const onClick = jest.fn();
   const onChange = jest.fn();
 
-  function getInputElement() {
-    const container = render(<Input onChange={onChange} onClick={onClick} />);
-    const input = container.getByLabelText('할 일');
-    const button = container.getByText('추가');
-
-    return {
-      ...container, input, button,
-    };
+  function renderInput() {
+    return render((
+      <Input
+        value=""
+        onChange={onChange}
+        onClick={onClick}
+      />
+    ));
   }
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders input, button', () => {
-    const { input, button } = getInputElement();
-    expect(input).toBeInTheDocument();
-    expect(button).toBeInTheDocument();
-  });
+  it('renders input and button', () => {
+    const { container } = renderInput();
 
-  it('changes input value', () => {
-    const { input } = getInputElement();
-    const inputValue = '운동 하기';
-
-    fireEvent.change(input, { target: { value: inputValue } });
-    expect(input.value).toBe(inputValue);
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
   });
 
   it('calls onchange', () => {
-    const { input } = getInputElement();
+    const { getByRole } = renderInput();
     const inputValue = '운동 하기';
 
-    expect(input.value).toBe('');
-    expect(onChange).not.toBeCalled();
-
-    fireEvent.change(input, { target: { value: inputValue } });
+    fireEvent.change(getByRole('textbox'), { target: { value: inputValue } });
     expect(onChange).toBeCalled();
   });
 
   it('calls onclick', () => {
-    const { input, button } = getInputElement();
-    const inputValue = '운동 하기';
+    const { getByText } = renderInput();
 
-    fireEvent.change(input, { target: { value: inputValue } });
-    fireEvent.click(button);
+    fireEvent.click(getByText('추가'));
     expect(onClick).toBeCalled();
   });
 });
