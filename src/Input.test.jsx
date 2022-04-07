@@ -2,8 +2,6 @@ import {
   render, fireEvent,
 } from '@testing-library/react';
 
-import { act } from 'react-dom/test-utils';
-
 import Input from './Input';
 
 const handleChangeTitle = jest.fn();
@@ -34,14 +32,14 @@ describe('Input', () => {
 
     const inputElement = getByPlaceholderText(/할 일을 입력해 주세요/i);
 
-    fireEvent.change(inputElement, { target: { value: '코딩을 즐기기' } });
+    fireEvent.change(container, { target: { value: '코딩을 즐기기' } });
 
-    expect(inputElement.getByDisplayValue).toEqual('코딩을 즐기기');
+    expect(container).toEqual('코딩을 즐기기');
     // TODO : 코딩을 즐기기로 값을 바꿔주기.
   });
 
   it('추가 버튼을 클릭하면 input이 비어진다. ', () => {
-    const { container, getByText, getByPlaceholderText } = render((
+    const { getByText, getByPlaceholderText } = render((
       <Input
         value=""
         onChange={handleChangeTitle}
