@@ -7,11 +7,16 @@ describe('App', () => {
     <App />
   ));
 
-  it('renders To-do, input, button', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders To-do, input, button, text', () => {
     const { container } = renderApp();
 
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일');
     expect(container).toHaveTextContent('추가');
+    expect(container).toHaveTextContent('할 일이 없어요!');
   });
 });
