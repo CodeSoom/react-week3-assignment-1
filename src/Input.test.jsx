@@ -1,25 +1,57 @@
 import { fireEvent, render } from '@testing-library/react';
+import { useState } from 'react';
 import Input from './Input';
 
-describe('Input', () => {
-  const value = 'hello';
+function TestInput({ onClick }) {
+  const [value, setValue] = useState('');
 
-  const handleClick = jest.fn();
-  const handleChange = jest.fn();
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
 
-  const { container, getByText } = render((
+  return (
     <Input
       value={value}
-      onChange={handleChange}
-      onClick={handleClick}
+      onChange={(event) => handleChange(event.target.value)}
+      onClick={onClick}
     />
-  ));
+  );
+}
 
-  it("Input앞 '할 일' 출력 ", () => {
-    expect(container).toHaveTextContent('할 일');
-  });
+const setup = () => {
+  const handleClick = jest.fn();
+  const utils = render(<TestInput onClick={handleClick} />);
+  const input = utils.getByPlaceholderText('할 일을 입력해 주세요');
+  return {
+    input,
+    handleClick,
+    ...utils,
+  };
+};
 
+test("'할 일' 텍스트 출력", () => {
+  const { container } = setup();
+  expect(container).toHaveTextContent('할 일');
+});
+
+test("'추가' 버튼 클릭", () => {
+  const { handleClick, getByText } = setup();
   expect(handleClick).not.toBeCalled();
   fireEvent.click(getByText('추가'));
   expect(handleClick).toBeCalled();
+});
+
+test('input에 텍스트 입력 테스트', async () => {
+  const { input } = setup();
+
+  fireEvent.change(input, { target: { value: '할일이 없어' } });
+  expect(input.value).toBe('할일이 없어');
+
+  fireEvent.change(input, { target: { value: '' } });
+  expect(input.value).toBe('');
+});
+
+test('input에 placeholder 테스트', async () => {
+  const { input } = setup();
+  expect(input.getAttribute('placeholder')).toBe('할 일을 입력해 주세요');
 });
