@@ -43,4 +43,12 @@ describe('List', () => {
       });
     });
   });
+
+  context('without task', () => {
+    it('renders message `할 일이 없어요!`', () => {
+      const { container } = renderList({ tasks: [] });
+
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
 });
