@@ -34,7 +34,7 @@ describe('Input', () => {
     expect(input.value).toBe(inputValue);
   });
 
-  it('calls onchange when change input value', () => {
+  it('calls onchange', () => {
     const { input } = getInputElement();
     const inputValue = '운동 하기';
 
@@ -45,7 +45,7 @@ describe('Input', () => {
     expect(onChange).toBeCalled();
   });
 
-  it('calls onclick when click button', () => {
+  it('calls onclick', () => {
     const { input, button } = getInputElement();
     const inputValue = '운동 하기';
 
