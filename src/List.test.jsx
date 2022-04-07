@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
@@ -8,12 +8,12 @@ describe('List', () => {
     { id: 101, title: '공부하기' },
   ];
 
-  const handleClickDelete = jest.fn();
+  const handleClickDeleteTask = jest.fn();
 
   const renderList = ({ tasks }) => render((
     <List
       tasks={tasks}
-      onClickDelete={handleClickDelete}
+      onClickDelete={handleClickDeleteTask}
     />
   ));
 
@@ -27,6 +27,19 @@ describe('List', () => {
 
       sampleTasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
+      });
+    });
+
+    it('calls handleClickDeleteTask', () => {
+      const { container, getAllByText } = renderList({ tasks: sampleTasks });
+
+      expect(container).toHaveTextContent('운동하기');
+      expect(container).toHaveTextContent('공부하기');
+      expect(handleClickDeleteTask).not.toBeCalled();
+
+      sampleTasks.forEach((task, index) => {
+        fireEvent.click(getAllByText('완료')[index]);
+        expect(handleClickDeleteTask).toBeCalledWith(task.id);
       });
     });
   });

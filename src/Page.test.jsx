@@ -26,52 +26,58 @@ beforeEach(() => {
 });
 
 describe('Page', () => {
-  it('renders title', () => {
-    const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+  context('render', () => {
+    it('renders title', () => {
+      const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
-    expect(container).toHaveTextContent('To-do');
-  });
-
-  it('renders tasks', () => {
-    const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
-
-    sampleTasks.forEach((task) => {
-      expect(container).toHaveTextContent(task.title);
+      expect(container).toHaveTextContent('To-do');
     });
-  });
 
-  it('calls handleChangeTaskTitle', () => {
-    const { getByRole } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+    it('renders tasks', () => {
+      const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
-    fireEvent.change(getByRole('textbox'), { target: { value: '운동 하기' } });
-    expect(handleChangeTaskTitle).toBeCalled();
-  });
-
-  it('calls handleClickAddTask', () => {
-    const { getByText } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
-    const button = getByText('추가');
-
-    fireEvent.click(button);
-    expect(handleClickAddTask).toBeCalled();
-  });
-
-  it('calls handleClickDeleteTask', () => {
-    const { container, getAllByText } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
-
-    expect(container).toHaveTextContent('운동하기');
-    expect(container).toHaveTextContent('공부하기');
-    expect(handleClickDeleteTask).not.toBeCalled();
-
-    sampleTasks.forEach((task, index) => {
-      fireEvent.click(getAllByText('완료')[index]);
-      expect(handleClickDeleteTask).toBeCalledWith(task.id);
+      sampleTasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+      });
     });
   });
 
   context('without tasks', () => {
-    const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: [] });
+    it('render message `할 일이 없어요!`', () => {
+      const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: [] });
 
-    expect(container).toHaveTextContent('To-do');
-    expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(container).toHaveTextContent('To-do');
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+
+    it('calls handleChangeTaskTitle', () => {
+      const { getByRole } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+
+      fireEvent.change(getByRole('textbox'), { target: { value: '운동 하기' } });
+      expect(handleChangeTaskTitle).toBeCalled();
+    });
+
+    it('calls handleClickAddTask', () => {
+      const { getByText } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+      const button = getByText('추가');
+
+      fireEvent.click(button);
+      expect(handleClickAddTask).toBeCalled();
+    });
+  });
+
+  context('with tasks', () => {
+    it('calls handleClickDeleteTask', () => {
+      const { container, getAllByText } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+
+      expect(container).toHaveTextContent('운동하기');
+      expect(container).toHaveTextContent('공부하기');
+      expect(handleClickDeleteTask).not.toBeCalled();
+
+      sampleTasks.forEach((task, index) => {
+        fireEvent.click(getAllByText('완료')[index]);
+        expect(handleClickDeleteTask).toBeCalledWith(task.id);
+      });
+    });
   });
 });
