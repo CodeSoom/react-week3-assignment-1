@@ -5,32 +5,49 @@ import Input from './Input';
 const onChange = jest.fn();
 const onClick = jest.fn();
 
-it('Input', () => {
-  const { container, getByText, getByPlaceholderText } = render((
-    <Input
-      value="테스트 코드 짜기"
-      onChange={onChange}
-      onClick={onClick}
-    />
-  ));
+const renderInput = () => render((
+  <Input
+    value="테스트 코드 짜기"
+    onChange={onChange}
+    onClick={onClick}
+  />
+));
 
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
-  expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('테스트 코드 짜기');
+describe('Input', () => {
+  it('renders label', () => {
+    const { container } = renderInput();
 
-  expect(onClick).not.toBeCalled();
+    expect(container).toHaveTextContent('할 일');
+  });
 
-  fireEvent.click(getByText('추가'));
+  it('renders textbox', () => {
+    const { getByPlaceholderText } = renderInput();
 
-  expect(onClick).toBeCalled();
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('테스트 코드 짜기');
 
-  expect(onChange).not.toBeCalled();
+    expect(onChange).not.toBeCalled();
 
-  fireEvent.change(
-    getByPlaceholderText('할 일을 입력해 주세요'),
-    { target: { value: '테스트 코드 작성' } },
-  );
+    fireEvent.change(
+      getByPlaceholderText('할 일을 입력해 주세요'),
+      { target: { value: '테스트 코드 작성' } },
+    );
 
-  expect(onChange).toBeCalledWith('테스트 코드 작성');
+    expect(onChange).toBeCalledWith('테스트 코드 작성');
+  });
+
+  it('renders button', () => {
+    const { container, getByText } = renderInput();
+
+    expect(container).toHaveTextContent('추가');
+
+    expect(onClick).not.toBeCalled();
+
+    fireEvent.click(getByText('추가'));
+
+    expect(onClick).toBeCalled();
+  });
 });
