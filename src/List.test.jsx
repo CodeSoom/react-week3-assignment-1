@@ -25,7 +25,7 @@ beforeEach(() => {
 
 describe('List', () => {
   context('without task', () => {
-    it('renders not have the task', () => {
+    it('renders "할 일이 없어요!"', () => {
       const { container } = renderList({ tasks: [] });
 
       expect(container).toHaveTextContent('할 일이 없어요!');
@@ -43,14 +43,16 @@ describe('List', () => {
       expect(getAllByText('완료')).toHaveLength(3);
     });
 
-    it('should trigger onClickDelete function with the task id args', () => {
-      const { container } = renderList({});
+    it('renders "완료" buttons to delete the task', () => {
+      const { container, getAllByText } = renderList({});
 
       const clickTaskButton = (taskTitle) => {
         fireEvent.click(
           getByText(getByText(container, taskTitle), '완료'),
         );
       };
+
+      expect(getAllByText('완료')).toHaveLength(3);
 
       expect(onClickDelete).not.toBeCalled();
 

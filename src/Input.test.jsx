@@ -24,7 +24,7 @@ describe('Input', () => {
     expect(container).toHaveTextContent('할 일');
   });
 
-  it('renders textbox', () => {
+  it('renders textbox to change task title', () => {
     const { getByPlaceholderText } = renderInput();
 
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue('테스트 코드 짜기');
@@ -39,7 +39,7 @@ describe('Input', () => {
     expect(onChange).toBeCalledWith('테스트 코드 작성');
   });
 
-  it('renders button', () => {
+  it('renders "추가" button to add task', () => {
     const { container, getByText } = renderInput();
 
     expect(container).toHaveTextContent('추가');
