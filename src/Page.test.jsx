@@ -40,13 +40,6 @@ describe('Page', () => {
     });
   });
 
-  it('render without tasks', () => {
-    const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: [] });
-
-    expect(container).toHaveTextContent('To-do');
-    expect(container).toHaveTextContent('할 일이 없어요!');
-  });
-
   it('calls handleChangeTaskTitle', () => {
     const { getByRole } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
@@ -73,5 +66,12 @@ describe('Page', () => {
       fireEvent.click(getAllByText('완료')[index]);
       expect(handleClickDeleteTask).toBeCalledWith(task.id);
     });
+  });
+
+  context('without tasks', () => {
+    const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: [] });
+
+    expect(container).toHaveTextContent('To-do');
+    expect(container).toHaveTextContent('할 일이 없어요!');
   });
 });
