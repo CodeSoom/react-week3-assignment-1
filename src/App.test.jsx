@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
@@ -18,5 +18,13 @@ describe('App', () => {
     expect(container).toHaveTextContent('할 일');
     expect(container).toHaveTextContent('추가');
     expect(container).toHaveTextContent('할 일이 없어요!');
+  });
+
+  it('adds task', () => {
+    const { container, getByText, getByRole } = renderApp();
+    fireEvent.change(getByRole('textbox'), { target: { value: '명상하기' } });
+    fireEvent.click(getByText('추가'));
+
+    expect(container).toHaveTextContent('명상하기');
   });
 });
