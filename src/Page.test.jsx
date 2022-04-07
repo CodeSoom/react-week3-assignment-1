@@ -47,14 +47,14 @@ describe('Page', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  it('calls handleChangeTaskTitle when change input value', () => {
+  it('calls handleChangeTaskTitle', () => {
     const { getByRole } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
     fireEvent.change(getByRole('textbox'), { target: { value: '운동 하기' } });
     expect(handleChangeTaskTitle).toBeCalled();
   });
 
-  it('calls handleClickAddTask when click button', () => {
+  it('calls handleClickAddTask', () => {
     const { getByText } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
     const button = getByText('추가');
 
@@ -62,7 +62,7 @@ describe('Page', () => {
     expect(handleClickAddTask).toBeCalled();
   });
 
-  it('calls handleClickDeleteTask when click complete button', () => {
+  it('calls handleClickDeleteTask', () => {
     const { container, getAllByText } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
     expect(container).toHaveTextContent('운동하기');
