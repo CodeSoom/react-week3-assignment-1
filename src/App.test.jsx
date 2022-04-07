@@ -27,4 +27,14 @@ describe('App', () => {
 
     expect(container).toHaveTextContent('명상하기');
   });
+
+  it('deletes task', () => {
+    const { container, getByText, getByRole } = renderApp();
+    fireEvent.change(getByRole('textbox'), { target: { value: '명상하기' } });
+    fireEvent.click(getByText('추가'));
+    expect(container).toHaveTextContent('명상하기');
+
+    fireEvent.click(getByText('완료'));
+    expect(container).not.toHaveTextContent('명상하기');
+  });
 });
