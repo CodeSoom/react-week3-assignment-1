@@ -56,43 +56,45 @@ const setup = () => {
   };
 };
 
-test('1. 할일 리스트 출력', () => {
-  const { container } = setup();
-  expect(container).toHaveTextContent('배고파요');
-  expect(container).toHaveTextContent('치킨을 먹어요');
-  expect(container).toHaveTextContent('피자를 먹어요');
-});
+describe('Page', () => {
+  it('1. 할일 리스트 출력', () => {
+    const { container } = setup();
+    expect(container).toHaveTextContent('배고파요');
+    expect(container).toHaveTextContent('치킨을 먹어요');
+    expect(container).toHaveTextContent('피자를 먹어요');
+  });
 
-test("2. '완료' 버튼 출력", () => {
-  const { container } = setup();
-  expect(container).toHaveTextContent('완료');
-});
+  it("2. '완료' 버튼 출력", () => {
+    const { container } = setup();
+    expect(container).toHaveTextContent('완료');
+  });
 
-test('3. To-do 출력', () => {
-  const { container } = setup();
-  expect(container).toHaveTextContent('To-do');
-});
+  it('3. To-do 출력', () => {
+    const { container } = setup();
+    expect(container).toHaveTextContent('To-do');
+  });
 
-test("4. '완료' 버튼 클릭 (배고파요 삭제, 피자를 먹어요 삭제)", () => {
-  const { container, getAllByText } = setup();
+  it("4. '완료' 버튼 클릭 (배고파요 삭제, 피자를 먹어요 삭제)", () => {
+    const { container, getAllByText } = setup();
 
-  expect(container).toHaveTextContent('배고파요');
-  fireEvent.click(getAllByText('완료')[0]);
-  expect(container).not.toHaveTextContent('배고파요');
+    expect(container).toHaveTextContent('배고파요');
+    fireEvent.click(getAllByText('완료')[0]);
+    expect(container).not.toHaveTextContent('배고파요');
 
-  expect(container).toHaveTextContent('피자를 먹어요');
-  fireEvent.click(getAllByText('완료')[1]);
-  expect(container).not.toHaveTextContent('피자를 먹어요');
+    expect(container).toHaveTextContent('피자를 먹어요');
+    fireEvent.click(getAllByText('완료')[1]);
+    expect(container).not.toHaveTextContent('피자를 먹어요');
 
-  expect(container).toHaveTextContent('치킨을 먹어요');
-});
+    expect(container).toHaveTextContent('치킨을 먹어요');
+  });
 
-test("5. 빈 배열일 때 '할 일이 없어요!' 출력", () => {
-  const { container, getAllByText } = setup();
+  it("5. 빈 배열일 때 '할 일이 없어요!' 출력", () => {
+    const { container, getAllByText } = setup();
 
-  fireEvent.click(getAllByText('완료')[0]);
-  fireEvent.click(getAllByText('완료')[0]);
-  fireEvent.click(getAllByText('완료')[0]);
+    fireEvent.click(getAllByText('완료')[0]);
+    fireEvent.click(getAllByText('완료')[0]);
+    fireEvent.click(getAllByText('완료')[0]);
 
-  expect(container).toHaveTextContent('할 일이 없어요!');
+    expect(container).toHaveTextContent('할 일이 없어요!');
+  });
 });
