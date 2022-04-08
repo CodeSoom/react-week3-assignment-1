@@ -26,19 +26,17 @@ beforeEach(() => {
 });
 
 describe('Page', () => {
-  context('render', () => {
-    it('renders title', () => {
-      const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+  it('renders title', () => {
+    const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
-      expect(container).toHaveTextContent('To-do');
-    });
+    expect(container).toHaveTextContent('To-do');
+  });
 
-    it('renders tasks', () => {
-      const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
+  it('renders tasks', () => {
+    const { container } = renderPage({ taskTitle: 'TDD공부하기', tasks: sampleTasks });
 
-      sampleTasks.forEach((task) => {
-        expect(container).toHaveTextContent(task.title);
-      });
+    sampleTasks.forEach((task) => {
+      expect(container).toHaveTextContent(task.title);
     });
   });
 
