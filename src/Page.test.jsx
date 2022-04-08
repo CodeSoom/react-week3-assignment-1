@@ -104,7 +104,16 @@ describe('Page', () => {
   });
 
   it('3. To-do 출력', () => {
-    const { container } = setup();
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+    const { container } = render(<Page
+      taskTitle={taskTitle}
+      tasks={tasks}
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      onClickDeleteTask={handleClickDeleteTask}
+    />);
     expect(container).toHaveTextContent('To-do');
   });
 
