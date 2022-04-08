@@ -57,8 +57,33 @@ const setup = () => {
 };
 
 describe('Page', () => {
+  const tasks = [
+    {
+      id: 1,
+      title: '배고파요',
+    },
+    {
+      id: 2,
+      title: '치킨을 먹어요',
+    },
+    {
+      id: 3,
+      title: '피자를 먹어요',
+    },
+  ];
+
   it('1. 할일 리스트 출력', () => {
-    const { container } = setup();
+    const taskTitle = 'hello';
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+    const { container } = render(<Page
+      taskTitle={taskTitle}
+      tasks={tasks}
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      onClickDeleteTask={handleClickDeleteTask}
+    />);
     expect(container).toHaveTextContent('배고파요');
     expect(container).toHaveTextContent('치킨을 먹어요');
     expect(container).toHaveTextContent('피자를 먹어요');
