@@ -6,11 +6,11 @@ const onClickAddTask = jest.fn();
 
 const onClickDeleteTask = jest.fn();
 
-const tasks = [
+const defaultTasks = [
   { id: 100, title: '밥먹기' },
 ];
 
-const renderPage = () => render((
+const renderPage = ({ tasks = defaultTasks }) => render((
   <Page
     taskTitle="tasks"
     onChangeTitle={onChangeTitle}
@@ -26,13 +26,13 @@ beforeEach(() => {
 
 describe('Page', () => {
   it('renders title', () => {
-    const { container } = renderPage();
+    const { container } = renderPage({});
 
     expect(container).toHaveTextContent('To-do');
   });
 
   it('listens for change event to chagne the task title', () => {
-    const { getByPlaceholderText } = renderPage();
+    const { getByPlaceholderText } = renderPage({});
     expect(onChangeTitle).not.toHaveBeenCalled();
 
     fireEvent.change(
@@ -44,7 +44,7 @@ describe('Page', () => {
   });
 
   it('renders "추가" button to add task', () => {
-    const { container, getByText } = renderPage();
+    const { container, getByText } = renderPage({});
 
     expect(container).toHaveTextContent('추가');
 
@@ -56,21 +56,22 @@ describe('Page', () => {
   });
 
   context('without the task', () => {
-    it('renders "할 일이 없어요!"');
-    const { container } = renderPage({ tasks: [] });
+    it('renders "할 일이 없어요!"', () => {
+      const { container } = renderPage({ tasks: [] });
 
-    expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
   });
 
   context('with tasks', () => {
     it('renders task title', () => {
-      const { container } = renderPage();
+      const { container } = renderPage({});
 
       expect(container).toHaveTextContent('밥먹기');
     });
 
     it('renders "완료" buttons to delete the task', () => {
-      const { container, getByText } = renderPage();
+      const { container, getByText } = renderPage({});
 
       expect(container).toHaveTextContent('완료');
 
