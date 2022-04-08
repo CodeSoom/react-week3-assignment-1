@@ -1,44 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
-import { useState } from 'react';
 import List from './List';
-
-function TestList({ tasks }) {
-  const [stateTasks, setStateTasks] = useState(tasks);
-
-  const handleClickDelete = (id) => {
-    setStateTasks(stateTasks.filter((item) => item.id !== id));
-  };
-
-  return (
-    <List
-      tasks={stateTasks}
-      onClickDelete={handleClickDelete}
-    />
-  );
-}
-
-const setup = () => {
-  const tasks = [
-    {
-      id: 1,
-      title: '배고파요',
-    },
-    {
-      id: 2,
-      title: '치킨을 먹어요',
-    },
-    {
-      id: 3,
-      title: '피자를 먹어요',
-    },
-  ];
-
-  const utils = render(<TestList tasks={tasks} />);
-  return {
-    tasks,
-    ...utils,
-  };
-};
 
 describe('List', () => {
   const tasks = [
