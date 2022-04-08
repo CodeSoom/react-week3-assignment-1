@@ -47,8 +47,15 @@ describe('Input', () => {
     expect(container).toHaveTextContent('할 일');
   });
 
-  it("'추가' 버튼 클릭", () => {
-    const { handleClick, getByText } = setup();
+  it("2. '추가' 버튼 클릭", () => {
+    const value = '';
+    const handleChange = jest.fn();
+    const handleClick = jest.fn();
+    const { getByText } = render(<Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />);
     expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('추가'));
     expect(handleClick).toBeCalled();
