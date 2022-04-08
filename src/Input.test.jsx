@@ -19,9 +19,9 @@ beforeEach(() => {
 
 describe('Input', () => {
   it('renders label', () => {
-    const { container } = renderInput();
+    const { queryByLabelText } = renderInput();
 
-    expect(container).toHaveTextContent('할 일');
+    expect(queryByLabelText('할 일')).toBeInTheDocument();
   });
 
   it('renders textbox to change task title', () => {
