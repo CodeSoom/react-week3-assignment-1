@@ -27,11 +27,11 @@ describe('Input', () => {
   });
 
   it('Input Click', () => {
-    const { getAllByRole } = renderInput;
+    const { getByText } = renderInput;
 
     expect(handleClick).not.toBeCalled();
 
-    fireEvent.click(getAllByRole('button')[0]);
+    fireEvent.click(getByText('추가'));
 
     expect(handleClick).toBeCalledTimes(1);
   });
