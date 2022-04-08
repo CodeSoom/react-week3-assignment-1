@@ -95,11 +95,11 @@ describe('List', () => {
   });
 
   test("4. 빈 배열일 때 '할 일이 없어요!' 출력", () => {
-    const { container, getAllByText } = setup();
-
-    fireEvent.click(getAllByText('완료')[0]);
-    fireEvent.click(getAllByText('완료')[0]);
-    fireEvent.click(getAllByText('완료')[0]);
+    const handleClickDelete = jest.fn();
+    const { container } = render(<List
+      tasks={[]}
+      onClickDelete={handleClickDelete}
+    />);
 
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
