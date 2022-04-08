@@ -35,8 +35,15 @@ const setup = () => {
 };
 
 describe('Input', () => {
-  it("'할 일' 텍스트 출력", () => {
-    const { container } = setup();
+  it("1. '할 일' 텍스트 출력", () => {
+    const value = '';
+    const handleChange = jest.fn();
+    const handleClick = jest.fn();
+    const { container } = render(<Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />);
     expect(container).toHaveTextContent('할 일');
   });
 
