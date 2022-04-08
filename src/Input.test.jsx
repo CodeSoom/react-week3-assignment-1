@@ -76,19 +76,6 @@ describe('Input', () => {
     expect(handleChange).toBeCalled();
   });
 
-  it('input에 값 입력 후 추가 클릭 시 input에 값 제거', () => {
-    const { input, handleClick, getByText } = setup();
-    expect(handleClick).not.toBeCalled();
-
-    fireEvent.change(input, { target: { value: '할일이 없어' } });
-    expect(input.value).toBe('할일이 없어');
-
-    fireEvent.click(getByText('추가'));
-    expect(handleClick).toBeCalled();
-
-    expect(input.value).toBe('');
-  });
-
   it('input에 placeholder 테스트', async () => {
     const { input } = setup();
     expect(input.getAttribute('placeholder')).toBe('할 일을 입력해 주세요');
