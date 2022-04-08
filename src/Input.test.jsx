@@ -61,14 +61,19 @@ describe('Input', () => {
     expect(handleClick).toBeCalled();
   });
 
-  it('input에 텍스트 입력 테스트', async () => {
-    const { input } = setup();
+  it('3. input에 텍스트 입력 테스트', async () => {
+    const value = '';
+    const handleChange = jest.fn();
+    const handleClick = jest.fn();
+    const { getByPlaceholderText } = render(<Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />);
 
-    fireEvent.change(input, { target: { value: '할일이 없어' } });
-    expect(input.value).toBe('할일이 없어');
-
-    fireEvent.change(input, { target: { value: '' } });
-    expect(input.value).toBe('');
+    expect(handleChange).not.toBeCalled();
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '할일이 없어' } });
+    expect(handleChange).toBeCalled();
   });
 
   it('input에 값 입력 후 추가 클릭 시 input에 값 제거', () => {
