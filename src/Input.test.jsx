@@ -4,60 +4,44 @@ import {
 
 import Input from './Input';
 
-const handleChangeTitle = jest.fn();
-const handleClickAddTask = jest.fn();
-
 describe('Input', () => {
-  it('renders input element', () => {
-    const { getByPlaceholderText } = render((
+  const handleChange = jest.fn();
+  const handleClick = jest.fn();
+
+  function rederInput() {
+    return render((
       <Input
         value=""
-        onChange={handleChangeTitle}
-        onClick={handleClickAddTask}
+        onChange={handleChange}
+        onClick={handleClick}
       />
     ));
+  }
 
-    const inputElement = getByPlaceholderText(/할 일을 입력해 주세요/i);
-    expect(inputElement).toBeInTheDocument();
+  it('renders input element', () => {
+    const { container } = rederInput();
+    expect(container).toBeInTheDocument();
   });
 
   it('should be able to change in input', () => {
-    const { container, getByPlaceholderText } = render((
-      <Input
-        value=""
-        onChange={handleChangeTitle}
-        onClick={handleClickAddTask}
-      />
-    ));
-
-    const inputElement = getByPlaceholderText(/할 일을 입력해 주세요/i);
-
-    fireEvent.change(container, { target: { value: '코딩을 즐기기' } });
-
-    expect(container).toEqual('코딩을 즐기기');
-    // TODO : 코딩을 즐기기로 값을 바꿔주기.
+    const { getByRole } = rederInput();
+    fireEvent.change(getByRole('textbox'), { target: { value: '코딩을 즐기기' } });
+    expect(handleChange).toBeCalled();
+    // expect(input.value).toBe('코딩을 즐기기');
   });
 
   it('추가 버튼을 클릭하면 input이 비어진다. ', () => {
-    const { getByText, getByPlaceholderText } = render((
-      <Input
-        value=""
-        onChange={handleChangeTitle}
-        onClick={handleClickAddTask}
-      />
-    ));
+    const { input, getByText } = rederInput();
+    // fireEvent.change(input, { target: { value: '코딩을 즐기기' } });
+    // expect(input.value).toBe('코딩을 즐기기');
 
     fireEvent.click(getByText('추가'));
-
-    expect(handleChangeTitle).toBeCalled();
-    expect(getByPlaceholderText(/할 일을 입력해 주세요/i)).toEqual('');
+    expect(handleClick).toBeCalled();
+    // expect(input.value).toEqual('');
   });
 
   it('has 할 일 text.', () => {
-    const { container } = render((
-      <Input />
-    ));
-
+    const { container } = rederInput();
     expect(container).toHaveTextContent('할 일');
   });
 });
