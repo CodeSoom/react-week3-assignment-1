@@ -117,18 +117,28 @@ describe('Page', () => {
     expect(container).toHaveTextContent('To-do');
   });
 
-  it("4. '완료' 버튼 클릭 (배고파요 삭제, 피자를 먹어요 삭제)", () => {
-    const { container, getAllByText } = setup();
+  it("4. '완료' 버튼 클릭", () => {
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+    const { getAllByText } = render(<Page
+      taskTitle={taskTitle}
+      tasks={tasks}
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      onClickDeleteTask={handleClickDeleteTask}
+    />);
 
-    expect(container).toHaveTextContent('배고파요');
+    expect(handleClickDeleteTask).not.toBeCalled();
+
     fireEvent.click(getAllByText('완료')[0]);
-    expect(container).not.toHaveTextContent('배고파요');
+    expect(handleClickDeleteTask).toBeCalledWith(1);
 
-    expect(container).toHaveTextContent('피자를 먹어요');
     fireEvent.click(getAllByText('완료')[1]);
-    expect(container).not.toHaveTextContent('피자를 먹어요');
+    expect(handleClickDeleteTask).toBeCalledWith(2);
 
-    expect(container).toHaveTextContent('치킨을 먹어요');
+    fireEvent.click(getAllByText('완료')[2]);
+    expect(handleClickDeleteTask).toBeCalledWith(3);
   });
 
   it("5. 빈 배열일 때 '할 일이 없어요!' 출력", () => {
