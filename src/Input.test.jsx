@@ -72,12 +72,22 @@ describe('Input', () => {
     />);
 
     expect(handleChange).not.toBeCalled();
-    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '할일이 없어' } });
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'),
+      { target: { value: '할일이 없어' } });
     expect(handleChange).toBeCalled();
   });
 
-  it('input에 placeholder 테스트', async () => {
-    const { input } = setup();
-    expect(input.getAttribute('placeholder')).toBe('할 일을 입력해 주세요');
+  it('4. input에 placeholder 테스트', async () => {
+    const value = '';
+    const handleChange = jest.fn();
+    const handleClick = jest.fn();
+    const { getByPlaceholderText } = render(<Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />);
+    expect(getByPlaceholderText('할 일을 입력해 주세요')
+      .getAttribute('placeholder'))
+      .toBe('할 일을 입력해 주세요');
   });
 });
