@@ -71,9 +71,9 @@ describe('Page', () => {
       title: '피자를 먹어요',
     },
   ];
+  const taskTitle = 'hello';
 
   it('1. 할일 리스트 출력', () => {
-    const taskTitle = 'hello';
     const handleChangeTitle = jest.fn();
     const handleClickAddTask = jest.fn();
     const handleClickDeleteTask = jest.fn();
@@ -90,7 +90,16 @@ describe('Page', () => {
   });
 
   it("2. '완료' 버튼 출력", () => {
-    const { container } = setup();
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
+    const { container } = render(<Page
+      taskTitle={taskTitle}
+      tasks={tasks}
+      onChangeTitle={handleChangeTitle}
+      onClickAddTask={handleClickAddTask}
+      onClickDeleteTask={handleClickDeleteTask}
+    />);
     expect(container).toHaveTextContent('완료');
   });
 
