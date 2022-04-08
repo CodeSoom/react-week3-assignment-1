@@ -1,38 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
-import { useState } from 'react';
 import Input from './Input';
-
-function TestInput({ onClick }) {
-  const [value, setValue] = useState('');
-
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
-
-  const handleClick = () => {
-    setValue('');
-    onClick();
-  };
-
-  return (
-    <Input
-      value={value}
-      onChange={(event) => handleChange(event.target.value)}
-      onClick={handleClick}
-    />
-  );
-}
-
-const setup = () => {
-  const handleClick = jest.fn();
-  const utils = render(<TestInput onClick={handleClick} />);
-  const input = utils.getByPlaceholderText('할 일을 입력해 주세요');
-  return {
-    input,
-    handleClick,
-    ...utils,
-  };
-};
 
 describe('Input', () => {
   it("1. '할 일' 텍스트 출력", () => {
