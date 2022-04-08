@@ -34,42 +34,44 @@ const setup = () => {
   };
 };
 
-test("'할 일' 텍스트 출력", () => {
-  const { container } = setup();
-  expect(container).toHaveTextContent('할 일');
-});
+describe('Input', () => {
+  it("'할 일' 텍스트 출력", () => {
+    const { container } = setup();
+    expect(container).toHaveTextContent('할 일');
+  });
 
-test("'추가' 버튼 클릭", () => {
-  const { handleClick, getByText } = setup();
-  expect(handleClick).not.toBeCalled();
-  fireEvent.click(getByText('추가'));
-  expect(handleClick).toBeCalled();
-});
+  it("'추가' 버튼 클릭", () => {
+    const { handleClick, getByText } = setup();
+    expect(handleClick).not.toBeCalled();
+    fireEvent.click(getByText('추가'));
+    expect(handleClick).toBeCalled();
+  });
 
-test('input에 텍스트 입력 테스트', async () => {
-  const { input } = setup();
+  it('input에 텍스트 입력 테스트', async () => {
+    const { input } = setup();
 
-  fireEvent.change(input, { target: { value: '할일이 없어' } });
-  expect(input.value).toBe('할일이 없어');
+    fireEvent.change(input, { target: { value: '할일이 없어' } });
+    expect(input.value).toBe('할일이 없어');
 
-  fireEvent.change(input, { target: { value: '' } });
-  expect(input.value).toBe('');
-});
+    fireEvent.change(input, { target: { value: '' } });
+    expect(input.value).toBe('');
+  });
 
-test('input에 값 입력 후 추가 클릭 시 input에 값 제거', () => {
-  const { input, handleClick, getByText } = setup();
-  expect(handleClick).not.toBeCalled();
+  it('input에 값 입력 후 추가 클릭 시 input에 값 제거', () => {
+    const { input, handleClick, getByText } = setup();
+    expect(handleClick).not.toBeCalled();
 
-  fireEvent.change(input, { target: { value: '할일이 없어' } });
-  expect(input.value).toBe('할일이 없어');
+    fireEvent.change(input, { target: { value: '할일이 없어' } });
+    expect(input.value).toBe('할일이 없어');
 
-  fireEvent.click(getByText('추가'));
-  expect(handleClick).toBeCalled();
+    fireEvent.click(getByText('추가'));
+    expect(handleClick).toBeCalled();
 
-  expect(input.value).toBe('');
-});
+    expect(input.value).toBe('');
+  });
 
-test('input에 placeholder 테스트', async () => {
-  const { input } = setup();
-  expect(input.getAttribute('placeholder')).toBe('할 일을 입력해 주세요');
+  it('input에 placeholder 테스트', async () => {
+    const { input } = setup();
+    expect(input.getAttribute('placeholder')).toBe('할 일을 입력해 주세요');
+  });
 });
