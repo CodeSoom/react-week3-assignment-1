@@ -1,43 +1,40 @@
 import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
-const getContainerAndElement = () => {
-  const onChange = jest.fn();
+describe('Input', () => {
+  function renderInput(onChange, onClick) {
+    return (
+      render(<Input onChange={onChange} onClick={onClick} />)
+    );
+  }
+
+  const onChangeValue = jest.fn();
   const onClickAddTask = jest.fn();
-  const container = render(<Input onChange={onChange} onClick={onClickAddTask} />);
-  const input = container.getByLabelText('할 일');
-  const button = container.getByText('추가');
 
-  return {
-    ...container, input, onChange, button, onClickAddTask,
-  };
-};
+  test('input에 값을 입력하면 값이 변경되어야 한다.', () => {
+    const { getByLabelText } = renderInput(onChangeValue, onClickAddTask);
+    const input = getByLabelText('할 일');
 
-test('input에 값을 입력하면 값이 변경되어야 한다.', () => {
-  const { input } = getContainerAndElement();
-  const inputValue = '첫번째 할일';
+    fireEvent.change(input, { target: { value: '첫번째 할일' } });
+    expect(input.value).toBe('첫번째 할일');
+  });
 
-  fireEvent.change(input, { target: { value: inputValue } });
-  expect(input.value).toBe(inputValue);
-});
+  test('input 의 값이 변경되면 onChange가 실행된다.', () => {
+    const { getByLabelText } = renderInput(onChangeValue, onClickAddTask);
+    const input = getByLabelText('할 일');
 
-test('input 의 값이 변경되면 onChange가 실행된다.', () => {
-  const { input, onChange } = getContainerAndElement();
-  const inputValue = '첫번째 할일';
+    // expect(onChangeValue).not.toBeCalled();
+    fireEvent.change(input, { target: { value: '다음 할 일' } });
+    expect(onChangeValue).toBeCalled();
+  });
 
-  expect(input.value).toBe('');
+  test('추가 버튼을 클릭하면 onClick 이 실행된다.', () => {
+    const { getByLabelText, getByText } = renderInput(onChangeValue, onClickAddTask);
+    const input = getByLabelText('할 일');
 
-  expect(onChange).not.toBeCalled();
-  fireEvent.change(input, { target: { value: inputValue } });
-  expect(onChange).toBeCalled();
-});
+    fireEvent.change(input, { target: { value: '다른 할 일' } });
+    fireEvent.click(getByText('추가'));
 
-test('추가 버튼을 클릭하면 onClick 이 실행된다.', () => {
-  const { input, button, onClickAddTask } = getContainerAndElement();
-  const inputValue = '첫번째 할일';
-
-  fireEvent.change(input, { target: { value: inputValue } });
-  fireEvent.click(button);
-
-  expect(onClickAddTask).toBeCalled();
+    expect(onClickAddTask).toBeCalled();
+  });
 });
