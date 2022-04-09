@@ -8,6 +8,12 @@ describe('App Test', () => {
     expect(getByText('할 일이 없어요!')).toBeVisible();
   });
 
+  test('추가 버튼을 있어야 한다.', () => {
+    const { getByText } = render((<App />));
+
+    expect(getByText(/추가/)).not.toBeNull();
+  });
+
   test('추가 버튼을 클릭할 수 있다.', () => {
     const { getByText } = render((<App />));
     fireEvent.click(getByText('추가'));
