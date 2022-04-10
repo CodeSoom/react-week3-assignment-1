@@ -6,32 +6,36 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
   const value = '테스트 입력';
-  const renderInput = render((
-    <Input
-      value={value}
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
 
   beforeEach(() => {
     handleChange.mockClear();
     handleClick.mockClear();
   });
 
+  function renderInput() {
+    return render((
+      <Input
+        value={value}
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+    ));
+  }
+
   it('Input Change', () => {
-    const { getByRole } = renderInput;
+    const { getByRole } = renderInput();
 
     fireEvent.change(getByRole('textbox'), { target: { value: '가나다' } });
     expect(handleChange).toBeCalledTimes(1);
   });
 
   it('Input Click', () => {
-    const { getByText } = renderInput;
+    const { getAllByText } = renderInput();
+    const buttons = getAllByText('추가');
 
     expect(handleClick).not.toBeCalled();
 
-    fireEvent.click(getByText('추가'));
+    fireEvent.click(buttons[0]);
 
     expect(handleClick).toBeCalledTimes(1);
   });
