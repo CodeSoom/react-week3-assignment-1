@@ -43,9 +43,9 @@ describe('Input', () => {
   });
 
   it('4. input에 placeholder 테스트', async () => {
-    const { getByPlaceholderText } = renderInput();
+    const { getByLabelText } = renderInput();
 
-    expect(getByPlaceholderText('할 일을 입력해 주세요')
+    expect(getByLabelText('할 일')
       .getAttribute('placeholder'))
       .toBe('할 일을 입력해 주세요');
   });
