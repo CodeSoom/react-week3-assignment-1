@@ -29,6 +29,7 @@ describe('Input', () => {
     const { getByText } = renderInput();
 
     expect(handleClick).not.toBeCalled();
+
     fireEvent.click(getByText('추가'));
     expect(handleClick).toBeCalled();
   });
@@ -37,6 +38,7 @@ describe('Input', () => {
     const { getByPlaceholderText } = renderInput();
 
     expect(handleChange).not.toBeCalled();
+
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'),
       { target: { value: '할일이 없어' } });
     expect(handleChange).toBeCalled();
