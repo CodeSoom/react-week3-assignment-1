@@ -17,32 +17,37 @@ describe('List', () => {
     },
   ];
 
+  const handleClickDelete = jest.fn();
+  function renderList() {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClickDelete}
+      />
+    ));
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('1. 할일 리스트 출력', () => {
-    const handleClickDelete = jest.fn();
-    const { container } = render(<List
-      tasks={tasks}
-      onClickDelete={handleClickDelete}
-    />);
+    const { container } = renderList();
+
     expect(container).toHaveTextContent('배고파요');
     expect(container).toHaveTextContent('치킨을 먹어요');
     expect(container).toHaveTextContent('피자를 먹어요');
   });
 
   test("2. '완료' 버튼 출력", () => {
-    const handleClickDelete = jest.fn();
-    const { container } = render(<List
-      tasks={tasks}
-      onClickDelete={handleClickDelete}
-    />);
+    const { container } = renderList();
+
     expect(container).toHaveTextContent('완료');
   });
 
   test("3. '완료' 버튼 클릭 (배고파요 삭제, 피자를 먹어요 삭제)", () => {
-    const handleClickDelete = jest.fn();
-    const { container, getAllByText } = render(<List
-      tasks={tasks}
-      onClickDelete={handleClickDelete}
-    />);
+    const { container, getAllByText } = renderList();
+
     expect(container).toHaveTextContent('완료');
 
     fireEvent.click(getAllByText('완료')[0]);
@@ -56,11 +61,7 @@ describe('List', () => {
   });
 
   test("4. 빈 배열일 때 '할 일이 없어요!' 출력", () => {
-    const handleClickDelete = jest.fn();
-    const { container } = render(<List
-      tasks={[]}
-      onClickDelete={handleClickDelete}
-    />);
+    const { container } = renderList();
 
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
