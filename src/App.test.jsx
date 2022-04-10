@@ -22,12 +22,6 @@ describe('App', () => {
     fireEvent.change(getByRole('textbox'), { target: { value: '가나다' } });
   });
 
-  it('change title', () => {
-    const { getByRole } = renderApp();
-
-    fireEvent.change(getByRole('textbox'), { target: { value: '가나다' } });
-  });
-
   it('add task', () => {
     const { getAllByText } = renderApp();
     const buttons = getAllByText('추가');
