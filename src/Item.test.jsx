@@ -1,28 +1,38 @@
-import { render, fireEvent } from '@testing-library/react';
-
+import { fireEvent, render } from '@testing-library/react';
 import Item from './Item';
 
-test('Item', () => {
+describe('Item', () => {
   const task = {
     id: 1,
-    title: '뭐라도 하기',
+    title: '포켓몬빵 사기',
   };
 
-  const handleClick = jest.fn();
+  const handleClickDelete = jest.fn();
+  function renderItem() {
+    return render((
+      <Item
+        task={task}
+        onClickDelete={handleClickDelete}
+      />
+    ));
+  }
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  it('1. 아이템에 task title, 완료버튼 출력', () => {
+    const { container } = renderItem();
 
-  expect(handleClick).not.toBeCalled();
+    expect(container).toHaveTextContent('포켓몬빵 사기');
+    expect(container).toHaveTextContent('완료');
+  });
 
-  fireEvent.click(getByText('완료'));
+  it('2. 완료 버튼 클릭', () => {
+    const { getByText } = renderItem();
 
-  expect(handleClick).toBeCalledWith(1);
+    expect(handleClickDelete).not.toBeCalled();
+    fireEvent.click(getByText('완료'));
+    expect(handleClickDelete).toBeCalledWith(1);
+  });
 });
