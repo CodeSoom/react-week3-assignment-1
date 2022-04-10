@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
+describe('Item', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
@@ -10,19 +10,31 @@ test('Item', () => {
 
   const handleClick = jest.fn();
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+  function renderItem() {
+    return render((
+      <Item
+        task={task}
+        onClickDelete={handleClick}
+      />
+    ));
+  }
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  expect(handleClick).not.toBeCalled();
+  it('renders tasks and done button', () => {
+    const { container } = renderItem();
 
-  fireEvent.click(getByText('완료'));
+    expect(container).toHaveTextContent('뭐라도 하기');
+    expect(container).toHaveTextContent('완료');
+  });
 
-  expect(handleClick).toBeCalledWith(1);
+  it('calls handleClick', () => {
+    const { getByText } = renderItem();
+
+    fireEvent.click(getByText('완료'));
+
+    expect(handleClick).toBeCalledWith(1);
+  });
 });
