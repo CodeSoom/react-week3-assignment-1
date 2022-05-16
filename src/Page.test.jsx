@@ -15,7 +15,6 @@ test('Page', () => {
   const onClickAddTask = jest.fn();
   const onClickDeleteTask = jest.fn();
 
-  // const handleClick = jest.fn();
   const { container } = render((
     <Page
       taskTitle={taskTitle}

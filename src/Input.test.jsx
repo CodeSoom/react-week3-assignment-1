@@ -8,7 +8,6 @@ test('Input', () => {
   const onChange = jest.fn();
   const onClick = jest.fn();
 
-  // const handleClick = jest.fn();
   const { container } = render((
     <Input value="" onChange={onChange} onClick={onClick} />
   ));

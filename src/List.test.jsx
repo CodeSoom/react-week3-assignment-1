@@ -12,7 +12,6 @@ test('List', () => {
 
   const onClickDelete = jest.fn();
 
-  // const handleClick = jest.fn();
   const { container } = render((
     <List tasks={tasks} onClickDelete={onClickDelete} />
   ));
