@@ -42,9 +42,17 @@ test('onclick function should be called when add button is clicked', () => {
 });
 
 test('todo input should be empty after clicking add button', () => {
+  const value = '뭐라도 하기';
+
   const handleClick = jest.fn();
 
-  const { getByText, getByPlaceholderText } = render((<Input onClick={handleClick} />));
+  const { getByText, getByPlaceholderText } = render((
+    <Input
+      value={value}
+      onClick={handleClick}
+    />));
+
+  const inputTodo = getByPlaceholderText('할 일을 입력해 주세요');
 
   expect(handleClick).not.toBeCalled();
 
@@ -52,6 +60,5 @@ test('todo input should be empty after clicking add button', () => {
 
   expect(handleClick).toBeCalled();
 
-  expect(getByPlaceholderText('할 일을 입력해 주세요').value).toBe('');
-
+  expect(inputTodo.value).toBe('');
 });
