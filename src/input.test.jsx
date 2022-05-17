@@ -29,7 +29,7 @@ test('todo input should be changed', () => {
   expect(inputTodo.value).toBe('뭐라도 하기');
 });
 
-test('add button should be clicked', () => {
+test('onclick function should be called when add button is clicked', () => {
   const handleClick = jest.fn();
 
   const { getByText } = render((<Input onClick={handleClick} />));
@@ -39,4 +39,19 @@ test('add button should be clicked', () => {
   fireEvent.click(getByText('추가'));
 
   expect(handleClick).toBeCalled();
+});
+
+test('todo input should be empty after clicking add button', () => {
+  const handleClick = jest.fn();
+
+  const { getByText, getByPlaceholderText } = render((<Input onClick={handleClick} />));
+
+  expect(handleClick).not.toBeCalled();
+
+  fireEvent.click(getByText('추가'));
+
+  expect(handleClick).toBeCalled();
+
+  expect(getByPlaceholderText('할 일을 입력해 주세요').value).toBe('');
+
 });
