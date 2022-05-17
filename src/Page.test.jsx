@@ -5,11 +5,9 @@ import Page from './Page';
 describe('Page', () => {
   const tasks = [{ id: 1, title: '1' }];
 
-  function renderPage() {
-    return render(<Page tasks={tasks} />);
-  }
+  const renderPage = () => render(<Page tasks={tasks} />);
 
-  it('1. Page가 정상적으로 렌더되어야 한다.', () => {
+  it('Page가 정상적으로 렌더되어야 한다.', () => {
     const { getByRole, getByText } = renderPage();
 
     expect(getByText('To-do')).toBeInTheDocument();

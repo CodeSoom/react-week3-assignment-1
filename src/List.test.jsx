@@ -18,18 +18,12 @@ describe('List', () => {
     },
   ];
 
-  const mockClick = jest.fn();
+  const handleClick = jest.fn();
 
-  function renderList({ tasks }) {
-    return render(<List tasks={tasks} onClickDelete={mockClick} />);
-  }
+  const renderList = ({ tasks }) => render(<List tasks={tasks} onClickDelete={handleClick} />);
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  context('1. 할 일이 있을 때', () => {
-    it('1.1. List에 taskTitle, 완료 버튼이 출력되어야 한다.', () => {
+  context('할 일이 있을 때', () => {
+    it('List에 taskTitle, 완료 버튼이 출력되어야 한다.', () => {
       const { container } = renderList({ tasks: existTasks });
 
       expect(container).toHaveTextContent('1');
@@ -42,26 +36,26 @@ describe('List', () => {
       expect(container).toHaveTextContent('완료');
     });
 
-    context('1.2. 완료 버튼을 클릭했을 때,', () => {
-      it('1.2.1. mockClick 함수가 호출한 taskTitle에 알맞게 호출되어야 한다.', () => {
+    context('완료 버튼을 클릭했을 때,', () => {
+      it('mockClick 함수가 호출한 taskTitle에 알맞게 호출되어야 한다.', () => {
         const { getAllByText } = renderList({ tasks: existTasks });
 
-        expect(mockClick).not.toBeCalled();
+        expect(handleClick).not.toBeCalled();
 
         fireEvent.click(getAllByText('완료')[0]);
-        expect(mockClick).toBeCalledWith(1);
+        expect(handleClick).toBeCalledWith(1);
 
         fireEvent.click(getAllByText('완료')[1]);
-        expect(mockClick).toBeCalledWith(2);
+        expect(handleClick).toBeCalledWith(2);
 
         fireEvent.click(getAllByText('완료')[2]);
-        expect(mockClick).toBeCalledWith(3);
+        expect(handleClick).toBeCalledWith(3);
       });
     });
   });
 
-  context('2. 할 일이 없을 때,', () => {
-    it("2.1. '할 일이 없어요!'가 출력되어야 한다", () => {
+  context('할 일이 없을 때,', () => {
+    it("'할 일이 없어요!'가 출력되어야 한다", () => {
       const { container } = renderList({ tasks: [] });
 
       expect(container).toHaveTextContent('할 일이 없어요!');
