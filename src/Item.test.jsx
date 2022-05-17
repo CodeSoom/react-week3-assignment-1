@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-describe('Item', () => {
+describe('Item 컴포넌트', () => {
   describe('Given : task가 주어지면', () => {
     const task = {
       id: 1,

@@ -4,7 +4,7 @@ import {
 
 import Input from './Input';
 
-describe('Input', () => {
+describe('Input 컴포넌트', () => {
   describe('Given : 입력값이 주어지지 않고', () => {
     test('When : 이벤트가 발생하지 않았을 때', () => {
       const { getByPlaceholderText, container } = render(<Input />);

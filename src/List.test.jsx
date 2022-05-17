@@ -4,27 +4,46 @@ import {
 
 import List from './List';
 
-test('List', () => {
-  const tasks = [
-    { id: 1, title: '아리 산책가기' },
-    { id: 2, title: '공부하기' },
-  ];
+describe('List 컴포넌트', () => {
+  describe('Given : tasks가 빈 배열이고', () => {
+    const tasks = [];
 
-  const onClickDelete = jest.fn();
+    const onClickDelete = jest.fn();
 
-  const { container } = render((
-    <List tasks={tasks} onClickDelete={onClickDelete} />
-  ));
+    test('When : 마운트 됐을 때', () => {
+      const { container } = render((
+        <List tasks={tasks} onClickDelete={onClickDelete} />
+      ));
 
-  tasks.forEach((task) => {
-    expect(container).toHaveTextContent(task.title);
+      expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(onClickDelete).not.toBeCalled();
+    });
   });
 
-  expect(onClickDelete).not.toBeCalled();
+  describe('Given : tasks가 주어지고', () => {
+    const tasks = [
+      { id: 1, title: '아리 산책가기' },
+      { id: 2, title: '공부하기' },
+    ];
 
-  tasks.forEach((task, index) => {
-    const button = getAllByText(container, '완료')[index];
-    fireEvent.click(button);
-    expect(onClickDelete).toBeCalledWith(task.id);
+    const onClickDelete = jest.fn();
+
+    test('When : 마운트 됐을 때', () => {
+      const { container } = render((
+        <List tasks={tasks} onClickDelete={onClickDelete} />
+      ));
+
+      tasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+      });
+
+      expect(onClickDelete).not.toBeCalled();
+
+      tasks.forEach((task, index) => {
+        const button = getAllByText(container, '완료')[index];
+        fireEvent.click(button);
+        expect(onClickDelete).toBeCalledWith(1);
+      });
+    });
   });
 });
