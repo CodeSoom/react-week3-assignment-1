@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import List from './List';
 
 test('항목이 없을 때 할 일이 없어요! 문구가 보인다.', () => {
@@ -9,11 +9,11 @@ test('항목이 없을 때 할 일이 없어요! 문구가 보인다.', () => {
 });
 
 test('task가 있을 때 목록이 표시된다.', () => {
-  const tasks = [
-    { id: 1, title: '헬스장 가기' },
-    { id: 2, title: '과제 하기' },
-  ];
-  const { container } = render(
-    <List tasks={tasks} />,
-  );
+  // const tasks = [
+  //   { id: 1, title: '헬스장 가기' },
+  //   { id: 2, title: '과제 하기' },
+  // ];
+  // const { container } = render(
+  //   <List tasks={tasks} />,
+  // );
 });
