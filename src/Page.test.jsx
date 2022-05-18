@@ -7,10 +7,11 @@ describe('Page', () => {
 
   const renderPage = () => render(<Page tasks={tasks} />);
 
-  it('Page가 정상적으로 렌더되어야 한다.', () => {
-    const { getByRole, getByText } = renderPage();
+  it('Page 컴포넌트를 렌더한다.', () => {
+    const { getByRole, getByLabelText, getByText } = renderPage();
 
     expect(getByText('To-do')).toBeInTheDocument();
+    expect(getByLabelText('할 일')).toBeInTheDocument();
     expect(getByRole('textbox')).toBeInTheDocument();
     expect(getByText('추가')).toBeInTheDocument();
     expect(getByText('1')).toBeInTheDocument();

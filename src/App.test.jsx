@@ -5,13 +5,13 @@ import App from './App';
 describe('App', () => {
   const renderApp = () => render(<App />);
 
-  it("'할 일이 없어요!'가 출력되어야 한다.", () => {
+  it('App 컴포넌트를 렌더한다.', () => {
     const { container } = renderApp();
 
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  it('task가 정상적으로 추가되어야 한다.', () => {
+  it('task를 추가한다.', () => {
     const { container, getByRole, getByText } = renderApp();
 
     const input = getByRole('textbox');
@@ -24,7 +24,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('완료');
   });
 
-  it("추가된 task를 완료 버튼 눌렀을 때, '할 일이 없어요'가 출력되어야 한다", () => {
+  it("task를 추가하고 제거하면 '할 일이 없어요'를 출력한다.", () => {
     const { container, getByRole, getByText } = renderApp();
 
     const input = getByRole('textbox');

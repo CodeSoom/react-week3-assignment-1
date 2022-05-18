@@ -10,59 +10,50 @@ describe('Input', () => {
     <Input value={value} onChange={handleChange} onClick={handleClick} />,
   );
 
-  it("'할 일'이 출력되어야 한다", () => {
-    const { container } = renderInput();
+  it('Input 컴포넌트를 렌더한다', () => {
+    const { container, getByLabelText } = renderInput();
 
     expect(container).toHaveTextContent('할 일');
-  });
-
-  it("input 태그 placeholder에 '할 일을 입력해 주세요'가 출력되어야 한다.", () => {
-    const { getByLabelText } = renderInput();
-
     expect(getByLabelText('할 일').getAttribute('placeholder')).toBe(
       '할 일을 입력해 주세요',
     );
   });
 
-  context('입력창에 입력할 때', () => {
-    it('mockChange 함수가 실행되어야 한다.', () => {
-      const { getByPlaceholderText } = renderInput();
+  it('Input창에 입력하면 mockChange 함수를 호출한다.', () => {
+    const { getByPlaceholderText } = renderInput();
 
-      expect(handleChange).not.toBeCalled();
+    expect(handleChange).not.toBeCalled();
 
-      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
-        target: { value: '테스트' },
-      });
-      expect(handleChange).toBeCalled();
+    fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
+      target: { value: '테스트' },
     });
-
-    it('원하는 값이 입력되어야 한다', () => {
-      const expectValue = '테스트';
-      const { getByRole } = renderInput(expectValue);
-
-      const result = getByRole('textbox');
-
-      expect(result).toHaveValue(expectValue);
-    });
+    expect(handleChange).toBeCalled();
   });
 
-  context('추가 버튼을 눌렀을 때', () => {
-    it('mockClick 함수가 실행되어야 한다.', () => {
-      const { getByText } = renderInput();
+  it('Input창에 원하는 값을 입력하고 렌더한다', () => {
+    const expectValue = '테스트';
+    const { getByRole } = renderInput(expectValue);
 
-      expect(handleClick).not.toBeCalled();
-      fireEvent.click(getByText('추가'));
-      expect(handleClick).toBeCalled();
-    });
+    const result = getByRole('textbox');
 
-    it('input창이 초기화 되어야 한다.', () => {
-      const { getByRole, getByText } = renderInput();
+    expect(result).toHaveValue(expectValue);
+  });
 
-      const input = getByRole('textbox');
+  it("'추가 버튼'을 누르면 handleClick 함수를 호출한다.", () => {
+    const { getByText } = renderInput();
 
-      fireEvent.change(input, { target: { value: '테스트' } });
-      fireEvent.click(getByText('추가'));
-      expect(input.value).toBe('');
-    });
+    expect(handleClick).not.toBeCalled();
+    fireEvent.click(getByText('추가'));
+    expect(handleClick).toBeCalled();
+  });
+
+  it("input창에 원하는 값을 입력하고 '추가' 버튼을 누르면 input창을 초기화한다.", () => {
+    const { getByRole, getByText } = renderInput();
+
+    const input = getByRole('textbox');
+
+    fireEvent.change(input, { target: { value: '테스트' } });
+    fireEvent.click(getByText('추가'));
+    expect(input.value).toBe('');
   });
 });
