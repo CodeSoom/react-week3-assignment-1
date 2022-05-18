@@ -2,7 +2,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Input from './Input';
 
-test('todo input should be empty', () => {
+test('todo input is empty', () => {
   render(<Input />);
 
   const inputTodo = screen.getByPlaceholderText('할 일을 입력해 주세요');
@@ -10,7 +10,7 @@ test('todo input should be empty', () => {
   expect(inputTodo.value).toBe('');
 });
 
-test('추가 button should be displayed', () => {
+test('추가 button is displayed', () => {
   render(<Input />);
 
   const addButton = screen.getByText('추가');
@@ -18,7 +18,7 @@ test('추가 button should be displayed', () => {
   expect(addButton).toBeInTheDocument();
 });
 
-test('todo input should be changed', () => {
+test('todo input is changed', () => {
   render(<Input />);
 
   const todo = '뭐라도 하기';
@@ -29,36 +29,14 @@ test('todo input should be changed', () => {
   expect(inputTodo.value).toBe('뭐라도 하기');
 });
 
-test('onclick function should be called when add button is clicked', () => {
+test('onclick function is called when add button is clicked', () => {
   const handleClick = jest.fn();
 
-  const { getByText } = render((<Input onClick={handleClick} />));
+  const { getByText } = render(<Input onClick={handleClick} />);
 
   expect(handleClick).not.toBeCalled();
 
   fireEvent.click(getByText('추가'));
 
   expect(handleClick).toBeCalled();
-});
-
-test('todo input should be empty after clicking add button', () => {
-  const value = '뭐라도 하기';
-
-  const handleClick = jest.fn();
-
-  const { getByText, getByPlaceholderText } = render((
-    <Input
-      value={value}
-      onClick={handleClick}
-    />));
-
-  const inputTodo = getByPlaceholderText('할 일을 입력해 주세요');
-
-  expect(handleClick).not.toBeCalled();
-
-  fireEvent.click(getByText('추가'));
-
-  expect(handleClick).toBeCalled();
-
-  expect(inputTodo.value).toBe('');
 });
