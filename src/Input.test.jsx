@@ -32,17 +32,16 @@ describe('Input', () => {
 
   it('Input창에 원하는 값을 입력하고 렌더한다', () => {
     const expectValue = '테스트';
-    const { getByRole } = renderInput(expectValue);
+    const { getByLabelText } = renderInput(expectValue);
 
-    const result = getByRole('textbox');
+    const result = getByLabelText('할 일').getAttribute('value');
 
-    expect(result).toHaveValue(expectValue);
+    expect(result).toBe(expectValue);
   });
 
   it("'추가 버튼'을 누르면 handleClick 함수를 호출한다.", () => {
     const { getByText } = renderInput();
 
-    expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('추가'));
     expect(handleClick).toBeCalled();
   });

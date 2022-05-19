@@ -26,29 +26,19 @@ describe('List', () => {
     it('List에 taskTitle, 완료 버튼을 출력한다.', () => {
       const { container } = renderList({ tasks: existTasks });
 
-      expect(container).toHaveTextContent('1');
-      expect(container).toHaveTextContent('완료');
-
-      expect(container).toHaveTextContent('2');
-      expect(container).toHaveTextContent('완료');
-
-      expect(container).toHaveTextContent('3');
-      expect(container).toHaveTextContent('완료');
+      existTasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+        expect(container).toHaveTextContent('완료');
+      });
     });
 
     it('mockClick 함수를 호출한 taskTitle에 알맞게 호출한다.', () => {
       const { getAllByText } = renderList({ tasks: existTasks });
 
-      expect(handleClick).not.toBeCalled();
-
-      fireEvent.click(getAllByText('완료')[0]);
-      expect(handleClick).toBeCalledWith(1);
-
-      fireEvent.click(getAllByText('완료')[1]);
-      expect(handleClick).toBeCalledWith(2);
-
-      fireEvent.click(getAllByText('완료')[2]);
-      expect(handleClick).toBeCalledWith(3);
+      existTasks.forEach((task) => {
+        fireEvent.click(getAllByText('완료')[task.id - 1]);
+        expect(handleClick).toBeCalledWith(task.id);
+      });
     });
   });
 

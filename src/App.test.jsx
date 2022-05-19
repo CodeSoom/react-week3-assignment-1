@@ -11,7 +11,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
 
-  it('task를 추가한다.', () => {
+  it('task를 추가하면 input창은 초기화하고 추가한 할 일을 렌더한다.', () => {
     const { container, getByRole, getByText } = renderApp();
 
     const input = getByRole('textbox');
