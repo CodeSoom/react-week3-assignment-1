@@ -3,26 +3,23 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  it('subject is displayed', () => {
-    render(<App />);
+  it('shows subject To-do', () => {
+    const { container } = render(<App />);
 
-    const subject = screen.getByText('To-do');
-
-    expect(subject).toBeInTheDocument();
+    expect(container).toHaveTextContent('To-do');
   });
 
-  it('todo input is empty and 추가 button is displayed', () => {
-    render(<App />);
+  it('shows empty todo input and 추가 button', () => {
+    const { container } = render(<App />);
 
     const inputTodo = screen.getByPlaceholderText('할 일을 입력해 주세요');
-    const addButton = screen.getByText('추가');
 
     expect(inputTodo.value).toBe('');
-    expect(addButton).toBeInTheDocument();
+    expect(container).toHaveTextContent('추가');
   });
 
-  context('The task is empty', () => {
-    it('할 일이 없어요! is displayed', () => {
+  context('When the task is empty', () => {
+    it('shows 할 일이 없어요!', () => {
       const tasks = [];
 
       const { container } = render(<App tasks={tasks} />);
@@ -31,7 +28,7 @@ describe('App', () => {
     });
   });
 
-  it('todo input is changed', () => {
+  it('changes todo input', () => {
     render(<App />);
 
     const todo = '뭐라도 하기';
@@ -42,7 +39,7 @@ describe('App', () => {
     expect(inputTodo.value).toBe('뭐라도 하기');
   });
 
-  it('Add button is working', () => {
+  it('adds the task', () => {
     const todo = '뭐라도 하기';
 
     const { container, getByText, getByPlaceholderText } = render(<App />);
@@ -59,7 +56,7 @@ describe('App', () => {
     expect(inputTodo.value).toBe('');
   });
 
-  it('Delete button is working', () => {
+  it('deletes the task', () => {
     const todo = '뭐라도 하기';
 
     const { container, getByText, getByPlaceholderText } = render(<App />);

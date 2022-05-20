@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Item from './Item';
 
 describe('Item', () => {
-  it('Item', () => {
+  it('shows the task', () => {
     const task = {
       id: 1,
       title: '뭐라도 하기',
@@ -19,7 +19,7 @@ describe('Item', () => {
     expect(container).toHaveTextContent('완료');
   });
 
-  it('완료 button is working', () => {
+  it('deletes the task', () => {
     const task = {
       id: 1,
       title: '뭐라도 하기',

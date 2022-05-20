@@ -3,7 +3,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  it('todo input is empty', () => {
+  it('shows empty todo input', () => {
     render(<Input />);
 
     const inputTodo = screen.getByPlaceholderText('할 일을 입력해 주세요');
@@ -11,15 +11,13 @@ describe('Input', () => {
     expect(inputTodo.value).toBe('');
   });
 
-  it('추가 button is displayed', () => {
-    render(<Input />);
+  it('shows 추가 button', () => {
+    const { container } = render(<Input />);
 
-    const addButton = screen.getByText('추가');
-
-    expect(addButton).toBeInTheDocument();
+    expect(container).toHaveTextContent('추가');
   });
 
-  it('todo input is changed', () => {
+  it('changes todo input', () => {
     render(<Input />);
 
     const todo = '뭐라도 하기';
@@ -30,7 +28,7 @@ describe('Input', () => {
     expect(inputTodo.value).toBe('뭐라도 하기');
   });
 
-  it('Add button is working', () => {
+  it('adds the task', () => {
     const handleClick = jest.fn();
 
     const { getByText } = render(<Input onClick={handleClick} />);

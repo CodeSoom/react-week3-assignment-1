@@ -3,8 +3,8 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  context('The task is empty', () => {
-    it('할 일이 없어요! is displayed', () => {
+  context('When the task is empty', () => {
+    it('shows 할 일이 없어요!', () => {
       const tasks = [];
 
       const { container } = render(<List tasks={tasks} />);
@@ -13,18 +13,19 @@ describe('List', () => {
     });
   });
 
-  context('The task is not empty', () => {
-    it('Item is displayed when the task is not empty', () => {
-      const tasks = [{ id: 1, title: '뭐라도 하기' }];
+  context('When the task is not empty', () => {
+    it('shows items', () => {
+      const tasks = [{ id: 1, title: '뭐라도 하기' }, { id: 2, title: '청소' }];
 
       const { container } = render(<List tasks={tasks} />);
 
       expect(container).toHaveTextContent('뭐라도 하기');
+      expect(container).toHaveTextContent('청소');
       expect(container).toHaveTextContent('완료');
     });
   });
 
-  it('완료 button is working', () => {
+  it('deletes the taks', () => {
     const tasks = [{ id: 1, title: '뭐라도 하기' }];
 
     const handleClick = jest.fn();

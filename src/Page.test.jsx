@@ -3,29 +3,26 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
-  it('subject is displayed', () => {
+  it('shows subject To-do', () => {
     const tasks = [];
 
-    const { getByText } = render(<Page tasks={tasks} />);
+    const { container } = render(<Page tasks={tasks} />);
 
-    const subject = getByText('To-do');
-
-    expect(subject).toBeInTheDocument();
+    expect(container).toHaveTextContent('To-do');
   });
 
-  it('todo input is empty and 추가 button is displayed', () => {
+  it('shows empty todo input and 추가 button', () => {
     const tasks = [];
 
-    render(<Page tasks={tasks} />);
+    const { container } = render(<Page tasks={tasks} />);
 
     const inputTodo = screen.getByPlaceholderText('할 일을 입력해 주세요');
-    const addButton = screen.getByText('추가');
 
     expect(inputTodo.value).toBe('');
-    expect(addButton).toBeInTheDocument();
+    expect(container).toHaveTextContent('추가');
   });
 
-  it('todo input is changed', () => {
+  it('changes todo input', () => {
     const tasks = [];
 
     render(<Page tasks={tasks} />);
@@ -38,7 +35,7 @@ describe('Page', () => {
     expect(inputTodo.value).toBe('뭐라도 하기');
   });
 
-  it('Add button is working', () => {
+  it('adds the task', () => {
     const tasks = [];
 
     const handleClick = jest.fn();
@@ -52,8 +49,8 @@ describe('Page', () => {
     expect(handleClick).toBeCalled();
   });
 
-  context('The task is empty', () => {
-    it('할 일이 없어요! is displayed', () => {
+  context('When the task is empty', () => {
+    it('shows 할 일이 없어요!', () => {
       const tasks = [];
 
       const { container } = render(<Page tasks={tasks} />);
@@ -62,8 +59,8 @@ describe('Page', () => {
     });
   });
 
-  context('The task is not empty', () => {
-    it('Item is displayed when the task is not empty', () => {
+  context('When task is not empty', () => {
+    it('shows items', () => {
       const tasks = [{ id: 1, title: '뭐라도 하기' }];
 
       const { container } = render(<Page tasks={tasks} />);
@@ -73,7 +70,7 @@ describe('Page', () => {
     });
   });
 
-  it('완료 button is working', () => {
+  it('deletes the task with ID', () => {
     const tasks = [{ id: 1, title: '뭐라도 하기' }];
 
     const handleClick = jest.fn();
