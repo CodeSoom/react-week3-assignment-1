@@ -4,26 +4,26 @@ import {
 
 import Page from './Page';
 
-describe('Page 컴포넌트', () => {
-  describe('Given : 값들이 주어지고', () => {
+describe('Page', () => {
+  context('값들이 주어지면', () => {
     const taskTitle = '뭐라도 하기';
     const tasks = [
       { id: 1, title: '아리 산책가기' },
       { id: 2, title: '공부하기' },
     ];
 
-    const onChangeTitle = jest.fn();
-    const onClickAddTask = jest.fn();
-    const onClickDeleteTask = jest.fn();
+    const handleChangeTitle = jest.fn();
+    const handleClickAddTask = jest.fn();
+    const handleClickDeleteTask = jest.fn();
 
-    test('When : 마운트 됐을 때', () => {
+    it('리스트와 인풋 value가 있어야한다.', () => {
       const { container } = render((
         <Page
           taskTitle={taskTitle}
           tasks={tasks}
-          onClickAddTask={onClickAddTask}
-          onClickDeleteTask={onClickDeleteTask}
-          onChangeTitle={onChangeTitle}
+          onClickAddTask={handleClickAddTask}
+          onClickDeleteTask={handleClickDeleteTask}
+          onChangeTitle={handleChangeTitle}
         />
       ));
 
@@ -33,12 +33,12 @@ describe('Page 컴포넌트', () => {
         expect(container).toHaveTextContent(task.title);
       });
 
-      expect(onClickDeleteTask).not.toBeCalled();
+      expect(handleClickDeleteTask).not.toBeCalled();
 
       tasks.forEach((task, index) => {
         const button = getAllByText(container, '완료')[index];
         fireEvent.click(button);
-        expect(onClickDeleteTask).toBeCalledWith(index + 1);
+        expect(handleClickDeleteTask).toBeCalledWith(index + 1);
       });
     });
   });

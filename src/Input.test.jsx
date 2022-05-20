@@ -6,7 +6,7 @@ import Input from './Input';
 
 describe('Input', () => {
   context('입력값이 주어지지 않으면', () => {
-    test('value가 공백이어야 한다.', () => {
+    it('value가 공백이어야 한다.', () => {
       const { getByPlaceholderText, container } = render(<Input />);
 
       expect(container).toHaveTextContent('할 일');
@@ -16,9 +16,9 @@ describe('Input', () => {
       expect(input).toHaveValue('');
     });
   });
-  describe('Given : 입력값이 주어지면', () => {
+  context('입력값이 주어지면', () => {
     const textContent = '아리 산책가기';
-    test('When : 값을 입력했을 때', () => {
+    it('value가 입력값이어야 한다.', () => {
       const { getByPlaceholderText, container } = render(<Input />);
 
       expect(container).toHaveTextContent('할 일');
