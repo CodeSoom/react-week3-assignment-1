@@ -4,16 +4,16 @@ import {
 
 import Input from './Input';
 
-describe('Input 컴포넌트', () => {
-  describe('Given : 입력값이 주어지지 않고', () => {
-    test('When : 이벤트가 발생하지 않았을 때', () => {
+describe('Input', () => {
+  context('입력값이 주어지지 않으면', () => {
+    test('value가 공백이어야 한다.', () => {
       const { getByPlaceholderText, container } = render(<Input />);
 
       expect(container).toHaveTextContent('할 일');
       expect(container).toHaveTextContent('추가');
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
-      expect(input.value).toBe('');
+      expect(input).toHaveValue('');
     });
   });
   describe('Given : 입력값이 주어지면', () => {
@@ -26,7 +26,7 @@ describe('Input 컴포넌트', () => {
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
       fireEvent.change(input, { target: { value: textContent } });
-      expect(input.value).toBe(textContent);
+      expect(input).toHaveValue(textContent);
     });
   });
 });

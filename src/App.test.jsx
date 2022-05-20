@@ -23,7 +23,7 @@ describe('App', () => {
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
       fireEvent.change(input, { target: { value: taskTitle } });
-      expect(input.value).toBe(taskTitle);
+      expect(input).toHaveValue(taskTitle);
 
       fireEvent.click(getByText('추가'));
       expect(container).toHaveTextContent(taskTitle);
@@ -39,11 +39,11 @@ describe('App', () => {
 
       const input = getByPlaceholderText('할 일을 입력해 주세요');
       fireEvent.change(input, { target: { value: '아리 산책가기' } });
-      expect(input.value).toBe(taskTitle);
+      expect(input).toHaveValue(taskTitle);
 
       fireEvent.click(getByText('추가'));
 
-      expect(input.value).toBe('');
+      expect(input).toHaveValue('');
     });
   });
 
@@ -57,7 +57,7 @@ describe('App', () => {
       const input = getByPlaceholderText('할 일을 입력해 주세요');
       fireEvent.change(input, { target: { value: taskTitle } });
 
-      expect(input.value).toBe(taskTitle);
+      expect(input).toHaveValue(taskTitle);
 
       fireEvent.click(getByText('추가'));
 
