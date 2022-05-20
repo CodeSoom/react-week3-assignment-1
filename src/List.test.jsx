@@ -1,19 +1,22 @@
 import { render } from '@testing-library/react';
+import { exampleTasks } from './example';
 import List from './List';
 
-test('항목이 없을 때 할 일이 없어요! 문구가 보인다.', () => {
-  const { container } = render(
-    <List tasks={[]} />,
-  );
-  expect(container).toHaveTextContent('할 일이 없어요!');
-});
+describe('List', () => {
+  const handleClickDelete = jest.fn();
+  const renderList = (tasks) => render(<List tasks={tasks} onClickDelete={handleClickDelete} />);
 
-test('task가 있을 때 목록이 표시된다.', () => {
-  // const tasks = [
-  //   { id: 1, title: '헬스장 가기' },
-  //   { id: 2, title: '과제 하기' },
-  // ];
-  // const { container } = render(
-  //   <List tasks={tasks} />,
-  // );
+  context('리스트 길이가 0이면', () => {
+    it('할 일이 없어요! 가 출력된다.', () => {
+      const { container } = renderList([]);
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
+  });
+
+  context('tasks의 길이만큼', () => {
+    it('Item 항목이 출력된다', () => {
+      const { getAllByText } = renderList(exampleTasks);
+      expect(getAllByText('완료')).toHaveLength(2);
+    });
+  });
 });
