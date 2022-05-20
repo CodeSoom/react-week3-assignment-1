@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import Item from './Item';
 
@@ -11,15 +12,17 @@ describe('Item', () => {
     const handleClick = jest.fn();
 
     it('title이 나오고 완료버튼이 있어야한다.', () => {
-      const { container } = render((
+      const { container, getByRole } = render((
         <Item
           task={task}
           onClickDelete={handleClick}
         />
       ));
+      const completeButton = getByRole('button');
+      expect(completeButton).toBeEnabled();
+      expect(completeButton).toHaveTextContent('완료');
 
       expect(container).toHaveTextContent('뭐라도 하기');
-      expect(container).toHaveTextContent('완료');
     });
   });
   describe('완료버튼을 클릭했을 때', () => {
@@ -29,15 +32,19 @@ describe('Item', () => {
     };
     const handleClick = jest.fn();
 
-    it('handleClick가 호출되어야한다.', () => {
-      const { getByText } = render((
+    it('handleClick가 호출되어야한다.', async () => {
+      const user = userEvent.setup();
+
+      const { getByRole } = render((
         <Item
           task={task}
           onClickDelete={handleClick}
         />
       ));
 
-      fireEvent.click(getByText('완료'));
+      const completeButton = getByRole('button');
+      await user.click(completeButton);
+
       expect(handleClick).toBeCalledWith(1);
     });
   });
