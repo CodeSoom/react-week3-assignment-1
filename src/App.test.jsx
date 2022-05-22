@@ -1,8 +1,9 @@
 import { fireEvent, render } from '@testing-library/react';
+
 import App from './App';
 
-describe('App', () => {
-  test('할 일을 입력하고 추가 버튼을 누르면 리스트가 추가된다.', async () => {
+describe('할 일을 입력하고 추가 버튼을 누르면', () => {
+  test('리스트가 추가된다.', () => {
     const { container, getByRole } = render(
       <App />,
     );
@@ -19,8 +20,10 @@ describe('App', () => {
     expect(container).toHaveTextContent('코드숨 과제하기');
     expect(input.value).toBe('');
   });
+});
 
-  test('완료 버튼을 누르면 해당 항목이 리스트에서 사라진다.', async () => {
+describe('완료 버튼을 누르면', () => {
+  test('해당 항목이 리스트에서 사라진다.', () => {
     const { container, getByRole, getByText } = render(
       <App />,
     );

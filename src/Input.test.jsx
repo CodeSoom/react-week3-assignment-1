@@ -5,14 +5,16 @@ test('Input', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  const { container, getByText, getByRole } = render(
+  const {
+    container, getByText, getByRole, getByLabelText,
+  } = render(
     <Input
       onClick={handleClick}
       onChange={handleChange}
     />,
   );
 
-  expect(container).toHaveTextContent('할 일');
+  expect(getByLabelText('할 일')).toBeInTheDocument();
   expect(container).toHaveTextContent('추가');
 
   const input = getByRole('textbox');

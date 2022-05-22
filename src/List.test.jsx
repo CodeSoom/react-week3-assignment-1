@@ -5,41 +5,41 @@ import {
 import List from './List';
 
 describe('List', () => {
-  test('리스트가 하나 이상 있다.', () => {
-    const tasks = [{ id: 0, title: '코드숨 과제하기' }, { id: 1, title: '잠자기' }];
+  const handleClickDelete = jest.fn();
 
-    const handleClickDelete = jest.fn();
-
-    const { container, getAllByText } = render(
+  function listRender(tasks) {
+    return render(
       <List
         tasks={tasks}
         onClickDelete={handleClickDelete}
       />,
     );
+  }
+  context('할 일이 하나라도 있을 때', () => {
+    test('할 일 목록을 보여준다.', () => {
+      const tasks = [{ id: 0, title: '코드숨 과제하기' }, { id: 1, title: '잠자기' }];
 
-    const completeButtons = getAllByText('완료');
+      const { container, getAllByText } = listRender(tasks);
 
-    expect(completeButtons).toHaveLength(2);
-    expect(container).toHaveTextContent('코드숨 과제하기');
+      const completeButtons = getAllByText('완료');
 
-    fireEvent.click(completeButtons[0]);
+      expect(completeButtons).toHaveLength(2);
+      expect(container).toHaveTextContent('코드숨 과제하기');
 
-    expect(handleClickDelete).toBeCalledWith(0);
+      fireEvent.click(completeButtons[0]);
+
+      expect(handleClickDelete).toBeCalledWith(0);
+    });
   });
 
-  test('리스트가 없다.', async () => {
-    const tasks = [];
+  context('할 일이 비어있을 때', () => {
+    test('할 일이 없어요! 메세지를 보여준다.', () => {
+      const tasks = [];
 
-    const handleClickDelete = jest.fn();
+      const { container, queryByText } = listRender(tasks);
 
-    const { container, queryByText } = render(
-      <List
-        tasks={tasks}
-        onClickDelete={handleClickDelete}
-      />,
-    );
-
-    expect(container).toHaveTextContent('할 일이 없어요!');
-    expect(queryByText('완료')).not.toBeInTheDocument();
+      expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(queryByText('완료')).not.toBeInTheDocument();
+    });
   });
 });

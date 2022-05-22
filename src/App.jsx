@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+// /* eslint-disable react/jsx-no-bind */
 import { useState } from 'react';
 
 import Page from './Page';
