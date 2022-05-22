@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const existTasks = [
+  const tasks = [
     {
       id: 1,
       title: '1',
@@ -23,21 +23,21 @@ describe('List', () => {
   const renderList = ({ tasks }) => render(<List tasks={tasks} onClickDelete={handleClick} />);
 
   context('할 일이 있을 때', () => {
-    it('List에 taskTitle, 완료 버튼을 출력한다.', () => {
-      const { container } = renderList({ tasks: existTasks });
+    it('List에 할 일, 완료 버튼을 출력한다.', () => {
+      const { container } = renderList({ tasks });
 
-      existTasks.forEach((task) => {
-        expect(container).toHaveTextContent(task.title);
+      tasks.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
         expect(container).toHaveTextContent('완료');
       });
     });
 
     it('mockClick 함수를 호출한 taskTitle에 알맞게 호출한다.', () => {
-      const { getAllByText } = renderList({ tasks: existTasks });
+      const { getAllByText } = renderList({ tasks });
 
-      existTasks.forEach((task) => {
-        fireEvent.click(getAllByText('완료')[task.id - 1]);
-        expect(handleClick).toBeCalledWith(task.id);
+      tasks.forEach(({ id }, index) => {
+        fireEvent.click(getAllByText('완료')[index]);
+        expect(handleClick).toBeCalledWith(id);
       });
     });
   });

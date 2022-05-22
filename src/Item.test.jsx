@@ -24,6 +24,6 @@ describe('Item', () => {
 
     expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('완료'));
-    expect(handleClick).toBeCalledWith(1);
+    expect(handleClick).toBeCalledWith(task.id);
   });
 });

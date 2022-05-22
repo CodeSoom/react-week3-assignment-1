@@ -1,5 +1,6 @@
 module.exports = {
   setupFilesAfterEnv: ['jest-plugin-context/setup', './jest.setup'],
+  verbose: true,
   coverageThreshold: {
     global: {
       branches: 100,
@@ -8,5 +9,5 @@ module.exports = {
       statements: 100,
     },
   },
-  restoreMocks: true,
+  clearMocks: true,
 };
