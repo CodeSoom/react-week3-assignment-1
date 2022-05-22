@@ -11,7 +11,7 @@ describe('Item', () => {
     };
     const handleClick = jest.fn();
 
-    it('title이 나오고 완료버튼이 있어야한다.', () => {
+    it('title이 나오고 완료버튼이 보인다.', () => {
       const { container, getByRole } = render((
         <Item
           task={task}
