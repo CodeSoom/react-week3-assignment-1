@@ -18,7 +18,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('추가');
   });
 
-  context('When the task is empty', () => {
+  context('without tasks', () => {
     it('shows 할 일이 없어요!', () => {
       const tasks = [];
 

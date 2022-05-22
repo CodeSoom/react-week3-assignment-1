@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  context('When the task is empty', () => {
+  context('without tasks', () => {
     it('shows 할 일이 없어요!', () => {
       const tasks = [];
 
@@ -13,7 +13,7 @@ describe('List', () => {
     });
   });
 
-  context('When the task is not empty', () => {
+  context('with tasks', () => {
     it('shows items', () => {
       const tasks = [{ id: 1, title: '뭐라도 하기' }, { id: 2, title: '청소' }];
 
