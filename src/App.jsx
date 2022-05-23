@@ -6,7 +6,10 @@ export default function App() {
   const [state, setState] = useState({
     newId: 100,
     taskTitle: '',
-    tasks: [],
+    tasks: [
+      { id: 1, title: 'Task-1' },
+      { id: 2, title: 'Task-2' },
+    ],
   });
 
   const { newId, taskTitle, tasks } = state;
@@ -27,7 +30,7 @@ export default function App() {
     });
   }
 
-  function handleClickDeleteTask(id) {
+  function handleClickDelete(id) {
     setState({
       ...state,
       tasks: tasks.filter((task) => task.id !== id),
@@ -40,7 +43,7 @@ export default function App() {
       onChangeTitle={handleChangeTitle}
       onClickAddTask={handleClickAddTask}
       tasks={tasks}
-      onClickDeleteTask={handleClickDeleteTask}
+      onClickDelete={handleClickDelete}
     />
   );
 }
