@@ -5,6 +5,15 @@ import List from './List';
 describe('List', () => {
   const handleClickDeleteTask = jest.fn();
 
+  function renderList(tasks) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={handleClickDeleteTask}
+      />
+    ));
+  }
+
   describe('"tasks"에 값이 있을때', () => {
     const tasks = [
       {
@@ -18,23 +27,14 @@ describe('List', () => {
     ];
 
     it('"tasks"에 값이 보여지는지', () => {
-      const { getByText } = render((
-        <List
-          tasks={tasks}
-        />
-      ));
+      const { getByText } = renderList(tasks);
 
       expect(getByText(/뭐라도 하기/)).not.toBeNull();
       expect(getByText(/코드숨 과제 하기/)).not.toBeNull();
     });
 
     it('"완료" 버튼을 클릭시 지워지는지', () => {
-      const { getAllByText } = render((
-        <List
-          onClickDelete={handleClickDeleteTask}
-          tasks={tasks}
-        />
-      ));
+      const { getAllByText } = renderList(tasks);
 
       const buttons = getAllByText('완료');
 
@@ -48,11 +48,7 @@ describe('List', () => {
     it('할 일이 없다는 문구가 나온다', () => {
       const tasks = [];
 
-      const { getByText } = render((
-        <List
-          tasks={tasks}
-        />
-      ));
+      const { getByText } = renderList(tasks);
 
       expect(getByText(/할 일이 없어요!/)).not.toBeNull();
     });
