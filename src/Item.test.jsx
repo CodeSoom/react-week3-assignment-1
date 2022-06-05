@@ -1,28 +1,51 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
+describe('Item', () => {
+  context('task가 주어지면', () => {
+    const task = {
+      id: 1,
+      title: '뭐라도 하기',
+    };
+    const handleClick = jest.fn();
 
-  const handleClick = jest.fn();
+    it('title이 나오고 완료버튼이 보인다.', () => {
+      const { container, getByRole } = render((
+        <Item
+          task={task}
+          onClickDelete={handleClick}
+        />
+      ));
+      const completeButton = getByRole('button');
+      expect(completeButton).toBeEnabled();
+      expect(completeButton).toHaveTextContent('완료');
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+      expect(container).toHaveTextContent('뭐라도 하기');
+    });
+  });
+  describe('완료버튼을 클릭했을 때', () => {
+    const task = {
+      id: 1,
+      title: '뭐라도 하기',
+    };
+    const handleClick = jest.fn();
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+    it('handleClick가 호출되어야한다.', async () => {
+      const user = userEvent.setup();
 
-  expect(handleClick).not.toBeCalled();
+      const { getByRole } = render((
+        <Item
+          task={task}
+          onClickDelete={handleClick}
+        />
+      ));
 
-  fireEvent.click(getByText('완료'));
+      const completeButton = getByRole('button');
+      await user.click(completeButton);
 
-  expect(handleClick).toBeCalledWith(1);
+      expect(handleClick).toBeCalledWith(1);
+    });
+  });
 });
