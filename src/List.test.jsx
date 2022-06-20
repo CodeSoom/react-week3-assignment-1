@@ -23,9 +23,15 @@ test('할일이 하나 이상일때', () => {
   ];
   const handleClick = jest.fn();
 
-  const { container } = render(
+  const { container, getByText } = render(
     <List tasks={tasks} onClickDelete={handleClick} />,
   );
 
   expect(container).toHaveTextContent('할일이 아주 많군요!');
+
+  expect(handleClick).not.toBeCalled();
+
+  fireEvent.click(getByText('완료'));
+
+  expect(handleClick).toBeCalledWith(1);
 });
