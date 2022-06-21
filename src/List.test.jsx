@@ -2,18 +2,18 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-test('List is Empty', () => {
-  const tasks = [];
+describe('<List />', () => {
+  context('할 일 목록이 없을 경우 "할 일이 없어요!"가 화면에 출력됩니다.', () => {
+    const { getByText } = render((
+      <List tasks={[]} />
+    ));
 
-  const emptyText = '할 일이 없어요!';
+    const emptyText = '할 일이 없어요!';
 
-  const { container, getByText } = render((
-    <List tasks={tasks} />
-  ));
-
-  expect(container).toHaveTextContent(emptyText);
-
-  expect(getByText(emptyText)).toBeInTheDocument();
+    it('"할 일이 없어요!"가 화면에 출력되는지 확인합니다.', () => {
+      expect(getByText(emptyText)).toBeInTheDocument();
+    });
+  });
 });
 
 test('List is Rendered', () => {
@@ -59,5 +59,5 @@ test('List is Rendered', () => {
 
   fireEvent.click(completeButtons[0]);
 
-  expect(handleClickDelete).toBeCalled();
+  expect(handleClickDelete).toBeCalledWith(1);
 });
