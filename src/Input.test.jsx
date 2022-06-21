@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+
 import Input from './Input';
 
 test('input', () => {
@@ -7,7 +8,7 @@ test('input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const { container } = render(
+  const { container, getByPlaceholderText } = render(
     <Input
       value={taskTitle}
       onChange={handleChange}
@@ -15,7 +16,10 @@ test('input', () => {
     />,
   );
 
-  expect(container).toHaveTextContent('할 일추가');
+  expect(container).toHaveTextContent('할 일');
+  expect(container).toHaveTextContent('추가');
 
-//   fireEvent.click(getByText('추가'));
+  fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: taskTitle } });
+
+  expect(getByPlaceholderText('할 일을 입력해 주세요').value).toBe(taskTitle);
 });

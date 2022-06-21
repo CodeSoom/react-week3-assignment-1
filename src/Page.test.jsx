@@ -20,7 +20,11 @@ test('input', () => {
     />,
   );
 
-  //   expect(container).toHaveTextContent('');
+  expect(container).toHaveTextContent('To-do');
+  expect(container).toHaveTextContent('할 일');
+  expect(container).toHaveTextContent('추가');
+  expect(container).toHaveTextContent('너무 어렵네요');
+  expect(container).toHaveTextContent('완료');
 
 //   fireEvent.click(getByText('추가'));
 });
