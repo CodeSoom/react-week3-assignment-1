@@ -2,24 +2,35 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
-  const taskTitle = '테스트코드 작성';
-
+describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const { container } = render((
+  const { container, getByPlaceholderText, getByText } = render((
     <Input
-      id="input-task-title"
-      type="text"
       value=""
       onChange={handleChange}
       onClick={handleClick}
     />
   ));
 
-  expect(handleChange).not.toBeCalled();
-  expect(handleChange).toBeCalledWith(taskTitle);
-  fireEvent.change(Input, { target: { value: taskTitle } });
-  expect(container).toHaveTextContent(taskTitle);
+  context('할 일을 입력하기', () => {
+    const input = getByPlaceholderText('할 일을 입력해 주세요');
+
+    expect(handleChange).not.toBeCalled();
+
+    fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+
+    expect(container).toHaveTextContent('뭐라도 하기');
+  });
+
+  context('추가 버튼을 누르기', () => {
+    const addeButton = getByText('추가');
+
+    expect(handleClick).not.toBeCalled();
+
+    fireEvent.click(addeButton);
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
 });
