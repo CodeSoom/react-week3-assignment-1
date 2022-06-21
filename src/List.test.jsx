@@ -5,11 +5,15 @@ import List from './List';
 test('List is Empty', () => {
   const tasks = [];
 
-  const { container } = render((
+  const emptyText = '할 일이 없어요!';
+
+  const { container, getByText } = render((
     <List tasks={tasks} />
   ));
 
-  expect(container).toHaveTextContent('할 일이 없어요!');
+  expect(container).toHaveTextContent(emptyText);
+
+  expect(getByText(emptyText)).toBeInTheDocument();
 });
 
 test('List is Rendered', () => {
