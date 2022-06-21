@@ -18,7 +18,7 @@ test('할일이 하나 이상일때', () => {
   const tasks = [
     {
       id: 1,
-      title: '할일이 아주 많군요!',
+      title: '테스트 코드는 아주 어렵네요!',
     },
   ];
   const handleClick = jest.fn();
@@ -27,7 +27,7 @@ test('할일이 하나 이상일때', () => {
     <List tasks={tasks} onClickDelete={handleClick} />,
   );
 
-  expect(container).toHaveTextContent('할일이 아주 많군요!');
+  expect(container).toHaveTextContent('테스트 코드는 아주 어렵네요!');
 
   expect(handleClick).not.toBeCalled();
 

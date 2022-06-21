@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import Page from './Page';
 
-test('input', () => {
+test('page', () => {
   const taskTitle = '테스크';
   const tasks = [{ id: 1, title: '너무 어렵네요' }];
 
