@@ -6,6 +6,8 @@ describe('Page', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
+  const newContents = '숨쉬기';
+
   const emptyTask = [];
   const notEmptyTasks = [
     {
@@ -18,68 +20,91 @@ describe('Page', () => {
     },
   ];
 
-  test('Page가 렌더링 되는지 확인합니다.', () => {
-    const { container, getByText, getByPlaceholderText } = render((
-      <Page tasks={emptyTask} />
-    ));
+  context('Page가 렌더링 됩니다.', () => {
+    it('엘리먼트가 존재하는지 확인합니다.', () => {
+      const {
+        container,
+        getByText,
+        getByPlaceholderText,
+      } = render((
+        <Page tasks={emptyTask} />
+      ));
 
-    expect(container).toHaveTextContent('To-do');
+      expect(container).toHaveTextContent('To-do');
+      expect(container).toHaveTextContent('할 일');
+      expect(container).toHaveTextContent('할 일이 없어요!');
+      expect(container).toHaveTextContent('추가');
 
-    const buttonEl = getByText('추가');
-    const inputEl = getByPlaceholderText('할 일을 입력해 주세요');
+      const inputEl = getByPlaceholderText('할 일을 입력해 주세요');
 
-    expect(inputEl).toBeInTheDocument();
-    expect(buttonEl).toBeInTheDocument();
+      expect(inputEl).toBeInTheDocument();
+      expect(getByText('추가')).toBeInTheDocument();
 
-    expect(inputEl.value).toBe('');
+      expect(inputEl.value).toBe('');
+    });
   });
 
-  test('Input에 onChangeTitle이 전달되어 이벤트를 수행하는지 체크합니다.', () => {
-    const { getByPlaceholderText } = render(
+  context('Page가 전달하는 Props들이 잘 전달되는지 확인합니다.', () => {
+    it('onChangeTitle이 전달되어 이벤트를 수행하는지 체크합니다.', () => {
+      const { getByPlaceholderText } = render(
+        <Page
+          tasks={emptyTask}
+          onChangeTitle={handleChange}
+        />,
+      );
+
+      const inputEl = getByPlaceholderText('할 일을 입력해 주세요');
+
+      fireEvent.change(inputEl, { target: { value: newContents } });
+
+      expect(inputEl.value).toBe(newContents);
+    });
+
+    it('Tasks가 잘 전달되는 지 확인합니다.', () => {
+      const { container } = render((
+        <Page
+          tasks={notEmptyTasks}
+        />
+      ));
+
+      expect(container).toHaveTextContent('숨쉬기');
+      expect(container).toHaveTextContent('아무것도 안하기');
+    });
+
+    it('DeleteTask가 잘 전달되는 지 확인합니다.', () => {
+      const { container, getAllByText } = render((
+        <Page
+          tasks={notEmptyTasks}
+          onClickDeleteTask={handleClick}
+        />
+      ));
+
+      expect(container).toHaveTextContent('숨쉬기');
+      expect(container).toHaveTextContent('완료');
+
+      expect(handleClick).not.toBeCalled();
+
+      fireEvent.click(getAllByText('완료')[0]);
+      fireEvent.click(getAllByText('완료')[1]);
+
+      expect(handleClick).toBeCalledWith(2);
+    });
+  });
+
+  it('onClickAddTask가 잘 전달되는 지 확인합니다.', () => {
+    const { getByText } = render((
       <Page
         tasks={emptyTask}
-        onChangeTitle={handleChange}
-      />,
-    );
-
-    const inputEl = getByPlaceholderText('할 일을 입력해 주세요');
-
-    fireEvent.change(inputEl, { target: { value: '숨쉬기' } });
-
-    expect(inputEl.value).toBe('숨쉬기');
-  });
-
-  test('List에 Tasks가 잘 전달되는 지 확인합니다.', () => {
-    const { container } = render((
-      <Page
-        tasks={notEmptyTasks}
+        onClickAddTask={handleClick}
       />
     ));
 
-    expect(container).toHaveTextContent('숨쉬기');
-    expect(container).toHaveTextContent('아무것도 안하기');
-  });
+    const buttonEl = getByText('추가');
 
-  test('완료 버튼을 눌렀을 때 해당 할 일이 사라집니다.', () => {
-    const { container, getAllByText } = render((
-      <Page
-        tasks={notEmptyTasks}
-        onClickDeleteTask={handleClick}
-      />
-    ));
+    expect(buttonEl).toBeInTheDocument();
 
-    expect(container).toHaveTextContent('숨쉬기');
-    expect(container).toHaveTextContent('완료');
+    fireEvent.click(buttonEl);
 
-    expect(handleClick).not.toBeCalled();
-
-    fireEvent.click(getAllByText('완료')[0]);
-    fireEvent.click(getAllByText('완료')[1]);
-
-    expect(handleClick).toBeCalledWith(2);
-  });
-
-  test('Input에서 Taks를 추가합니다.', () => {
-    // 진행 예정입니다...!
+    expect(handleClick).toBeCalledWith(1);
   });
 });
