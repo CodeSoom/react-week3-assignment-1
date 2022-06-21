@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
@@ -28,6 +28,8 @@ test('List is Rendered', () => {
     },
   ];
 
+  const handleClickDelete = jest.fn();
+
   const { getAllByRole } = render((
     <List tasks={tasks} />
   ));
@@ -41,4 +43,18 @@ test('List is Rendered', () => {
 
     expect(item).toHaveTextContent(task.title);
   });
+
+  expect(handleClickDelete).not.toBeCalled();
+
+  const completeButtons = getAllByRole('button');
+
+  expect(completeButtons).toHaveLength(2);
+
+  completeButtons.forEach((button) => {
+    expect(button).toHaveTextContent('완료');
+  });
+
+  fireEvent.click(completeButtons[0]);
+
+  expect(handleClickDelete).toBeCalled();
 });
