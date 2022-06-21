@@ -31,7 +31,10 @@ test('List is Rendered', () => {
   const handleClickDelete = jest.fn();
 
   const { getAllByRole } = render((
-    <List tasks={tasks} />
+    <List
+      tasks={tasks}
+      onClickDelete={handleClickDelete}
+    />
   ));
 
   const items = getAllByRole('listitem');
