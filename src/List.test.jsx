@@ -4,14 +4,12 @@ import List from './List';
 
 describe('<List />', () => {
   context('할 일 목록이 없을 경우 "할 일이 없어요!"가 화면에 출력됩니다.', () => {
-    const { getByText } = render((
-      <List tasks={[]} />
-    ));
-
-    const emptyText = '할 일이 없어요!';
-
     it('"할 일이 없어요!"가 화면에 출력되는지 확인합니다.', () => {
-      expect(getByText(emptyText)).toBeInTheDocument();
+      const { queryByText } = render((
+        <List tasks={[]} />
+      ));
+
+      expect(queryByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 });
