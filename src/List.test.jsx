@@ -9,10 +9,10 @@ beforeEach(() => {
 });
 
 test('할일이 없을때', () => {
-  const taskNull = [];
+  const tasks = [];
 
   const { container } = render((
-    <List tasks={taskNull} onClickDelete={handleClick} />
+    <List tasks={tasks} onClickDelete={handleClick} />
   ));
 
   expect(container).toHaveTextContent('할 일이 없어요!');
