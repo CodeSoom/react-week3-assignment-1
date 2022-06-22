@@ -3,12 +3,12 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  const handleChange = jest.fn();
-  const handleClick = jest.fn();
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
 
   beforeEach(() => {
-    handleChange.mockClear();
-    handleClick.mockClear();
+    onChangeTitle.mockClear();
+    onClickAddTask.mockClear();
     render((
       <Input />
     ));
@@ -36,18 +36,18 @@ describe('Input', () => {
     const { getByPlaceholderText } = render((
       <Input
         value="아무것도 안하기"
-        onChange={handleChange}
+        onChange={onChangeTitle}
       />
     ));
 
     it('입력창에 "숨쉬기" 라는 문구가 보인다.', () => {
       const newContents = '숨쉬기';
 
-      const inputEl = getByPlaceholderText('할 일을 입력해 주세요');
+      const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-      fireEvent.change(inputEl, { target: { value: newContents } });
+      fireEvent.change(input, { target: { value: newContents } });
 
-      expect(inputEl.value).toBe(newContents);
+      expect(input.value).toBe(newContents);
     });
   });
 });
