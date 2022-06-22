@@ -2,24 +2,28 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-test('input', () => {
-  const taskTitle = '안녕';
+describe('Input', () => {
+  context('화면이 렌더링 됬을때', () => {
+    it('화면의 요소 확인', () => {
+      const taskTitle = '안녕';
 
-  const handleChange = jest.fn();
-  const handleClick = jest.fn();
+      const handleChange = jest.fn();
+      const handleClick = jest.fn();
 
-  const { container, getByPlaceholderText } = render((
-    <Input
-      value={taskTitle}
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
+      const { container, getByPlaceholderText } = render((
+        <Input
+          value={taskTitle}
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      ));
 
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
+      expect(container).toHaveTextContent('할 일');
+      expect(container).toHaveTextContent('추가');
 
-  fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: taskTitle } });
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: taskTitle } });
 
-  expect(getByPlaceholderText('할 일을 입력해 주세요').value).toBe(taskTitle);
+      expect(getByPlaceholderText('할 일을 입력해 주세요').value).toBe(taskTitle);
+    });
+  });
 });
