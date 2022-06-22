@@ -24,62 +24,49 @@ const tasks = [
 
 describe('<List />', () => {
   context('할 일 목록이 없으면', () => {
-    it('"할 일이 없어요!"가 보입니다', () => {
-      const { queryByText } = renderList({
+    it('"할 일이 없어요!" 텍스트가 보인다.', () => {
+      const { getByText } = renderList({
         tasks: [],
       });
 
-      expect(queryByText('할 일이 없어요!')).toBeInTheDocument();
+      expect(getByText('할 일이 없어요!')).toBeInTheDocument();
     });
   });
 
   context('할 일 목록이 있으면', () => {
-    it('할 일 개수만큼 Item 컴포넌트가 보입니다', () => {
-      const { queryAllByRole } = renderList({
+    it('할 일 개수만큼 Item 컴포넌트가 보인다.', () => {
+      const { getAllByRole } = renderList({
         tasks,
       });
 
-      expect(queryAllByRole('listitem')).toHaveLength(tasks.length);
+      expect(getAllByRole('listitem')).toHaveLength(tasks.length);
     });
 
-    it('첫번째 Item 컴포넌트의 내용이 "뭐라도 하기"입니다', () => {
-      const { queryAllByRole } = renderList({
+    it('첫번째 Item 컴포넌트의 내용인 "뭐라도 하기"가 보인다.', () => {
+      const { getAllByRole } = renderList({
         tasks,
       });
 
-      const listItems = queryAllByRole('listitem');
+      const listItems = getAllByRole('listitem');
 
       expect(listItems[0]).toHaveTextContent(tasks[0].title);
     });
   });
 
-  context('사용자가 완료 버튼을 클릭하면', () => {
+  describe('완료 버튼 클릭', () => {
     const handleClickDelete = jest.fn();
 
-    it('onClickDelete 함수가 실행됩니다.', () => {
-      const { getAllByRole } = renderList({
+    it('handleClickDelete이 호출된다.', () => {
+      const { getAllByText } = renderList({
         tasks,
         handleClickDelete,
       });
 
-      const completeButtons = getAllByRole('button');
+      const completeButtons = getAllByText('완료');
 
       fireEvent.click(completeButtons[0]);
 
       expect(handleClickDelete).toBeCalled();
-    });
-
-    it('onClickDelete의 인자로 클릭한 Item의 id가 전달됩니다.', () => {
-      const { getAllByRole } = renderList({
-        tasks,
-        handleClickDelete,
-      });
-
-      const completeButtons = getAllByRole('button');
-
-      fireEvent.click(completeButtons[0]);
-
-      expect(handleClickDelete).toBeCalledWith(1);
     });
   });
 });
