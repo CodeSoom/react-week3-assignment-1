@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  context('화면이 렌더링 됬을때', () => {
+  context('Input을 본다', () => {
     it('화면의 요소 확인', () => {
       const taskTitle = '안녕';
 

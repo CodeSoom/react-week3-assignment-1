@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Item from './Item';
 
 describe('Item', () => {
-  context('화면이 렌더링 됬을때', () => {
+  context('Item을 본다', () => {
     it('화면의 요소 확인', () => {
       const task = {
         id: 1,

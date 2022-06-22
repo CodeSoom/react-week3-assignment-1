@@ -3,12 +3,11 @@ import { render } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  context('페이지가 렌더링되었을때', () => {
+  const { container } = render((
+    <App />
+  ));
+  context('App을 본다', () => {
     it('화면의 요소 확인', () => {
-      const { container } = render((
-        <App />
-      ));
-
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
       expect(container).toHaveTextContent('추가');

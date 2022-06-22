@@ -9,7 +9,7 @@ describe('List', () => {
     handleClick.mockClear();
   });
 
-  context('할일이 없을때 페이지 렌더링', () => {
+  context('List의 내용이 없는걸 본다', () => {
     it('페이지의 요소들이 맞는지 확인', () => {
       const tasks = [];
 
@@ -21,7 +21,7 @@ describe('List', () => {
     });
   });
 
-  context('할일이 하나 이상일때 페이지 렌더링', () => {
+  context('List의 내용이 있는걸 본다', () => {
     it('페이지의 요소들이 맞는지 확인', () => {
       const tasks = [
         {
