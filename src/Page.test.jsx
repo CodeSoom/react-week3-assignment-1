@@ -3,11 +3,17 @@ import { render } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
-  context('Page가 보인다', () => {
-    const handleChangeTitle = jest.fn();
-    const handleClickAddTask = jest.fn();
-    const handleClickDeleteTask = jest.fn();
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+  const handleClickDeleteTask = jest.fn();
 
+  beforeEach(() => {
+    handleChangeTitle.mockClear();
+    handleClickAddTask.mockClear();
+    handleClickDeleteTask.mockClear();
+  });
+
+  context('Page가 보인다', () => {
     const taskTitle = '테스크';
     const tasks = [{ id: 1, title: '너무 어렵네요' }];
 
