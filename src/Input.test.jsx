@@ -14,7 +14,7 @@ describe('Input', () => {
     ));
   });
 
-  context('Input이 렌더링 됩니다.', () => {
+  context('Input이 렌더링 되면', () => {
     const { container, getByText, getByPlaceholderText } = render((
       <Input />
     ));
