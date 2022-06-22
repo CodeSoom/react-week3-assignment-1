@@ -2,60 +2,84 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-describe('<List />', () => {
-  context('할 일 목록이 없을 경우 "할 일이 없어요!"가 화면에 출력됩니다.', () => {
-    it('"할 일이 없어요!"가 화면에 출력되는지 확인합니다.', () => {
-      const { queryByText } = render((
-        <List tasks={[]} />
-      ));
-
-      expect(queryByText('할 일이 없어요!')).toBeInTheDocument();
-    });
-  });
-});
-
-test('List is Rendered', () => {
-  const tasks = [
-    {
-      id: 1,
-      title: '뭐라도 하기',
-    },
-    {
-      id: 2,
-      title: '아무것도 하지 않기',
-    },
-  ];
-
-  const handleClickDelete = jest.fn();
-
-  const { getAllByRole } = render((
+function renderList({ tasks = [], handleClickDelete = () => {} }) {
+  return render((
     <List
       tasks={tasks}
       onClickDelete={handleClickDelete}
     />
   ));
+}
 
-  const items = getAllByRole('listitem');
+const tasks = [
+  {
+    id: 1,
+    title: '뭐라도 하기',
+  },
+  {
+    id: 2,
+    title: '아무것도 하지 않기',
+  },
+];
 
-  expect(items).toHaveLength(tasks.length);
+describe('<List />', () => {
+  context('할 일 목록이 없으면', () => {
+    it('"할 일이 없어요!"가 보입니다', () => {
+      const { queryByText } = renderList({
+        tasks: [],
+      });
 
-  items.forEach((item, index) => {
-    const task = tasks[index];
-
-    expect(item).toHaveTextContent(task.title);
+      expect(queryByText('할 일이 없어요!')).toBeInTheDocument();
+    });
   });
 
-  expect(handleClickDelete).not.toBeCalled();
+  context('할 일 목록이 있으면', () => {
+    it('할 일 개수만큼 Item 컴포넌트가 보입니다', () => {
+      const { queryAllByRole } = renderList({
+        tasks,
+      });
 
-  const completeButtons = getAllByRole('button');
+      expect(queryAllByRole('listitem')).toHaveLength(tasks.length);
+    });
 
-  expect(completeButtons).toHaveLength(2);
+    it('첫번째 Item 컴포넌트의 내용이 "뭐라도 하기"입니다', () => {
+      const { queryAllByRole } = renderList({
+        tasks,
+      });
 
-  completeButtons.forEach((button) => {
-    expect(button).toHaveTextContent('완료');
+      const listItems = queryAllByRole('listitem');
+
+      expect(listItems[0]).toHaveTextContent(tasks[0].title);
+    });
   });
 
-  fireEvent.click(completeButtons[0]);
+  context('사용자가 완료 버튼을 클릭하면', () => {
+    const handleClickDelete = jest.fn();
 
-  expect(handleClickDelete).toBeCalledWith(1);
+    it('onClickDelete 함수가 실행됩니다.', () => {
+      const { getAllByRole } = renderList({
+        tasks,
+        handleClickDelete,
+      });
+
+      const completeButtons = getAllByRole('button');
+
+      fireEvent.click(completeButtons[0]);
+
+      expect(handleClickDelete).toBeCalled();
+    });
+
+    it('onClickDelete의 인자로 클릭한 Item의 id가 전달됩니다.', () => {
+      const { getAllByRole } = renderList({
+        tasks,
+        handleClickDelete,
+      });
+
+      const completeButtons = getAllByRole('button');
+
+      fireEvent.click(completeButtons[0]);
+
+      expect(handleClickDelete).toBeCalledWith(1);
+    });
+  });
 });
