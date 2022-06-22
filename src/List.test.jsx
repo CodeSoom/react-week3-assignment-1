@@ -2,10 +2,14 @@ import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
+const handleClick = jest.fn();
+
+beforeEach(() => {
+  handleClick.mockClear();
+});
+
 test('할일이 없을때', () => {
   const taskNull = [];
-
-  const handleClick = jest.fn();
 
   const { container } = render(
     <List tasks={taskNull} onClickDelete={handleClick} />,
@@ -21,7 +25,6 @@ test('할일이 하나 이상일때', () => {
       title: '테스트 코드는 아주 어렵네요!',
     },
   ];
-  const handleClick = jest.fn();
 
   const { container, getByText } = render(
     <List tasks={tasks} onClickDelete={handleClick} />,
