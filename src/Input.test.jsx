@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -7,35 +7,48 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
+  const setUp = () => render(
+    <Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />,
+  );
+
   beforeEach(() => {
-    render(
-      <Input
-        value={value}
-        onChange={handleChange}
-        onClick={handleClick}
-      />,
-    );
+    handleChange.mockClear();
+    handleClick.mockClear();
   });
 
-  it('has label', () => {
-    expect(screen.getByText('할 일')).toBeInTheDocument();
+  it('renders label', () => {
+    const { container } = setUp();
+
+    expect(container).toHaveTextContent('할 일');
   });
 
-  it('shows value in props', () => {
-    expect(screen.getByDisplayValue(value)).toBeInTheDocument();
+  it('renders value', () => {
+    const { getByDisplayValue } = setUp();
+
+    expect(getByDisplayValue(value)).toBeInTheDocument();
   });
 
-  it('has input with placeholder and calls onChange when input is change', () => {
-    const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
+  context('when input is changed', () => {
+    it('calls onChange', () => {
+      const { getByPlaceholderText } = setUp();
 
-    expect(handleChange).not.toBeCalled();
-    fireEvent.change(input, { target: { value: 'a' } });
-    expect(handleChange).toBeCalled();
+      expect(handleChange).not.toBeCalled();
+      fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'a' } });
+      expect(handleChange).toBeCalled();
+    });
   });
 
-  it('calls onClick when button is click', () => {
-    expect(handleClick).not.toBeCalled();
-    fireEvent.click(screen.getByText('추가'));
-    expect(handleClick).toBeCalled();
+  context('when button is clicked', () => {
+    it('calls onClick', () => {
+      const { getByText } = setUp();
+
+      expect(handleClick).not.toBeCalled();
+      fireEvent.click(getByText('추가'));
+      expect(handleClick).toBeCalled();
+    });
   });
 });
