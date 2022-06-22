@@ -10,7 +10,11 @@ describe('Input', () => {
     onChangeTitle.mockClear();
     onClickAddTask.mockClear();
     render((
-      <Input />
+      <Input
+        value="숨쉬기"
+        onChange={onChangeTitle}
+        onClick={onClickAddTask}
+      />
     ));
   });
 
@@ -48,6 +52,21 @@ describe('Input', () => {
       fireEvent.change(input, { target: { value: newContents } });
 
       expect(input.value).toBe(newContents);
+    });
+  });
+
+  context('유저가 "추가" 버튼을 누르면', () => {
+    const { getByText } = render((
+      <Input
+        value="숨쉬기"
+        onClick={onClickAddTask}
+      />
+    ));
+
+    it('호출됩니다.', () => {
+      fireEvent.click(getByText('추가'));
+
+      expect(onClickAddTask).toBeCalledTimes(1);
     });
   });
 });
