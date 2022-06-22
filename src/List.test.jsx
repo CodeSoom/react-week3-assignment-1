@@ -11,9 +11,9 @@ beforeEach(() => {
 test('할일이 없을때', () => {
   const taskNull = [];
 
-  const { container } = render(
-    <List tasks={taskNull} onClickDelete={handleClick} />,
-  );
+  const { container } = render((
+    <List tasks={taskNull} onClickDelete={handleClick} />
+  ));
 
   expect(container).toHaveTextContent('할 일이 없어요!');
 });
@@ -26,9 +26,9 @@ test('할일이 하나 이상일때', () => {
     },
   ];
 
-  const { container, getByText } = render(
-    <List tasks={tasks} onClickDelete={handleClick} />,
-  );
+  const { container, getByText } = render((
+    <List tasks={tasks} onClickDelete={handleClick} />
+  ));
 
   expect(container).toHaveTextContent('테스트 코드는 아주 어렵네요!');
 

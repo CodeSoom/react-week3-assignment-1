@@ -8,13 +8,13 @@ test('input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const { container, getByPlaceholderText } = render(
+  const { container, getByPlaceholderText } = render((
     <Input
       value={taskTitle}
       onChange={handleChange}
       onClick={handleClick}
-    />,
-  );
+    />
+  ));
 
   expect(container).toHaveTextContent('할 일');
   expect(container).toHaveTextContent('추가');

@@ -10,15 +10,13 @@ test('page', () => {
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
 
-  const { container } = render(
-    <Page
-      taskTitle={taskTitle}
-      onChangeTitle={handleChangeTitle}
-      onClickAddTask={handleClickAddTask}
-      tasks={tasks}
-      onClickDeleteTask={handleClickDeleteTask}
-    />,
-  );
+  const { container } = render((<Page
+    taskTitle={taskTitle}
+    onChangeTitle={handleChangeTitle}
+    onClickAddTask={handleClickAddTask}
+    tasks={tasks}
+    onClickDeleteTask={handleClickDeleteTask}
+  />));
 
   expect(container).toHaveTextContent('To-do');
   expect(container).toHaveTextContent('할 일');
