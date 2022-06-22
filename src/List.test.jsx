@@ -1,35 +1,83 @@
 import { render, fireEvent } from '@testing-library/react';
-import React from 'react';
 
 import List from './List';
 
-describe('List', () => {
-  const noHaveTasks = [];
-  const haveTasks = [
-    { id: 0, title: '첫 번째 할일' },
-    { id: 1, title: '두 번째 할일' },
-  ];
-  const handleClickDelete = jest.fn();
+const NO_HAVE_TASKS = [];
+const HAVE_TASKS = [
+  { id: 0, title: '첫 번째 할일' },
+  { id: 1, title: '두 번째 할일' },
+];
 
-  const renderElement = (tasks) => (
-    <List
-      tasks={tasks}
-      onClickDelete={handleClickDelete}
-    />
-  );
+describe('List에 tasks가 없는 경우.', () => {
+  // events
+  let handleClickDelete;
 
-  test('task가 없을 경우, 할 일이 없어요! 문구 노출 테스트', () => {
-    const { container } = render(renderElement(noHaveTasks));
+  // element
+  let renderElement;
+
+  const initializeTestProps = () => {
+    handleClickDelete = jest.fn();
+
+    renderElement = render(
+      <List
+        tasks={NO_HAVE_TASKS}
+        onClickDelete={handleClickDelete}
+      />,
+    );
+  };
+  beforeEach(() => {
+    initializeTestProps();
+  });
+
+  const clearMock = () => {
+    handleClickDelete = jest.fn();
+  };
+  afterEach(() => {
+    clearMock();
+  });
+
+  test('List는 (할 일이 없어요!) 문구를 렌더링 한다.', () => {
+    const { container } = renderElement;
     expect(container).toHaveTextContent('할 일이 없어요!');
   });
+});
 
-  test('task가 있을 경우, 할 일 노출 테스트', () => {
-    const { container } = render(renderElement(haveTasks));
-    expect(container).toHaveTextContent('첫 번째 할일');
+describe('List에 tasks가 있는 경우.', () => {
+  // events
+  let handleClickDelete;
+
+  // element
+  let renderElement;
+
+  const initializeTestProps = () => {
+    handleClickDelete = jest.fn();
+
+    renderElement = render(
+      <List
+        tasks={HAVE_TASKS}
+        onClickDelete={handleClickDelete}
+      />,
+    );
+  };
+  beforeEach(() => {
+    initializeTestProps();
   });
 
-  test('handleClickDelete 동작 테스트', () => {
-    const { getAllByText } = render(renderElement(haveTasks));
+  const clearMock = () => {
+    handleClickDelete = jest.fn();
+  };
+  afterEach(() => {
+    clearMock();
+  });
+
+  test('List는 (첫 번째 할일), (두 번째 할일)을 렌더링 한다.', () => {
+    const { container } = renderElement;
+    expect(container).toHaveTextContent('첫 번째 할일');
+    expect(container).toHaveTextContent('두 번째 할일');
+  });
+
+  test('List의 완료 버튼을 누르면, 해당하는 task의 handleClickDelete가 실행된다.', () => {
+    const { getAllByText } = renderElement;
     expect(handleClickDelete).not.toBeCalled();
     fireEvent.click(getAllByText('완료')[0]);
     expect(handleClickDelete).toBeCalled();
