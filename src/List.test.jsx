@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
@@ -33,11 +33,22 @@ describe('List', () => {
       { id: 3, title: '할 일 3' },
     ];
 
-    it('renders tasks list', () => {
+    it('renders titles of tasks', () => {
+      const { container } = setUp({ tasks });
+
+      tasks.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
+      });
+    });
+
+    it('listens click events', () => {
       const { getAllByRole } = setUp({ tasks });
 
-      const items = getAllByRole('listitem');
-      expect(items.length).toBe(tasks.length);
+      expect(handleClick).not.toBeCalled();
+      getAllByRole('button').forEach((button) => {
+        fireEvent.click(button);
+      });
+      expect(handleClick).toBeCalledTimes(tasks.length);
     });
   });
 });
