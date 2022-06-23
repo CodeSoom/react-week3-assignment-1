@@ -3,46 +3,48 @@ import { fireEvent, render } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  const todoTitle = '뭐라도 하기';
-  const Inputplaceholder = '할 일을 입력해 주세요';
-
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const { getByPlaceholderText, getByText } = render((
-    <Input
-      value=""
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  ));
+  function renderInput() {
+    return render((
+      <Input
+        value=""
+        onChange={handleChange}
+        onClick={handleClick}
+      />
+    ));
+  }
 
   beforeEach(() => jest.clearAllMocks());
 
-  const addeButton = getByText('추가');
+  it('input과 button이 보인다', () => {
+    const { container } = renderInput();
 
-  context('할 일을 입력하기', () => {
-    const input = getByPlaceholderText(Inputplaceholder);
-
-    it('입력창에 입력한 할 일이 보인다', () => {
-      expect(handleChange).not.toBeCalled();
-
-      fireEvent.change(input, { target: { value: todoTitle } });
-
-      expect(input).toHaveTextContent(todoTitle);
-    });
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
   });
 
-  context('추가 버튼을 누르기', () => {
-    it('입력 창에 "할 일을 입력해 주세요" 라는 문구가 보인다', () => {
-      expect(handleClick).not.toBeCalled();
+  it('입력창에 입력하면 handleChange가 실행되며 입력값이 보여진다.', () => {
+    const { getByLabelText } = renderInput();
 
-      fireEvent.click(addeButton);
+    expect(handleChange).not.toBeCalled();
 
-      expect(handleClick).toBeCalled();
-      expect(handleClick).toHaveBeenCalledTimes(1);
+    fireEvent.change(getByLabelText('할 일'), { target: { value: '뭐라도 하기' } });
 
-      expect(getByPlaceholderText(Inputplaceholder)).toBeInTheDocument();
-    });
+    expect(handleChange).toBeCalled();
+    expect(getByLabelText('할 일').value).toBe('뭐라도 하기');
+  });
+
+  it('"추가" 버튼을 누르면 입력 창에 "할 일을 입력해 주세요" 라는 문구가 보인다', () => {
+    const { getByText, getByPlaceholderText } = renderInput();
+
+    expect(handleClick).not.toBeCalled();
+
+    fireEvent.click(getByText('추가'));
+
+    expect(handleClick).toBeCalled();
+    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
   });
 });
