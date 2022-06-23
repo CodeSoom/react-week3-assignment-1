@@ -3,10 +3,13 @@ import { fireEvent, render } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
+  const todoTitle = '뭐라도 하기';
+  const Inputplaceholder = '할 일을 입력해 주세요';
+
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const { container, getByPlaceholderText, getByText } = render((
+  const { getByPlaceholderText, getByText } = render((
     <Input
       value=""
       onChange={handleChange}
@@ -14,23 +17,32 @@ describe('Input', () => {
     />
   ));
 
+  beforeEach(() => jest.clearAllMocks());
+
+  const addeButton = getByText('추가');
+
   context('할 일을 입력하기', () => {
-    const input = getByPlaceholderText('할 일을 입력해 주세요');
+    const input = getByPlaceholderText(Inputplaceholder);
 
-    expect(handleChange).not.toBeCalled();
+    it('입력창에 입력한 할 일이 보인다', () => {
+      expect(handleChange).not.toBeCalled();
 
-    fireEvent.change(input, { target: { value: '뭐라도 하기' } });
+      fireEvent.change(input, { target: { value: todoTitle } });
 
-    expect(container).toHaveTextContent('뭐라도 하기');
+      expect(input).toHaveTextContent(todoTitle);
+    });
   });
 
   context('추가 버튼을 누르기', () => {
-    const addeButton = getByText('추가');
+    it('입력 창에 "할 일을 입력해 주세요" 라는 문구가 보인다', () => {
+      expect(handleClick).not.toBeCalled();
 
-    expect(handleClick).not.toBeCalled();
+      fireEvent.click(addeButton);
 
-    fireEvent.click(addeButton);
+      expect(handleClick).toBeCalled();
+      expect(handleClick).toHaveBeenCalledTimes(1);
 
-    expect(handleClick).toHaveBeenCalledTimes(1);
+      expect(getByPlaceholderText(Inputplaceholder)).toBeInTheDocument();
+    });
   });
 });
