@@ -5,7 +5,7 @@ import List from './List';
 describe('List', () => {
   const handleClick = jest.fn();
 
-  const setUp = ({ tasks }) => render(
+  const renderList = ({ tasks }) => render(
     <List
       tasks={tasks}
       onClickDelete={handleClick}
@@ -20,7 +20,7 @@ describe('List', () => {
     const tasks = [];
 
     it('renders fallback', () => {
-      const { container } = setUp({ tasks });
+      const { container } = renderList({ tasks });
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -34,7 +34,7 @@ describe('List', () => {
     ];
 
     it('renders titles of tasks', () => {
-      const { container } = setUp({ tasks });
+      const { container } = renderList({ tasks });
 
       tasks.forEach(({ title }) => {
         expect(container).toHaveTextContent(title);
@@ -42,12 +42,12 @@ describe('List', () => {
     });
 
     it('listens click events', () => {
-      const { getAllByRole } = setUp({ tasks });
+      const { getAllByRole } = renderList({ tasks });
 
-      expect(handleClick).not.toBeCalled();
       getAllByRole('button').forEach((button) => {
         fireEvent.click(button);
       });
+
       expect(handleClick).toBeCalledTimes(tasks.length);
     });
   });
