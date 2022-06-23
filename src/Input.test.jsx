@@ -2,14 +2,13 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input', () => {
+describe('<Input />', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
   function renderInput() {
     return render((
       <Input
-        value=""
         onChange={handleChange}
         onClick={handleClick}
       />
