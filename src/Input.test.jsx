@@ -6,7 +6,7 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const setUp = (value = '') => render(
+  const renderInput = (value = '') => render(
     <Input
       value={value}
       onChange={handleChange}
@@ -19,31 +19,31 @@ describe('Input', () => {
   });
 
   it('renders label', () => {
-    const { container } = setUp();
+    const { container } = renderInput();
 
     expect(container).toHaveTextContent('할 일');
   });
 
   it('renders value', () => {
     const value = '지금 할 일';
-    const { getByDisplayValue } = setUp(value);
+    const { getByDisplayValue } = renderInput(value);
 
     expect(getByDisplayValue(value)).toBeInTheDocument();
   });
 
   it('listens value change event', () => {
-    const { getByPlaceholderText } = setUp();
+    const { getByPlaceholderText } = renderInput();
 
-    expect(handleChange).not.toBeCalled();
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'a' } });
-    expect(handleChange).toBeCalled();
+
+    expect(handleChange).toBeCalledTimes(1);
   });
 
   it('listens button click event', () => {
-    const { getByText } = setUp();
+    const { getByText } = renderInput();
 
-    expect(handleClick).not.toBeCalled();
     fireEvent.click(getByText('추가'));
-    expect(handleClick).toBeCalled();
+
+    expect(handleClick).toBeCalledTimes(1);
   });
 });
