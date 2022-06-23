@@ -1,9 +1,7 @@
 export default function Input({ value, onChange, onClick }) {
   return (
     <p>
-      <label htmlFor="input-task-title">
-        할 일
-      </label>
+      <label htmlFor="input-task-title">할 일</label>
       <input
         id="input-task-title"
         type="text"
