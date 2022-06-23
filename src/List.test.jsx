@@ -2,6 +2,8 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
+import TASKS from './fixtures/tasks';
+
 function renderList({ tasks = [], handleClickDelete = () => {} }) {
   return render((
     <List
@@ -10,17 +12,6 @@ function renderList({ tasks = [], handleClickDelete = () => {} }) {
     />
   ));
 }
-
-const tasks = [
-  {
-    id: 1,
-    title: '뭐라도 하기',
-  },
-  {
-    id: 2,
-    title: '아무것도 하지 않기',
-  },
-];
 
 describe('<List />', () => {
   context('할 일 목록이 없으면', () => {
@@ -36,20 +27,20 @@ describe('<List />', () => {
   context('할 일 목록이 있으면', () => {
     it('할 일 개수만큼 Item 컴포넌트가 보인다.', () => {
       const { getAllByRole } = renderList({
-        tasks,
+        tasks: TASKS,
       });
 
-      expect(getAllByRole('listitem')).toHaveLength(tasks.length);
+      expect(getAllByRole('listitem')).toHaveLength(TASKS.length);
     });
 
-    it('첫번째 Item 컴포넌트의 내용인 "뭐라도 하기"가 보인다.', () => {
-      const { getAllByRole } = renderList({
-        tasks,
+    TASKS.forEach(({ title }, index) => {
+      it(`${index + 1}번째 Item 컴포넌트의 내용인 "${title}"가 보인다.`, () => {
+        const { container } = renderList({
+          tasks: TASKS,
+        });
+
+        expect(container).toHaveTextContent(title);
       });
-
-      const listItems = getAllByRole('listitem');
-
-      expect(listItems[0]).toHaveTextContent(tasks[0].title);
     });
   });
 
@@ -58,7 +49,7 @@ describe('<List />', () => {
 
     it('handleClickDelete이 호출된다.', () => {
       const { getAllByText } = renderList({
-        tasks,
+        tasks: TASKS,
         handleClickDelete,
       });
 
