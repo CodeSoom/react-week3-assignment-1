@@ -7,7 +7,7 @@ describe('Page', () => {
   const handleClickAddTask = jest.fn();
   const handleClickDeleteTask = jest.fn();
 
-  const setUp = ({ taskTitle = '', tasks = [] } = {}) => render(
+  const renderPage = ({ taskTitle = '', tasks = [] } = {}) => render(
     <Page
       taskTitle={taskTitle}
       onChangeTitle={handleChangeTitle}
@@ -22,32 +22,32 @@ describe('Page', () => {
   });
 
   it('renders title', () => {
-    const { container } = setUp();
+    const { container } = renderPage();
 
     expect(container).toHaveTextContent('To-do');
   });
 
   it('renders task title', () => {
     const taskTitle = '지금 할 일';
-    const { getByDisplayValue } = setUp({ taskTitle });
+    const { getByDisplayValue } = renderPage({ taskTitle });
 
     expect(getByDisplayValue(taskTitle)).toBeInTheDocument();
   });
 
   it('listens change title event', () => {
-    const { getByRole } = setUp();
+    const { getByRole } = renderPage();
 
-    expect(handleChangeTitle).not.toBeCalled();
     fireEvent.change(getByRole('textbox'), { target: { value: 'a' } });
-    expect(handleChangeTitle).toBeCalled();
+
+    expect(handleChangeTitle).toBeCalledTimes(1);
   });
 
   it('listens click add task event', () => {
-    const { getByText } = setUp();
+    const { getByText } = renderPage();
 
-    expect(handleClickAddTask).not.toBeCalled();
     fireEvent.click(getByText('추가'));
-    expect(handleClickAddTask).toBeCalled();
+
+    expect(handleClickAddTask).toBeCalledTimes(1);
   });
 
   context('with tasks', () => {
@@ -62,7 +62,7 @@ describe('Page', () => {
     });
 
     it('renders titles of tasks', () => {
-      const { container } = setUp({ tasks });
+      const { container } = renderPage({ tasks });
 
       tasks.forEach(({ title }) => {
         expect(container).toHaveTextContent(title);
@@ -70,9 +70,8 @@ describe('Page', () => {
     });
 
     it('listens click delete task events', () => {
-      const { getAllByRole } = setUp({ tasks });
+      const { getAllByRole } = renderPage({ tasks });
 
-      expect(handleClickDeleteTask).not.toBeCalled();
       getAllByRole('button').forEach((button) => {
         fireEvent.click(button);
       });
