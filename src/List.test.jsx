@@ -2,11 +2,11 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-describe('Lixt', () => {
+describe('List', () => {
   // events
   const handleClickDelete = jest.fn();
 
-  // element
+  // elements
   const renderElement = (tasks) => render(
     <List
       tasks={tasks}
@@ -14,21 +14,19 @@ describe('Lixt', () => {
     />,
   );
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  beforeEach(() => jest.clearAllMocks());
 
-  context('tasks가 없는 경우.', () => {
+  context('1. tasks가 없는 경우.', () => {
     // props
     const noHavaTasks = [];
 
-    it('List는 (할 일이 없어요!) 문구를 렌더링 한다.', () => {
+    it('(할 일이 없어요!) 문구를 렌더링 한다.', () => {
       const { container } = renderElement(noHavaTasks);
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
-  context('tasks가 있는 경우.', () => {
+  context('2. tasks가 있는 경우.', () => {
     // props
     const haveTasks = [
       { id: 0, title: '첫 번째 할일' },

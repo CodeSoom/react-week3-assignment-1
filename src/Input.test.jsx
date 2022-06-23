@@ -19,9 +19,7 @@ describe('Input', () => {
     />,
   );
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  beforeEach(() => jest.clearAllMocks());
 
   it('value를 렌더링한다.', () => {
     const { getByPlaceholderText } = renderElement();
