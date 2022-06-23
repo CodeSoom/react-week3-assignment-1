@@ -6,12 +6,11 @@ describe('App', () => {
   const { container } = render((
     <App />
   ));
-  context('App을 본다', () => {
-    it('화면의 요소 확인', () => {
-      expect(container).toHaveTextContent('To-do');
-      expect(container).toHaveTextContent('할 일');
-      expect(container).toHaveTextContent('추가');
-      expect(container).toHaveTextContent('할 일이 없어요!');
-    });
+
+  it('App을 렌더링한다', () => {
+    expect(container).toHaveTextContent('To-do');
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
+    expect(container).toHaveTextContent('할 일이 없어요!');
   });
 });
