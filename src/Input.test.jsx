@@ -21,13 +21,12 @@ beforeEach(() => {
 });
 
 describe('<Input />', () => {
-  it('text input이 보인다.', () => {
+  it('input이 보인다.', () => {
     const { getByPlaceholderText } = renderInput('');
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
 
     expect(input).toBeInTheDocument();
-    expect(input).toHaveAttribute('type', 'text');
   });
 
   it('추가 버튼이 보인다.', () => {
@@ -36,12 +35,14 @@ describe('<Input />', () => {
     expect(getByText('추가')).toBeInTheDocument();
   });
 
-  it('input의 현재 값과 props.value의 값이 서로 같다.', () => {
-    const taskTitle = '할일';
+  context('입력 값이 있다면', () => {
+    it('input의 현재 값과 props.value의 값이 서로 같다.', () => {
+      const taskTitle = '할일';
 
-    const { getByPlaceholderText } = renderInput(taskTitle);
+      const { getByPlaceholderText } = renderInput(taskTitle);
 
-    expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
+    });
   });
 
   describe('추가 버튼 클릭', () => {
