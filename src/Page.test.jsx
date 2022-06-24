@@ -3,13 +3,17 @@ import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
-  const handleChange = jest.fn();
-  const handleClick = jest.fn();
+  const onChangeTitle = jest.fn();
+  const onClickAddTask = jest.fn();
+  const onClickDeleteTask = jest.fn();
 
-  const newContents = '숨쉬기';
+  const todoInWriting = {
+    target: {
+      value: '숨쉬기',
+    },
+  };
 
-  const emptyTask = [];
-  const notEmptyTasks = [
+  const TASK = [
     {
       id: 1,
       title: '숨쉬기',
@@ -20,91 +24,138 @@ describe('Page', () => {
     },
   ];
 
-  context('Page가 렌더링 됩니다.', () => {
-    it('엘리먼트가 존재하는지 확인합니다.', () => {
-      const {
-        container,
-        getByText,
-        getByPlaceholderText,
-      } = render((
-        <Page tasks={emptyTask} />
-      ));
+  const EMPTYTASK = [];
 
-      expect(container).toHaveTextContent('To-do');
-      expect(container).toHaveTextContent('할 일');
-      expect(container).toHaveTextContent('할 일이 없어요!');
-      expect(container).toHaveTextContent('추가');
-
-      const inputEl = getByPlaceholderText('할 일을 입력해 주세요');
-
-      expect(inputEl).toBeInTheDocument();
-      expect(getByText('추가')).toBeInTheDocument();
-
-      expect(inputEl.value).toBe('');
-    });
-  });
-
-  context('Page가 전달하는 Props들이 잘 전달되는지 확인합니다.', () => {
-    it('onChangeTitle이 전달되어 이벤트를 수행하는지 체크합니다.', () => {
-      const { getByPlaceholderText } = render(
-        <Page
-          tasks={emptyTask}
-          onChangeTitle={handleChange}
-        />,
-      );
-
-      const inputEl = getByPlaceholderText('할 일을 입력해 주세요');
-
-      fireEvent.change(inputEl, { target: { value: newContents } });
-
-      expect(inputEl.value).toBe(newContents);
-    });
-
-    it('Tasks가 잘 전달되는 지 확인합니다.', () => {
-      const { container } = render((
-        <Page
-          tasks={notEmptyTasks}
-        />
-      ));
-
-      expect(container).toHaveTextContent('숨쉬기');
-      expect(container).toHaveTextContent('아무것도 안하기');
-    });
-
-    it('DeleteTask가 잘 전달되는 지 확인합니다.', () => {
-      const { container, getAllByText } = render((
-        <Page
-          tasks={notEmptyTasks}
-          onClickDeleteTask={handleClick}
-        />
-      ));
-
-      expect(container).toHaveTextContent('숨쉬기');
-      expect(container).toHaveTextContent('완료');
-
-      expect(handleClick).not.toBeCalled();
-
-      fireEvent.click(getAllByText('완료')[0]);
-      fireEvent.click(getAllByText('완료')[1]);
-
-      expect(handleClick).toBeCalledWith(2);
-    });
-  });
-
-  it('onClickAddTask가 잘 전달되는 지 확인합니다.', () => {
-    const { getByText } = render((
+  function rendererPage({ tasks, taskTitle }) {
+    return render((
       <Page
-        tasks={emptyTask}
-        onClickAddTask={handleClick}
+        tasks={tasks}
+        taskTitle={taskTitle}
+        onChangeTitle={onChangeTitle}
+        onClickAddTask={onClickAddTask}
+        onClickDeleteTask={onClickDeleteTask}
       />
     ));
+  }
 
-    const buttonEl = getByText('추가');
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-    expect(buttonEl).toBeInTheDocument();
+  context('Page가 렌더링되면', () => {
+    it('To-do가 보입니다.', () => {
+      const { container } = rendererPage({ tasks: EMPTYTASK });
 
-    fireEvent.click(buttonEl);
+      expect(container).toHaveTextContent('To-do');
+    });
+  });
 
-    expect(handleClick).toBeCalledWith(1);
+  describe('<Input/>', () => {
+    context('Input 컴포넌트가 렌더링되면', () => {
+      it('button이 보입니다.', () => {
+        const { getByText } = rendererPage({ tasks: EMPTYTASK });
+
+        expect(getByText('추가')).toBeInTheDocument();
+      });
+
+      it('input이 보입니다.', () => {
+        const { getByLabelText } = rendererPage({ tasks: EMPTYTASK });
+
+        expect(getByLabelText('할 일').value).toBe('');
+      });
+    });
+
+    describe('input', () => {
+      context('할 일을 입력하면', () => {
+        it('onChangeTitle이 호출됩니다.', () => {
+          const { getByPlaceholderText } = rendererPage({ tasks: EMPTYTASK, taskTitle: '' });
+
+          const input = getByPlaceholderText('할 일을 입력해 주세요');
+
+          fireEvent.change(input, todoInWriting);
+
+          expect(onChangeTitle).toBeCalled();
+        });
+      });
+    });
+
+    describe('button', () => {
+      context('유저가 "추가" 버튼을 클릭하면', () => {
+        it('onClickAddTask 함수가 호출됩니다.', () => {
+          const { getByText } = rendererPage({ tasks: EMPTYTASK });
+
+          fireEvent.click(getByText('추가'));
+
+          expect(onClickAddTask).toBeCalled();
+        });
+      });
+    });
+  });
+
+  describe('List컴포넌트가 렌더링 되면', () => {
+    describe('list', () => {
+      context('tasks가 비어있지 않을 시', () => {
+        it('해당 tasks의 title이 보입니다.', () => {
+          const { container } = rendererPage({ tasks: TASK });
+
+          TASK.forEach((task) => {
+            expect(container).toHaveTextContent(task.title);
+          });
+        });
+      });
+
+      context('tasks가 비어있을 시', () => {
+        it('"할 일이 없어요!"가 출력됩니다.', () => {
+          const { container } = rendererPage({ tasks: EMPTYTASK });
+
+          expect(container).toHaveTextContent('할 일이 없어요');
+        });
+      });
+    });
+
+    describe('button', () => {
+      context('유저가 "완료" 버튼을 클릭하면', () => {
+        it('onClickDelete가 호출됩니다.', () => {
+          const { getAllByText } = rendererPage({ tasks: TASK });
+
+          fireEvent.click(getAllByText('완료')[0]);
+
+          expect(onClickDeleteTask).toBeCalledTimes(1);
+        });
+      });
+    });
+  });
+
+  describe('Item컴포넌트가 렌더링되면', () => {
+    describe('li', () => {
+      context('tasks가 비어있지 않을 시', () => {
+        it('해당 tasks의 title이 보입니다.', () => {
+          const { container } = rendererPage({ tasks: TASK });
+
+          expect(container).toHaveTextContent('숨쉬기');
+        });
+      });
+
+      context('tasks가 비어있을 시', () => {
+        it('"할 일이 없어요!" 가 출력됩니다.', () => {
+          const { container } = rendererPage({ tasks: EMPTYTASK });
+
+          expect(container).toHaveTextContent('할 일이 없어요!');
+        });
+      });
+    });
+
+    describe('button', () => {
+      context('완료버튼을 클릭하면', () => {
+        it('onClickDelete가 호출됩니다.', () => {
+          const { getAllByText } = rendererPage({ tasks: TASK });
+
+          fireEvent.click(getAllByText('완료')[0]);
+          fireEvent.click(getAllByText('완료')[1]);
+
+          expect(onClickDeleteTask).toBeCalledTimes(2);
+        });
+      });
+    });
   });
 });
