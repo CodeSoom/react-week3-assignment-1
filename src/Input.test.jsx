@@ -6,60 +6,68 @@ describe('Input', () => {
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
 
-  const rendereInput = () => render(
-    <Input
-      onClick={onClickAddTask}
-      onChangeTitle={onChangeTitle}
-    />,
-  );
+  function rendererInput(taskTitle = '') {
+    return render((
+      <Input
+        value={taskTitle}
+        onChange={onChangeTitle}
+        onClick={onClickAddTask}
+      />
+    ));
+  }
 
   beforeEach(() => {
     jest.clearAllMocks();
-
-    rendereInput();
   });
 
-  describe('Input이 렌더링 되면', () => {
-    const { container, getByText, getByPlaceholderText } = rendereInput();
-
+  context('Input컴포넌트가 렌더링되면', () => {
     it('label이 보입니다.', () => {
+      const { container } = rendererInput();
+
       expect(container).toHaveTextContent('할 일');
     });
 
     it('button이 보입니다.', () => {
+      const { getByText } = rendererInput();
+
       expect(getByText('추가')).toBeInTheDocument();
     });
 
     it('input이 보입니다.', () => {
+      const { getByPlaceholderText } = rendererInput();
+
       expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
     });
   });
 
-  describe('유저가 "숨쉬기" 라는 할 일을 입력하면', () => {
-    const newContents = '숨쉬기';
-    const { getByPlaceholderText } = rendereInput();
+  describe('input', () => {
+    context('할 일을 입력하면', () => {
+      it('onChangeTitle이 호출됩니다.', () => {
+        const event = {
+          target: {
+            value: '숨쉬기',
+          },
+        };
 
-    it('입력창에 "숨쉬기" 라는 문구가 보입니다.', () => {
-      const input = getByPlaceholderText('할 일을 입력해 주세요');
+        const { getByLabelText } = rendererInput('');
 
-      fireEvent.change(input, { target: { value: newContents } });
+        const input = getByLabelText('할 일');
 
-      expect(input.value).toBe(newContents);
+        fireEvent.change(input, event);
+
+        expect(onChangeTitle).toBeCalled();
+      });
     });
   });
 
-  describe('유저가 "추가"', () => {
-    const { getByText } = rendereInput();
-    context('버튼을 클릭하면', () => {
+  describe('button', () => {
+    context('유저가 "추가" 버튼을 클릭하면', () => {
       it('onClickAddTask함수가 호출됩니다.', () => {
+        const { getByText } = rendererInput();
+
         fireEvent.click(getByText('추가'));
 
         expect(onClickAddTask).toBeCalledTimes(1);
-      });
-    });
-    context('버튼을 클릭하지 않는다면', () => {
-      it('onClickAddTask함수가 호출되지 않습니다.', () => {
-        expect(onClickAddTask).not.toBeCalled();
       });
     });
   });
