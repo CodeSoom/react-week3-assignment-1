@@ -2,66 +2,56 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-describe('List', () => {
+describe('<List/>', () => {
   const onClickDelete = jest.fn();
 
-  const tasks = [{
+  const TASK = [{
     id: 1,
     title: '뭐라도 하기',
   },
   ];
 
-  const emptyTask = [];
-
-  const rendererList = (task) => render(
-    <List
-      tasks={task}
-      onClickDelete={onClickDelete}
-    />,
-  );
+  function rendererList({ tasks }) {
+    return render((
+      <List
+        tasks={tasks}
+        onClickDelete={onClickDelete}
+      />
+    ));
+  }
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('List가 렌더링될 때', () => {
-    describe('task의 할 일 목록에', () => {
-      context('할 일이 있을 시', () => {
-        it('해당 tasks의 할 일 목록만큼 리스트가 보입니다.', () => {
-          const { getAllByRole } = rendererList(tasks);
+  describe('list', () => {
+    context('tasks가 비어있지 않을 시', () => {
+      it('해당 tasks의 title이 보입니다.', () => {
+        const { container } = rendererList({ tasks: TASK });
 
-          const todos = getAllByRole('listitem');
-
-          expect(todos.length).toBe(tasks.length);
-        });
-
-        context('할 일이 없을 시', () => {
-          it('"할 일이 없어요!"가 출력됩니다.', () => {
-            const { container } = rendererList(emptyTask);
-
-            expect(container).toHaveTextContent('할 일이 없어요!');
-          });
+        TASK.forEach((task) => {
+          expect(container).toHaveTextContent(task.title);
         });
       });
     });
 
-    describe('유저가 "완료"', () => {
-      context('버튼을 클릭하면', () => {
-        it('onClickDelete가 호출됩니다.', () => {
-          const { getByText } = rendererList(tasks);
+    context('tasks가 비어있을 시', () => {
+      it('"할 일이 없어요!"가 출력됩니다.', () => {
+        const { container } = rendererList({ tasks: [] });
 
-          fireEvent.click(getByText('완료'));
-
-          expect(onClickDelete).toBeCalledTimes(1);
-        });
+        expect(container).toHaveTextContent('할 일이 없어요!');
       });
+    });
+  });
 
-      context('버튼을 클릭하지 않는다면', () => {
-        it('onClickDelete가 호출되지 않습니다.', () => {
-          rendererList(tasks);
+  describe('button', () => {
+    context('유저가 "완료" 버튼을 클릭하면', () => {
+      it('onClickDelete가 호출됩니다.', () => {
+        const { getByText } = rendererList({ tasks: TASK });
 
-          expect(onClickDelete).not.toBeCalled();
-        });
+        fireEvent.click(getByText('완료'));
+
+        expect(onClickDelete).toBeCalledTimes(1);
       });
     });
   });
