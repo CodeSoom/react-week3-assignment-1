@@ -2,25 +2,25 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-const handleChangeTitle = jest.fn();
-const handleClickAddTask = jest.fn();
-
-function renderInput(taskTitle = '') {
-  return render((
-    <Input
-      value={taskTitle}
-      onChange={handleChangeTitle}
-      onClick={handleClickAddTask}
-    />
-  ));
-}
-
-beforeEach(() => {
-  handleChangeTitle.mockClear();
-  handleClickAddTask.mockClear();
-});
-
 describe('<Input />', () => {
+  const handleChangeTitle = jest.fn();
+  const handleClickAddTask = jest.fn();
+
+  function renderInput(taskTitle = '') {
+    return render((
+      <Input
+        value={taskTitle}
+        onChange={handleChangeTitle}
+        onClick={handleClickAddTask}
+      />
+    ));
+  }
+
+  beforeEach(() => {
+    handleChangeTitle.mockClear();
+    handleClickAddTask.mockClear();
+  });
+
   it('input이 보인다.', () => {
     const { getByPlaceholderText } = renderInput('');
 
