@@ -9,7 +9,7 @@ describe('List', () => {
     jest.clearAllMocks();
   });
 
-  const testRender = (tasks) => render((
+  const renderList = (tasks) => render((
     <List tasks={tasks} onClickDelete={handleClick} />
   ));
 
@@ -17,7 +17,7 @@ describe('List', () => {
     it('내용이 없으므로 할 일이 없어요!가 렌더링된다', () => {
       const tasks = [];
 
-      const { container } = testRender(tasks);
+      const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
@@ -32,7 +32,7 @@ describe('List', () => {
         },
       ];
 
-      const { container, getByText } = testRender(tasks);
+      const { container, getByText } = renderList(tasks);
 
       expect(container).toHaveTextContent('테스트 코드는 아주 어렵네요!');
 
