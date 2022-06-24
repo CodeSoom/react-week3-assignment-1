@@ -6,7 +6,7 @@ describe('Item', () => {
   const handleClick = jest.fn();
 
   beforeEach(() => {
-    handleClick.mockClear();
+    jest.clearAllMocks();
   });
 
   it('Item을 렌더링 한다', () => {

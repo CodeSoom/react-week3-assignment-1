@@ -6,7 +6,7 @@ describe('List', () => {
   const handleClick = jest.fn();
 
   beforeEach(() => {
-    handleClick.mockClear();
+    jest.clearAllMocks();
   });
 
   const testRender = (tasks) => render((

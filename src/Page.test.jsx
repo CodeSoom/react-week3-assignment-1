@@ -8,9 +8,7 @@ describe('Page', () => {
   const handleClickDeleteTask = jest.fn();
 
   beforeEach(() => {
-    handleChangeTitle.mockClear();
-    handleClickAddTask.mockClear();
-    handleClickDeleteTask.mockClear();
+    jest.clearAllMocks();
   });
 
   const taskTitle = '테스크';
