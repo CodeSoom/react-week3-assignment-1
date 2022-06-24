@@ -4,33 +4,31 @@ import Page from './Page';
 
 import TASKS from './fixtures/tasks';
 
-const handleChangeTitle = jest.fn();
-const handleClickDeleteTask = jest.fn();
-const handleClickAddTask = jest.fn();
-
-function renderPage({ taskTitle = '', tasks = [] } = {}) {
-  return render((
-    <Page
-      tasks={tasks}
-      taskTitle={taskTitle}
-      onChangeTitle={handleChangeTitle}
-      onClickAddTask={handleClickAddTask}
-      onClickDeleteTask={handleClickDeleteTask}
-    />
-  ));
-}
-
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('<Page />', () => {
+  const handleChangeTitle = jest.fn();
+  const handleClickDeleteTask = jest.fn();
+  const handleClickAddTask = jest.fn();
+
+  function renderPage({ taskTitle = '', tasks = [] } = {}) {
+    return render((
+      <Page
+        tasks={tasks}
+        taskTitle={taskTitle}
+        onChangeTitle={handleChangeTitle}
+        onClickAddTask={handleClickAddTask}
+        onClickDeleteTask={handleClickDeleteTask}
+      />
+    ));
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Input이 보인다.', () => {
     const { getByLabelText } = renderPage();
 
-    const input = getByLabelText('할 일');
-
-    expect(input).toBeInTheDocument();
+    expect(getByLabelText('할 일')).toBeInTheDocument();
   });
 
   context('할 일 목록이 없으면', () => {
@@ -50,14 +48,6 @@ describe('<Page />', () => {
       TASKS.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
       });
-    });
-
-    it('할 일이 없어요! 텍스트가 보이지 않는다.', () => {
-      const { queryByText } = renderPage({
-        tasks: TASKS,
-      });
-
-      expect(queryByText('할 일이 없어요!')).not.toBeInTheDocument();
     });
   });
 });
