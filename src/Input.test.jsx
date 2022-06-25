@@ -36,7 +36,7 @@ describe('Input', () => {
 
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: 'a' } });
 
-    expect(handleChange).toBeCalledTimes(1);
+    expect(handleChange).toBeCalled();
   });
 
   it('listens button click event', () => {
@@ -44,6 +44,6 @@ describe('Input', () => {
 
     fireEvent.click(getByText('추가'));
 
-    expect(handleClick).toBeCalledTimes(1);
+    expect(handleClick).toBeCalled();
   });
 });
