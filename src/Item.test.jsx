@@ -36,9 +36,9 @@ describe('Item', () => {
   it('click 이벤트를 listen 한다', () => {
     const { getByText } = renderItem();
 
-    expect(handleClick).not.toBeCalled();
-
     fireEvent.click(getByText('완료'));
+
+    expect(handleClick).toBeCalled();
 
     expect(handleClick).toBeCalledWith(1);
   });
