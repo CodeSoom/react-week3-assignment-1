@@ -39,7 +39,7 @@ describe('Page', () => {
 
     fireEvent.change(getByRole('textbox'), { target: { value: 'a' } });
 
-    expect(handleChangeTitle).toBeCalledTimes(1);
+    expect(handleChangeTitle).toBeCalled();
   });
 
   it('listens click add task event', () => {
@@ -47,7 +47,7 @@ describe('Page', () => {
 
     fireEvent.click(getByText('추가'));
 
-    expect(handleClickAddTask).toBeCalledTimes(1);
+    expect(handleClickAddTask).toBeCalled();
   });
 
   context('with tasks', () => {
