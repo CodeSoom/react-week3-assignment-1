@@ -17,7 +17,7 @@ describe('List', () => {
   ));
 
   context('내용이 없을 때', () => {
-    it('"할일이 없어요!"가 렌더링된다', () => {
+    it('tasks의 title이 없다고 렌더링된다', () => {
       const tasks = [];
       const { container } = renderList(tasks);
 
@@ -33,7 +33,7 @@ describe('List', () => {
       },
     ];
 
-    it('"테스트 코드는 아주 어렵네요!" 가 렌더링된다', () => {
+    it('tasks의 title을 렌더링한다', () => {
       const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('테스트 코드는 아주 어렵네요!');
