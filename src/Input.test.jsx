@@ -1,6 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
-
-import userEvent from '@testing-library/user-event';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -27,7 +25,7 @@ describe('Input component', () => {
     expect(getByText('추가')).toBeInTheDocument();
   });
 
-  it('onChange event should be fired when value changed.', () => {
+  it('onChange event should be fired', () => {
     const { getByPlaceholderText } = renderInputComponent();
 
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
@@ -35,6 +33,12 @@ describe('Input component', () => {
     });
 
     expect(handleChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('onChange event should be fired when value changed.', () => {
+    const { rerender } = render(<Input />);
+
+    rerender(<Input value="23" />);
   });
 
   it('value parameter should be changed', () => {
