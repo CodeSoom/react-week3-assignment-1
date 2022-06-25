@@ -35,14 +35,12 @@ describe('<Input />', () => {
     expect(getByText('추가')).toBeInTheDocument();
   });
 
-  context('입력 값이 있다면', () => {
-    it('input의 현재 값과 props.value의 값이 서로 같다.', () => {
-      const taskTitle = '할일';
+  it('현재 입력 중인 값이 보인다.', () => {
+    const taskTitle = '할일';
 
-      const { getByPlaceholderText } = renderInput(taskTitle);
+    const { getByPlaceholderText } = renderInput(taskTitle);
 
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
-    });
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(taskTitle);
   });
 
   describe('추가 버튼 클릭', () => {
