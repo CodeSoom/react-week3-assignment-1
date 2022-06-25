@@ -13,7 +13,11 @@ describe('Input', () => {
   const taskTitle = '안녕';
 
   const renderInput = () => render(
-    <Input value={taskTitle} onChange={handleChange} onClick={handleClick} />,
+    <Input
+      value={taskTitle}
+      onChange={handleChange}
+      onClick={handleClick}
+    />,
   );
 
   it('input-title을 렌더링한다', () => {

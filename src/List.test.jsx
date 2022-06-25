@@ -10,7 +10,10 @@ describe('List', () => {
   });
 
   const renderList = (tasks) => render((
-    <List tasks={tasks} onClickDelete={handleClick} />
+    <List
+      tasks={tasks}
+      onClickDelete={handleClick}
+    />
   ));
 
   context('내용이 없을 때', () => {
