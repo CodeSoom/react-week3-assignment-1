@@ -33,16 +33,14 @@ describe('<Page />', () => {
     expect(getByLabelText(LABEL_TEXT)).toBeInTheDocument();
   });
 
-  context('taskTitle이 있으면', () => {
-    it('input의 value가 taskTitle과 같다.', () => {
-      const taskTitle = '입력값';
+  it('Input에 현재 입력중인 값이 보인다.', () => {
+    const taskTitle = '입력값';
 
-      const { getByLabelText } = renderPage({
-        taskTitle,
-      });
-
-      expect(getByLabelText(LABEL_TEXT)).toHaveValue(taskTitle);
+    const { getByLabelText } = renderPage({
+      taskTitle,
     });
+
+    expect(getByLabelText(LABEL_TEXT)).toHaveValue(taskTitle);
   });
 
   describe('input에 할 일을 입력', () => {
@@ -75,20 +73,22 @@ describe('<Page />', () => {
 
   context('할 일 목록이 없으면', () => {
     it('"할 일이 없어요!" 텍스트가 보인다.', () => {
-      const { container } = renderPage();
+      const { container } = renderPage({
+        tasks: [],
+      });
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
   context('할 일 목록이 있으면', () => {
-    it('할 일 목록의 모든 텍스트가 보인다.', () => {
+    it('할 일 목록이 보인다.', () => {
       const { container } = renderPage({
         tasks: TASKS,
       });
 
-      TASKS.forEach((task) => {
-        expect(container).toHaveTextContent(task.title);
+      TASKS.forEach(({ title }) => {
+        expect(container).toHaveTextContent(title);
       });
     });
   });
