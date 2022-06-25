@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
@@ -33,12 +33,6 @@ describe('Input component', () => {
     });
 
     expect(handleChange).toHaveBeenCalledTimes(1);
-  });
-
-  it('onChange event should be fired when value changed.', () => {
-    const { rerender } = render(<Input />);
-
-    rerender(<Input value="23" />);
   });
 
   it('value parameter should be changed', () => {
