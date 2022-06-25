@@ -6,13 +6,13 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  const renderInput = (value = '') => render(
+  const renderInput = (value = '') => render((
     <Input
       value={value}
       onChange={handleChange}
       onClick={handleClick}
-    />,
-  );
+    />
+  ));
 
   beforeEach(() => {
     jest.clearAllMocks();
