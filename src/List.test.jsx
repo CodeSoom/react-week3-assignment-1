@@ -5,12 +5,12 @@ import List from './List';
 describe('List', () => {
   const handleClick = jest.fn();
 
-  const renderList = ({ tasks }) => render(
+  const renderList = ({ tasks }) => render((
     <List
       tasks={tasks}
       onClickDelete={handleClick}
-    />,
-  );
+    />
+  ));
 
   beforeEach(() => {
     handleClick.mockClear();
