@@ -4,5 +4,5 @@ import App from './App';
 
 describe('App component', () => {
   const renderAppComponent = () => render(<App />);
-  it('', () => {});
+  it('handleChangeTitle', () => {});
 });

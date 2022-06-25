@@ -2,31 +2,25 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-test('List tasks', () => {
-  const tasks = [
-    {
-      id: 101,
-      title: '뭐라도 하기',
-    },
-  ];
-  const handleClickDelete = jest.fn();
+describe('List component', () => {
+  const onClickDelete = jest.fn();
 
-  const { container } = render(
-    <List tasks={tasks} onClickDelete={handleClickDelete} />
-  );
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-});
+  const renderListComponent = (tasks) =>
+    render(<List tasks={tasks} onClickDelete={onClickDelete} />);
 
-test('List no tasks', () => {
-  const tasks = [];
-  const handleClickDelete = jest.fn();
+  it("p html tag text should be '할 일이 없어요!'' when tasks.length is 0", () => {
+    const tasks = [];
+    const { getByText } = renderListComponent(tasks);
+    expect(getByText('할 일이 없어요!')).toContainHTML('p');
+  });
 
-  const { container } = render(
-    <List tasks={tasks} onClickDelete={handleClickDelete} />
-  );
-
-  // expect(container).toHaveTextContent('뭐라도 하기');
-
-  expect(container).toHaveTextContent('할 일이 없어요!');
+  it('ol html should be existed when tasks.length value is 1 or more ', () => {
+    const tasks = ['not today'];
+    const { container } = renderListComponent(tasks);
+    expect(container).toContainHTML('ol');
+  });
 });
