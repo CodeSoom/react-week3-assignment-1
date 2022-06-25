@@ -43,7 +43,9 @@ describe('List', () => {
       const { getByText } = renderList(tasks);
 
       expect(handleClick).not.toBeCalled();
+
       fireEvent.click(getByText('완료'));
+
       expect(handleClick).toBeCalledWith(1);
     });
   });

@@ -38,6 +38,7 @@ describe('Input', () => {
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
       target: { value: taskTitle },
     });
+
     expect(getByPlaceholderText('할 일을 입력해 주세요').value).toBe('안녕');
   });
 });
