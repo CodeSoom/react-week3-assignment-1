@@ -42,7 +42,7 @@ describe('App', () => {
       expect(getByRole('textbox')).toHaveDisplayValue('');
     });
 
-    it('renders task title when add button is clicked', () => {
+    it('renders title of task when add button is clicked', () => {
       const { container, getByText } = renderAppWithInputValue();
 
       fireEvent.click(getByText('추가'));
@@ -72,7 +72,7 @@ describe('App', () => {
       return result;
     };
 
-    it('renders task titles', () => {
+    it('renders titles of tasks', () => {
       const { container } = renderAppWithTasks();
 
       taskTitles.forEach((taskTitle) => {
@@ -80,7 +80,7 @@ describe('App', () => {
       });
     });
 
-    it('removes task when complete button is clicked', () => {
+    it('removes tasks when complete button is clicked', () => {
       const { container, getAllByText } = renderAppWithTasks();
       const completeButton = getAllByText('완료');
 
