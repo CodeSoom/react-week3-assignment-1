@@ -51,15 +51,11 @@ describe('Page', () => {
   });
 
   context('with tasks', () => {
-    let tasks;
-
-    beforeEach(() => {
-      tasks = [
-        { id: 1, title: '할 일 1' },
-        { id: 2, title: '할 일 2' },
-        { id: 3, title: '할 일 3' },
-      ];
-    });
+    const tasks = [
+      { id: 1, title: '할 일 1' },
+      { id: 2, title: '할 일 2' },
+      { id: 3, title: '할 일 3' },
+    ];
 
     it('renders titles of tasks', () => {
       const { container } = renderPage({ tasks });
