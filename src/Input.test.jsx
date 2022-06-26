@@ -16,8 +16,6 @@ describe('<Input />', () => {
     ));
   }
 
-  beforeEach(() => jest.clearAllMocks());
-
   it('input과 button이 보인다', () => {
     const { container } = renderInput();
 

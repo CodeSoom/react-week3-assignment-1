@@ -20,10 +20,6 @@ describe('<Page />', () => {
     ));
   }
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it('input이 보인다', () => {
     const { getByPlaceholderText } = renderPage();
 

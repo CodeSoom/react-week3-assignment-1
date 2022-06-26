@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "verbose": true,
+    "clearMocks":true
+  },
   "scripts": {
     "start": "webpack serve --mode development",
     "test:unit": "jest",
