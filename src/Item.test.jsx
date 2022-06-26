@@ -39,7 +39,5 @@ describe('Item', () => {
     fireEvent.click(getByText('완료'));
 
     expect(handleClick).toBeCalled();
-
-    expect(handleClick).toBeCalledWith(1);
   });
 });
