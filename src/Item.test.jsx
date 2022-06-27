@@ -2,27 +2,42 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
+describe('Item', () => {
+  const handleClick = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const tasks = {
     id: 1,
     title: '뭐라도 하기',
   };
 
-  const handleClick = jest.fn();
-
-  const { container, getByText } = render((
+  const renderItem = () => render((
     <Item
-      task={task}
+      task={tasks}
       onClickDelete={handleClick}
     />
   ));
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  it('item-title 을 렌더링한다', () => {
+    const { container } = renderItem();
 
-  expect(handleClick).not.toBeCalled();
+    expect(container).toHaveTextContent('뭐라도 하기');
+  });
 
-  fireEvent.click(getByText('완료'));
+  it('item-button 을 렌더링한다', () => {
+    const { container } = renderItem();
 
-  expect(handleClick).toBeCalledWith(1);
+    expect(container).toHaveTextContent('완료');
+  });
+
+  it('click 이벤트를 listen 한다', () => {
+    const { getByText } = renderItem();
+
+    fireEvent.click(getByText('완료'));
+
+    expect(handleClick).toBeCalled();
+  });
 });
