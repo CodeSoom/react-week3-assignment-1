@@ -11,28 +11,28 @@ export default function App() {
 
   const { newId, taskTitle, tasks } = state;
 
-  function handleChangeTitle(event) {
+  const handleChangeTitle = (event) => {
     setState({
       ...state,
       taskTitle: event.target.value,
     });
-  }
+  };
 
-  function handleClickAddTask() {
+  const handleClickAddTask = () => {
     setState({
       ...state,
       newId: newId + 1,
       taskTitle: '',
       tasks: [...tasks, { id: newId, title: taskTitle }],
     });
-  }
+  };
 
-  function handleClickDeleteTask(id) {
+  const handleClickDeleteTask = (id) => {
     setState({
       ...state,
       tasks: tasks.filter((task) => task.id !== id),
     });
-  }
+  };
 
   return (
     <Page
