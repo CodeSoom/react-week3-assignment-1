@@ -9,13 +9,16 @@ test('Input', () => {
 
   const { getByText } = render(<Input onClick={handleClick} value={value} />);
 
+  // <input>에 텍스트 입력 시 <input>에 작성한 value가 보여지기
   screen.getByDisplayValue(value);
 
   expect(handleClick).not.toBeCalled();
 
-  fireEvent.click(getByText('추가'));
+  fireEvent.click(getByText('추가')); // 추가 버튼 클릭
 
-  expect(handleClick).toBeCalled();
+  expect(handleClick).toBeCalled(); // 이벤트 실행 확인 (통과)
+
+  // screen.getByDisplayValue(''); // 추가 버튼을 클릭 하는 이벤트 실행됐음에도 왜 input의 value가 ''이 아닌가?
 });
 
 // Input의 기능
