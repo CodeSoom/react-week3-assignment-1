@@ -1,4 +1,7 @@
-export default function Item({ task: { id, title }, onClickDelete }) {
+export default function Item({
+  task: { id, title },
+  onClickDelete,
+}) {
   return (
     <li>
       {title}
