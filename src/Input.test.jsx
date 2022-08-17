@@ -6,7 +6,7 @@ describe('<Input/>', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  context('when input text', () => {
+  context('when component called', () => {
     it('should render', () => {
       const { container } = render((
         <Input

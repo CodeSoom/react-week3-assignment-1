@@ -18,7 +18,6 @@ describe('<List/>', () => {
           onClickDelete={handleClick}
         />
       ));
-
       expect(container).toHaveTextContent('뭐라도 하기');
       expect(container).toHaveTextContent('코드숨 과제');
       expect(container).toHaveTextContent('완료');
