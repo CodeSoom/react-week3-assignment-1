@@ -2,11 +2,11 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-describe('List', () => {
+describe('<List/>', () => {
   const handleClick = jest.fn();
 
-  context('tasks 가 존재한다면', () => {
-    it('title이 보인다.', () => {
+  context('with tasks', () => {
+    it('should renders tasks', () => {
       const tasks = [
         { id: 1, title: '뭐라도 하기' },
         { id: 2, title: '코드숨 과제' },
@@ -25,8 +25,8 @@ describe('List', () => {
     });
   });
 
-  context('완료 버튼을 누른다면', () => {
-    it('각각의 버튼에 함수가 동작한다.', () => {
+  context('when click on the "완료" button', () => {
+    it('should returns each id value', () => {
       const tasks = [
         { id: 1, title: '뭐라도 하기' },
         { id: 2, title: '코드숨 과제' },
@@ -50,8 +50,8 @@ describe('List', () => {
     });
   });
 
-  context('tasks가 비어있다면', () => {
-    it('할 일이 없어요! 가 보인다', () => {
+  context('without tasks', () => {
+    it('should renders "할 일이 없어요!"', () => {
       const tasks = [];
 
       const { container } = render((
