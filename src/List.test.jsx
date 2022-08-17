@@ -6,12 +6,12 @@ describe('<List/>', () => {
   const handleClick = jest.fn();
 
   context('with tasks', () => {
-    it('should renders tasks', () => {
-      const tasks = [
-        { id: 1, title: '뭐라도 하기' },
-        { id: 2, title: '코드숨 과제' },
-      ];
+    const tasks = [
+      { id: 1, title: '뭐라도 하기' },
+      { id: 2, title: '코드숨 과제' },
+    ];
 
+    it('should renders tasks', () => {
       const { container } = render((
         <List
           tasks={tasks}
@@ -23,15 +23,8 @@ describe('<List/>', () => {
       expect(container).toHaveTextContent('코드숨 과제');
       expect(container).toHaveTextContent('완료');
     });
-  });
 
-  context('when click on the "완료" button', () => {
-    it('should returns each id value', () => {
-      const tasks = [
-        { id: 1, title: '뭐라도 하기' },
-        { id: 2, title: '코드숨 과제' },
-      ];
-
+    it('should "완료" button clickable', () => {
       const { getAllByText } = render((
         <List
           tasks={tasks}
