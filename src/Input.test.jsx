@@ -45,7 +45,7 @@ describe('Input', () => {
     expect(handleClick).not.toBeCalled();
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
-    fireEvent.change(input, { target: { value: '잠자기이' } });
+    fireEvent.change(input, { target: { value: '잠자기' } });
 
     fireEvent.click(getByText('추가'));
     expect(handleClick).toBeCalled();
