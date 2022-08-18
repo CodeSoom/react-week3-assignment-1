@@ -2,53 +2,92 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-const setup = () => {
-  const handleChange = jest.fn();
-  const handleClick = jest.fn(() => {
-    fireEvent.change(input, { target: { value: '' } });
-  });
-
-  const utils = render(<Input onChange={handleChange} onClick={handleClick} />);
-  const input = utils.container.querySelector('input');
-  const button = utils.container.querySelector('button');
+const setup = (props = {}) => {
+  const utils = render(<Input {...props} />);
+  const input = utils.getByPlaceholderText('할 일을 입력해 주세요');
+  const button = utils.getByText('추가');
   return {
     input,
     button,
-    handleChange,
-    handleClick,
     ...utils,
   };
 };
 
-test('Render Input component', () => {
-  const { input, button } = setup();
+describe('Input component', () => {
+  context('When Input render', () => {
+    it('Has input', () => {
+      const { input } = setup();
+      expect(input).toBeTruthy();
+    });
 
-  expect(input).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
-  expect(input).toHaveAttribute('type', 'text');
-  expect(button).toHaveTextContent('추가');
-});
+    it('Input element has text type', () => {
+      const { input } = setup();
+      expect(input).toHaveAttribute('type', 'text');
+    });
 
-test('Change input', () => {
-  const { input, handleChange } = setup();
-  const text = '코드숨 리액트 11기 화이팅!';
+    it('Has button', () => {
+      const { button } = setup();
+      expect(button).toBeTruthy();
+    });
+  });
 
-  expect(handleChange).not.toBeCalled();
+  context('When input change', () => {
+    const text = '코드숨 리액트 11기 화이팅!';
 
-  fireEvent.change(input, { target: { value: text } });
+    it('Not yet handleChange is called', () => {
+      const handleChange = jest.fn();
+      setup({ onChange: handleChange });
 
-  expect(handleChange).toBeCalled();
-  expect(input.value).toBe(text);
-});
+      expect(handleChange).not.toBeCalled();
+    });
 
-test('Click add button', () => {
-  const { input, button, handleClick } = setup();
-  const text = '코드숨 리액트 11기 화이팅!';
+    it('handleChange is called', () => {
+      const handleChange = jest.fn();
+      const { input } = setup({ onChange: handleChange });
 
-  expect(handleClick).not.toBeCalled();
+      fireEvent.change(input, { target: { value: text } });
 
-  fireEvent.change(input, { target: { value: text } });
-  fireEvent.click(button);
+      expect(handleChange).toBeCalled();
+    });
 
-  expect(handleClick).toBeCalled();
-  expect(input.value).toBe('');
+    it('Input element value is set', () => {
+      const handleChange = jest.fn();
+      const { input } = setup({ onChange: handleChange });
+
+      fireEvent.change(input, { target: { value: text } });
+
+      expect(input.value).toBe(text);
+    });
+  });
+
+  context('When add button click', () => {
+    const text = '코드숨 리액트 11기 화이팅!';
+
+    it('Not yet handleClick is called', () => {
+      const handleClick = jest.fn();
+      setup({ onClick: handleClick });
+
+      expect(handleClick).not.toBeCalled();
+    });
+
+    it('handleClick is called', () => {
+      const handleClick = jest.fn();
+      const { input, button } = setup({ onClick: handleClick });
+
+      fireEvent.change(input, { target: { value: text } });
+      fireEvent.click(button);
+
+      expect(handleClick).toBeCalled();
+    });
+
+    it('Is empty input value after clicking add button', () => {
+      const handleClick = jest.fn();
+      const { input, button } = setup({ onClick: handleClick });
+
+      fireEvent.change(input, { target: { value: text } });
+      fireEvent.click(button);
+
+      // expect(input.value).toBe('');
+    });
+  });
 });
