@@ -3,8 +3,8 @@ import { render, fireEvent } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  context('할 일이 입력되면', () => {
-    it('input의 value가 변경된다', () => {
+  context('When to-do is entered', () => {
+    it('Input value changed', () => {
       const handleChange = jest.fn();
       const handleClick = jest.fn();
 
@@ -33,8 +33,8 @@ describe('Input', () => {
     });
   });
 
-  context('추가 버튼이 클릭되면', () => {
-    it('handleClick 함수가 실행된다', () => {
+  context('When the Add button is Clicked', () => {
+    it('handleClick function is executed', () => {
       const handleChange = jest.fn();
       const handleClick = jest.fn();
 
