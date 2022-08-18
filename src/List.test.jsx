@@ -26,12 +26,30 @@ describe('List', () => {
     const { container } = render((
       <List
         tasks={tasks}
-        onClick={handleClick}
       />
     ));
 
     expect(container).toHaveTextContent('잠자기');
     expect(container).toHaveTextContent('산책하기');
     expect(container).toHaveTextContent('완료');
+  });
+
+  it('Clicked done button', () => {
+    const tasks = [
+      { id: 1, title: '잠자기' },
+      { id: 2, title: '산책하기' },
+    ];
+
+    const { container, getByText } = render((
+      <List
+        tasks={tasks}
+        onClick={handleClick}
+      />
+    ));
+
+    expect(handleClick).not.toBeCalled();
+
+    fireEvent.click(getByText('잠자기'));
+    expect(handleClick).toBeCalledWith();
   });
 });
