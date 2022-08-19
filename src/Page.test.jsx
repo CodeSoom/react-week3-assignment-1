@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
@@ -23,8 +23,20 @@ describe('<Page/>', () => {
     });
   });
 
-  it('renders changed input value', () => {
+  it('changes input value', () => {
+    const { getByPlaceholderText } = render(
+      <Page
+        onChangeTitle={handleChange}
+        onClickAddTask={handleClickAdd}
+        tasks={tasks}
+        onClickDeleteTask={handleClickDelete}
+      />,
+    );
 
+    const input = getByPlaceholderText('할 일을 입력해 주세요');
+    fireEvent.change(input, { target: { value: 'Changed' } });
+
+    expect(input.value).toBe('Changed');
   });
 
   it('clears <input> value after "추가" button clicked', () => {
