@@ -6,7 +6,7 @@ describe('Input', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  it('Rendered component', () => {
+  it('Renders a button to add task', () => {
     const { container, getByPlaceholderText } = render((
       <Input />
     ));
@@ -18,7 +18,7 @@ describe('Input', () => {
     expect(input).toBeEnabled();
   });
 
-  it('Changed input value', () => {
+  it('The user enters a task in the input box', () => {
     const { getByPlaceholderText } = render((
       <Input
         onChange={handleChange}
@@ -31,10 +31,11 @@ describe('Input', () => {
     fireEvent.change(input, { target: { value: '잠자기' } });
 
     expect(input.value).toBe('잠자기');
+    expect(input.getAttribute('value')).toBe('');
     expect(handleChange).toBeCalled();
   });
 
-  it('Click add button', () => {
+  it('Click the Add button to add a task', () => {
     const { getByText, getByPlaceholderText } = render((
       <Input
         onClick={handleClick}
