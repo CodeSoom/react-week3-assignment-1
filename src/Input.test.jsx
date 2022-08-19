@@ -7,7 +7,7 @@ describe('<Input/>', () => {
   const handleChange = jest.fn();
 
   context('when component called', () => {
-    it('should render', () => {
+    it('renders <label> and <button> tags', () => {
       const { container } = render((
         <Input
           onChange={handleChange}
@@ -18,7 +18,7 @@ describe('<Input/>', () => {
       expect(container).toHaveTextContent('추가');
     });
 
-    it('should be able to click "추가" button', () => {
+    it('renders clickable "추가" button', () => {
       const { getByText } = render((
         <Input
           onChange={handleChange}

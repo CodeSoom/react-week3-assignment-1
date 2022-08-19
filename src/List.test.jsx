@@ -11,7 +11,7 @@ describe('<List/>', () => {
       { id: 2, title: '코드숨 과제' },
     ];
 
-    it('should renders tasks', () => {
+    it('renders tasks', () => {
       const { container } = render((
         <List
           tasks={tasks}
@@ -23,7 +23,7 @@ describe('<List/>', () => {
       expect(container).toHaveTextContent('완료');
     });
 
-    it('should be able to click "완료" buttons', () => {
+    it('renders clickable "완료" buttons', () => {
       const { getAllByText } = render((
         <List
           tasks={tasks}
@@ -43,7 +43,7 @@ describe('<List/>', () => {
   });
 
   context('without tasks', () => {
-    it('should renders "할 일이 없어요!"', () => {
+    it('renders "할 일이 없어요!" <p> tag', () => {
       const tasks = [];
 
       const { container } = render((

@@ -11,7 +11,7 @@ describe('<Item/>', () => {
       title: '뭐라도 하기',
     };
 
-    it('should renders', () => {
+    it('renders task', () => {
       const { container } = render((
         <Item
           task={task}
@@ -23,7 +23,7 @@ describe('<Item/>', () => {
       expect(container).toHaveTextContent('완료');
     });
 
-    it('should be able to click "완료" button', () => {
+    it('renders clickable "완료" button', () => {
       const { getByText } = render((
         <Item
           task={task}
@@ -32,7 +32,7 @@ describe('<Item/>', () => {
       ));
 
       expect(handleClick).not.toBeCalled();
-      
+
       fireEvent.click(getByText('완료'));
 
       expect(handleClick).toBeCalledWith(1);
