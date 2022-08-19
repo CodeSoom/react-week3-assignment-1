@@ -13,22 +13,14 @@ describe('<Page/>', () => {
     { id: 2, title: '코드숨 과제' },
   ];
 
-  const component = (
-    <Page
-      taskTitle={taskTitle}
-      onChangeTitle={handleChange}
-      onClickAddTask={handleClickAdd}
-      tasks={tasks}
-      onClickDeleteTask={handleClickDelete}
-    />
-  );
+  context('with tasks', () => {
+    it('renders <h1>, <label>, <button> tags', () => {
+      const { container } = render(<Page tasks={tasks} />);
 
-  it('renders <h1>, <label>, <button> tags', () => {
-    const { container } = render(component);
-
-    expect(container).toHaveTextContent('To-do');
-    expect(container).toHaveTextContent('할 일');
-    expect(container).toHaveTextContent('추가');
+      expect(container).toHaveTextContent('To-do');
+      expect(container).toHaveTextContent('할 일');
+      expect(container).toHaveTextContent('추가');
+    });
   });
 
   it('renders changed input value', () => {
@@ -36,10 +28,6 @@ describe('<Page/>', () => {
   });
 
   it('clears <input> value after "추가" button clicked', () => {
-
-  });
-
-  context('with tasks', () => {
 
   });
 

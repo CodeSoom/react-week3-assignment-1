@@ -6,24 +6,15 @@ describe('<Input/>', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
 
-  const value = '유닛 테스트 재밌다.';
-  const component = (
-    <Input
-      value={value}
-      onChange={handleChange}
-      onClick={handleClick}
-    />
-  );
-
   it('renders <label> and <button> tags', () => {
-    const { container } = render(component);
+    const { container } = render(<Input />);
 
     expect(container).toHaveTextContent('할 일');
     expect(container).toHaveTextContent('추가');
   });
 
   it('renders clickable "추가" button', () => {
-    const { getByText } = render(component);
+    const { getByText } = render(<Input onClick={handleClick} />);
 
     expect(handleClick).not.toBeCalled();
 

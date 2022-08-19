@@ -12,24 +12,14 @@ describe('<Item/>', () => {
     };
 
     it('renders task', () => {
-      const { container } = render((
-        <Item
-          task={task}
-          onClickDelete={handleClick}
-        />
-      ));
+      const { container } = render(<Item task={task} />);
 
       expect(container).toHaveTextContent('뭐라도 하기');
       expect(container).toHaveTextContent('완료');
     });
 
     it('renders clickable "완료" button', () => {
-      const { getByText } = render((
-        <Item
-          task={task}
-          onClickDelete={handleClick}
-        />
-      ));
+      const { getByText } = render(<Item task={task} onClickDelete={handleClick} />);
 
       expect(handleClick).not.toBeCalled();
 
