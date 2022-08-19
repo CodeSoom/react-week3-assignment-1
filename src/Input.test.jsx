@@ -7,35 +7,29 @@ describe('<Input/>', () => {
   const handleChange = jest.fn();
 
   const value = '유닛 테스트 재밌다.';
+  const component = (
+    <Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />
+  );
 
-  context('when component called', () => {
-    it('renders <label> and <button> tags', () => {
-      const { container } = render((
-        <Input
-          value={value}
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
+  it('renders <label> and <button> tags', () => {
+    const { container } = render(component);
 
-      expect(container).toHaveTextContent('할 일');
-      expect(container).toHaveTextContent('추가');
-    });
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
+  });
 
-    it('renders clickable "추가" button', () => {
-      const { getByText } = render((
-        <Input
-          onChange={handleChange}
-          onClick={handleClick}
-        />
-      ));
+  it('renders clickable "추가" button', () => {
+    const { getByText } = render(component);
 
-      expect(handleClick).not.toBeCalled();
+    expect(handleClick).not.toBeCalled();
 
-      const button = getByText('추가');
-      fireEvent.click(button);
+    const button = getByText('추가');
+    fireEvent.click(button);
 
-      expect(handleClick).toBeCalled();
-    });
+    expect(handleClick).toBeCalled();
   });
 });
