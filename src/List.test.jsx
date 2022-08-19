@@ -11,25 +11,23 @@ describe('<List/>', () => {
       { id: 2, title: '코드숨 과제' },
     ];
 
+    const component = (
+      <List
+        tasks={tasks}
+        onClickDelete={handleClick}
+      />
+    );
+
     it('renders tasks', () => {
-      const { container } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />
-      ));
+      const { container } = render(component);
+
       expect(container).toHaveTextContent('뭐라도 하기');
       expect(container).toHaveTextContent('코드숨 과제');
       expect(container).toHaveTextContent('완료');
     });
 
     it('renders clickable "완료" buttons', () => {
-      const { getAllByText } = render((
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />
-      ));
+      const { getAllByText } = render(component);
 
       expect(handleClick).not.toBeCalled();
 
