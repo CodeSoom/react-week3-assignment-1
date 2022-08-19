@@ -5,7 +5,13 @@ import Input from './Input';
 describe('Input component', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
-  const setup = (value = '') => render(<Input value={value} onChange={handleChange} onClick={handleClick} />);
+  const setup = (value = '') => render(
+    <Input
+      value={value}
+      onChange={handleChange}
+      onClick={handleClick}
+    />,
+  );
 
   const text = '코드숨 리액트 11기 화이팅!';
 
