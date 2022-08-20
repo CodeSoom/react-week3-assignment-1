@@ -58,12 +58,38 @@ describe('<Page/>', () => {
       expect(container).toHaveTextContent('코드숨 과제완료');
     });
 
-    it('clicks "추가" button for adding task', () => {
+    it('clicks "완료" buttons for deleting task', () => {
+      const { getAllByText } = render(
+        <Page
+          onChangeTitle={handleChange}
+          onClickAddTask={handleClickAdd}
+          tasks={tasks}
+          onClickDeleteTask={handleClickDelete}
+        />,
+      );
 
+      expect(handleClickDelete).not.toBeCalled();
+
+      const buttons = getAllByText('완료');
+      fireEvent.click(buttons[0]);
+      fireEvent.click(buttons[1]);
+
+      expect(handleClickDelete).toBeCalledTimes(2);
     });
   });
 
   context('without tasks', () => {
+    it('renders "할 일이 없어요!"', () => {
+      const { container } = render(
+        <Page
+          onChangeTitle={handleChange}
+          onClickAddTask={handleClickAdd}
+          tasks={[]}
+          onClickDeleteTask={handleClickDelete}
+        />,
+      );
 
+      expect(container).toHaveTextContent('할 일이 없어요!');
+    });
   });
 });
