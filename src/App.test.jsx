@@ -1,4 +1,4 @@
-import { render, fireEvent, getAllByText } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
