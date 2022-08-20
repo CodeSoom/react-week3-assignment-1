@@ -12,7 +12,12 @@ describe('<List/>', () => {
     ];
 
     it('renders tasks', () => {
-      const { container } = render(<List tasks={tasks} />);
+      const { container } = render(
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />,
+      );
 
       expect(container).toHaveTextContent('뭐라도 하기');
       expect(container).toHaveTextContent('코드숨 과제');
@@ -20,7 +25,12 @@ describe('<List/>', () => {
     });
 
     it('renders clickable "완료" buttons', () => {
-      const { getAllByText } = render(<List tasks={tasks} onClickDelete={handleClick} />);
+      const { getAllByText } = render(
+        <List
+          tasks={tasks}
+          onClickDelete={handleClick}
+        />,
+      );
 
       expect(handleClick).not.toBeCalled();
 
@@ -35,8 +45,12 @@ describe('<List/>', () => {
 
   context('without tasks', () => {
     it('renders "할 일이 없어요!" <p> tag', () => {
-      const { container } = render(<List tasks={[]} />);
-
+      const { container } = render(
+        <List
+          tasks={[]}
+          onClickDelete={handleClick}
+        />,
+      );
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });

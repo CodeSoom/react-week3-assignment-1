@@ -7,7 +7,6 @@ describe('<Page/>', () => {
   const handleClickAdd = jest.fn();
   const handleClickDelete = jest.fn();
 
-  const taskTitle = '테스트 코드 재밌다.';
   const tasks = [
     { id: 1, title: '뭐라도 하기' },
     { id: 2, title: '코드숨 과제' },
@@ -15,7 +14,14 @@ describe('<Page/>', () => {
 
   context('with tasks', () => {
     it('renders <h1>, <label>, <button> tags', () => {
-      const { container } = render(<Page tasks={tasks} />);
+      const { container } = render(
+        <Page
+          onChangeTitle={handleChange}
+          onClickAddTask={handleClickAdd}
+          tasks={tasks}
+          onClickDeleteTask={handleClickDelete}
+        />,
+      );
 
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
