@@ -19,7 +19,7 @@ describe('Input component', () => {
   it('renders input & button', () => {
     const { getByPlaceholderText, getByText } = setup();
 
-    expect(getByText('추가')).toBeTruthy();
+    expect(getByText('추가')).not.toBeNull();
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveAttribute('type', 'text');
   });
 
@@ -33,7 +33,7 @@ describe('Input component', () => {
     expect(handleChange).toBeCalled();
   });
 
-  it('renders input set value after change event', () => {
+  it('renders input set value', () => {
     const { getByPlaceholderText } = setup(text);
 
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(text);

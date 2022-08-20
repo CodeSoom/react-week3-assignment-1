@@ -7,10 +7,10 @@ describe('List component', () => {
   const setup = (tasks = []) => render(<List tasks={tasks} onClickDelete={handleClickDelete} />);
 
   context('When tasks is empty', () => {
-    it('List render', () => {
+    it('render paragraph', () => {
       const { getByText } = setup();
 
-      expect(getByText('할 일이 없어요!')).toBeTruthy();
+      expect(getByText('할 일이 없어요!')).not.toBeNull();
     });
   });
 
