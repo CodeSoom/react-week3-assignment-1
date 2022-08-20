@@ -17,14 +17,14 @@ describe('Item component', () => {
     />
   ));
 
-  it('Item render', () => {
+  it('renders list & button', () => {
     const { container } = setup();
 
     expect(container).toHaveTextContent('뭐라도 하기');
     expect(container).toHaveTextContent('완료');
   });
 
-  it('handleClick is called at change event', () => {
+  it('renders button to listen to click event', () => {
     const { getByText } = setup();
 
     expect(handleClick).not.toBeCalled();

@@ -5,6 +5,7 @@ import Input from './Input';
 describe('Input component', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
+
   const setup = (value = '') => render(
     <Input
       value={value}
@@ -15,7 +16,7 @@ describe('Input component', () => {
 
   const text = '코드숨 리액트 11기 화이팅!';
 
-  it('Input render', () => {
+  it('renders input & button', () => {
     const { getByPlaceholderText, getByText } = setup();
 
     expect(getByText('추가')).toBeTruthy();
@@ -32,7 +33,7 @@ describe('Input component', () => {
     expect(handleChange).toBeCalled();
   });
 
-  it('input value is set at change event', () => {
+  it('renders input set value after change event', () => {
     const { getByPlaceholderText } = setup(text);
 
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveValue(text);
