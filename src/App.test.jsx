@@ -30,6 +30,7 @@ describe('<App/>', () => {
     const addButton = getByText('추가');
     fireEvent.click(addButton);
 
+    expect(input.value).toBe('');
     expect(container).not.toHaveTextContent('할 일이 없어요!');
 
     expect(container).toHaveTextContent('New task');
