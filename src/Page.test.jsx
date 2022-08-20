@@ -43,6 +43,24 @@ describe('<Page/>', () => {
     expect(input.value).toBe('Changed');
   });
 
+  it('clicks "추가" button for adding task', () => {
+    const { getByText } = render(
+      <Page
+        onChangeTitle={handleChange}
+        onClickAddTask={handleClickAdd}
+        tasks={tasks}
+        onClickDeleteTask={handleClickDelete}
+      />,
+    );
+
+    expect(handleClickAdd).not.toBeCalled();
+
+    const button = getByText('추가');
+    fireEvent.click(button);
+
+    expect(handleClickAdd).toBeCalled();
+  });
+
   context('with tasks', () => {
     it('renders <List/> field', () => {
       const { container } = render(
