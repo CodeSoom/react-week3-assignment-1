@@ -24,7 +24,7 @@ describe('<Item/>', () => {
       expect(container).toHaveTextContent('완료');
     });
 
-    it('renders clickable "완료" button', () => {
+    it('clicks "완료" buttons for deleting a task', () => {
       const { getByText } = render(
         <Item
           key={task.id}
