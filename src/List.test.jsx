@@ -38,8 +38,7 @@ describe('<List/>', () => {
       fireEvent.click(buttons[0]);
       fireEvent.click(buttons[1]);
 
-      expect(handleClick).toBeCalledWith(1);
-      expect(handleClick).toBeCalledWith(2);
+      expect(handleClick).toBeCalledTimes(2);
     });
   });
 
