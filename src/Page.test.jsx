@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
-import { tasks } from './__fixtures__/tasks';
+import { fixtureTasks } from './__fixtures__/tasks';
 
 describe('<Page/>', () => {
   const handleChange = jest.fn();
@@ -19,18 +19,18 @@ describe('<Page/>', () => {
 
   context('with tasks', () => {
     it('renders <Input/> and <List/> component', () => {
-      const { container } = appComponent(tasks);
+      const { container } = appComponent(fixtureTasks);
 
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
       expect(container).toHaveTextContent('추가');
-      tasks.forEach((task) => {
+      fixtureTasks.forEach((task) => {
         expect(container).toHaveTextContent(task.title);
       });
     });
 
     it('clicks "완료" buttons to delete tasks', () => {
-      const { getAllByText } = appComponent(tasks);
+      const { getAllByText } = appComponent(fixtureTasks);
 
       expect(handleClickDelete).not.toBeCalled();
 

@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
-import { task } from './__fixtures__/tasks';
+import { fixtureTask } from './__fixtures__/tasks';
 
 describe('<Item/>', () => {
   const handleClick = jest.fn();
@@ -15,14 +15,14 @@ describe('<Item/>', () => {
   );
 
   it('renders task', () => {
-    const { container } = appComponent(task);
+    const { container } = appComponent(fixtureTask);
 
     expect(container).toHaveTextContent('뭐라도 하기');
     expect(container).toHaveTextContent('완료');
   });
 
   it('clicks "완료" buttons to delete a task', () => {
-    const { getByText } = appComponent(task);
+    const { getByText } = appComponent(fixtureTask);
 
     expect(handleClick).not.toBeCalled();
 
