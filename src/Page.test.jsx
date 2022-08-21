@@ -9,9 +9,9 @@ describe('<Page/>', () => {
 
   const appComponent = (tasks) => render(
     <Page
+      tasks={tasks}
       onChangeTitle={handleChange}
       onClickAddTask={handleClickAdd}
-      tasks={tasks}
       onClickDeleteTask={handleClickDelete}
     />,
   );
