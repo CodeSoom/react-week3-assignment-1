@@ -1,6 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
+import { task } from './__fixtures__/tasks';
 
 describe('<Item/>', () => {
   const handleClick = jest.fn();
@@ -12,11 +13,6 @@ describe('<Item/>', () => {
       onClickDelete={handleClick}
     />,
   );
-
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
 
   it('renders task', () => {
     const { container } = appComponent(task);
