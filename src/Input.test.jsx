@@ -7,7 +7,7 @@ describe('<Input/>', () => {
   const handleChange = jest.fn();
   const handleClick = jest.fn();
 
-  it('renders <label> and <button> tags', () => {
+  it('renders <Input/> field', () => {
     const { container } = render(
       <Input
         value={value}
