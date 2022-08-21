@@ -21,7 +21,7 @@ describe('<App/>', () => {
     expect(input.value).toBe('Changed');
   });
 
-  it('clicks "추가" button to display task', () => {
+  it('clicks "추가" button to add a task', () => {
     const { container, getByPlaceholderText, getByText } = render(<App />);
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
@@ -37,7 +37,7 @@ describe('<App/>', () => {
     expect(container).toHaveTextContent('완료');
   });
 
-  it('clicks "완료" button to delete task', () => {
+  it('clicks "완료" button to delete a task', () => {
     const { container, getByPlaceholderText, getByText } = render(<App />);
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');

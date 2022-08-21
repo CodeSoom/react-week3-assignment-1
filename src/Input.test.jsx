@@ -20,7 +20,7 @@ describe('<Input/>', () => {
     expect(container).toHaveTextContent('추가');
   });
 
-  it('clicks "추가" button for adding a task', () => {
+  it('clicks "추가" button to add a task', () => {
     const { getByText } = render(
       <Input
         value={value}

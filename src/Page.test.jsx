@@ -43,7 +43,7 @@ describe('<Page/>', () => {
     expect(input.value).toBe('Changed');
   });
 
-  it('clicks "추가" button for adding task', () => {
+  it('clicks "추가" button to add a task', () => {
     const { getByText } = render(
       <Page
         onChangeTitle={handleChange}
@@ -76,7 +76,7 @@ describe('<Page/>', () => {
       expect(container).toHaveTextContent('코드숨 과제완료');
     });
 
-    it('clicks "완료" buttons for deleting task', () => {
+    it('clicks "완료" buttons to delete tasks', () => {
       const { getAllByText } = render(
         <Page
           onChangeTitle={handleChange}

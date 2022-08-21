@@ -24,7 +24,7 @@ describe('<List/>', () => {
       expect(container).toHaveTextContent('완료');
     });
 
-    it('clicks "완료" buttons for deleting a task', () => {
+    it('clicks "완료" buttons to delete tasks', () => {
       const { getAllByText } = render(
         <List
           tasks={tasks}
