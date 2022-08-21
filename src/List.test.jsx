@@ -17,8 +17,10 @@ describe('<List/>', () => {
     it('renders tasks', () => {
       const { container } = appComponent(tasks);
 
-      expect(container).toHaveTextContent('뭐라도 하기');
-      expect(container).toHaveTextContent('코드숨 과제');
+      tasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+      });
+
       expect(container).toHaveTextContent('완료');
     });
 
@@ -28,8 +30,7 @@ describe('<List/>', () => {
       expect(handleClick).not.toBeCalled();
 
       const buttons = getAllByText('완료');
-      fireEvent.click(buttons[0]);
-      fireEvent.click(buttons[1]);
+      buttons.forEach((button) => fireEvent.click(button));
 
       expect(handleClick).toBeCalledTimes(2);
     });

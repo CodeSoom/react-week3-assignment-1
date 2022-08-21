@@ -17,11 +17,6 @@ describe('<Page/>', () => {
     />,
   );
 
-  // const tasks = [
-  //   { id: 1, title: '뭐라도 하기' },
-  //   { id: 2, title: '코드숨 과제' },
-  // ];
-
   context('with tasks', () => {
     it('renders <Input/> and <List/> component', () => {
       const { container } = appComponent(tasks);
@@ -29,8 +24,9 @@ describe('<Page/>', () => {
       expect(container).toHaveTextContent('To-do');
       expect(container).toHaveTextContent('할 일');
       expect(container).toHaveTextContent('추가');
-      expect(container).toHaveTextContent('뭐라도 하기');
-      expect(container).toHaveTextContent('코드숨 과제');
+      tasks.forEach((task) => {
+        expect(container).toHaveTextContent(task.title);
+      });
     });
 
     it('clicks "완료" buttons to delete tasks', () => {
@@ -39,8 +35,7 @@ describe('<Page/>', () => {
       expect(handleClickDelete).not.toBeCalled();
 
       const buttons = getAllByText('완료');
-      fireEvent.click(buttons[0]);
-      fireEvent.click(buttons[1]);
+      buttons.forEach((button) => fireEvent.click(button));
 
       expect(handleClickDelete).toBeCalledTimes(2);
     });
