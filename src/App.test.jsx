@@ -3,8 +3,10 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('<App/>', () => {
+  const appComponent = () => render(<App />);
+
   it('renders <Page/>', () => {
-    const { container } = render(<App />);
+    const { container } = appComponent();
 
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일');
@@ -13,7 +15,7 @@ describe('<App/>', () => {
   });
 
   it('changes input value', () => {
-    const { getByPlaceholderText } = render(<App />);
+    const { getByPlaceholderText } = appComponent();
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
     fireEvent.change(input, { target: { value: 'Changed' } });
@@ -22,7 +24,7 @@ describe('<App/>', () => {
   });
 
   it('clicks "추가" button to add a task', () => {
-    const { container, getByPlaceholderText, getByText } = render(<App />);
+    const { container, getByPlaceholderText, getByText } = appComponent();
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
     fireEvent.change(input, { target: { value: 'New task' } });
@@ -38,7 +40,7 @@ describe('<App/>', () => {
   });
 
   it('clicks "완료" button to delete a task', () => {
-    const { container, getByPlaceholderText, getByText } = render(<App />);
+    const { container, getByPlaceholderText, getByText } = appComponent();
 
     const input = getByPlaceholderText('할 일을 입력해 주세요');
     fireEvent.change(input, { target: { value: 'New task' } });

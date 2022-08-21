@@ -5,19 +5,21 @@ import List from './List';
 describe('<List/>', () => {
   const handleClick = jest.fn();
 
-  context('with tasks', () => {
-    const tasks = [
-      { id: 1, title: '뭐라도 하기' },
-      { id: 2, title: '코드숨 과제' },
-    ];
+  const appComponent = (tasks) => render(
+    <List
+      tasks={tasks}
+      onClickDelete={handleClick}
+    />,
+  );
 
+  const tasks = [
+    { id: 1, title: '뭐라도 하기' },
+    { id: 2, title: '코드숨 과제' },
+  ];
+
+  context('with tasks', () => {
     it('renders tasks', () => {
-      const { container } = render(
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />,
-      );
+      const { container } = appComponent(tasks);
 
       expect(container).toHaveTextContent('뭐라도 하기');
       expect(container).toHaveTextContent('코드숨 과제');
@@ -25,12 +27,7 @@ describe('<List/>', () => {
     });
 
     it('clicks "완료" buttons to delete tasks', () => {
-      const { getAllByText } = render(
-        <List
-          tasks={tasks}
-          onClickDelete={handleClick}
-        />,
-      );
+      const { getAllByText } = appComponent(tasks);
 
       expect(handleClick).not.toBeCalled();
 
@@ -44,12 +41,7 @@ describe('<List/>', () => {
 
   context('without tasks', () => {
     it('renders "할 일이 없어요!"', () => {
-      const { container } = render(
-        <List
-          tasks={[]}
-          onClickDelete={handleClick}
-        />,
-      );
+      const { container } = appComponent([]);
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
