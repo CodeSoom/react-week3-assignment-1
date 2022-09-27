@@ -6,6 +6,7 @@ describe('Input component test', () => {
   context('When <Input /> component rendered', () => {
     it('Show specific text (할 일 & 추가)', () => {
       const { container } = render(<Input />);
+
       expect(container).toHaveTextContent('할 일');
       expect(container).toHaveTextContent('추가');
     });
@@ -14,6 +15,7 @@ describe('Input component test', () => {
   context('When put a value in Input', () => {
     it('Onchange event occurred in Input', () => {
       render(<Input />);
+
       const task = screen.getByLabelText('할 일');
 
       fireEvent.change(task, { target: { value: '아무거나' } });
@@ -31,6 +33,7 @@ describe('Input component test', () => {
           onClick={handleClick}
         />
       ));
+
       const button = screen.getByText('추가');
 
       expect(handleClick).not.toBeCalled();
