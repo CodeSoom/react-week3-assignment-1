@@ -21,7 +21,7 @@ describe('List component test', () => {
   });
 
   context('When there no task on the list', () => {
-    it('Show Tasks on the list', () => {
+    it('Show other specific nodes (할 일이 없어요!)', () => {
       const tasks = [];
 
       const { container } = render((
