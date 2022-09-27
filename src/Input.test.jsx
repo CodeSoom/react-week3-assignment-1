@@ -25,12 +25,15 @@ describe('Input component test', () => {
   context('When click 추가 button', () => {
     it('HandleClick event occurs', () => {
       const handleClick = jest.fn();
+
       render((
         <Input
           onClick={handleClick}
         />
       ));
       const button = screen.getByText('추가');
+
+      expect(handleClick).not.toBeCalled();
 
       fireEvent.click(button);
 
