@@ -8,7 +8,7 @@ describe('<List />', () => {
     id: 1,
     title: '할 일 추가했음',
   }];
-  const handleClick = jest.fn(() => true);
+  const handleClick = jest.fn();
 
   it('List 컴포넌트에 tasks가 없다는 요소가 있는가?', () => {
     const { getByText } = render(
