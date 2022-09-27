@@ -30,16 +30,6 @@ describe('App component test', () => {
     });
   });
 
-  context('When click 추가 button', () => {
-    it('HandleClick event occurs', () => {
-      render(<App />);
-
-      const button = screen.getByText('추가');
-
-      fireEvent.click(button);
-    });
-  });
-
   context('When put a value in Input', () => {
     it('Onchange event occurred in Input', () => {
       render(<App />);
@@ -49,6 +39,22 @@ describe('App component test', () => {
       fireEvent.change(task, { target: { value: '아무거나' } });
 
       expect(task.value).toBe('아무거나');
+    });
+  });
+
+  context('When click 추가 button', () => {
+    it('HandleClick event occurs', () => {
+      const { queryByText } = render(<App />);
+
+      const task = screen.getByLabelText('할 일');
+
+      fireEvent.change(task, { target: { value: '아무거나' } });
+
+      expect(task.value).toBe('아무거나');
+
+      fireEvent.click(screen.getByText('추가'));
+
+      expect(queryByText('아무거나')).not.toBeNull();
     });
   });
 
