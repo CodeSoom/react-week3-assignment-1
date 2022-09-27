@@ -2,26 +2,39 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
-  const handleClick = jest.fn();
+describe('Input component test', () => {
+  context('When <Input /> component rendered', () => {
+    it('Show specific text (할 일 & 추가)', () => {
+      const { container } = render(<Input />);
+      expect(container).toHaveTextContent('할 일');
+      expect(container).toHaveTextContent('추가');
+    });
+  });
 
-  const { container } = render((
-    <Input
-      onClick={handleClick}
-    />
-  ));
+  context('When put a value in Input', () => {
+    it('Onchange event occurred in Input', () => {
+      render(<Input />);
+      const task = screen.getByLabelText('할 일');
 
-  expect(container).toHaveTextContent('할 일');
-  expect(container).toHaveTextContent('추가');
+      fireEvent.change(task, { target: { value: '아무거나' } });
 
-  const task = screen.getByLabelText('할 일');
-  const button = screen.getByText('추가');
+      expect(task.value).toBe('아무거나');
+    });
+  });
 
-  fireEvent.change(task, { target: { value: '아무거나' } });
+  context('When click 추가 button', () => {
+    it('HandleClick event occurs', () => {
+      const handleClick = jest.fn();
+      render((
+        <Input
+          onClick={handleClick}
+        />
+      ));
+      const button = screen.getByText('추가');
 
-  expect(task.value).toBe('아무거나');
+      fireEvent.click(button);
 
-  fireEvent.click(button);
-
-  expect(handleClick).toBeCalled();
+      expect(handleClick).toBeCalled();
+    });
+  });
 });
