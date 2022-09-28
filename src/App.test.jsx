@@ -2,36 +2,32 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import App from './App';
 
-describe('App component test', () => {
-  context('When <App /> component rendered', () => {
-    it('Show specific text (To-do & 할 일 & 추가)', () => {
-      const { queryByText } = render(<App />);
+describe('App', () => {
+  it('Show text (To-do & 할 일 & 추가)', () => {
+    const { queryByText } = render(<App />);
 
-      expect(queryByText('To-do')).not.toBeNull();
-      expect(queryByText('할 일')).not.toBeNull();
-    });
+    expect(queryByText('To-do')).not.toBeNull();
+    expect(queryByText('할 일')).not.toBeNull();
   });
 
-  context('Render Page component', () => {
-    it('Render Input component', () => {
-      render(<App />);
+  it('Render Input component', () => {
+    render(<App />);
 
-      const task = screen.getByLabelText('할 일');
-      const button = screen.getByText('추가');
+    const task = screen.getByLabelText('할 일');
+    const button = screen.getByText('추가');
 
-      expect(task).toBeInTheDocument();
-      expect(button).toBeInTheDocument();
-    });
+    expect(task).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
+  });
 
-    it('Render List component', () => {
-      const { queryByText } = render(<App />);
+  it('Render List component', () => {
+    const { queryByText } = render(<App />);
 
-      expect(queryByText('할 일이 없어요!')).not.toBeNull();
-    });
+    expect(queryByText('할 일이 없어요!')).not.toBeNull();
   });
 
   context('When put a value in Input', () => {
-    it('Onchange event occurred in Input', () => {
+    it('OnChange Event Occurred', () => {
       render(<App />);
 
       const task = screen.getByLabelText('할 일');
@@ -43,7 +39,7 @@ describe('App component test', () => {
   });
 
   context('When click 추가 button', () => {
-    it('HandleClick event occurs', () => {
+    it('Adds task', () => {
       const { queryByText } = render(<App />);
 
       const task = screen.getByLabelText('할 일');
@@ -59,7 +55,7 @@ describe('App component test', () => {
   });
 
   context('When click 완료 button', () => {
-    it('Onchange event occurred in Input', () => {
+    it('Delete task', () => {
       const { queryByText } = render(<App />);
 
       const task = screen.getByLabelText('할 일');
