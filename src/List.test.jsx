@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-describe('<List />', () => {
+describe('List 컴포넌트는', () => {
   const noTasks = [];
   const tasks = [{
     id: 1,
@@ -10,26 +10,30 @@ describe('<List />', () => {
   }];
   const handleClick = jest.fn();
 
-  it('List 컴포넌트에 tasks가 없다는 요소가 있는가?', () => {
-    const { getByText } = render(
-      <List tasks={noTasks} />,
-    );
+  context('task가 없으면', () => {
+    it('할 일이 없다는 문자를 리턴한다', () => {
+      const { getByText } = render(
+        <List tasks={noTasks} />,
+      );
 
-    getByText('할 일이 없어요!'); // tasks 없음 메시지 요소가 있는지 확인
+      getByText('할 일이 없어요!');
+    });
   });
 
-  it('List 컴포넌트에 task가 있는가?', () => {
-    const { getByText } = render(
-      <List
-        tasks={tasks}
-      />,
-    );
+  context('tasks가 있으면', () => {
+    it('할일 목록을 리턴한다', () => {
+      const { getByText } = render(
+        <List
+          tasks={tasks}
+        />,
+      );
 
-    getByText(tasks[0].title);
+      getByText(tasks[0].title);
 
-    expect(tasks[0]).toMatchObject({
-      id: 1,
-      title: '할 일 추가했음',
+      expect(tasks[0]).toMatchObject({
+        id: 1,
+        title: '할 일 추가했음',
+      });
     });
   });
 
@@ -41,6 +45,6 @@ describe('<List />', () => {
       />,
     );
 
-    expect(handleClick).toHaveBeenCalledTimes(0); // 전달되는 함수는 있지만 호출은 안하는지 확인
+    expect(handleClick).toHaveBeenCalledTimes(0);
   });
 });

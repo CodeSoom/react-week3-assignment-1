@@ -2,21 +2,21 @@ import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
-describe('<App />', () => {
-  it('App 컴포넌트에서 Page 컴포넌트를 호출하고 있는가?', () => {
+describe('App 컴포넌트에서는', () => {
+  it('Page 컴포넌트를 리턴한다', () => {
     const { getByText } = render(
       <App />,
     );
 
-    expect(getByText('To-do')).toBeInTheDocument(); // Page 컴포넌트의 h1요소 확인
+    expect(getByText('To-do')).toBeInTheDocument();
   });
 
-  it('App 컴포넌트에서 정의된 handleChangeTitle 함수 확인', () => {
+  it('정의된 handleChangeTitle 함수를 통해 인풋의 값을 변경할 수 있다', () => {
     const { getByPlaceholderText } = render(
       <App />,
     );
 
-    const input = getByPlaceholderText('할 일을 입력해 주세요'); // 인풋 요소의 onChange 함수 확인
+    const input = getByPlaceholderText('할 일을 입력해 주세요');
     fireEvent.change(input, {
       target: {
         value: '할 일을 적는 중',
@@ -26,25 +26,24 @@ describe('<App />', () => {
     expect(input).toHaveAttribute('value', '할 일을 적는 중');
   });
 
-  it('App 컴포넌트에서 정의된 handleClickAddTask 함수 확인', () => {
+  it('정의된 handleClickAddTask 함수를 통해 tasks를 추가할 수 있다', () => {
     const { container, getByText, getByPlaceholderText } = render(
       <App />,
     );
 
-    // 이벤트를 발생시켜서 새 항목을 추가
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
       target: {
         value: '추가될 할일',
       },
     });
 
-    const addButton = getByText('추가'); // 추가 버튼의 onClick 함수 확인
+    const addButton = getByText('추가');
     fireEvent.click(addButton);
 
     expect(container).toHaveTextContent('추가될 할일');
   });
 
-  it('App 컴포넌트에서 정의된 handleClickDeleteTask 함수 확인', () => {
+  it('정의된 handleClickDeleteTask 함수를 통해 완료된 할일을 삭제 할 수 있다', () => {
     const { container, getByText, getByPlaceholderText } = render(
       <App />,
     );
@@ -59,7 +58,7 @@ describe('<App />', () => {
 
     getByText('완료된 할일');
 
-    const deleteButton = getByText('완료'); // 완료 버튼의 onClick 함수 확인
+    const deleteButton = getByText('완료');
     fireEvent.click(deleteButton);
 
     expect(container).not.toHaveTextContent('완료된 할일');
