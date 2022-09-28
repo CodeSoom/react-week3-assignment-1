@@ -2,19 +2,17 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Page from './Page';
 
-describe('Page component test', () => {
-  context('When <Page /> component rendered', () => {
-    it('Show specific text (To-do)', () => {
-      const tasks = [];
+describe('Page', () => {
+  it('Show specific text (To-do)', () => {
+    const tasks = [];
 
-      const { queryByText } = render(<Page tasks={tasks} />);
+    const { queryByText } = render(<Page tasks={tasks} />);
 
-      expect(queryByText('To-do')).not.toBeNull();
-    });
+    expect(queryByText('To-do')).not.toBeNull();
   });
 
   context('When there task on the list', () => {
-    it('Show Tasks on the list', () => {
+    it('Show tasks on the list', () => {
       const tasks = [
         {
           id: 1,
@@ -39,7 +37,7 @@ describe('Page component test', () => {
   });
 
   context('When click 추가 button', () => {
-    it('OnClickAddTask event occurs', () => {
+    it('OnClickAddTask Event occurs', () => {
       const tasks = [
         {
           id: 1,
