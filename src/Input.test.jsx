@@ -2,18 +2,16 @@ import { render, fireEvent, screen } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input component test', () => {
-  context('When <Input /> component rendered', () => {
-    it('Show specific text (할 일 & 추가)', () => {
-      const { container } = render(<Input />);
+describe('Input', () => {
+  it('Show specific text (할 일 & 추가)', () => {
+    const { container } = render(<Input />);
 
-      expect(container).toHaveTextContent('할 일');
-      expect(container).toHaveTextContent('추가');
-    });
+    expect(container).toHaveTextContent('할 일');
+    expect(container).toHaveTextContent('추가');
   });
 
   context('When put a value in Input', () => {
-    it('Onchange event occurred in Input', () => {
+    it('Onchange event occurred', () => {
       render(<Input />);
 
       const task = screen.getByLabelText('할 일');
@@ -25,7 +23,7 @@ describe('Input component test', () => {
   });
 
   context('When click 추가 button', () => {
-    it('HandleClick event occurs', () => {
+    it('Calls handleClick)', () => {
       const handleClick = jest.fn();
 
       render((
