@@ -37,7 +37,7 @@ describe('Page', () => {
   });
 
   context('When click 추가 button', () => {
-    it('OnClickAddTask Event occurs', () => {
+    it('Calls onClickAddTask', () => {
       const tasks = [
         {
           id: 1,
@@ -63,7 +63,7 @@ describe('Page', () => {
   });
 
   context('When click 완료 button in tasks', () => {
-    it('OnClickDeleteTask event occurs with parameter(id: 1)', () => {
+    it('Calls OnClickDeleteTask with parameter(id: 1)', () => {
       const tasks = [
         {
           id: 1,
