@@ -3,7 +3,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import Input from './Input';
 
 describe('Input', () => {
-  it('Show specific text (할 일 & 추가)', () => {
+  it('Shows text', () => {
     const { container } = render(<Input />);
 
     expect(container).toHaveTextContent('할 일');
@@ -11,7 +11,7 @@ describe('Input', () => {
   });
 
   context('When put a value in Input', () => {
-    it('Onchange event occurred', () => {
+    it('Calls onchange event', () => {
       render(<Input />);
 
       const task = screen.getByLabelText('할 일');
