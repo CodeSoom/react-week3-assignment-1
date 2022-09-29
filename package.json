@@ -9,7 +9,8 @@
     "coverage": "npm run test:unit -- --coverage",
     "test:e2e": "codeceptjs run --steps",
     "test": "npm run coverage && start-server-and-test start http://localhost:8080 test:e2e",
-    "lint": "eslint --ext js,jsx ."
+    "lint": "eslint --ext js,jsx .",
+    "coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
