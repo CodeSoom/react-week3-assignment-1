@@ -3,8 +3,8 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List component test', () => {
-  context('When there task on the list', () => {
-    it('Show Tasks on the list', () => {
+  context('When list with task', () => {
+    it('Show list with task', () => {
       const tasks = [
         {
           id: 1,
@@ -20,8 +20,8 @@ describe('List component test', () => {
     });
   });
 
-  context('When there no task on the list', () => {
-    it('Show other specific nodes (할 일이 없어요!)', () => {
+  context('When list without task', () => {
+    it('Shows other nodes', () => {
       const tasks = [];
 
       const { container } = render((
