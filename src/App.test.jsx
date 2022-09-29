@@ -3,14 +3,14 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  it('Show text (To-do & 할 일 & 추가)', () => {
+  it('Shows text', () => {
     const { queryByText } = render(<App />);
 
     expect(queryByText('To-do')).not.toBeNull();
     expect(queryByText('할 일')).not.toBeNull();
   });
 
-  it('Render Input component', () => {
+  it('Renders Input component', () => {
     render(<App />);
 
     const task = screen.getByLabelText('할 일');
@@ -20,14 +20,14 @@ describe('App', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('Render List component', () => {
+  it('Renders List component', () => {
     const { queryByText } = render(<App />);
 
     expect(queryByText('할 일이 없어요!')).not.toBeNull();
   });
 
   context('When put a value in Input', () => {
-    it('OnChange Event Occurred', () => {
+    it('Calls onChange event', () => {
       render(<App />);
 
       const task = screen.getByLabelText('할 일');
@@ -55,7 +55,7 @@ describe('App', () => {
   });
 
   context('When click 완료 button', () => {
-    it('Delete task', () => {
+    it('Deletes task', () => {
       const { queryByText } = render(<App />);
 
       const task = screen.getByLabelText('할 일');
