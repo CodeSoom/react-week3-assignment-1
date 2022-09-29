@@ -34,7 +34,7 @@ describe('Input 컴포넌트는', () => {
     expect(input).toHaveAttribute('value', '할 일 입력');
   });
 
-  it('추가 버튼에 전달된 클릭이벤트를 호출한다', () => {
+  it('추가 버튼에 전달된 handleClick함수를 호출한다', () => {
     const taskTitle = '할 일 입력';
     const handleChange = jest.fn();
     const handleClick = jest.fn();

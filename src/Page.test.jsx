@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Page from './Page';
 
-describe('Page 컴포넌트는', () => {
+describe('Page component', () => {
   const taskTitle = '할 일1';
   const tasks = [{
     id: 2,
@@ -12,7 +12,7 @@ describe('Page 컴포넌트는', () => {
   const handleClickDelete = jest.fn();
   const handleChange = jest.fn();
 
-  it('타이틀, 인풋, 리스트 요소를 가지고 있다', () => {
+  it('has title, input, list component', () => {
     const { getByText, getByPlaceholderText } = render(
       <Page
         taskTitle={taskTitle}

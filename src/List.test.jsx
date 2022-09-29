@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 
 import List from './List';
 
-describe('List 컴포넌트는', () => {
+describe('List component', () => {
   const noTasks = [];
   const tasks = [{
     id: 1,
@@ -10,8 +10,8 @@ describe('List 컴포넌트는', () => {
   }];
   const handleClick = jest.fn();
 
-  context('task가 없으면', () => {
-    it('할 일이 없다는 문자를 리턴한다', () => {
+  context('without tasks', () => {
+    it('returns text : "할 일이 없다"', () => {
       const { getByText } = render(
         <List tasks={noTasks} />,
       );
@@ -20,8 +20,8 @@ describe('List 컴포넌트는', () => {
     });
   });
 
-  context('tasks가 있으면', () => {
-    it('할일 목록을 리턴한다', () => {
+  context('with tasks', () => {
+    it('returns tasks list', () => {
       const { getByText } = render(
         <List
           tasks={tasks}
@@ -37,7 +37,7 @@ describe('List 컴포넌트는', () => {
     });
   });
 
-  it('List 컴포넌트에서 삭제 함수를 전달하는가?', () => {
+  it('List component calls onClickDelete', () => {
     render(
       <List
         tasks={tasks}
