@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import Page from './Page';
 
 describe('Page', () => {
-  it('Show specific text (To-do)', () => {
+  it('Shows text', () => {
     const tasks = [];
 
     const { queryByText } = render(<Page tasks={tasks} />);
@@ -11,8 +11,8 @@ describe('Page', () => {
     expect(queryByText('To-do')).not.toBeNull();
   });
 
-  context('When there task on the list', () => {
-    it('Show tasks on the list', () => {
+  context('When list with tasks', () => {
+    it('Shows tasks on the list', () => {
       const tasks = [
         {
           id: 1,
@@ -26,8 +26,8 @@ describe('Page', () => {
     });
   });
 
-  context('When there no task on the list', () => {
-    it('Show other specific nodes (할 일이 없어요!)', () => {
+  context('When list without tasks', () => {
+    it('Shows other nodes', () => {
       const tasks = [];
 
       const { container } = render(<Page tasks={tasks} />);
