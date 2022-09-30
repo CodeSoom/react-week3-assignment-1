@@ -2,42 +2,38 @@ import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
 
-test('ListTest_테스크_1', () => {
-  const tasks = [{
-    id: 1,
-    title: '뭐라도 하기',
-  },
-  ];
+describe('List', () => {
+  const tasks = [{ id: 1, title: '할일1' }, { id: 2, title: '할일2' }];
+  const onClickDelete = jest.fn();
 
-  const handleClick = jest.fn();
+  it('Tasks 모두 출력된다.', () => {
+    const { container, getByText } = render((
+      <List
+        tasks={tasks}
+        onClickDelete={onClickDelete}
+      />
+    ));
+    expect(container).toHaveTextContent('할일1');
+    expect(container).toHaveTextContent('할일1');
+  });
+  it('Tasks 의 완료 버튼이 모두 출력된다.', () => {
+    const { container, getByText, getAllByText } = render((
+      <List
+        tasks={tasks}
+        onClickDelete={onClickDelete}
+      />
+    ));
+    const buttonNum = getAllByText('완료');
+    expect(buttonNum).toHaveLength(tasks.length);
+  });
 
-  const { container, getByText } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClick}
-    />
-  ));
-
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(handleClick).not.toBeCalled();
-
-  fireEvent.click(getByText('완료'));
-
-  expect(handleClick).toBeCalledWith(1);
-});
-
-test('ListTest_테스크_0', () => {
-  const tasks = [
-  ];
-
-  const handleClick = jest.fn();
-
-  const { container } = render((
-    <List
-      tasks={tasks}
-      onClickDelete={handleClick}
-    />
-  ));
-
-  expect(container).toHaveTextContent('할 일이 없어요!');
+  it('Task가 없으면 할 일이 없어요! 가 출력된다.', () => {
+    const { container, getByText } = render((
+      <List
+        tasks={[]}
+        onClickDelete={onClickDelete}
+      />
+    ));
+    // expect(container).toHaveTextContent('할 일이 없어요!');
+  });
 });

@@ -2,27 +2,39 @@ import { render, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
-  const task = {
-    id: 1,
-    title: '뭐라도 하기',
-  };
+describe('Item', () => {
+  const task = { id: 1, title: '할일1' };
+  const onClickDelete = jest.fn();
 
-  const handleClick = jest.fn();
+  it('Task가 존재하면 Task Title이 출력된다', () => {
+    const { container, getByText } = render((
+      <Item
+        task={task}
+        onClickDelete={onClickDelete}
+      />
+    ));
+    expect(container).toHaveTextContent('할일1');
+  });
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+  it('Task가 존재하면 완료 버튼이 생성된다 ', () => {
+    const { container, getByText } = render((
+      <Item
+        task={task}
+        onClickDelete={onClickDelete}
+      />
+    ));
+    expect(container).toHaveTextContent('완료');
+  });
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  it('완료 버튼이 누르면 눌러진다. ', () => {
+    const { container, getByText } = render((
+      <Item
+        task={task}
+        onClickDelete={onClickDelete}
+      />
+    ));
+    fireEvent.click(getByText('완료'));
 
-  expect(handleClick).not.toBeCalled();
-
-  fireEvent.click(getByText('완료'));
-
-  expect(handleClick).toBeCalledWith(1);
+    expect(onClickDelete).toBeCalled();
+  });
 });
