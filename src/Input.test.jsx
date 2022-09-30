@@ -21,17 +21,11 @@ test('Click Event', () => {
 });
 
 test('Change Event', () => {
-  const handleChange = jest.fn();
+  const value = '뿌잉';
+  const { getByPlaceholderText } = render((<Input value={value} />));
+  const input = getByPlaceholderText('할 일을 입력해 주세요');
 
-  const { getByPlaceholderText } = render((
-    <Input
-      onChange={handleChange}
-    />
-  ));
+  fireEvent.change(input, { target: { value: value } });
 
-  expect(handleChange).not.toBeCalled();
-
-  fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), { target: { value: '뿌잉' } });
-
-  expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveAttribute('value', '뿌잉');
+  expect(input).toHaveAttribute('value', value);
 });
