@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App component', () => {
-  it('returns Page component', () => {
+  it('returns title', () => {
     const { getByText } = render(<App />);
 
     expect(getByText('To-do')).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('App component', () => {
     expect(input).toHaveAttribute('value', '할 일을 적는 중');
   });
 
-  it('adds values into tasks', () => {
+  it('adds task', () => {
     const { container, getByText, getByPlaceholderText } = render(<App />);
 
     fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {

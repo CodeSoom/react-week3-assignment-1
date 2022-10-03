@@ -37,7 +37,7 @@ describe('List component', () => {
     });
   });
 
-  it('List component calls onClickDelete', () => {
+  it('calls onClickDelete', () => {
     render(
       <List
         tasks={tasks}
