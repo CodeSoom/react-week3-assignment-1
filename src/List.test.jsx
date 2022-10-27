@@ -3,11 +3,12 @@ import { render } from '@testing-library/react';
 import List from './List';
 
 describe('List', () => {
-  const onClickDelete = jest.fn();
-  const renderElement = (task) => (
+  const handleClickDelete = jest.fn();
+
+  const listElement = (task) => (
     <List
       tasks={task}
-      onClick={onClickDelete}
+      onClick={handleClickDelete}
     />
   );
 
@@ -18,13 +19,13 @@ describe('List', () => {
   context('List에서 할 일이 없을 때', () => {
     it('할 일이 없어요 문구 랜더링된다', () => {
       const task = [];
-      const { getByText } = render(renderElement(task));
+      const { getByText } = render(listElement(task));
       getByText('할 일이 없어요!');
     });
   });
 
   context('List에서 할 일이 있을 때', () => {
-    it('입력한 할 일이 출력된다', () => {
+    it('입력한 할 일이 랜더링된다', () => {
       const tasks = [{
         id: 1,
         title: '잠자기',
@@ -36,7 +37,7 @@ describe('List', () => {
       ];
 
       const { container } = render(
-        renderElement(tasks),
+        listElement(tasks),
       );
 
       expect(container).toHaveTextContent('잠자기');
