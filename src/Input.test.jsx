@@ -26,12 +26,9 @@ describe('Input', () => {
 
     const input = getByLabelText('할 일');
 
-    // tdd 하기로 input의 value 값이 잘 바뀌었는지 확인..이 안되네...
-
     fireEvent.change(input, { target: { value: 'TDD 하기' } });
 
     expect(handleChange).toBeCalled();
-    // expect(input.value).toBe('TDD');
   });
 
   it('추가 버튼을 클릭하면 handleClick 함수가 실행된다.', () => {

@@ -21,8 +21,6 @@ describe('App', () => {
   it('추가 버튼을 누르면 handleClick 함수가 실행된다', () => {
     const { getByText } = renderApp();
 
-    // console.log(fireEvent.click(getByText('추가')));
-
     expect(handleClick).not.toBeCalled();
 
     fireEvent.click(getByText('추가'));
