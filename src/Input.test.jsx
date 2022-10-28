@@ -5,16 +5,14 @@ import Input from './Input';
 describe('<Input />', () => {
   const handleClick = jest.fn();
   const handleChange = jest.fn();
-  const InputElement = (
-    render((<Input
-      value="잠자기"
-      onClick={handleClick}
-      onChange={handleChange}
-    />))
-  );
+  const InputElement = () => render((<Input
+    value="잠자기"
+    onClick={handleClick}
+    onChange={handleChange}
+  />));
 
   it('Input 추가 버튼이 호출된다', () => {
-    const { getByText } = InputElement;
+    const { getByText } = InputElement();
 
     expect(handleClick).not.toBeCalled();
 
@@ -23,7 +21,7 @@ describe('<Input />', () => {
   });
 
   it('Input에 입력한 값이 제대로 랜더링 된다', () => {
-    InputElement;
+    InputElement();
 
     const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
 

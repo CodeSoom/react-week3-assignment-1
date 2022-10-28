@@ -5,12 +5,12 @@ import List from './List';
 describe('List', () => {
   const handleClickDelete = jest.fn();
 
-  const listElement = (task) => (
+  const listElement = (task) => render((
     <List
       tasks={task}
       onClick={handleClickDelete}
     />
-  );
+  ));
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -19,7 +19,7 @@ describe('List', () => {
   context('List에서 할 일이 없을 때', () => {
     it('할 일이 없어요 문구 랜더링된다', () => {
       const task = [];
-      const { getByText } = render(listElement(task));
+      const { getByText } = listElement(task);
       getByText('할 일이 없어요!');
     });
   });
@@ -36,10 +36,7 @@ describe('List', () => {
       },
       ];
 
-      const { container } = render(
-        listElement(tasks),
-      );
-
+      const { container } = listElement(tasks);
       expect(container).toHaveTextContent('잠자기');
       expect(container).toHaveTextContent('누워있기');
     });
