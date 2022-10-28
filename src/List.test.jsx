@@ -2,25 +2,27 @@ import { fireEvent, render } from '@testing-library/react';
 
 import List from './List';
 
+import tasks from '../fixtures/tasks';
+
 describe('List', () => {
   const handleClick = jest.fn();
 
-  const renderList = (tasks) => render(<List tasks={tasks} onClickDelete={handleClick} />);
+  const renderList = (todoList) => render(
+    <List
+      tasks={todoList}
+      onClickDelete={handleClick}
+    />,
+  );
 
-  context('with tasks', () => {
-    const tasks = [
-      { id: 1, title: '리액트 공부하기' },
-      { id: 2, title: '블로그 작성하기' },
-    ];
-
-    it('todo list', () => {
+  context('tasks가 있을 경우', () => {
+    it('List 컴포넌트가 렌더링된다.', () => {
       const { container } = renderList(tasks);
 
       expect(container).toHaveTextContent('리액트 공부하기');
       expect(container).toHaveTextContent('블로그 작성하기');
     });
 
-    it('완료 buttons to delete a task', () => {
+    it('완료 버튼을 누르면 handleClick 함수가 실행된다.', () => {
       const { getAllByText } = renderList(tasks);
 
       const buttons = getAllByText('완료');
@@ -31,11 +33,11 @@ describe('List', () => {
     });
   });
 
-  context('without tasks', () => {
-    const tasks = [];
+  context('tasks가 없을 경우', () => {
+    const emptyTasks = [];
 
-    it('no task message', () => {
-      const { container } = renderList(tasks);
+    it('할 일이 없어요 메시지가 보인다.', () => {
+      const { container } = renderList(emptyTasks);
 
       expect(container).toHaveTextContent('할 일이 없어요!');
     });
