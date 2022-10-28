@@ -21,6 +21,9 @@ describe('List', () => {
       const task = [];
       const { getByText } = listElement(task);
       getByText('할 일이 없어요!');
+
+      const { container } = listElement(task);
+      expect(container).toHaveTextContent('할 일이 없어요!');
     });
   });
 
