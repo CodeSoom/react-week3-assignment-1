@@ -30,15 +30,11 @@ describe('List', () => {
     it('renders "완료" button to delete a task', () => {
       const { getAllByText } = renderList(tasks);
 
-      /* fireEvent.click(screen.getByText('완료'));
-      `*AllBy*` variant of the query..오류=> buttons이 여러개이기때문에 오류가 생김
-      */
-
       const buttons = getAllByText('완료');
 
       fireEvent.click(buttons[0]);
 
-      expect(handleClickDelete).toBeCalledWith(1);// buttons[0]=>1번째꺼 고르게 했으니까 1
+      expect(handleClickDelete).toBeCalledWith(1);
     });
   });
 

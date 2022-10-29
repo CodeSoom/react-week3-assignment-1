@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import App from './App';
 
@@ -15,19 +15,65 @@ describe('App', () => {
     },
   ]; */
 
-  it('추가버튼이 있는지 확인한다', () => {
-    const { getByText } = render((
-      <App />
-    ));
+  const appContents = () => render((<App />));
 
-    expect(getByText(/To-do/)).not.toBeNull();
-    expect(getByText(/할 일이 없어요!/)).not.toBeNull();
-    expect(getByText(/추가/)).not.toBeNull();
+  it('App 컴포넌트 랜더링이 된다', () => {
+    const { container } = appContents();
+
+    expect(container).toHaveTextContent(/To-do/);
+    expect(container).toHaveTextContent(/할 일이 없어요!/);
+    expect(container).toHaveTextContent(/추가/);
   });
 
-/*   context('onChange', () => {
-    it('', () => {
+  context('할 일이 있을 경우', () => {
+    it('"완료"버튼이 랜더링된다', () => {
+      const { getByLabelText, getByText, container } = appContents();
 
+      const input = getByLabelText('할 일');
+
+      fireEvent.change(input, {
+        target: {
+          value: '독서',
+        },
+      });
+
+      const addTaskBtn = getByText('추가');
+
+      fireEvent.click(addTaskBtn);
+
+      expect(container).toHaveTextContent('독서');
+
+      const deleteBtn = getByText('완료');
+
+      fireEvent.click(deleteBtn);
+
+      expect(container).not.toHaveTextContent('독서');
     });
-  }); */
+  });
+
+  context('할 일이 없을 경우', () => {
+    it('할 일이 없어요! 글씨가 뜬다.', () => {
+      const tasks = [];
+      const { getByText } = appContents(tasks);
+
+      expect(getByText('할 일이 없어요!')).not.toBeNull();
+    });
+
+    it('value가 입력되면 "추가" 버튼이 랜더링 된다', () => {
+      const { getByLabelText, getByText, container } = appContents();
+      const input = getByLabelText('할 일');
+
+      fireEvent.change(input, {
+        target: {
+          value: '할 일 추가',
+        },
+      });
+
+      const addTaskBtn = getByText('추가');
+
+      fireEvent.click(addTaskBtn);
+
+      expect(container).toHaveTextContent('할 일 추가');
+    });
+  });
 });
