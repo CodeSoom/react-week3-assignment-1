@@ -3,9 +3,6 @@ import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  const handleChange = jest.fn();
-  const handleClick = jest.fn();
-
   function renderApp() {
     return render((<App />));
   }
@@ -18,33 +15,47 @@ describe('App', () => {
     expect(container).toHaveTextContent('추가');
   });
 
-  it('추가 버튼을 누르면 handleClick 함수가 실행된다', () => {
-    const { getByText } = renderApp();
+  it('입력하면 handleChange 함수가 실행된다.', () => {
+    const { getByLabelText } = renderApp();
 
-    expect(handleClick).not.toBeCalled();
+    fireEvent.change(getByLabelText('할 일'), {
+      target: { value: 'TDD 하기' },
+    });
+
+    expect(getByLabelText('할 일').value).toBe('TDD 하기');
+
+    fireEvent.change(getByLabelText('할 일'), {
+      target: { value: '집에 가기' },
+    });
+
+    expect(getByLabelText('할 일').value).toBe('집에 가기');
+  });
+
+  it('추가 버튼을 누르면 handleClickAdd 함수가 실행된다.', () => {
+    const { container, getByLabelText, getByText } = renderApp();
+
+    fireEvent.change(getByLabelText('할 일'), {
+      target: { value: 'TDD 하기' },
+    });
+
+    expect(getByLabelText('할 일').value).toBe('TDD 하기');
 
     fireEvent.click(getByText('추가'));
 
-    expect(handleClick).toBeCalled();
+    expect(container).toHaveTextContent('TDD 하기');
   });
 
-  it('handleChange 함수가 실행된다', () => {
-    const { getByLabelText } = renderApp();
+  it('완료 버튼을 누르면 handleClickDelete 함수가 실행된다.', () => {
+    const { container, getByLabelText, getByText } = renderApp();
 
-    const input = getByLabelText('할 일');
+    fireEvent.change(getByLabelText('할 일'), {
+      target: { value: 'TDD 하기' },
+    });
 
-    fireEvent.change(input, { target: { value: 'TDD 하기' } });
+    fireEvent.click(getByText('추가'));
 
-    expect(handleChange).toBeCalled();
-  });
+    fireEvent.click(getByText('완료'));
 
-  it('완료 버튼을 누르면 handleClick 함수가 실행된다.', () => {
-    const { getAllByText } = renderApp();
-
-    const buttons = getAllByText('완료');
-
-    fireEvent.click(buttons[0]);
-
-    expect(handleClick).toBeCalled();
+    expect(container).not.toHaveTextContent('TDD 하기');
   });
 });
