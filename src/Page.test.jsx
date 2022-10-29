@@ -18,7 +18,7 @@ describe('<Page />', () => {
   const handleChangeTitle = jest.fn();
   const handleAddTask = jest.fn();
 
-  it('Page에 할일, 추가, 삭제 버튼이 있는가', () => {
+  it('Page에 할일, 추가, 삭제 버튼이 랜더링 된다', () => {
     const { container, getByText } = render((
       <Page
         tasks={tasks}

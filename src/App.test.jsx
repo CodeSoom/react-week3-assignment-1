@@ -1,13 +1,26 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
+
 import App from './App';
 
 describe('<App />', () => {
-  const appElement = () => render((<App />));
+  const renderApp = () => {
+    const result = render((<App />));
 
-  const taskTitle = '입력 값';
+    return {
+      ...result,
+      changeInput: (value) => {
+        const element = result.getByLabelText('할 일');
+        fireEvent.change(element, {
+          target: {
+            value,
+          },
+        });
+      },
+    };
+  };
 
   it('App 컴포넌트가 랜더링된다', () => {
-    const { container } = appElement();
+    const { container } = renderApp();
 
     expect(container).toHaveTextContent('To-do');
     expect(container).toHaveTextContent('할 일이 없어요!');
@@ -16,52 +29,45 @@ describe('<App />', () => {
 
   context('할 일이 있을 시', () => {
     it('"삭제" 버튼이 랜더링된다', () => {
-      const { getByLabelText, getByText, container } = appElement();
-      const input = getByLabelText('할 일');
+      const { container, changeInput } = renderApp();
 
-      fireEvent.change(input, {
-        target: {
-          value: taskTitle,
-        },
-      });
+      changeInput('누워있기');
 
-      const addTaskButton = getByText('추가');
+      fireEvent.click(screen.getByText('추가'));
+      fireEvent.click(screen.getByText('완료'));
 
-      fireEvent.click(addTaskButton);
-
-      expect(container).toHaveTextContent(taskTitle);
-
-      const deleteButton = getByText('완료');
-
-      fireEvent.click(deleteButton);
-
-      expect(container).not.toHaveTextContent(taskTitle);
+      expect(container).not.toHaveTextContent('누워있기');
     });
   });
 
   context('할 일이 없을 시', () => {
     it('할 일이 없어요! 메시지가 보인다', () => {
       const tasks = [];
-      const { getByText } = appElement(tasks);
+      const { getByText } = renderApp(tasks);
 
       expect(getByText(/할 일이 없어요!/)).not.toBeNull();
     });
 
-    it('값을 입력하면 "추가" 버튼이 랜더링 된다', () => {
-      const { getByLabelText, getByText, container } = appElement();
-      const input = getByLabelText('할 일');
+    context('값을 입력하면', () => {
+      it('onChange가 실행된다', () => {
+        const { changeInput } = renderApp();
+        changeInput('누워있기');
 
-      fireEvent.change(input, {
-        target: {
-          value: taskTitle,
-        },
+        expect(screen.getByLabelText('할 일').value).toBe('누워있기');
+
+        changeInput('잠자기');
+
+        expect(screen.getByLabelText('할 일').value).toBe('잠자기');
       });
 
-      const addTaskButton = getByText('추가');
+      it('추가 버튼이 랜더링된다', () => {
+        const { container, changeInput } = renderApp();
+        changeInput('누워있기');
 
-      fireEvent.click(addTaskButton);
+        fireEvent.click(screen.getByText('추가'));
 
-      expect(container).toHaveTextContent(taskTitle);
+        expect(container).toHaveTextContent('누워있기');
+      });
     });
   });
 });
