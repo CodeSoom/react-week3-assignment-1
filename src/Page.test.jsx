@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Page from './Page';
 
 describe('<Page />', () => {
@@ -19,7 +19,7 @@ describe('<Page />', () => {
   const handleAddTask = jest.fn();
 
   it('Page에 할일, 추가, 삭제 버튼이 있는가', () => {
-    const { container } = render((
+    const { container, getByText } = render((
       <Page
         tasks={tasks}
         taskTitle={taskTitle}
@@ -29,5 +29,8 @@ describe('<Page />', () => {
       />));
 
     expect(container).toHaveTextContent('완료');
+
+    fireEvent.click(getByText('추가'));
+    expect(handleAddTask).toBeCalled();
   });
 });
