@@ -33,8 +33,8 @@ describe('<App />', () => {
 
       changeInput('누워있기');
 
-      fireEvent.click(screen.getByText('추가'));
-      fireEvent.click(screen.getByText('완료'));
+      fireEvent.click(screen.getByRole('button', { name: '추가' }));
+      fireEvent.click(screen.getByRole('button', { name: '완료' }));
 
       expect(container).not.toHaveTextContent('누워있기');
     });
@@ -48,7 +48,7 @@ describe('<App />', () => {
       expect(getByText(/할 일이 없어요!/)).not.toBeNull();
     });
 
-    context('값을 입력하면', () => {
+    context('할 일을 입력하면', () => {
       it('onChange가 실행된다', () => {
         const { changeInput } = renderApp();
         changeInput('누워있기');
@@ -64,7 +64,7 @@ describe('<App />', () => {
         const { container, changeInput } = renderApp();
         changeInput('누워있기');
 
-        fireEvent.click(screen.getByText('추가'));
+        fireEvent.click(screen.getByRole('button', { name: '추가' }));
 
         expect(container).toHaveTextContent('누워있기');
       });
