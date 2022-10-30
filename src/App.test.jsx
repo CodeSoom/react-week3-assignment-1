@@ -15,7 +15,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('추가');
   });
 
-  it('입력하면 handleChange 함수가 실행된다.', () => {
+  it('할 일을 입력시 handleChange 함수가 실행되어 input의 value가 변경된다.', () => {
     const { getByLabelText } = renderApp();
 
     fireEvent.change(getByLabelText('할 일'), {
@@ -31,7 +31,7 @@ describe('App', () => {
     expect(getByLabelText('할 일').value).toBe('집에 가기');
   });
 
-  it('추가 버튼을 누르면 handleClickAdd 함수가 실행된다.', () => {
+  it('추가 버튼을 누르면 handleClickAdd 함수가 실행되어 할 일이 렌더링된다.', () => {
     const { container, getByLabelText, getByText } = renderApp();
 
     fireEvent.change(getByLabelText('할 일'), {
@@ -45,7 +45,7 @@ describe('App', () => {
     expect(container).toHaveTextContent('TDD 하기');
   });
 
-  it('완료 버튼을 누르면 handleClickDelete 함수가 실행된다.', () => {
+  it('완료 버튼을 누르면 handleClickDelete 함수가 실행되어 추가되었던 할 일이 삭제된다.', () => {
     const { container, getByLabelText, getByText } = renderApp();
 
     fireEvent.change(getByLabelText('할 일'), {
