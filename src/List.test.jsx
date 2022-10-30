@@ -30,7 +30,7 @@ describe('List', () => {
   });
 
   context('List에서 할 일이 있을 때', () => {
-    it('입력한 할 일이 랜더링된다', () => {
+    it('할 일이 랜더링된다', () => {
       const { container } = listElement(tasks);
 
       expect(container).toHaveTextContent('잠자기');
