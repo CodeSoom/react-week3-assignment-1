@@ -1,24 +1,17 @@
 import { render, fireEvent } from '@testing-library/react';
+
 import Page from './Page';
 
-describe('<Page />', () => {
-  const tasks = [{
-    id: 1,
-    content: '잠자기',
-  },
-  {
-    id: 2,
-    content: '누워있기',
-  },
-  ];
+import tasks from '../fixtures/tasks';
 
+describe('<Page />', () => {
   const taskTitle = '';
 
   const handleDeleteTask = jest.fn();
   const handleChangeTitle = jest.fn();
   const handleAddTask = jest.fn();
 
-  it('Page에 할일, 추가, 삭제 버튼이 랜더링 된다', () => {
+  it('Page에 추가, 완료 버튼이 랜더링 된다', () => {
     const { container, getByText } = render((
       <Page
         tasks={tasks}
@@ -31,6 +24,7 @@ describe('<Page />', () => {
     expect(container).toHaveTextContent('완료');
 
     fireEvent.click(getByText('추가'));
+
     expect(handleAddTask).toBeCalled();
   });
 });
