@@ -1,33 +1,45 @@
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import Input from './Input';
 
-test('Input', () => {
-  const newTodo = 'newTodo';
+describe('Input', () => {
+  const newTodo = '';
 
   const setNewTodos = jest.fn();
 
   const addTodo = jest.fn();
 
-  const { container, getByText, getByDisplayValue } = render(
-    <Input value={newTodo} onChange={setNewTodos} onClick={addTodo} />
-  );
+  const inputComponentRender = () => render(<Input value={newTodo} onChange={setNewTodos} onClick={addTodo} />);
 
-  expect(setNewTodos).not.toBeCalled();
+  context('first rending', () => {
+    it('renders label with text', () => {
+      const { getByLabelText } = inputComponentRender();
+      expect(getByLabelText('할 일')).toBeInTheDocument();
+    });
 
-  expect(addTodo).not.toBeCalled();
+    it('renders input', () => {
+      const { getByPlaceholderText } = inputComponentRender();
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
+    });
 
-  expect(container).toHaveTextContent('추가');
-
-  expect(getByDisplayValue('newTodo')).toHaveValue('newTodo');
-
-  fireEvent.change(getByDisplayValue('newTodo'), {
-    target: { value: { newTodo } },
+    it('renders button', () => {
+      const { getByRole } = inputComponentRender();
+      expect(getByRole('button')).toBeInTheDocument();
+    });
+  });
+  context('typing newTodo at input box', () => {
+    it('setNewTodos to be called', () => {
+      const { getByRole } = inputComponentRender();
+      fireEvent.change(getByRole('textbox'), { target: { value: 'newTodo' } });
+      expect(setNewTodos).toBeCalled();
+    });
   });
 
-  expect(setNewTodos).toBeCalled();
-
-  fireEvent.click(getByText('추가'));
-
-  expect(addTodo).toBeCalled();
+  context('click button after typing', () => {
+    it('addTodo to be called', () => {
+      const { getByRole } = inputComponentRender();
+      fireEvent.click(getByRole('button'));
+      expect(addTodo).toBeCalled();
+    });
+  });
 });
