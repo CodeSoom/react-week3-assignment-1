@@ -1,48 +1,55 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from './Input';
 
-describe('Input', () => {
-  it('label은 할 일 이라는 텍스트를 가지고 있어야 한다.', () => {
-    render(<Input />);
+describe('Input 컴포넌트', () => {
+  const handleAddText = jest.fn();
+  const handleChangeText = jest.fn();
+  const renderInput = render(
+    <Input
+      onClick={handleAddText}
+      onChange={handleChangeText}
+    />,
+  );
 
-    const label = screen.getByLabelText('할 일');
+  const { getByPlaceholderText } = renderInput;
 
-    expect(label).toBeInTheDocument();
+  const input = getByPlaceholderText('할 일을 입력해 주세요');
+
+  context('최초 렌더링 되었을 때', () => {
+    it('화면에 노출되어야 한다.', () => {
+      expect(input).toBeInTheDocument();
+    });
+
+    it('빈 값으로 노출되어야 한다.', () => {
+      expect(input.value).toBe('');
+    });
   });
 
-  it('input은 입력하는 글자를 화면에 노출해야 한다.', () => {
-    const changeInputText = jest.fn();
+  context('글자를 입력하면', () => {
+    const value = '새로운 값이에요';
 
-    render(<Input onChange={changeInputText} />);
+    it('같은 글자를 화면에 노출시켜야 한다.', () => {
+      fireEvent.change(input, { target: { value } });
 
-    const input = screen.getByRole('textbox');
-
-    expect(input.value).not.toBe('누워 있기');
-
-    fireEvent.change(input, { target: { value: '누워 있기' } });
-
-    expect(input.value).toBe('누워 있기');
+      expect(input.value).toBe(value);
+    });
   });
 
-  it('확인 버튼을 누르면 빈 value로 화면에 노출되어야 한다.', async () => {
-    const addTodo = jest.fn();
-    const changeInputValue = jest.fn();
-
-    render(<Input onClick={addTodo} onChange={changeInputValue} />);
-
-    const input = screen.getByRole('textbox');
-
-    fireEvent.change(input, { target: { value: '고양이 밥 주기' } });
-
-    const button = screen.getByRole('button', { name: '추가' });
-
-    expect(screen.getByRole('textbox').value).toBe('고양이 밥 주기');
+  context('버튼을 한 번 클릭하면', () => {
+    const { getByRole } = renderInput;
+    const button = getByRole('button', { name: '추가' });
 
     fireEvent.click(button);
-    expect(addTodo).toHaveBeenCalledTimes(1);
 
-    fireEvent.change(input, { target: { value: '' } });
-    expect(screen.getByRole('textbox').value).toBe('');
+    it('handleAddText가 한 번 실행되어야 한다.', () => {
+      expect(handleAddText).toHaveBeenCalledTimes(1);
+    });
+
+    it('값이 초기화되어 빈 값으로 노출되어야 한다.', () => {
+      const value = '';
+
+      expect(input.value).toBe(value);
+    });
   });
 });
