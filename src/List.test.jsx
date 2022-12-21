@@ -1,6 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 
 import List from './List';
+import items from './__fixtures__/items';
 
 describe('List', () => {
   const handleClick = jest.fn();
@@ -12,7 +13,7 @@ describe('List', () => {
     />
   ));
 
-  context('without tasks', () => {
+  context('without task', () => {
     it('renders "할 일이 없어요!"', () => {
       const { container } = renderList();
 
@@ -21,33 +22,22 @@ describe('List', () => {
   });
 
   context('with tasks', () => {
-    const tasks = [
-      {
-        id: 1,
-        title: 'study',
-      },
-      {
-        id: 2,
-        title: 'play',
-      },
-    ];
-
     it('renders tasks', () => {
-      const { container } = renderList(tasks);
+      const { container } = renderList(items);
 
-      tasks.forEach(({ title }) => {
+      items.forEach(({ title }) => {
         expect(container).toHaveTextContent(title);
       });
     });
 
     it('handles click', () => {
-      const { getAllByText } = renderList(tasks);
+      const { getAllByText } = renderList(items);
 
       getAllByText('완료').forEach((button) => {
         fireEvent.click(button);
       });
 
-      expect(handleClick).toBeCalledTimes(tasks.length);
+      expect(handleClick).toBeCalledTimes(items.length);
     });
   });
 });

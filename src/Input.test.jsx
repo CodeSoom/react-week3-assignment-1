@@ -14,46 +14,41 @@ describe('Input', () => {
     />
   ));
 
-  context('when first render', () => {
-    it('renders label', () => {
-      const { getByLabelText } = renderInput();
+  it('renders label', () => {
+    const { getByLabelText } = renderInput();
 
-      expect(getByLabelText('할 일')).toBeInTheDocument();
-    });
-
-    it('renders input and "할일을 입력해 주세요" placeholder', () => {
-      const { getByRole } = renderInput();
-
-      expect(getByRole('textbox')).toBeInTheDocument();
-      expect(getByRole('textbox')).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
-    });
-
-    it('renders add button', () => {
-      const { getByText } = renderInput();
-
-      expect(getByText('추가')).toBeInTheDocument();
-    });
+    expect(getByLabelText('할 일')).toBeInTheDocument();
   });
 
-  context('when change input', () => {
-    it('renders change input', () => {
-      const { getByRole } = renderInput();
+  it('renders input and "할일을 입력해 주세요" placeholder', () => {
+    const { getByRole } = renderInput();
 
-      fireEvent.change(getByRole('textbox'), { target: { value: 'study' } });
+    expect(getByRole('textbox')).toBeInTheDocument();
+    expect(getByRole('textbox')).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
+  });
 
-      expect(handleChange).toBeCalled();
-    });
+  it('renders add button', () => {
+    const { getByText } = renderInput();
 
-    it('renders empty input when click add button', () => {
-      const { getByRole, getByText } = renderInput();
+    expect(getByText('추가')).toBeInTheDocument();
+  });
 
-      expect(handleClick).not.toBeCalled();
+  it('renders new value when change input', () => {
+    const { getByRole } = renderInput();
 
-      fireEvent.click(getByText('추가'));
+    fireEvent.change(getByRole('textbox'), { target: { value: 'study' } });
+    expect(handleChange).toBeCalled();
+  });
 
-      expect(handleClick).toBeCalled();
+  it('renders empty input when click add', () => {
+    const { getByRole, getByText } = renderInput();
 
-      expect(getByRole('textbox')).toHaveAttribute('value', '');
-    });
+    expect(handleClick).not.toBeCalled();
+
+    fireEvent.click(getByText('추가'));
+
+    expect(handleClick).toBeCalled();
+
+    expect(getByRole('textbox')).toHaveValue('');
   });
 });
