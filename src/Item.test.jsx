@@ -1,30 +1,38 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import Item from './Item';
 
-test('Item', () => {
+describe('Item 컴포넌트', () => {
   const task = {
     id: 1,
     title: '뭐라도 하기',
   };
 
-  const handleClick = jest.fn();
+  it('화면에 렌더 된다', () => {
+    render(<Item task={task} />);
 
-  const { container, getByText } = render(
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />,
-  );
+    expect(screen.getByRole('button', { name: '완료' }));
+  });
 
-  expect(container).toHaveTextContent('뭐라도 하기');
-  expect(container).toHaveTextContent('완료');
+  it('task의 title과 같은 값으로 렌더 된다.', () => {
+    render(<Item task={task} />);
 
-  const button = getByText('완료');
+    expect(screen.getByText(/뭐라도 하기/));
+  });
 
-  expect(handleClick).not.toBeCalled();
+  it('버튼을 클릭하면 handleCompleteTask가 실행된다.', () => {
+    const handlerCompleteTask = jest.fn();
 
-  fireEvent.click(button);
+    render(
+      <Item
+        task={task}
+        onClickDelete={handlerCompleteTask}
+      />,
+    );
 
-  expect(handleClick).toBeCalledWith(1);
+    const button = screen.getByRole('button', { name: '완료' });
+    fireEvent.click(button);
+
+    expect(handlerCompleteTask).toHaveBeenCalled();
+  });
 });
