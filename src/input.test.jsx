@@ -9,7 +9,8 @@ describe('Input', () => {
 
   const addTodo = jest.fn();
 
-  const inputComponentRender = () => render(<Input value={newTodo} onChange={setNewTodos} onClick={addTodo} />);
+  const inputComponentRender = () =>
+    render(<Input value={newTodo} onChange={setNewTodos} onClick={addTodo} />);
 
   context('first rending', () => {
     it('renders label with text', () => {
@@ -19,7 +20,10 @@ describe('Input', () => {
 
     it('renders input', () => {
       const { getByPlaceholderText } = inputComponentRender();
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveAttribute('placeholder', '할 일을 입력해 주세요');
+      expect(getByPlaceholderText('할 일을 입력해 주세요')).toHaveAttribute(
+        'placeholder',
+        '할 일을 입력해 주세요'
+      );
     });
 
     it('renders button', () => {
