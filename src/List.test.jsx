@@ -30,7 +30,7 @@ describe('List', () => {
       });
     });
 
-    it('handles click', () => {
+    it('listens click delete event', () => {
       const { getAllByText } = renderList(items);
 
       getAllByText('완료').forEach((button) => {

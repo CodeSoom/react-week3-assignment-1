@@ -20,7 +20,7 @@ describe('App', () => {
     expect(getByText('추가')).toBeInTheDocument();
   });
 
-  it('renders new value when change input', () => {
+  it('listens change input event', () => {
     const { getByRole } = renderApp();
 
     fireEvent.change(getByRole('textbox'), { target: { value: 'study' } });
@@ -28,7 +28,7 @@ describe('App', () => {
     expect(getByRole('textbox')).toHaveValue('study');
   });
 
-  it('renders empty input when click add', () => {
+  it('listens click add event', () => {
     const { container, getByRole, getByText } = renderApp();
 
     fireEvent.change(getByRole('textbox'), { target: { value: 'study' } });
@@ -58,7 +58,7 @@ describe('App', () => {
       });
     });
 
-    it('handles click delete', () => {
+    it('listens click delete event', () => {
       const { container, getByRole, getByText } = renderApp();
 
       items.forEach(({ title }) => {

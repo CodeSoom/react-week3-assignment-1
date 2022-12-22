@@ -15,9 +15,9 @@ describe('Page', () => {
   const renderPage = ({ taskTitle, tasks }) => render((
     <Page
       taskTitle={taskTitle}
+      tasks={tasks}
       onChangeTitle={handleChange}
       onClickAddTask={handleClickAdd}
-      tasks={tasks}
       onClickDeleteTask={handleClickDelte}
     />
   ));
@@ -36,7 +36,7 @@ describe('Page', () => {
     expect(getByText('추가')).toBeInTheDocument();
   });
 
-  it('renders new value when change input', () => {
+  it('listens change input event', () => {
     const { getByRole } = renderPage(initailState);
 
     fireEvent.change(getByRole('textbox'), { target: { value: 'study' } });
@@ -44,7 +44,7 @@ describe('Page', () => {
     expect(handleChange).toBeCalled();
   });
 
-  it('renders empty input when click add', () => {
+  it('listens click add event', () => {
     const { getByText } = renderPage(initailState);
 
     fireEvent.click(getByText('추가'));
@@ -68,7 +68,7 @@ describe('Page', () => {
       });
     });
 
-    it('handles click delete', () => {
+    it('listens click delete event', () => {
       const { getAllByText } = renderPage({ ...initailState, tasks: items });
 
       getAllByText('완료').forEach((button) => {

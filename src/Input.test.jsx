@@ -33,14 +33,14 @@ describe('Input', () => {
     expect(getByText('추가')).toBeInTheDocument();
   });
 
-  it('renders new value when change input', () => {
+  it('listens change input event', () => {
     const { getByRole } = renderInput();
 
     fireEvent.change(getByRole('textbox'), { target: { value: 'study' } });
     expect(handleChange).toBeCalled();
   });
 
-  it('renders empty input when click add', () => {
+  it('listens click add event', () => {
     const { getByRole, getByText } = renderInput();
 
     expect(handleClick).not.toBeCalled();
