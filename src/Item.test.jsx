@@ -7,15 +7,11 @@ test('Item', () => {
     id: 1,
     title: '뭐라도 하기',
   };
-
   const handleClick = jest.fn();
 
-  const { container, getByText } = render((
-    <Item
-      task={task}
-      onClickDelete={handleClick}
-    />
-  ));
+  const { container, getByText } = render(
+    <Item task={task} onClickDelete={handleClick} />
+  );
 
   expect(container).toHaveTextContent('뭐라도 하기');
   expect(container).toHaveTextContent('완료');
