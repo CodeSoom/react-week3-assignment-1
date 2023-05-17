@@ -35,25 +35,26 @@ describe('Input', () => {
   });
 
   context('Input에 입력이 일어나면', () => {
-    it('input에 입력한 value가 보여야해', () => {
-      const { container, getByLabelText } = rendererInput();
+    it('handleChange 함수가 실행된다.', () => {
+      const { getByLabelText } = rendererInput();
 
       fireEvent.change(getByLabelText('할 일'), {
-        target: { value: { taskTitle: 'test' } },
+        target: {
+          value: '변경됨',
+        },
       });
 
-      expect(container).toBeInTheDocument('test');
+      expect(handleChange).toBeCalled();
     });
   });
 
   context('추가 버튼을 클릭하면', () => {
-    it('value가 빈칸으로 보여야해', () => {
-      const { getByPlaceholderText, getByText } = rendererInput();
-      fireEvent.click(getByText('추가'), {
-        target: { value: { taskTitle: '' } },
-      });
+    it('handleClick함수가 호출됩니다.', () => {
+      const { getByText } = rendererInput();
 
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+      fireEvent.click(getByText('추가'));
+
+      expect(handleClick).toBeCalledTimes(1);
     });
   });
 });
