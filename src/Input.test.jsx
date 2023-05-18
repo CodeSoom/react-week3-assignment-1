@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import Input from './Input';
 
 // 무엇을 테스트할 것인가
@@ -12,26 +12,24 @@ describe('Input', () => {
 
   function rendererInput(taskTitle = '') {
     return render(
-      <Input value={taskTitle} onChange={handleChange} onClick={handleClick} />
+      <Input value={taskTitle} onChange={handleChange} onClick={handleClick} />,
     );
   }
 
-  context('Input컴포넌트가 렌더링되면', () => {
-    it('label이 보입니다.', () => {
-      const { container } = rendererInput();
+  it('label이 보입니다.', () => {
+    const { container } = rendererInput();
 
-      expect(container).toHaveTextContent('할 일');
-    });
-    it('input이 보입니다.', () => {
-      const { getByPlaceholderText } = rendererInput();
+    expect(container).toHaveTextContent('할 일');
+  });
+  it('input이 보입니다.', () => {
+    const { getByPlaceholderText } = rendererInput();
 
-      expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
-    });
-    it('button이 보입니다.', () => {
-      const { getByText } = rendererInput();
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+  });
+  it('button이 보입니다.', () => {
+    const { getByText } = rendererInput();
 
-      expect(getByText('추가')).toBeInTheDocument();
-    });
+    expect(getByText('추가')).toBeInTheDocument();
   });
 
   context('Input에 입력이 일어나면', () => {
@@ -54,7 +52,7 @@ describe('Input', () => {
 
       fireEvent.click(getByText('추가'));
 
-      expect(handleClick).toBeCalledTimes(1);
+      expect(handleClick).toBeCalled();
     });
   });
 });

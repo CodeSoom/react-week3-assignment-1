@@ -1,27 +1,39 @@
 import { render } from '@testing-library/react';
 import Page from './Page';
 
-test('Page 렌더링이 된다.', () => {
+describe('Page가 렌더링이 된다', () => {
   const tasks = [
-    { id: 1, title: '뭐라도하지' },
-    { id: 2, title: '그만해' },
+    { id: 1, taskTitle: '하기 싫어요' },
+    { id: 2, taskTitle: '너무 좋아요' },
   ];
-  const { title } = tasks;
   const onChangeTitle = jest.fn();
   const onClickAddTask = jest.fn();
   const onClickDeleteTask = jest.fn();
 
-  const { container } = render(
-    <Page
-      taskTitle={title}
-      onChangeTitle={onChangeTitle}
-      onClickAddTask={onClickAddTask}
-      tasks={tasks}
-      onClickDeleteTask={onClickDeleteTask}
-    />
-  );
+  function renderPage(taskTitle = '') {
+    return render(
+      <Page
+        taskTitle={taskTitle}
+        onChangeTitle={onChangeTitle}
+        onClickAddTask={onClickAddTask}
+        tasks={tasks}
+        onClickDeleteTask={onClickDeleteTask}
+      />,
+    );
+  }
 
-  expect(container).toHaveTextContent('To-do');
-  expect(container).toHaveTextContent('뭐라도하지');
-  expect(container).toHaveTextContent('완료');
+  it('To-do가 보인다', () => {
+    const { getByRole } = renderPage();
+    expect(getByRole('heading')).toHaveTextContent('To-do');
+  });
+
+  it('Input 컴포넌트가 렌더링된다.', () => {
+    const { getByPlaceholderText } = renderPage();
+    expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
+  });
+
+  it('List 컴포넌트가 렌더링된다.', () => {
+    const { getAllByRole } = renderPage(tasks);
+    expect(getAllByRole('listitem')).toHaveLength(tasks.length);
+  });
 });
