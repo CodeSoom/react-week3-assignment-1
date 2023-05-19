@@ -11,7 +11,7 @@ function renderList(tasks = []) {
   return render(<List tasks={tasks} onClickDelete={handleClickDelete} />);
 }
 
-describe('List 컴포넌트 렌더링이 된다.', () => {
+describe('List', () => {
   context('tasks가 없는 경우', () => {
     it('할 일이 없어요가 보인다.', () => {
       const { container } = renderList();

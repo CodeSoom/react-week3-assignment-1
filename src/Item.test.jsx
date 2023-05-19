@@ -28,7 +28,7 @@ describe('Item', () => {
     expect(getByText('완료')).toBeInTheDocument();
   });
 
-  context('완료버튼이 클릭 되면', () => {
+  describe('완료버튼이 클릭 되면', () => {
     it('id를 인자로 받은 핸들클릭 함수가 호출된다.', () => {
       const { getByText } = renderItem();
       fireEvent.click(getByText('완료'));

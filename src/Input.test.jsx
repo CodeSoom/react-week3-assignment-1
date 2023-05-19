@@ -16,23 +16,20 @@ describe('Input', () => {
     );
   }
 
-  it('label이 보입니다.', () => {
+  it('label이 보인다.', () => {
     const { container } = rendererInput();
-
     expect(container).toHaveTextContent('할 일');
   });
-  it('input이 보입니다.', () => {
+  it('input이 보인다.', () => {
     const { getByPlaceholderText } = rendererInput();
-
     expect(getByPlaceholderText('할 일을 입력해 주세요')).toBeInTheDocument();
   });
-  it('button이 보입니다.', () => {
+  it('button이 보인다.', () => {
     const { getByText } = rendererInput();
-
     expect(getByText('추가')).toBeInTheDocument();
   });
 
-  context('Input에 입력이 일어나면', () => {
+  describe('Input에 입력이 일어나면', () => {
     it('handleChange 함수가 실행된다.', () => {
       const { getByLabelText } = rendererInput();
 

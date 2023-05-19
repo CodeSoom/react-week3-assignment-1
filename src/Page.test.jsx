@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import Page from './Page';
 
-describe('Page가 렌더링이 된다', () => {
+describe('Page', () => {
   const tasks = [
     { id: 1, taskTitle: '하기 싫어요' },
     { id: 2, taskTitle: '너무 좋아요' },
