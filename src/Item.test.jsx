@@ -1,5 +1,4 @@
 import { render, fireEvent } from '@testing-library/react';
-
 import Item from './Item';
 
 // 테스트 항목
