@@ -35,8 +35,8 @@ describe('App', () => {
     expect(container).toBeInTheDocument('추가');
   });
 
-  describe('handleChangeTitle 함수가 실행된다', () => {
-    it('input value가 eventtarget의 value값으로 바뀐다.', () => {
+  describe('할 일을 적는 input에 텍스트를 입력한다.', () => {
+    it('입력한 텍스트로 값이 변경된다.', () => {
       const { container, getByPlaceholderText } = renderApp();
       fireEvent.change(getByPlaceholderText('할 일을 입력해 주세요'), {
         target: {
@@ -47,8 +47,8 @@ describe('App', () => {
     });
   });
 
-  describe('handleClickAddTask 함수가 실행된다', () => {
-    context('taskTitle이 값이 없다면', () => {
+  describe('할 일을 등록한다.', () => {
+    context('빈 텍스트를 등록할 경우', () => {
       it('아무것도 보이지 않는다', () => {
         const { container, getByText } = renderApp();
         fireEvent.click(getByText('추가'));
@@ -56,8 +56,8 @@ describe('App', () => {
       });
     });
 
-    context('taskTitle이 값이 있다면', () => {
-      it('itemlist에 입력된 taskTitle과 완료 버튼이 있어야한다.', () => {
+    context('텍스트가 1글자 이상 등록될 경우', () => {
+      it('아이템리스트에 추가 되어야한다.', () => {
         const {
           getByText, getByPlaceholderText, getByRole,
         } = renderApp();
@@ -72,11 +72,11 @@ describe('App', () => {
     });
   });
 
-  describe('handleClickDeleteTask 함수가 실행된다.', () => {
+  describe('완료 버튼을 누른다.', () => {
     const {
       container,
     } = renderApp();
-    it('itemList에서 해당 task가 안보여야한다.', () => {
+    it('해당 아이템이 리스트에서 제거된다.', () => {
       const {
         getByText, getByPlaceholderText,
       } = renderApp();
