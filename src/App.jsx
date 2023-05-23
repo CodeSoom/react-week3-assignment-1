@@ -19,6 +19,9 @@ export default function App() {
   }
 
   function handleClickAddTask() {
+    if (taskTitle === '') {
+      return;
+    }
     setState({
       ...state,
       newId: newId + 1,

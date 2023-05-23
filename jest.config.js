@@ -11,4 +11,5 @@ module.exports = {
       statements: 100,
     },
   },
+  restoreMocks: true,
 };
